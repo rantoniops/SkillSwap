@@ -349,6 +349,9 @@
                                         <include reference="mrj-U8-TuI"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="profileButtonPress:" destination="C6z-MJ-OJR" eventType="touchUpInside" id="rD1-Aa-ilQ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -926,6 +929,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="iIJ-0L-a4g"/>
+        <segue reference="Pic-mL-L1X"/>
     </inferredMetricsTieBreakers>
 </document>

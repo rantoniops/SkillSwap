@@ -59,6 +59,8 @@
 
 
 
+- (IBAction)profileButtonPress:(UIButton *)sender {
+}
 
 
 - (IBAction)listButtonPress:(UIButton *)sender {
