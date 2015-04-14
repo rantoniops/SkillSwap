@@ -23,6 +23,13 @@
 {
     [super viewDidLoad];
     [self showUserLocation];
+
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self addCenterPinImageAndButton];
+
 }
 
 -(void)showUserLocation
@@ -38,13 +45,11 @@
 {
     UIImage *pinImage = [UIImage imageNamed:@"redcircle"];
     UIImageView *pin = [[UIImageView alloc]initWithImage:pinImage];
-    pin.frame = CGRectMake(self.view.center.x , self.view.center.y, 50, 50);
-//    pin.center = CGPointMake(self.mapView.center.x, self.mapView.center.y);
+    pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -25  , self.mapView.bounds.size.height/2 - 25, 50, 50);
     UITapGestureRecognizer *pinTap = [[UITapGestureRecognizer alloc]init];
-//    CGSize desiredImageSize = CGSizeMake(30, 30);
     [self imageview:pin addGestureRecognizer:pinTap];
     [self.mapView addSubview:pin];
-    
+    NSLog(@"%f and %f", self.mapView.center.x, self.mapView.center.y);
     
 }
 
@@ -57,21 +62,18 @@
     [imageView addGestureRecognizer:gestureRecognizer];
 }
 
-//size the image for map
--(UIImage *)imageWithimage:(UIImage *)image convertToSize:(CGSize)size
-{
-    UIGraphicsBeginImageContext(size);
-    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    UIImage *presentedImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return presentedImage;
-}
-
 
 //action on tap of pin imageView
 -(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     NSLog(@"Tap was correctly handled, now we need to prescribe an action");
+    MKPointAnnotation *newAnnotation = [[MKPointAnnotation alloc]init];
+    newAnnotation.coordinate = self.mapView.centerCoordinate;
+    [self.mapView addAnnotation:newAnnotation];
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.01,0.01);
+    [self.mapView setRegion:MKCoordinateRegionMake(newAnnotation.coordinate,span) animated:true];
+    [self presentViewController:  animated:true completion:nil]
+    
 }
 
 
@@ -81,16 +83,13 @@
     CLLocationCoordinate2D location;
     location.latitude = userLocation.coordinate.latitude;
     location.longitude = userLocation.coordinate.longitude;
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.1,0.1);
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.05,0.05);
     [self.mapView setRegion:MKCoordinateRegionMake(location,span) animated:true];
 
 }
 - (IBAction)onAddButtonTap:(UIButton *)sender
 {
-    MKPointAnnotation *newAnnotation = [[MKPointAnnotation alloc]init];
-    newAnnotation.coordinate = self.mapView.centerCoordinate;
-    [self.mapView addAnnotation:newAnnotation];
-    [self addCenterPinImageAndButton];
+
 
     
 }
