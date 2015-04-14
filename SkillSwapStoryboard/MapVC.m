@@ -10,9 +10,10 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
-@interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate>
+@interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
 
@@ -55,5 +56,16 @@
         annotationView.dragState = MKAnnotationViewDragStateNone;
     }
 }
+
+
+
+
+
+- (IBAction)listButtonPress:(UIButton *)sender {
+}
+
+- (IBAction)msgButtonPress:(UIButton *)sender {
+}
+
 
 @end
