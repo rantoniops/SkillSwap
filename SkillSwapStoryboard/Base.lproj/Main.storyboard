@@ -459,10 +459,10 @@
             </objects>
             <point key="canvasLocation" x="1609.5" y="702"/>
         </scene>
-        <!--SkillVC-->
+        <!--CourseVC-->
         <scene sceneID="JCF-4q-sO3">
             <objects>
-                <viewController id="Dzz-ZH-zxG" customClass="SkillVC" sceneMemberID="viewController">
+                <viewController id="Dzz-ZH-zxG" customClass="CourseVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="D7w-qj-t0m"/>
                         <viewControllerLayoutGuide type="bottom" id="QzE-aV-pRq"/>

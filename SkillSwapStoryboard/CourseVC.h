@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SkillVC : UIViewController
+@interface CourseVC : UIViewController
 
 @end

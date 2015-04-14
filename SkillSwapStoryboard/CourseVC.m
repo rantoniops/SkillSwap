@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 antonioperez. All rights reserved.
 //
 
-#import "SkillVC.h"
+#import "CourseVC.h"
 
-@interface SkillVC ()<UITableViewDataSource,UITableViewDelegate>
+@interface CourseVC ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *courseImage;
 @property (weak, nonatomic) IBOutlet UILabel *teacherName;
@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @end
 
-@implementation SkillVC
+@implementation CourseVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
