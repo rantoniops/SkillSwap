@@ -61,7 +61,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="cIs-Kd-flr" kind="show" id="bfa-Ap-ZEv"/>
+                                            <segue destination="cIs-Kd-flr" kind="show" identifier="course" id="bfa-Ap-ZEv"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -115,7 +115,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H6S-jG-N0L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-73.5" y="2742"/>
+            <point key="canvasLocation" x="-432" y="1448"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="obs-Ef-tMe">
@@ -154,7 +154,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j2t-qX-rzG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="699" y="2903"/>
+            <point key="canvasLocation" x="-432" y="2210"/>
         </scene>
         <!--MessagesVC-->
         <scene sceneID="odn-C7-Gkt">
@@ -201,13 +201,10 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="n5A-aw-Ta6"/>
-                    <connections>
-                        <segue destination="hgs-oW-eJb" kind="show" identifier="profile" id="75n-5h-3SL"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nYn-Qj-olI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-73.5" y="1992"/>
+            <point key="canvasLocation" x="244.5" y="2210"/>
         </scene>
         <!--MapVC-->
         <scene sceneID="0BY-85-1ks">
@@ -231,22 +228,26 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKc-xE-UTH">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="YOU">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="10" y="7" width="33" height="30"/>
-                                </variation>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBU-w0-wVg">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="cWB-Yb-yMg"/>
+                                    <constraint firstAttribute="width" constant="32" id="eDK-Pb-Kg4"/>
+                                </constraints>
                                 <state key="normal" title="LIST">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="352" y="7" width="32" height="30"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="cWB-Yb-yMg"/>
+                                        <exclude reference="eDK-Pb-Kg4"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="cWB-Yb-yMg"/>
+                                        <include reference="eDK-Pb-Kg4"/>
+                                    </mask>
                                 </variation>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOg-x2-3Ib">
@@ -274,40 +275,91 @@
                                     <action selector="onAddButtonTap:" destination="C6z-MJ-OJR" eventType="touchUpInside" id="WaP-Yi-c2C"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Tg-TU-esF">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Profile">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="16" y="550" width="44" height="30"/>
+                                </variation>
+                                <connections>
+                                    <segue destination="hgs-oW-eJb" kind="show" identifier="profile" id="DbC-3d-9AT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKc-xE-UTH">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="QY5-Fr-8pt"/>
+                                    <constraint firstAttribute="width" constant="32" id="mJY-5S-kyj"/>
+                                </constraints>
+                                <state key="normal" title="YOU">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="QY5-Fr-8pt"/>
+                                        <exclude reference="mJY-5S-kyj"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="QY5-Fr-8pt"/>
+                                        <include reference="mJY-5S-kyj"/>
+                                    </mask>
+                                </variation>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="Huc-1f-hRt" secondAttribute="trailing" constant="-16" id="2FT-cZ-DmH"/>
-                            <constraint firstItem="gaa-Yj-AFh" firstAttribute="top" secondItem="PuU-bE-IYd" secondAttribute="topMargin" id="AXO-Fl-1yM"/>
+                            <constraint firstItem="gaa-Yj-AFh" firstAttribute="leading" secondItem="TKc-xE-UTH" secondAttribute="trailing" constant="5" id="3kc-Bh-9CE"/>
+                            <constraint firstItem="OBU-w0-wVg" firstAttribute="trailing" secondItem="PuU-bE-IYd" secondAttribute="trailingMargin" id="4wG-7s-fvO"/>
+                            <constraint firstItem="gaa-Yj-AFh" firstAttribute="top" secondItem="PuU-bE-IYd" secondAttribute="topMargin" id="AXO-Fl-1yM">
+                                <variation key="widthClass=compact" constant="54"/>
+                            </constraint>
                             <constraint firstItem="4cg-g5-9T0" firstAttribute="top" secondItem="sOg-x2-3Ib" secondAttribute="bottom" constant="20" id="RQb-lq-Qd9"/>
+                            <constraint firstItem="Huc-1f-hRt" firstAttribute="top" secondItem="gaa-Yj-AFh" secondAttribute="bottom" constant="8" id="Tzb-ZZ-7wd"/>
                             <constraint firstItem="gaa-Yj-AFh" firstAttribute="leading" secondItem="PuU-bE-IYd" secondAttribute="leadingMargin" constant="-16" id="V73-UE-myI">
                                 <variation key="widthClass=compact" constant="43"/>
                             </constraint>
+                            <constraint firstItem="TKc-xE-UTH" firstAttribute="leading" secondItem="PuU-bE-IYd" secondAttribute="leadingMargin" id="V88-2r-WFf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sOg-x2-3Ib" secondAttribute="trailing" constant="16" id="Xs9-PB-Hu9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gaa-Yj-AFh" secondAttribute="trailing" constant="-16" id="ZyI-QC-1XG">
                                 <variation key="widthClass=compact" constant="43"/>
                             </constraint>
                             <constraint firstItem="4cg-g5-9T0" firstAttribute="top" secondItem="Huc-1f-hRt" secondAttribute="bottom" id="Zyt-Rj-Fqm"/>
+                            <constraint firstItem="Huc-1f-hRt" firstAttribute="top" secondItem="TKc-xE-UTH" secondAttribute="bottom" constant="15" id="hPd-CJ-MN3"/>
+                            <constraint firstItem="OBU-w0-wVg" firstAttribute="leading" secondItem="gaa-Yj-AFh" secondAttribute="trailing" constant="5" id="n8q-se-YHT"/>
                             <constraint firstItem="Huc-1f-hRt" firstAttribute="top" secondItem="PuU-bE-IYd" secondAttribute="topMargin" id="rRN-9D-wZC">
-                                <variation key="widthClass=compact" constant="44"/>
+                                <variation key="widthClass=compact" constant="106"/>
                             </constraint>
+                            <constraint firstItem="Huc-1f-hRt" firstAttribute="top" secondItem="OBU-w0-wVg" secondAttribute="bottom" constant="15" id="s1h-w4-onw"/>
                             <constraint firstItem="Huc-1f-hRt" firstAttribute="leading" secondItem="PuU-bE-IYd" secondAttribute="leadingMargin" constant="-16" id="up4-L0-a6m"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="Huc-1f-hRt"/>
                                 <exclude reference="gaa-Yj-AFh"/>
-                                <exclude reference="TKc-xE-UTH"/>
                                 <exclude reference="OBU-w0-wVg"/>
                                 <exclude reference="sOg-x2-3Ib"/>
+                                <exclude reference="5Tg-TU-esF"/>
+                                <exclude reference="TKc-xE-UTH"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="2FT-cZ-DmH"/>
-                                <exclude reference="rRN-9D-wZC"/>
-                                <exclude reference="up4-L0-a6m"/>
+                                <exclude reference="V88-2r-WFf"/>
+                                <exclude reference="3kc-Bh-9CE"/>
                                 <exclude reference="AXO-Fl-1yM"/>
                                 <exclude reference="V73-UE-myI"/>
                                 <exclude reference="ZyI-QC-1XG"/>
+                                <exclude reference="2FT-cZ-DmH"/>
+                                <exclude reference="Tzb-ZZ-7wd"/>
+                                <exclude reference="hPd-CJ-MN3"/>
+                                <exclude reference="rRN-9D-wZC"/>
+                                <exclude reference="s1h-w4-onw"/>
+                                <exclude reference="up4-L0-a6m"/>
+                                <exclude reference="4wG-7s-fvO"/>
+                                <exclude reference="n8q-se-YHT"/>
                                 <exclude reference="RQb-lq-Qd9"/>
                                 <exclude reference="Zyt-Rj-Fqm"/>
                                 <exclude reference="Xs9-PB-Hu9"/>
@@ -317,17 +369,25 @@
                             <mask key="subviews">
                                 <include reference="Huc-1f-hRt"/>
                                 <include reference="gaa-Yj-AFh"/>
-                                <include reference="TKc-xE-UTH"/>
                                 <include reference="OBU-w0-wVg"/>
                                 <include reference="sOg-x2-3Ib"/>
+                                <include reference="5Tg-TU-esF"/>
+                                <include reference="TKc-xE-UTH"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="2FT-cZ-DmH"/>
-                                <include reference="rRN-9D-wZC"/>
-                                <include reference="up4-L0-a6m"/>
+                                <include reference="V88-2r-WFf"/>
+                                <include reference="3kc-Bh-9CE"/>
                                 <include reference="AXO-Fl-1yM"/>
-                                <include reference="V73-UE-myI"/>
-                                <include reference="ZyI-QC-1XG"/>
+                                <exclude reference="V73-UE-myI"/>
+                                <exclude reference="ZyI-QC-1XG"/>
+                                <include reference="2FT-cZ-DmH"/>
+                                <include reference="Tzb-ZZ-7wd"/>
+                                <include reference="hPd-CJ-MN3"/>
+                                <include reference="rRN-9D-wZC"/>
+                                <include reference="s1h-w4-onw"/>
+                                <include reference="up4-L0-a6m"/>
+                                <include reference="4wG-7s-fvO"/>
+                                <include reference="n8q-se-YHT"/>
                                 <include reference="RQb-lq-Qd9"/>
                                 <include reference="Zyt-Rj-Fqm"/>
                                 <include reference="Xs9-PB-Hu9"/>
@@ -345,7 +405,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gYI-KG-qhU" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="406.5" y="1122"/>
+            <point key="canvasLocation" x="1609.5" y="702"/>
         </scene>
         <!--SkillVC-->
         <scene sceneID="JCF-4q-sO3">
@@ -506,13 +566,13 @@
                         </variation>
                     </view>
                     <connections>
-                        <segue destination="EUb-3V-jwR" kind="show" id="qpf-Cl-Js2"/>
-                        <segue destination="WVF-Eu-zvm" kind="show" id="fs6-1Z-XI9"/>
+                        <segue destination="EUb-3V-jwR" kind="show" identifier="reviews" id="qpf-Cl-Js2"/>
+                        <segue destination="WVF-Eu-zvm" kind="show" identifier="teacherProfile" id="fs6-1Z-XI9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A0U-ZX-YKJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2478" y="1116"/>
+            <point key="canvasLocation" x="2403" y="1448"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Bua-jL-bIR">
@@ -551,7 +611,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ncs-gQ-ES8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3381" y="852"/>
+            <point key="canvasLocation" x="3219" y="1448"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="uh9-5i-kj0">
@@ -590,7 +650,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dmJ-fK-Qgu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3381" y="1624"/>
+            <point key="canvasLocation" x="2403" y="2226"/>
         </scene>
         <!--ListVC-->
         <scene sceneID="2Zb-UG-TWV">
@@ -658,7 +718,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FEu-SC-VzW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1689" y="2002"/>
+            <point key="canvasLocation" x="972" y="2210"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="kPA-m9-567">
@@ -788,7 +848,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E9B-6n-VvC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1221" y="310"/>
+            <point key="canvasLocation" x="2442" y="702"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xws-Xs-Y90">
@@ -806,7 +866,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ide-cl-uLC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-937.5" y="1992"/>
+            <point key="canvasLocation" x="253.5" y="1448"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="RfN-q0-7Sn">
@@ -824,10 +884,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F7a-zE-X5t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="882" y="2002"/>
+            <point key="canvasLocation" x="972" y="1448"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Pic-mL-L1X"/>
+        <segue reference="iIJ-0L-a4g"/>
     </inferredMetricsTieBreakers>
 </document>
