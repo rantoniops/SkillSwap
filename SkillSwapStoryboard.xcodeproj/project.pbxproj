@@ -34,6 +34,12 @@
 		9E4608381ADC9CBD00AFF702 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608371ADC9CBD00AFF702 /* libsqlite3.dylib */; };
 		9E46083A1ADC9CFC00AFF702 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608391ADC9CFC00AFF702 /* Parse.framework */; };
 		9E46083C1ADC9D0800AFF702 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E46083B1ADC9D0800AFF702 /* Bolts.framework */; };
+		B126D47D1ADCFADC002E6F99 /* CourseListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D47C1ADCFADC002E6F99 /* CourseListVC.m */; };
+		B126D4801ADD70F6002E6F99 /* SkillVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D47F1ADD70F6002E6F99 /* SkillVC.m */; };
+		B126D4831ADD78BC002E6F99 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D4821ADD78BC002E6F99 /* LoginVC.m */; };
+		B126D4861ADD7AEE002E6F99 /* TeachingCourseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D4851ADD7AEE002E6F99 /* TeachingCourseVC.m */; };
+		B126D4891ADD7B46002E6F99 /* MessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D4881ADD7B46002E6F99 /* MessageVC.m */; };
+		B126D48C1ADD8254002E6F99 /* UserProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D48B1ADD8254002E6F99 /* UserProfileVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +87,18 @@
 		9E4608371ADC9CBD00AFF702 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		9E4608391ADC9CFC00AFF702 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		9E46083B1ADC9D0800AFF702 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		B126D47B1ADCFADC002E6F99 /* CourseListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseListVC.h; sourceTree = "<group>"; };
+		B126D47C1ADCFADC002E6F99 /* CourseListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseListVC.m; sourceTree = "<group>"; };
+		B126D47E1ADD70F6002E6F99 /* SkillVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillVC.h; sourceTree = "<group>"; };
+		B126D47F1ADD70F6002E6F99 /* SkillVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillVC.m; sourceTree = "<group>"; };
+		B126D4811ADD78BC002E6F99 /* LoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
+		B126D4821ADD78BC002E6F99 /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
+		B126D4841ADD7AEE002E6F99 /* TeachingCourseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeachingCourseVC.h; sourceTree = "<group>"; };
+		B126D4851ADD7AEE002E6F99 /* TeachingCourseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeachingCourseVC.m; sourceTree = "<group>"; };
+		B126D4871ADD7B46002E6F99 /* MessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageVC.h; sourceTree = "<group>"; };
+		B126D4881ADD7B46002E6F99 /* MessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageVC.m; sourceTree = "<group>"; };
+		B126D48A1ADD8254002E6F99 /* UserProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileVC.h; sourceTree = "<group>"; };
+		B126D48B1ADD8254002E6F99 /* UserProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +160,18 @@
 				6B7846501ADC988B00EAD40D /* MapVC.h */,
 				6B7846511ADC988B00EAD40D /* MapVC.m */,
 				6B7846531ADC988B00EAD40D /* Main.storyboard */,
+				B126D48A1ADD8254002E6F99 /* UserProfileVC.h */,
+				B126D48B1ADD8254002E6F99 /* UserProfileVC.m */,
+				B126D4841ADD7AEE002E6F99 /* TeachingCourseVC.h */,
+				B126D4851ADD7AEE002E6F99 /* TeachingCourseVC.m */,
+				B126D4871ADD7B46002E6F99 /* MessageVC.h */,
+				B126D4881ADD7B46002E6F99 /* MessageVC.m */,
+				B126D4811ADD78BC002E6F99 /* LoginVC.h */,
+				B126D4821ADD78BC002E6F99 /* LoginVC.m */,
+				B126D47E1ADD70F6002E6F99 /* SkillVC.h */,
+				B126D47F1ADD70F6002E6F99 /* SkillVC.m */,
+				B126D47B1ADCFADC002E6F99 /* CourseListVC.h */,
+				B126D47C1ADCFADC002E6F99 /* CourseListVC.m */,
 				6B7846561ADC988B00EAD40D /* Images.xcassets */,
 				6B7846581ADC988B00EAD40D /* LaunchScreen.xib */,
 				6B78464D1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld */,
@@ -312,14 +342,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B7846751ADCAA0300EAD40D /* Photo.swift in Sources */,
+				B126D4831ADD78BC002E6F99 /* LoginVC.m in Sources */,
 				6B78464C1ADC988B00EAD40D /* AppDelegate.m in Sources */,
 				6B7846791ADCAA6500EAD40D /* Review.swift in Sources */,
 				6B7846771ADCAA3800EAD40D /* Credit.swift in Sources */,
+				B126D4891ADD7B46002E6F99 /* MessageVC.m in Sources */,
+				B126D48C1ADD8254002E6F99 /* UserProfileVC.m in Sources */,
 				6B78464F1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld in Sources */,
+				B126D47D1ADCFADC002E6F99 /* CourseListVC.m in Sources */,
+				B126D4861ADD7AEE002E6F99 /* TeachingCourseVC.m in Sources */,
 				6B7846521ADC988B00EAD40D /* MapVC.m in Sources */,
 				6B7846731ADCA98600EAD40D /* Skill.swift in Sources */,
 				6B78467B1ADCAAFA00EAD40D /* Message.swift in Sources */,
 				6B7846711ADCA8F500EAD40D /* User.swift in Sources */,
+				B126D4801ADD70F6002E6F99 /* SkillVC.m in Sources */,
 				6B7846491ADC988B00EAD40D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
