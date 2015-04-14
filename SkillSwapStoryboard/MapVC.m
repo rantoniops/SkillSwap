@@ -60,6 +60,7 @@
 
 
 - (IBAction)profileButtonPress:(UIButton *)sender {
+    [self performSegueWithIdentifier:@"profile" sender:self];
 }
 
 
