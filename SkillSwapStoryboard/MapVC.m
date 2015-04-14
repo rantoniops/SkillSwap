@@ -72,8 +72,7 @@
     [self.mapView addAnnotation:newAnnotation];
     MKCoordinateSpan span = MKCoordinateSpanMake(0.01,0.01);
     [self.mapView setRegion:MKCoordinateRegionMake(newAnnotation.coordinate,span) animated:true];
-    [self presentViewController:  animated:true completion:nil]
-    
+    [self performSegueWithIdentifier:@"mapToSkill" sender:self];
 }
 
 
