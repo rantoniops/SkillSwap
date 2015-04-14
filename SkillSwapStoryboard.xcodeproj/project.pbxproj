@@ -35,7 +35,7 @@
 		9E46083A1ADC9CFC00AFF702 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608391ADC9CFC00AFF702 /* Parse.framework */; };
 		9E46083C1ADC9D0800AFF702 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E46083B1ADC9D0800AFF702 /* Bolts.framework */; };
 		B126D47D1ADCFADC002E6F99 /* CourseListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D47C1ADCFADC002E6F99 /* CourseListVC.m */; };
-		B126D4801ADD70F6002E6F99 /* SkillVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D47F1ADD70F6002E6F99 /* SkillVC.m */; };
+		B126D4801ADD70F6002E6F99 /* CourseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D47F1ADD70F6002E6F99 /* CourseVC.m */; };
 		B126D4831ADD78BC002E6F99 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D4821ADD78BC002E6F99 /* LoginVC.m */; };
 		B126D4861ADD7AEE002E6F99 /* TeachingCourseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D4851ADD7AEE002E6F99 /* TeachingCourseVC.m */; };
 		B126D4891ADD7B46002E6F99 /* MessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D4881ADD7B46002E6F99 /* MessageVC.m */; };
@@ -89,8 +89,8 @@
 		9E46083B1ADC9D0800AFF702 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		B126D47B1ADCFADC002E6F99 /* CourseListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseListVC.h; sourceTree = "<group>"; };
 		B126D47C1ADCFADC002E6F99 /* CourseListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseListVC.m; sourceTree = "<group>"; };
-		B126D47E1ADD70F6002E6F99 /* SkillVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillVC.h; sourceTree = "<group>"; };
-		B126D47F1ADD70F6002E6F99 /* SkillVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillVC.m; sourceTree = "<group>"; };
+		B126D47E1ADD70F6002E6F99 /* CourseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseVC.h; sourceTree = "<group>"; };
+		B126D47F1ADD70F6002E6F99 /* CourseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseVC.m; sourceTree = "<group>"; };
 		B126D4811ADD78BC002E6F99 /* LoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
 		B126D4821ADD78BC002E6F99 /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
 		B126D4841ADD7AEE002E6F99 /* TeachingCourseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeachingCourseVC.h; sourceTree = "<group>"; };
@@ -132,13 +132,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B16B5151ADDC9E70040B4EB /* STORYBOARD CONDOM */ = {
+			isa = PBXGroup;
+			children = (
+				6B7846531ADC988B00EAD40D /* Main.storyboard */,
+			);
+			name = "STORYBOARD CONDOM";
+			path = SkillSwapStoryboard;
+			sourceTree = "<group>";
+		};
+		6B16B5161ADDCA6F0040B4EB /* MapVC and its buttons VCs */ = {
+			isa = PBXGroup;
+			children = (
+				6B7846501ADC988B00EAD40D /* MapVC.h */,
+				6B7846511ADC988B00EAD40D /* MapVC.m */,
+				B126D47B1ADCFADC002E6F99 /* CourseListVC.h */,
+				B126D47C1ADCFADC002E6F99 /* CourseListVC.m */,
+				B126D48A1ADD8254002E6F99 /* UserProfileVC.h */,
+				B126D48B1ADD8254002E6F99 /* UserProfileVC.m */,
+				B126D4871ADD7B46002E6F99 /* MessageVC.h */,
+				B126D4881ADD7B46002E6F99 /* MessageVC.m */,
+				B126D47E1ADD70F6002E6F99 /* CourseVC.h */,
+				B126D47F1ADD70F6002E6F99 /* CourseVC.m */,
+			);
+			name = "MapVC and its buttons VCs";
+			sourceTree = "<group>";
+		};
+		6B16B5171ADDCB040040B4EB /* App delegate */ = {
+			isa = PBXGroup;
+			children = (
+				6B78464A1ADC988B00EAD40D /* AppDelegate.h */,
+				6B78464B1ADC988B00EAD40D /* AppDelegate.m */,
+			);
+			name = "App delegate";
+			path = SkillSwapStoryboard;
+			sourceTree = "<group>";
+		};
 		6B78463A1ADC988B00EAD40D = {
 			isa = PBXGroup;
 			children = (
+				6B16B5151ADDC9E70040B4EB /* STORYBOARD CONDOM */,
 				6B78467C1ADCAB2B00EAD40D /* Frameworks */,
 				6B7846451ADC988B00EAD40D /* SkillSwapStoryboard */,
 				6B7846621ADC988B00EAD40D /* SkillSwapStoryboardTests */,
 				6B7846441ADC988B00EAD40D /* Products */,
+				6B16B5171ADDCB040040B4EB /* App delegate */,
 				6B78467D1ADCAB7A00EAD40D /* Parse Subclasses */,
 			);
 			sourceTree = "<group>";
@@ -155,23 +193,11 @@
 		6B7846451ADC988B00EAD40D /* SkillSwapStoryboard */ = {
 			isa = PBXGroup;
 			children = (
-				6B78464A1ADC988B00EAD40D /* AppDelegate.h */,
-				6B78464B1ADC988B00EAD40D /* AppDelegate.m */,
-				6B7846501ADC988B00EAD40D /* MapVC.h */,
-				6B7846511ADC988B00EAD40D /* MapVC.m */,
-				6B7846531ADC988B00EAD40D /* Main.storyboard */,
-				B126D48A1ADD8254002E6F99 /* UserProfileVC.h */,
-				B126D48B1ADD8254002E6F99 /* UserProfileVC.m */,
-				B126D4841ADD7AEE002E6F99 /* TeachingCourseVC.h */,
-				B126D4851ADD7AEE002E6F99 /* TeachingCourseVC.m */,
-				B126D4871ADD7B46002E6F99 /* MessageVC.h */,
-				B126D4881ADD7B46002E6F99 /* MessageVC.m */,
+				6B16B5161ADDCA6F0040B4EB /* MapVC and its buttons VCs */,
 				B126D4811ADD78BC002E6F99 /* LoginVC.h */,
 				B126D4821ADD78BC002E6F99 /* LoginVC.m */,
-				B126D47E1ADD70F6002E6F99 /* SkillVC.h */,
-				B126D47F1ADD70F6002E6F99 /* SkillVC.m */,
-				B126D47B1ADCFADC002E6F99 /* CourseListVC.h */,
-				B126D47C1ADCFADC002E6F99 /* CourseListVC.m */,
+				B126D4841ADD7AEE002E6F99 /* TeachingCourseVC.h */,
+				B126D4851ADD7AEE002E6F99 /* TeachingCourseVC.m */,
 				6B7846561ADC988B00EAD40D /* Images.xcassets */,
 				6B7846581ADC988B00EAD40D /* LaunchScreen.xib */,
 				6B78464D1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld */,
@@ -355,7 +381,7 @@
 				6B7846731ADCA98600EAD40D /* Skill.swift in Sources */,
 				6B78467B1ADCAAFA00EAD40D /* Message.swift in Sources */,
 				6B7846711ADCA8F500EAD40D /* User.swift in Sources */,
-				B126D4801ADD70F6002E6F99 /* SkillVC.m in Sources */,
+				B126D4801ADD70F6002E6F99 /* CourseVC.m in Sources */,
 				6B7846491ADC988B00EAD40D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
