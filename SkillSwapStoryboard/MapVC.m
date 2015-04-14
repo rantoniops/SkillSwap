@@ -1,24 +1,13 @@
-//
-//  ViewController.m
-//  SkillSwapStoryboard
-//
-//  Created by Antonio Perez on 4/13/15.
-//  Copyright (c) 2015 antonioperez. All rights reserved.
-//
-
 #import "MapVC.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
-
+#import "SkillSwapStoryboard-Swift.h"
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-
 @end
-
 @implementation MapVC
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -28,6 +17,13 @@
     self.locationManager.delegate = self;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    if ([PFUser currentUser] == nil)
+    {
+        [self performSegueWithIdentifier:@"login" sender:self];
+    }
+}
 
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
