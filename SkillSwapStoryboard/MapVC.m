@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 
-@interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate>
+@interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -22,14 +22,60 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self showUserLocation];
+}
+
+-(void)showUserLocation
+{
     self.mapView.showsUserLocation = true;
     self.locationManager = [CLLocationManager new];
     [self.locationManager requestWhenInUseAuthorization];
     self.locationManager.delegate = self;
+
+}
+
+-(void)addCenterPinImageAndButton
+{
+    UIImage *pinImage = [UIImage imageNamed:@"redcircle"];
+    UIImageView *pin = [[UIImageView alloc]initWithImage:pinImage];
+    pin.frame = CGRectMake(self.view.center.x , self.view.center.y, 50, 50);
+//    pin.center = CGPointMake(self.mapView.center.x, self.mapView.center.y);
+    UITapGestureRecognizer *pinTap = [[UITapGestureRecognizer alloc]init];
+//    CGSize desiredImageSize = CGSizeMake(30, 30);
+    [self imageview:pin addGestureRecognizer:pinTap];
+    [self.mapView addSubview:pin];
+    
+    
+}
+
+//add a tapGesture recognizer to the imageView
+-(void)imageview:(UIImageView *)imageView addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+{
+    imageView.userInteractionEnabled = YES;
+    gestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
+    gestureRecognizer.delegate = self;
+    [imageView addGestureRecognizer:gestureRecognizer];
+}
+
+//size the image for map
+-(UIImage *)imageWithimage:(UIImage *)image convertToSize:(CGSize)size
+{
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *presentedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return presentedImage;
 }
 
 
+//action on tap of pin imageView
+-(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    NSLog(@"Tap was correctly handled, now we need to prescribe an action");
+}
 
+
+//zoom to the user's location
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     CLLocationCoordinate2D location;
@@ -42,20 +88,13 @@
 - (IBAction)onAddButtonTap:(UIButton *)sender
 {
     MKPointAnnotation *newAnnotation = [[MKPointAnnotation alloc]init];
+    newAnnotation.coordinate = self.mapView.centerCoordinate;
     [self.mapView addAnnotation:newAnnotation];
+    [self addCenterPinImageAndButton];
+
+    
 }
 
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState
-{
-    if (newState == MKAnnotationViewDragStateStarting)
-    {
-        annotationView.dragState = MKAnnotationViewDragStateDragging;
-    }
-    else if (newState == MKAnnotationViewDragStateEnding || newState == MKAnnotationViewDragStateCanceling)
-    {
-        annotationView.dragState = MKAnnotationViewDragStateNone;
-    }
-}
 
 
 
