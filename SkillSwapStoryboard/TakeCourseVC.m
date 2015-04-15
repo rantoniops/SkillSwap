@@ -1,4 +1,6 @@
 #import "TakeCourseVC.h"
+#import "SkillSwapStoryboard-Swift.h"
+
 
 @interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -17,13 +19,34 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self queryForCourseInfo];
+    
+    
+}
+
+
+
+-(void)queryForCourseInfo
+{
+    PFQuery *courseQuery = [PFQuery queryWithClassName:@"Course"];
+    [courseQuery whereKey:@"address" containsString:self.selectedAddress];
+    [courseQuery getFirstObjectInBackgroundWithBlock: ^(PFObject *course, NSError *error)
+     {
+         self.courseName.text = course[@"title"];
+         self.courseAddress.text = course[@"address"];
+         self.courseDesciption.text = course[@"description"];
+         self.courseDuration.text = course[@"time"];
+//         self.teacherName.text = course[@"teacher"] must be added and teacher is still just a pointer
+         
+     }];
+
 }
 
 - (IBAction)takeClass:(UIButton *)sender {
 }
 
 - (IBAction)nopeButtonTap:(UIButton *)sender {
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -31,6 +54,11 @@
     return nil;
     
 }
+- (IBAction)dismissButton:(id)sender {
+    [self dismissViewControllerAnimated:true completion:nil];    
+}
+
+
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

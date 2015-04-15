@@ -10,4 +10,8 @@
 
 @interface TakeCourseVC : UIViewController
 
+@property NSString *selectedAddress;
+
+
+
 @end
