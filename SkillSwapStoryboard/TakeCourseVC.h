@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SkillVC : UIViewController
+@interface TakeCourseVC : UIViewController
+
+@property NSString *selectedAddress;
+
+
 
 @end

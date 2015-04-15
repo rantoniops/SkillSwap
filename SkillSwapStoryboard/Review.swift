@@ -17,8 +17,8 @@ class Review : PFObject, PFSubclassing
 
 
 
-    @NSManaged var owner : User
-    @NSManaged var reviewBody : String
+    @NSManaged var reviewer : User
+    @NSManaged var reviewContent : String
     @NSManaged var rating : Int
 
 
