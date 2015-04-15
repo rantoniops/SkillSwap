@@ -1,4 +1,5 @@
 #import "UserProfileVC.h"
+#import "SkillSwapStoryboard-Swift.h"
 @interface UserProfileVC () <UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *rating;
@@ -12,6 +13,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    User *currentUser = [User currentUser];
+
+    self.name.text = currentUser.username;
+//    self.skills.text = currentUser.skills;
+
+    
+
+
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
