@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface PostCourseVC : UIViewController
+@property NSString *selectedAddress;
+@property NSString *selectedLatitude;
+@property double selectedLongitude;
 
 @end

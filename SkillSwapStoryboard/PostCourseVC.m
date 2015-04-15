@@ -12,6 +12,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.classAddressTextField.text = self.selectedAddress;
 }
 
 
@@ -34,6 +35,8 @@
              //    course.coursePhoto = something
              course.teacher = [User currentUser];
              course.skillTaught = skill;
+//             course.latitude = self.selectedLatitude;
+//             course.longitude = self.selectedLongitude;
              [course saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
               {
                   if (succeeded)
