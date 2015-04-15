@@ -37,9 +37,6 @@
              course.address = self.classAddressTextField.text;
              //    course.coursePhoto = something
              course.teacher = [User currentUser];
-//             course.skillTaught = skill;
-//             course.latitude = self.selectedLatitude;
-//             course.longitude = self.selectedLongitude;
              course.skillsTaught = skill;
              course.location = [PFGeoPoint geoPointWithLocation:self.courseLocation];
              [course saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)

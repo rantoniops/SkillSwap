@@ -12,7 +12,6 @@
 
 @interface TakeCourseVC : UIViewController
 
-@property NSString *selectedAddress;
 @property Course *selectedCourse;
 
 

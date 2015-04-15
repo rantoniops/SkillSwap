@@ -33,29 +33,33 @@
     [self queryForMap];
 }
 
-//pulls all the existing pins for events
+//pulls all the pins for existing events
 - (void)queryForMap
 {
-    PFQuery *query = [PFQuery queryWithClassName:@"Course"];
+    PFQuery *query = [Course query];
+    [query includeKey:@"teacher"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error)
         {
             NSLog(@"Successfully retrieved %lu courses.", (unsigned long)objects.count);
-            // Do something with the found objects
-            for (PFObject *object in objects)
+            for (Course *object in objects)
             {
-                CourseAnnotationVC *coursePointAnnotation = [[CourseAnnotationVC alloc]init];
-                coursePointAnnotation.course = object;
-                coursePointAnnotation.title = object[@"title"];
-                coursePointAnnotation.subtitle = object[@"address"];
-                PFGeoPoint *geoPoint = object[@"location"];
-                coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
-                [self.mapView addAnnotation:coursePointAnnotation];
+                if ([object isKindOfClass:[Course class]]) {
+                    NSLog(@"%@", object.teacher.username);
+                    CourseAnnotationVC *coursePointAnnotation = [[CourseAnnotationVC alloc]init];
+                    coursePointAnnotation.course = object;
+                    coursePointAnnotation.title = object[@"title"];
+                    coursePointAnnotation.subtitle = object[@"address"];
+                    PFGeoPoint *geoPoint = object[@"location"];
+                    coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+                    [self.mapView addAnnotation:coursePointAnnotation];
+                    NSLog(@"%@", coursePointAnnotation.course);
+                }
+                
             }
         }
         else
         {
-            // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
@@ -102,8 +106,6 @@
     
     [self performSegueWithIdentifier:@"mapToSkill" sender:view.annotation];
 }
-///should go to takeCourseVC, pass the location then pull the data while querying for the location otherwise just find an object of course and pass that although it wasn't working
-////need to be able to pass an instance of course otherwise we will be stuck passing an address
 
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
@@ -129,11 +131,10 @@
 }
 ////////Need to figure out how to delete the latest pin dropped if the user does not add a new course, it isn't saved but it stays on map//////
 ////pins should be colored based on whether current user is course coordinator or not/////
-////fetch by event ID/////
+
 
 - (IBAction)onAddButtonTap:(UIButton *)sender
 {
-
     [self addCenterPinImageAndButton];
 }
 
@@ -188,11 +189,9 @@
     else
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
-        MKAnnotationView *theView = sender;
-        CourseAnnotationVC *courseAnnotation = theView.annotation;
+        CourseAnnotationVC *courseAnnotation = sender;
         Course *courseToShow = courseAnnotation.course;
         takeVC.selectedCourse = courseToShow;
-        takeVC.title = courseToShow.title;
         
         
 //        CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];

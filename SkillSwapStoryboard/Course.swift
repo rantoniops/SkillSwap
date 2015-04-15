@@ -1,5 +1,5 @@
 import Foundation
-class Course : PFObject, PFSubclassing
+@objc class Course : PFObject, PFSubclassing
 {
     override class func initialize()
     {

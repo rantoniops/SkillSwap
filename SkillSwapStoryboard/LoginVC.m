@@ -46,7 +46,7 @@
     {
         if (succeeded)
         {
-            [self dismissViewControllerAnimated:true completion:nil];
+            [self performSegueWithIdentifier:@"logIn" sender:self];
         }
         else
         {
