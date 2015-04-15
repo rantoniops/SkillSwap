@@ -23,9 +23,7 @@ class Course : PFObject, PFSubclassing
     @NSManaged var coursePhoto: PFFile
     @NSManaged var location: PFGeoPoint
 
-
-    @NSManaged var skillsTaught: Skill
-
+    @NSManaged var skillaTaught : PFRelation
 
     @NSManaged var teacher : User
     @NSManaged var students : User

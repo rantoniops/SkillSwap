@@ -4,7 +4,6 @@
 #import "SkillSwapStoryboard-Swift.h"
 #import "PostCourseVC.h"
 #import "TakeCourseVC.h"
-
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
@@ -15,9 +14,6 @@
 @property double *eventLatitude;
 @property double *eventLongitude;
 @property MKPointAnnotation *anotherAnnotation;
-
-
-
 @end
 @implementation MapVC
 - (void)viewDidLoad
@@ -36,7 +32,8 @@
 - (void)queryForMap
 {
     PFQuery *query = [PFQuery queryWithClassName:@"Course"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
         if (!error)
         {
             NSLog(@"Successfully retrieved %lu courses.", (unsigned long)objects.count);
@@ -86,7 +83,8 @@
 -(void)reverseGeocodeLocation:(CLLocation *)location
 {
     CLGeocoder *geocoder = [CLGeocoder new];
-    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
+    {
         CLPlacemark *placeMark = [placemarks objectAtIndex:0];
        self.formattedAdress = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
          self.formattedAdressTwo = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
