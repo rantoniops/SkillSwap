@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property UIImageView *pin;
 
 @end
 
@@ -43,12 +44,12 @@
 
 -(void)addCenterPinImageAndButton
 {
-    UIImage *pinImage = [UIImage imageNamed:@"redcircle"];
-    UIImageView *pin = [[UIImageView alloc]initWithImage:pinImage];
-    pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -25  , self.mapView.bounds.size.height/2 - 25, 50, 50);
+    UIImage *pinImage = [UIImage imageNamed:@"pointer"];
+    self.pin = [[UIImageView alloc]initWithImage:pinImage];
+    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -75  , self.mapView.bounds.size.height/2 - 75, 150, 50);
     UITapGestureRecognizer *pinTap = [[UITapGestureRecognizer alloc]init];
-    [self imageview:pin addGestureRecognizer:pinTap];
-    [self.mapView addSubview:pin];
+    [self imageview:self.pin addGestureRecognizer:pinTap];
+    [self.mapView addSubview:self.pin];
 }
 
 //add a tapGesture recognizer to the imageView
@@ -65,6 +66,7 @@
 -(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     [self addAnnotation];
+    self.pin.hidden = YES;
     MKCoordinateSpan span = MKCoordinateSpanMake(0.01,0.01);
     [self.mapView setRegion:MKCoordinateRegionMake(self.mapView.centerCoordinate,span) animated:true];
     double delayInSeconds = 2.0;
