@@ -1,14 +1,6 @@
-//
-//  SkillViewController.m
-//  SkillSwapStoryboard
-//
-//  Created by Sha Zhu on 4/14/15.
-//  Copyright (c) 2015 antonioperez. All rights reserved.
-//
+#import "TakeCourseVC.h"
 
-#import "SkillVC.h"
-
-@interface SkillVC ()<UITableViewDataSource,UITableViewDelegate>
+@interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *courseImage;
 @property (weak, nonatomic) IBOutlet UILabel *teacherName;
@@ -21,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @end
 
-@implementation SkillVC
+@implementation TakeCourseVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];

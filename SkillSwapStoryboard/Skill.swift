@@ -16,12 +16,11 @@ class Skill : PFObject, PFSubclassing
     }
 
 
-    @NSManaged var commentBody: String
-    @NSManaged var commenter : User
+    @NSManaged var name: String
+    @NSManaged var owner : User
 
     
     
-    
-    
+
     
 }
