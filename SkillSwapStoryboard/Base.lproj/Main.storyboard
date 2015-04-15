@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="C6z-MJ-OJR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14C2061" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="C6z-MJ-OJR">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -778,9 +778,22 @@
                                     <action selector="onPostButtonPressed:" destination="1NH-1g-Wdt" eventType="touchUpInside" id="sBN-a5-eqN"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YTP-8E-bEa">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHm-92-fdE">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="X">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="8" y="10" width="30" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="onXButtonPressed:" destination="1NH-1g-Wdt" eventType="touchUpInside" id="8zs-6a-4J3"/>
+                                </connections>
+                            </button>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YTP-8E-bEa">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="IQv-Sw-tQA"/>
                                 </constraints>
@@ -794,19 +807,10 @@
                                         <include reference="IQv-Sw-tQA"/>
                                     </mask>
                                 </variation>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHm-92-fdE">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="X">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="8" y="10" width="30" height="30"/>
-                                </variation>
                                 <connections>
-                                    <action selector="onXButtonPressed:" destination="1NH-1g-Wdt" eventType="touchUpInside" id="8zs-6a-4J3"/>
+                                    <outletCollection property="gestureRecognizers" destination="MKr-kH-32c" appends="YES" id="CWB-wP-IuT"/>
                                 </connections>
-                            </button>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -816,7 +820,7 @@
                             <constraint firstItem="SFX-Lr-gOE" firstAttribute="top" secondItem="rhI-U0-BJd" secondAttribute="bottom" constant="33" id="1OK-5E-FRl"/>
                             <constraint firstAttribute="centerX" secondItem="lVL-tt-1ln" secondAttribute="centerX" id="2hv-sd-DhC"/>
                             <constraint firstItem="Jxl-p2-0Lc" firstAttribute="top" secondItem="lVL-tt-1ln" secondAttribute="bottom" constant="234" id="8dq-bP-paI">
-                                <variation key="widthClass=compact" constant="95"/>
+                                <variation key="widthClass=compact" constant="48"/>
                             </constraint>
                             <constraint firstAttribute="centerX" secondItem="6Pi-IF-4fk" secondAttribute="centerX" id="9zx-yb-jq6"/>
                             <constraint firstAttribute="centerX" secondItem="YTP-8E-bEa" secondAttribute="centerX" id="CGo-l5-gPJ"/>
@@ -827,7 +831,7 @@
                             <constraint firstAttribute="centerX" secondItem="YpD-FG-Kdn" secondAttribute="centerX" id="KlG-eE-jAg"/>
                             <constraint firstItem="Jxl-p2-0Lc" firstAttribute="top" secondItem="6Pi-IF-4fk" secondAttribute="bottom" constant="318" id="Lg5-nv-o0s"/>
                             <constraint firstItem="lVL-tt-1ln" firstAttribute="top" secondItem="YTP-8E-bEa" secondAttribute="bottom" constant="30" id="Mcv-gn-jMi">
-                                <variation key="widthClass=compact" constant="28"/>
+                                <variation key="widthClass=compact" constant="15"/>
                             </constraint>
                             <constraint firstItem="EEO-eU-Doi" firstAttribute="top" secondItem="rhI-U0-BJd" secondAttribute="bottom" constant="59" id="RM2-t2-38T">
                                 <variation key="widthClass=compact" constant="87"/>
@@ -839,7 +843,7 @@
                                 <variation key="widthClass=compact" constant="51"/>
                             </constraint>
                             <constraint firstItem="YTP-8E-bEa" firstAttribute="top" secondItem="6Pi-IF-4fk" secondAttribute="bottom" constant="35" id="gIw-cF-jYO">
-                                <variation key="widthClass=compact" constant="44"/>
+                                <variation key="widthClass=compact" constant="81"/>
                             </constraint>
                             <constraint firstItem="YpD-FG-Kdn" firstAttribute="top" secondItem="EEO-eU-Doi" secondAttribute="bottom" constant="40" id="hXn-FV-OhZ"/>
                             <constraint firstAttribute="centerX" secondItem="EEO-eU-Doi" secondAttribute="centerX" id="ilV-gg-C1w"/>
@@ -853,8 +857,8 @@
                                 <exclude reference="YpD-FG-Kdn"/>
                                 <exclude reference="6Pi-IF-4fk"/>
                                 <exclude reference="lVL-tt-1ln"/>
-                                <exclude reference="YTP-8E-bEa"/>
                                 <exclude reference="ZHm-92-fdE"/>
+                                <exclude reference="YTP-8E-bEa"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="9zx-yb-jq6"/>
@@ -887,8 +891,8 @@
                                 <include reference="YpD-FG-Kdn"/>
                                 <include reference="6Pi-IF-4fk"/>
                                 <include reference="lVL-tt-1ln"/>
-                                <include reference="YTP-8E-bEa"/>
                                 <include reference="ZHm-92-fdE"/>
+                                <include reference="YTP-8E-bEa"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="9zx-yb-jq6"/>
@@ -924,6 +928,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RH1-f4-sQz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="MKr-kH-32c"/>
             </objects>
             <point key="canvasLocation" x="2595" y="702"/>
         </scene>

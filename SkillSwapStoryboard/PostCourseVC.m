@@ -1,6 +1,6 @@
 #import "PostCourseVC.h"
 #import "SkillSwapStoryboard-Swift.h"
-@interface PostCourseVC () <UITextFieldDelegate>
+@interface PostCourseVC () <UITextFieldDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *classTitleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *classDescriptionTextField;
 @property (weak, nonatomic) IBOutlet UITextField *classTimeTextField;
@@ -12,7 +12,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.classAddressTextField.text = self.selectedAddress;
+    UIImage *profileImage = [UIImage imageNamed:@"emptyProfile"];
+    self.classPhotoImageView.image = profileImage;
+    UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
+    [self.classPhotoImageView addGestureRecognizer:photoTap];
+    
+
+}
+
+
+-(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    NSLog(@"successful Tap");
 }
 
 
@@ -58,6 +69,7 @@
      }];
     [self dismissViewControllerAnimated:true completion:nil];
 }
+
 
 
 

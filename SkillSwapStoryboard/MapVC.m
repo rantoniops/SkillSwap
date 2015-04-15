@@ -146,9 +146,9 @@
 //add the image to map - gets called on addButton tap
 -(void)addCenterPinImageAndButton
 {
-    UIImage *pinImage = [UIImage imageNamed:@"pointer"];
+    UIImage *pinImage = [UIImage imageNamed:@"newpin"];
     self.pin = [[UIImageView alloc]initWithImage:pinImage];
-    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -75  , self.mapView.bounds.size.height/2 - 75, 150, 50);
+    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -75  , self.mapView.bounds.size.height/2 - 65, 150, 75);
     UITapGestureRecognizer *pinTap = [[UITapGestureRecognizer alloc]init];
     [self imageview:self.pin addGestureRecognizer:pinTap];
     [self.mapView addSubview:self.pin];
