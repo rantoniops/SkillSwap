@@ -9,6 +9,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *classSkillTextField;
 @end
 @implementation PostCourseVC
+
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -55,6 +58,7 @@
              NSLog(@"skill NOT saved");
          }
      }];
+    [self dismissViewControllerAnimated:true completion:nil];
 
 
 

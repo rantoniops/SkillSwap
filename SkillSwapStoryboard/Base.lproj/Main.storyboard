@@ -451,7 +451,7 @@
                         <segue destination="REZ-1m-KA0" kind="presentation" identifier="login" id="mc2-E3-mNT"/>
                         <segue destination="Yzx-7v-Fpq" kind="show" identifier="list" id="1nx-of-mrl"/>
                         <segue destination="qMt-YE-rIX" kind="show" identifier="messages" id="iaq-gg-eba"/>
-                        <segue destination="Dzz-ZH-zxG" kind="show" identifier="mapToSkill" id="Pic-mL-L1X"/>
+                        <segue destination="D3C-uq-VKx" kind="show" identifier="mapToSkill" id="Pic-mL-L1X"/>
                         <segue destination="hgs-oW-eJb" kind="show" identifier="profile" id="lmm-OR-fQ0"/>
                         <segue destination="1NH-1g-Wdt" kind="presentation" identifier="postClass" id="mPB-HJ-ttb"/>
                     </connections>
@@ -624,6 +624,13 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="Oh4-mp-fzI">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="ZH2-v4-q0p">
+                            <connections>
+                                <action selector="dismissButton:" destination="Dzz-ZH-zxG" id="G15-Cn-yFp"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="courseAddress" destination="DMu-bf-X36" id="9oI-ve-Iaq"/>
                         <outlet property="courseCredit" destination="cNw-qV-2oX" id="eFW-6W-UVn"/>
@@ -639,7 +646,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A0U-ZX-YKJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2424" y="1462"/>
+            <point key="canvasLocation" x="3342" y="1462"/>
         </scene>
         <!--Post CourseVC-->
         <scene sceneID="Lfn-7W-mM9">
@@ -749,18 +756,6 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHm-92-fdE">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="X">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="8" y="10" width="30" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="onXButtonPressed:" destination="1NH-1g-Wdt" eventType="touchUpInside" id="8zs-6a-4J3"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lVL-tt-1ln">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
@@ -800,6 +795,18 @@
                                     </mask>
                                 </variation>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHm-92-fdE">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="X">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="8" y="10" width="30" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="onXButtonPressed:" destination="1NH-1g-Wdt" eventType="touchUpInside" id="8zs-6a-4J3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -845,9 +852,9 @@
                                 <exclude reference="EEO-eU-Doi"/>
                                 <exclude reference="YpD-FG-Kdn"/>
                                 <exclude reference="6Pi-IF-4fk"/>
-                                <exclude reference="ZHm-92-fdE"/>
                                 <exclude reference="lVL-tt-1ln"/>
                                 <exclude reference="YTP-8E-bEa"/>
+                                <exclude reference="ZHm-92-fdE"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="9zx-yb-jq6"/>
@@ -879,9 +886,9 @@
                                 <include reference="EEO-eU-Doi"/>
                                 <include reference="YpD-FG-Kdn"/>
                                 <include reference="6Pi-IF-4fk"/>
-                                <include reference="ZHm-92-fdE"/>
                                 <include reference="lVL-tt-1ln"/>
                                 <include reference="YTP-8E-bEa"/>
+                                <include reference="ZHm-92-fdE"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="9zx-yb-jq6"/>
@@ -957,7 +964,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ncs-gQ-ES8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3219" y="1448"/>
+            <point key="canvasLocation" x="4137" y="1448"/>
         </scene>
         <!--Course ListVC-->
         <scene sceneID="2Zb-UG-TWV">
@@ -981,7 +988,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Dzz-ZH-zxG" kind="show" identifier="listToSkill" id="iIJ-0L-a4g"/>
+                                            <segue destination="D3C-uq-VKx" kind="show" identifier="listToSkill" id="iIJ-0L-a4g"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1207,8 +1214,26 @@
             </objects>
             <point key="canvasLocation" x="972" y="1448"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="gwl-tg-vAM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="D3C-uq-VKx" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yG6-XC-3iI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Dzz-ZH-zxG" kind="relationship" relationship="rootViewController" id="s8f-rx-aHI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AQz-nI-DhU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2424" y="1462"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Pic-mL-L1X"/>
+        <segue reference="iIJ-0L-a4g"/>
     </inferredMetricsTieBreakers>
 </document>

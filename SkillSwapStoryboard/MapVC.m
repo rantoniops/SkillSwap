@@ -12,6 +12,7 @@
 @property NSString *formattedAdress;
 @property double *eventLatitude;
 @property double *eventLongitude;
+@property MKPointAnnotation *anotherAnnotation;
 
 
 
@@ -72,15 +73,14 @@
 ///Create new pin on tap
 -(void)addAnnotation
 {
-    MKPointAnnotation *newAnnotation = [[MKPointAnnotation alloc]init];
-    newAnnotation.coordinate = self.mapView.centerCoordinate;
-    newAnnotation.title = @"skill";
-    newAnnotation.subtitle = @"location";
-//    self.eventLatitude = [newAnnotation.ladoubleValue];
-//    self.eventLongitude = [newAnnotation.coordinate.longitude doubleValue];
-    CLLocation *location = [[CLLocation alloc]initWithLatitude:newAnnotation.coordinate.latitude longitude:newAnnotation.coordinate.longitude];
+    self.anotherAnnotation = [[MKPointAnnotation alloc]init];
+    self.anotherAnnotation.coordinate = self.mapView.centerCoordinate;
+    self.anotherAnnotation.title = @"tbd";  ///the address needs to wait until the reverse geolocation block has ended
+                                 
+    CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
     [self reverseGeocodeLocation: location];
-    [self.mapView addAnnotation:newAnnotation];
+    [self.mapView addAnnotation:self.anotherAnnotation];
+    
 }
 
 //turn coordinates into an address
@@ -90,7 +90,20 @@
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         CLPlacemark *placeMark = [placemarks objectAtIndex:0];
         NSLog(@"Pin location is %@ %@ %@ %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.postalCode);
-       self.formattedAdress = [NSString stringWithFormat: @"%@ %@ %@ %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.postalCode];
+       self.formattedAdress = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
+      //            self.anotherAnnotation.title = queryCourse.title;
+        }];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.anotherAnnotation.subtitle = self.formattedAdress;
+    PFQuery *skillQuery = [PFQuery queryWithClassName:@"Course"];
+    [skillQuery whereKey:@"address" containsString:self.formattedAdress];
+    [skillQuery getFirstObjectInBackgroundWithBlock: ^(PFObject *course, NSError *error)
+     {
+         NSLog(@"%@", course);
+         self.anotherAnnotation.title = course[@"title"];
     }];
 
 }
