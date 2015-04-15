@@ -4,6 +4,7 @@
 #import "SkillSwapStoryboard-Swift.h"
 #import "PostCourseVC.h"
 #import "TakeCourseVC.h"
+#import "CourseAnnotationVC.h"
 
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -43,12 +44,13 @@
             // Do something with the found objects
             for (PFObject *object in objects)
             {
-                MKPointAnnotation *newPin = [[MKPointAnnotation alloc]init];
+                CourseAnnotationVC *coursePointAnnotation = [[CourseAnnotationVC alloc]init];
+                coursePointAnnotation.course = object;
+                coursePointAnnotation.title = object[@"title"];
+                coursePointAnnotation.subtitle = object[@"address"];
                 PFGeoPoint *geoPoint = object[@"location"];
-                newPin.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
-                newPin.title = object[@"title"];
-                newPin.subtitle = object[@"address"];
-                [self.mapView addAnnotation:newPin];
+                coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+                [self.mapView addAnnotation:coursePointAnnotation];
             }
         }
         else
@@ -97,7 +99,6 @@
 //triggers segway to event detailVC
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    MKPointAnnotation *tappedAnnotation = view.annotation;
     
     [self performSegueWithIdentifier:@"mapToSkill" sender:view.annotation];
 }
@@ -128,6 +129,7 @@
 }
 ////////Need to figure out how to delete the latest pin dropped if the user does not add a new course, it isn't saved but it stays on map//////
 ////pins should be colored based on whether current user is course coordinator or not/////
+////fetch by event ID/////
 
 - (IBAction)onAddButtonTap:(UIButton *)sender
 {
@@ -186,9 +188,16 @@
     else
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
-        CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
-        [self reverseGeocodeLocation: location];
-        takeVC.selectedAddress = self.formattedAdressTwo;
+        MKAnnotationView *theView = sender;
+        CourseAnnotationVC *courseAnnotation = theView.annotation;
+        Course *courseToShow = courseAnnotation.course;
+        takeVC.selectedCourse = courseToShow;
+        takeVC.title = courseToShow.title;
+        
+        
+//        CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
+//        [self reverseGeocodeLocation: location];
+//        takeVC.selectedAddress = self.formattedAdressTwo;
         //still needs to be changed to be updated for location and not address
     }
 }

@@ -22,6 +22,7 @@
 		6B7846771ADCAA3800EAD40D /* Credit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7846761ADCAA3800EAD40D /* Credit.swift */; };
 		6B7846791ADCAA6500EAD40D /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7846781ADCAA6500EAD40D /* Review.swift */; };
 		6B78467B1ADCAAFA00EAD40D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B78467A1ADCAAFA00EAD40D /* Message.swift */; };
+		96E2A9C21ADECED100727E09 /* CourseAnnotationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E2A9C11ADECED100727E09 /* CourseAnnotationVC.m */; };
 		9E4608241ADC9C5A00AFF702 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608231ADC9C5A00AFF702 /* MapKit.framework */; };
 		9E4608261ADC9C6100AFF702 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608251ADC9C6100AFF702 /* CoreLocation.framework */; };
 		9E4608281ADC9C6700AFF702 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608271ADC9C6700AFF702 /* CFNetwork.framework */; };
@@ -77,6 +78,8 @@
 		6B7846761ADCAA3800EAD40D /* Credit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credit.swift; sourceTree = "<group>"; };
 		6B7846781ADCAA6500EAD40D /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		6B78467A1ADCAAFA00EAD40D /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		96E2A9C01ADECED100727E09 /* CourseAnnotationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseAnnotationVC.h; sourceTree = "<group>"; };
+		96E2A9C11ADECED100727E09 /* CourseAnnotationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseAnnotationVC.m; sourceTree = "<group>"; };
 		9E4608231ADC9C5A00AFF702 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		9E4608251ADC9C6100AFF702 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		9E4608271ADC9C6700AFF702 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -155,6 +158,8 @@
 				B126D48B1ADD8254002E6F99 /* UserProfileVC.m */,
 				B126D4871ADD7B46002E6F99 /* MessageVC.h */,
 				B126D4881ADD7B46002E6F99 /* MessageVC.m */,
+				96E2A9C01ADECED100727E09 /* CourseAnnotationVC.h */,
+				96E2A9C11ADECED100727E09 /* CourseAnnotationVC.m */,
 				B126D47E1ADD70F6002E6F99 /* TakeCourseVC.h */,
 				B126D47F1ADD70F6002E6F99 /* TakeCourseVC.m */,
 				6B16B5181ADDCD3D0040B4EB /* PostCourseVC.h */,
@@ -373,6 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96E2A9C21ADECED100727E09 /* CourseAnnotationVC.m in Sources */,
 				6B16B51C1ADDD09F0040B4EB /* Course.swift in Sources */,
 				B126D4831ADD78BC002E6F99 /* LoginVC.m in Sources */,
 				6B78464C1ADC988B00EAD40D /* AppDelegate.m in Sources */,
