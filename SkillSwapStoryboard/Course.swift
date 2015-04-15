@@ -24,16 +24,11 @@ class Course : PFObject, PFSubclassing
     @NSManaged var latitude: String
     @NSManaged var longitude: String
 
-    @NSManaged var skillTaught: Skill
+    @NSManaged var skillsTaught: Skill
 
 
     @NSManaged var teacher : User
-    
     @NSManaged var students : User
 
-
-
-    
-    
     
 }
