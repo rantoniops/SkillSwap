@@ -8,7 +8,13 @@ class User : PFUser, PFSubclassing
 
 
     @NSManaged var friends: User
+    @NSManaged var teachers: User
+    @NSManaged var students: User
+
     @NSManaged var profilePic: PFFile
+    @NSManaged var rating : Int
+
+    @NSManaged var skills : Skill
 
 
 

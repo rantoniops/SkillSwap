@@ -22,16 +22,11 @@ class Course : PFObject, PFSubclassing
     @NSManaged var address: String
     @NSManaged var coursePhoto: PFFile
 
-    @NSManaged var skillTaught: Skill
+    @NSManaged var skillsTaught: Skill
 
 
     @NSManaged var teacher : User
-    
     @NSManaged var students : User
 
-
-
-    
-    
     
 }

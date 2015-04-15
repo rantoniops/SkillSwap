@@ -33,7 +33,7 @@
              course.address = self.classAddressTextField.text;
              //    course.coursePhoto = something
              course.teacher = [User currentUser];
-             course.skillTaught = skill;
+             course.skillsTaught = skill;
              [course saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
               {
                   if (succeeded)
