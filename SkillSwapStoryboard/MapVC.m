@@ -3,6 +3,7 @@
 #import <MapKit/MapKit.h>
 #import "SkillSwapStoryboard-Swift.h"
 #import "PostCourseVC.h"
+#import "TakeCourseVC.h"
 
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -10,6 +11,7 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property UIImageView *pin;
 @property NSString *formattedAdress;
+@property NSString *formattedAdressTwo;
 @property double *eventLatitude;
 @property double *eventLongitude;
 @property MKPointAnnotation *anotherAnnotation;
@@ -25,6 +27,39 @@
 
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self queryForMap];
+}
+
+//pulls all the existing pins for events
+- (void)queryForMap
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"Course"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error)
+        {
+            NSLog(@"Successfully retrieved %lu courses.", (unsigned long)objects.count);
+            // Do something with the found objects
+            for (PFObject *object in objects)
+            {
+                MKPointAnnotation *newPin = [[MKPointAnnotation alloc]init];
+                PFGeoPoint *geoPoint = object[@"location"];
+                newPin.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+                newPin.title = object[@"title"];
+                newPin.subtitle = object[@"address"];
+                [self.mapView addAnnotation:newPin];
+            }
+        }
+        else
+        {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+}
+
+
 //fetch the user's location
 -(void)showUserLocation
 {
@@ -32,6 +67,72 @@
     self.locationManager = [CLLocationManager new];
     [self.locationManager requestWhenInUseAuthorization];
     self.locationManager.delegate = self;
+}
+
+
+
+///Create new pin on tap
+-(void)addAnnotation
+{
+    self.anotherAnnotation = [[MKPointAnnotation alloc]init];
+    self.anotherAnnotation.coordinate = self.mapView.centerCoordinate;
+    CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
+    [self reverseGeocodeLocation: location];
+    [self.mapView addAnnotation:self.anotherAnnotation];
+    
+}
+
+//turn coordinates into an address
+-(void)reverseGeocodeLocation:(CLLocation *)location
+{
+    CLGeocoder *geocoder = [CLGeocoder new];
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        CLPlacemark *placeMark = [placemarks objectAtIndex:0];
+       self.formattedAdress = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
+         self.formattedAdressTwo = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
+        }];
+}
+
+
+//triggers segway to event detailVC
+-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    MKPointAnnotation *tappedAnnotation = view.annotation;
+    
+    [self performSegueWithIdentifier:@"mapToSkill" sender:view.annotation];
+}
+///should go to takeCourseVC, pass the location then pull the data while querying for the location otherwise just find an object of course and pass that although it wasn't working
+////need to be able to pass an instance of course otherwise we will be stuck passing an address
+
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    NSLog(@"ready to segue");
+}
+
+
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if (![annotation isEqual:self.mapView.userLocation])
+    {
+        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
+        newPin.canShowCallout = true;
+        newPin.pinColor = MKPinAnnotationColorPurple;
+        newPin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        return newPin;
+    }
+    else
+    {
+        return nil;
+    }
+    
+}
+////////Need to figure out how to delete the latest pin dropped if the user does not add a new course, it isn't saved but it stays on map//////
+////pins should be colored based on whether current user is course coordinator or not/////
+
+- (IBAction)onAddButtonTap:(UIButton *)sender
+{
+
+    [self addCenterPinImageAndButton];
 }
 
 //add the image to map - gets called on addButton tap
@@ -65,112 +166,31 @@
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void)
-    {
-        [self performSegueWithIdentifier:@"postClass" sender:self];
-    });
-}
-
-///Create new pin on tap
--(void)addAnnotation
-{
-    self.anotherAnnotation = [[MKPointAnnotation alloc]init];
-    self.anotherAnnotation.coordinate = self.mapView.centerCoordinate;
-    self.anotherAnnotation.title = @"tbd";  ///the address needs to wait until the reverse geolocation block has ended
-                                 
-    CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
-    [self reverseGeocodeLocation: location];
-    [self.mapView addAnnotation:self.anotherAnnotation];
-    
-}
-
-//turn coordinates into an address
--(void)reverseGeocodeLocation:(CLLocation *)location
-{
-    CLGeocoder *geocoder = [CLGeocoder new];
-    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-        CLPlacemark *placeMark = [placemarks objectAtIndex:0];
-        NSLog(@"Pin location is %@ %@ %@ %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.postalCode);
-       self.formattedAdress = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
-      //            self.anotherAnnotation.title = queryCourse.title;
-        }];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    self.anotherAnnotation.subtitle = self.formattedAdress;
-    PFQuery *skillQuery = [PFQuery queryWithClassName:@"Course"];
-    [skillQuery whereKey:@"address" containsString:self.formattedAdress];
-    [skillQuery getFirstObjectInBackgroundWithBlock: ^(PFObject *course, NSError *error)
-     {
-         NSLog(@"%@", course);
-         self.anotherAnnotation.title = course[@"title"];
-    }];
-
-}
-
-//triggers segway to event detailVC
--(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
-{
-    [self performSegueWithIdentifier:@"mapToSkill" sender:view.annotation];
-}
-
--(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
-{
-    NSLog(@"ready to segue");
+                   {
+                       [self performSegueWithIdentifier:@"postClass" sender:self];
+                   });
 }
 
 
-//zoom to the user's location
--(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    CLLocationCoordinate2D location;
-    location.latitude = userLocation.coordinate.latitude;
-    location.longitude = userLocation.coordinate.longitude;
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.05,0.05);
-    [self.mapView setRegion:MKCoordinateRegionMake(location,span) animated:true];
-
-}
-
--(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
-{
-    if (![annotation isEqual:self.mapView.userLocation])
-    {
-        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
-        newPin.canShowCallout = true;
-        newPin.pinColor = MKPinAnnotationColorPurple;
-        newPin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        return newPin;
-    }
-    else
-    {
-        return nil;
-    }
-    
-}
-
-
-- (IBAction)onAddButtonTap:(UIButton *)sender
-{
-
-    [self addCenterPinImageAndButton];
-    
-}
-
-
+///segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"postClass"])
     {
         PostCourseVC *postVC = segue.destinationViewController;
         postVC.selectedAddress = self.formattedAdress;
-//        postVC.selectedLatitude = self.eventLatitude;
-//        postVC.selectedLongitude = self.eventLongitude;
+        CLLocation *locationToPass = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
+        postVC.selectedAddress = self.formattedAdress;
+        postVC.courseLocation = locationToPass;
     }
     else
     {
-        nil;
+        TakeCourseVC *takeVC = segue.destinationViewController;
+        CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
+        [self reverseGeocodeLocation: location];
+        takeVC.selectedAddress = self.formattedAdressTwo;
+        //still needs to be changed to be updated for location and not address
     }
-   
 }
 
 - (IBAction)profileButtonPress:(UIButton *)sender {
@@ -184,5 +204,15 @@
 - (IBAction)msgButtonPress:(UIButton *)sender {
 }
 
+//zoom to the user's location
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    CLLocationCoordinate2D location;
+    location.latitude = userLocation.coordinate.latitude;
+    location.longitude = userLocation.coordinate.longitude;
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.05,0.05);
+    [self.mapView setRegion:MKCoordinateRegionMake(location,span) animated:true];
+    
+}
 
 @end

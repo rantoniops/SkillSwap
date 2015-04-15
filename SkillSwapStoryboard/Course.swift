@@ -21,8 +21,8 @@ class Course : PFObject, PFSubclassing
     @NSManaged var time: String
     @NSManaged var address: String
     @NSManaged var coursePhoto: PFFile
-    @NSManaged var latitude: String
-    @NSManaged var longitude: String
+    @NSManaged var location: PFGeoPoint
+
 
     @NSManaged var skillsTaught: Skill
 

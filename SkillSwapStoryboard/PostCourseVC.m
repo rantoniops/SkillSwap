@@ -41,6 +41,7 @@
 //             course.latitude = self.selectedLatitude;
 //             course.longitude = self.selectedLongitude;
              course.skillsTaught = skill;
+             course.location = [PFGeoPoint geoPointWithLocation:self.courseLocation];
              [course saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
               {
                   if (succeeded)

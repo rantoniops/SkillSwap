@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+
 
 @interface PostCourseVC : UIViewController
 @property NSString *selectedAddress;
-@property NSString *selectedLatitude;
-@property double selectedLongitude;
+@property CLLocation *courseLocation;
+
 
 @end
