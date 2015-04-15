@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SkillSwapStoryboard-Swift.h"
+
 
 @interface TakeCourseVC : UIViewController
 
-@property NSString *selectedAddress;
+@property Course *selectedCourse;
 
 
 
