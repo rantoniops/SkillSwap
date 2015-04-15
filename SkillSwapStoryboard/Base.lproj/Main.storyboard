@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14C2061" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="C6z-MJ-OJR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="C6z-MJ-OJR">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -448,12 +448,12 @@
                     <connections>
                         <outlet property="mapView" destination="Huc-1f-hRt" id="yNo-By-3rg"/>
                         <outlet property="searchBar" destination="gaa-Yj-AFh" id="Ts0-HB-w93"/>
-                        <segue destination="REZ-1m-KA0" kind="presentation" identifier="login" id="mc2-E3-mNT"/>
                         <segue destination="Yzx-7v-Fpq" kind="show" identifier="list" id="1nx-of-mrl"/>
                         <segue destination="qMt-YE-rIX" kind="show" identifier="messages" id="iaq-gg-eba"/>
                         <segue destination="hgs-oW-eJb" kind="show" identifier="profile" id="lmm-OR-fQ0"/>
                         <segue destination="1NH-1g-Wdt" kind="presentation" identifier="postClass" id="mPB-HJ-ttb"/>
                         <segue destination="Dzz-ZH-zxG" kind="presentation" identifier="mapToSkill" id="5U3-6a-ZrJ"/>
+                        <segue destination="REZ-1m-KA0" kind="presentation" identifier="loginSegue" id="TS7-tW-IbF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gYI-KG-qhU" sceneMemberID="firstResponder"/>
@@ -1173,7 +1173,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E9B-6n-VvC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2424" y="-54"/>
+            <point key="canvasLocation" x="2322" y="35"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xws-Xs-Y90">

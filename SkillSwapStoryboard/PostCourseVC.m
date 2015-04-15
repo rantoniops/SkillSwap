@@ -9,9 +9,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *classSkillTextField;
 @end
 @implementation PostCourseVC
-
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -21,6 +18,7 @@
 
 - (IBAction)onPostButtonPressed:(UIButton *)sender
 {
+    // CREATING SKILL
     Skill *skill = [Skill new];
     skill.name = self.classSkillTextField.text;
     skill.owner = [User currentUser];
@@ -30,18 +28,17 @@
          {
              NSLog(@"skill saved");
 
+             // CREATING COURSE
              Course *course = [Course new];
              course.title = self.classTitleTextField.text;
              course.courseDescription = self.classDescriptionTextField.text;
              course.time = self.classTimeTextField.text;
              course.address = self.classAddressTextField.text;
-             //    course.coursePhoto = something
+             //    course.coursePhoto = we'll get to this eventually
              course.teacher = [User currentUser];
-//             course.skillTaught = skill;
-//             course.latitude = self.selectedLatitude;
-//             course.longitude = self.selectedLongitude;
-             course.skillsTaught = skill;
              course.location = [PFGeoPoint geoPointWithLocation:self.courseLocation];
+             PFRelation *relation = [course relationForKey:@"skillsTaught"];
+             [relation addObject: skill];
              [course saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
               {
                   if (succeeded)
@@ -51,7 +48,6 @@
                   else
                   {
                       NSLog(@"course NOT saved");
-                      
                   }
               }];
          }
@@ -61,12 +57,7 @@
          }
      }];
     [self dismissViewControllerAnimated:true completion:nil];
-
-
-
-
 }
-
 
 
 

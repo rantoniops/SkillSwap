@@ -17,7 +17,9 @@ class Skill : PFObject, PFSubclassing
 
 
     @NSManaged var name: String
+
     @NSManaged var owner : User
+    @NSManaged var course : Course
 
     
     
