@@ -37,7 +37,7 @@
              //    course.coursePhoto = we'll get to this eventually
              course.teacher = [User currentUser];
              course.location = [PFGeoPoint geoPointWithLocation:self.courseLocation];
-             PFRelation *relation = [course relationForKey:@"skillaTaught"];
+             PFRelation *relation = [course relationForKey:@"skillsTaught"];
              [relation addObject: skill];
              [course saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
               {

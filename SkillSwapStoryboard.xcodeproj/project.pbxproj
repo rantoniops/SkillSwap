@@ -22,6 +22,9 @@
 		6B7846771ADCAA3800EAD40D /* Credit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7846761ADCAA3800EAD40D /* Credit.swift */; };
 		6B7846791ADCAA6500EAD40D /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7846781ADCAA6500EAD40D /* Review.swift */; };
 		6B78467B1ADCAAFA00EAD40D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B78467A1ADCAAFA00EAD40D /* Message.swift */; };
+		96A50BE91ADEF52C007C82E5 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E46083B1ADC9D0800AFF702 /* Bolts.framework */; };
+		96A50BEB1ADEF52F007C82E5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608391ADC9CFC00AFF702 /* Parse.framework */; };
+		96E2A9C21ADECED100727E09 /* CourseAnnotationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E2A9C11ADECED100727E09 /* CourseAnnotationVC.m */; };
 		9E4608241ADC9C5A00AFF702 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608231ADC9C5A00AFF702 /* MapKit.framework */; };
 		9E4608261ADC9C6100AFF702 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608251ADC9C6100AFF702 /* CoreLocation.framework */; };
 		9E4608281ADC9C6700AFF702 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608271ADC9C6700AFF702 /* CFNetwork.framework */; };
@@ -33,7 +36,6 @@
 		9E4608341ADC9CAD00AFF702 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608331ADC9CAD00AFF702 /* SystemConfiguration.framework */; };
 		9E4608361ADC9CB500AFF702 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608351ADC9CB500AFF702 /* libz.dylib */; };
 		9E4608381ADC9CBD00AFF702 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608371ADC9CBD00AFF702 /* libsqlite3.dylib */; };
-		9E46083A1ADC9CFC00AFF702 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608391ADC9CFC00AFF702 /* Parse.framework */; };
 		9E46083C1ADC9D0800AFF702 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E46083B1ADC9D0800AFF702 /* Bolts.framework */; };
 		B126D47D1ADCFADC002E6F99 /* CourseListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D47C1ADCFADC002E6F99 /* CourseListVC.m */; };
 		B126D4801ADD70F6002E6F99 /* TakeCourseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D47F1ADD70F6002E6F99 /* TakeCourseVC.m */; };
@@ -77,6 +79,8 @@
 		6B7846761ADCAA3800EAD40D /* Credit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credit.swift; sourceTree = "<group>"; };
 		6B7846781ADCAA6500EAD40D /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		6B78467A1ADCAAFA00EAD40D /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		96E2A9C01ADECED100727E09 /* CourseAnnotationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseAnnotationVC.h; sourceTree = "<group>"; };
+		96E2A9C11ADECED100727E09 /* CourseAnnotationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseAnnotationVC.m; sourceTree = "<group>"; };
 		9E4608231ADC9C5A00AFF702 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		9E4608251ADC9C6100AFF702 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		9E4608271ADC9C6700AFF702 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -115,12 +119,12 @@
 				9E4608321ADC9CA500AFF702 /* StoreKit.framework in Frameworks */,
 				9E46082E1ADC9C7C00AFF702 /* QuartzCore.framework in Frameworks */,
 				9E4608301ADC9C8100AFF702 /* Security.framework in Frameworks */,
+				96A50BEB1ADEF52F007C82E5 /* Parse.framework in Frameworks */,
 				9E46082C1ADC9C7500AFF702 /* MobileCoreServices.framework in Frameworks */,
 				9E46083C1ADC9D0800AFF702 /* Bolts.framework in Frameworks */,
 				9E46082A1ADC9C6D00AFF702 /* AudioToolbox.framework in Frameworks */,
 				9E4608281ADC9C6700AFF702 /* CFNetwork.framework in Frameworks */,
 				9E4608261ADC9C6100AFF702 /* CoreLocation.framework in Frameworks */,
-				9E46083A1ADC9CFC00AFF702 /* Parse.framework in Frameworks */,
 				9E4608241ADC9C5A00AFF702 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,6 +133,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96A50BE91ADEF52C007C82E5 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +160,8 @@
 				B126D48B1ADD8254002E6F99 /* UserProfileVC.m */,
 				B126D4871ADD7B46002E6F99 /* MessageVC.h */,
 				B126D4881ADD7B46002E6F99 /* MessageVC.m */,
+				96E2A9C01ADECED100727E09 /* CourseAnnotationVC.h */,
+				96E2A9C11ADECED100727E09 /* CourseAnnotationVC.m */,
 				B126D47E1ADD70F6002E6F99 /* TakeCourseVC.h */,
 				B126D47F1ADD70F6002E6F99 /* TakeCourseVC.m */,
 				6B16B5181ADDCD3D0040B4EB /* PostCourseVC.h */,
@@ -373,6 +380,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96E2A9C21ADECED100727E09 /* CourseAnnotationVC.m in Sources */,
 				6B16B51C1ADDD09F0040B4EB /* Course.swift in Sources */,
 				B126D4831ADD78BC002E6F99 /* LoginVC.m in Sources */,
 				6B78464C1ADC988B00EAD40D /* AppDelegate.m in Sources */,
@@ -553,6 +561,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -572,6 +581,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SkillSwapStoryboardTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

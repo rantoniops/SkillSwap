@@ -1,5 +1,5 @@
 import Foundation
-class Course : PFObject, PFSubclassing
+@objc class Course : PFObject, PFSubclassing
 {
     override class func initialize()
     {
@@ -23,7 +23,7 @@ class Course : PFObject, PFSubclassing
     @NSManaged var coursePhoto: PFFile
     @NSManaged var location: PFGeoPoint
 
-    @NSManaged var skillaTaught : PFRelation
+    @NSManaged var skillsTaught : PFRelation
 
     @NSManaged var teacher : User
     @NSManaged var students : User

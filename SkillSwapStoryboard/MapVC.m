@@ -4,6 +4,8 @@
 #import "SkillSwapStoryboard-Swift.h"
 #import "PostCourseVC.h"
 #import "TakeCourseVC.h"
+#import "CourseAnnotationVC.h"
+
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
@@ -20,37 +22,48 @@
 {
     [super viewDidLoad];
     [self showUserLocation];
-
 }
 
--(void)viewWillAppear:(BOOL)animated
+
+-(void)viewDidAppear:(BOOL)animated
 {
-    [self queryForMap];
+    if ([User currentUser] == nil)
+    {
+        [self performSegueWithIdentifier:@"loginSegue" sender:self];
+    }
+    else
+    {
+        [self queryForMap];
+    }
 }
 
-//pulls all the existing pins for events
+
+//pulls all the pins for existing events
 - (void)queryForMap
 {
-    PFQuery *query = [PFQuery queryWithClassName:@"Course"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-    {
+    PFQuery *query = [Course query];
+    [query includeKey:@"teacher"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error)
         {
             NSLog(@"Successfully retrieved %lu courses.", (unsigned long)objects.count);
-            // Do something with the found objects
-            for (PFObject *object in objects)
+            for (Course *object in objects)
             {
-                MKPointAnnotation *newPin = [[MKPointAnnotation alloc]init];
-                PFGeoPoint *geoPoint = object[@"location"];
-                newPin.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
-                newPin.title = object[@"title"];
-                newPin.subtitle = object[@"address"];
-                [self.mapView addAnnotation:newPin];
+                if ([object isKindOfClass:[Course class]]) {
+                    NSLog(@"%@", object.teacher.username);
+                    CourseAnnotationVC *coursePointAnnotation = [[CourseAnnotationVC alloc]init];
+                    coursePointAnnotation.course = object;
+                    coursePointAnnotation.title = object[@"title"];
+                    coursePointAnnotation.subtitle = object[@"address"];
+                    PFGeoPoint *geoPoint = object[@"location"];
+                    coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+                    [self.mapView addAnnotation:coursePointAnnotation];
+                    NSLog(@"%@", coursePointAnnotation.course);
+                }
             }
         }
         else
         {
-            // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
@@ -95,12 +108,9 @@
 //triggers segway to event detailVC
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    MKPointAnnotation *tappedAnnotation = view.annotation;
     
     [self performSegueWithIdentifier:@"mapToSkill" sender:view.annotation];
 }
-///should go to takeCourseVC, pass the location then pull the data while querying for the location otherwise just find an object of course and pass that although it wasn't working
-////need to be able to pass an instance of course otherwise we will be stuck passing an address
 
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
@@ -127,9 +137,9 @@
 ////////Need to figure out how to delete the latest pin dropped if the user does not add a new course, it isn't saved but it stays on map//////
 ////pins should be colored based on whether current user is course coordinator or not/////
 
+
 - (IBAction)onAddButtonTap:(UIButton *)sender
 {
-
     [self addCenterPinImageAndButton];
 }
 
@@ -181,17 +191,27 @@
         postVC.selectedAddress = self.formattedAdress;
         postVC.courseLocation = locationToPass;
     }
+    else if ([segue.identifier isEqualToString:@"loginSegue"])
+    {
+        NSLog(@"segue called");
+    }
     else
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
-        CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
-        [self reverseGeocodeLocation: location];
-        takeVC.selectedAddress = self.formattedAdressTwo;
+        CourseAnnotationVC *courseAnnotation = sender;
+        Course *courseToShow = courseAnnotation.course;
+        takeVC.selectedCourse = courseToShow;
+        
+        
+//        CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
+//        [self reverseGeocodeLocation: location];
+//        takeVC.selectedAddress = self.formattedAdressTwo;
         //still needs to be changed to be updated for location and not address
     }
 }
 
-- (IBAction)profileButtonPress:(UIButton *)sender {
+- (IBAction)profileButtonPress:(UIButton *)sender
+{
     [self performSegueWithIdentifier:@"profile" sender:self];
 }
 
