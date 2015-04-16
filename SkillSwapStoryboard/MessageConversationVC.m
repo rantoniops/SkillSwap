@@ -12,7 +12,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if (self.selectedConversation.count == 0)
+    if (self.selectedConversation)
     {
         [self queryMessages];
     }
@@ -48,6 +48,21 @@
 
 - (IBAction)onSendButtonPressed:(UIButton *)sender
 {
+    Conversation *newConversation = [Conversation new];
+    [newConversation addObject:[User currentUser] forKey:@"users"];
+    [newConversation addObject: self.selectedTeacher forKey:@"users"];
+    [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         if (succeeded)
+         {
+             NSLog(@"conversation saved");
+         }
+         else
+         {
+             NSLog(@"msg NOT saved");
+         }
+     }];
+
     Message *newMessage = [Message new];
     newMessage.messageBody = self.messageTextField.text;
     newMessage.messageSender = [User currentUser];

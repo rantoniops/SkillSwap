@@ -4,7 +4,7 @@
 @interface MessagesVC () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *messages;
-@property NSMutableArray *messagesGroupedBySender;
+@property NSArray *conversations;
 @end
 @implementation MessagesVC
 
@@ -16,7 +16,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self queryMessages];
+    [self queryConversations];
 }
 
 //-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -35,20 +35,17 @@
 ////    messageConversationVC.selectedConversation = 
 //}
 
-
--(void)queryMessages
+-(void)queryConversations
 {
-    PFQuery *query = [Message query];
-    [query whereKey:@"messageReceiver" equalTo:[User currentUser]];
-    [query includeKey:@"messageSender"];
-    [query includeKey:@"course"];
+    PFQuery *query = [Conversation query];
+    [query whereKey:@"users" equalTo:[User currentUser]];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (!error)
          {
-             NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
-             self.messages = objects;
+             NSLog(@"Successfully retrieved %lu conversations.", (unsigned long)objects.count);
+             self.conversations = objects;
              [self.tableView reloadData];
          }
          else
@@ -57,6 +54,30 @@
          }
      }];
 }
+
+
+
+//-(void)queryMessages
+//{
+//    PFQuery *query = [Message query];
+//    [query whereKey:@"messageReceiver" equalTo:[User currentUser]];
+//    [query includeKey:@"messageSender"];
+//    [query includeKey:@"course"];
+//    [query orderByDescending:@"createdAt"];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//     {
+//         if (!error)
+//         {
+//             NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
+//             self.messages = objects;
+//             [self.tableView reloadData];
+//         }
+//         else
+//         {
+//             NSLog(@"Error: %@ %@", error, [error userInfo]);
+//         }
+//     }];
+//}
 
 
 
@@ -70,17 +91,17 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.messages.count;
+    return self.conversations.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    Message *messageToShow = self.messages[indexPath.row];
-    cell.textLabel.text = messageToShow.messageBody;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
-    return cell;
-}
+//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+//    Conversation *conversationToShow = self.conversations[indexPath.row];
+//    cell.textLabel.text = messageToShow.messageBody;
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
+//    return cell;
+//}
 
 
 @end

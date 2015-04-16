@@ -16,7 +16,8 @@ class Conversation : PFObject, PFSubclassing
     }
 
 
-    @NSManaged var firstUser : User
-    @NSManaged var secondUser : User
-    
+    @NSManaged var users : [User]
+
+    @NSManaged var messages : Message
+
 }
