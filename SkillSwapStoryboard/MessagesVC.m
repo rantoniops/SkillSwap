@@ -1,8 +1,10 @@
 #import "MessagesVC.h"
+#import "MessageConversationVC.h"
 #import "SkillSwapStoryboard-Swift.h"
 @interface MessagesVC () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *messages;
+@property NSMutableArray *messagesGroupedBySender;
 @end
 @implementation MessagesVC
 
@@ -17,30 +19,29 @@
     [self queryMessages];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self performSegueWithIdentifier:@"messageConversation" sender:self.view];
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//
+//
+//    [self performSegueWithIdentifier:@"messageConversation" sender:self];
+//    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+//    NSLog(@"going to prepare for segue");
+//}
 
 
 //-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 //{
-//    if ([segue.identifier isEqualToString:@"postClass"])
-//    {
-//        PostCourseVC *postVC = segue.destinationViewController;
-//        CLLocation *locationToPass = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
-//        postVC.selectedAddress = self.formattedAdress;
-//        postVC.courseLocation = locationToPass;
-//    }
-//
+//    MessageConversationVC *messageConversationVC = segue.destinationViewController;
+////    messageConversationVC.selectedConversation = 
 //}
 
 
 -(void)queryMessages
 {
     PFQuery *query = [Message query];
-    [query whereKey:@"messageSender" equalTo:[User currentUser]];
+    [query whereKey:@"messageReceiver" equalTo:[User currentUser]];
+    [query includeKey:@"messageSender"];
+    [query includeKey:@"course"];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -56,6 +57,8 @@
          }
      }];
 }
+
+
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {

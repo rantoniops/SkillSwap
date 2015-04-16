@@ -74,6 +74,7 @@
     {
         MessageConversationVC *messageVC = segue.destinationViewController;
         messageVC.selectedTeacher = self.selectedCourse.teacher;
+        messageVC.selectedCourse = self.selectedCourse;
     }
 }
 

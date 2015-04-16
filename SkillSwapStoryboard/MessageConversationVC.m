@@ -12,7 +12,10 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self queryMessages];
+    if (self.selectedConversation.count == 0)
+    {
+        [self queryMessages];
+    }
 }
 
 -(void)queryMessages
@@ -20,6 +23,7 @@
     PFQuery *query = [Message query];
     [query whereKey:@"messageSender" equalTo:[User currentUser]];
     [query whereKey:@"messageReceiver" equalTo:self.selectedTeacher];
+    [query whereKey:@"course" equalTo:self.selectedCourse];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -48,6 +52,7 @@
     newMessage.messageBody = self.messageTextField.text;
     newMessage.messageSender = [User currentUser];
     newMessage.messageReceiver = self.selectedTeacher;
+    newMessage.course = self.selectedCourse;
     [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
          if (succeeded)
