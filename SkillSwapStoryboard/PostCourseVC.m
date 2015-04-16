@@ -1,12 +1,15 @@
 #import "PostCourseVC.h"
 #import "SkillSwapStoryboard-Swift.h"
-@interface PostCourseVC () <UITextFieldDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate>
+#import <MobileCoreServices/UTCoreTypes.h>
+
+@interface PostCourseVC () <UITextFieldDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *classTitleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *classDescriptionTextField;
 @property (weak, nonatomic) IBOutlet UITextField *classTimeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *classAddressTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *classPhotoImageView;
 @property (weak, nonatomic) IBOutlet UITextField *classSkillTextField;
+
 @property UIImage *chosenImage;
 @property NSData *smallImageData;
 @end
@@ -20,6 +23,8 @@
     self.classSkillTextField.delegate = self;
     self.classDescriptionTextField.delegate = self;
     
+//    [self configureImagePicker];
+    
     self.classAddressTextField.text = self.selectedAddress;
     UIImage *profileImage = [UIImage imageNamed:@"emptyProfile"];
     self.classPhotoImageView.image = profileImage;
@@ -32,6 +37,7 @@
 
     
 }
+
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -48,13 +54,12 @@
 -(void)showAlertOnViewController
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Choose photo option" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *takePhoto = [UIAlertAction actionWithTitle:@"Use Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *takePhoto = [UIAlertAction actionWithTitle:@"Take a Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showTakePhotoView];
     }];
     UIAlertAction *pullLibrary = [UIAlertAction actionWithTitle:@"Choose From Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showCameraPhotoView];
     }];
-    
     UIAlertAction *takeMovie = [UIAlertAction actionWithTitle:@"Take a movie" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showMovieView];
     }];
@@ -63,16 +68,22 @@
         nil;
     }];
     
+    [alert addAction:takeMovie];
     [alert addAction:takePhoto];
     [alert addAction:pullLibrary];
-    [alert addAction:takeMovie];
+   
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:true completion:nil];
 }
 
 -(void)showMovieView
 {
-    
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.delegate = self;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    picker.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, nil];
+    picker.videoMaximumDuration = 10;
+    [self presentViewController:picker animated:true completion:NULL];
 }
 
 -(void)showTakePhotoView
@@ -89,15 +100,29 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     [self presentViewController:picker animated:true completion:NULL];
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    self.chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.classPhotoImageView.image = self.chosenImage;
-    self.smallImageData = UIImageJPEGRepresentation(self.chosenImage, 0.5);
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    if (![mediaType isEqualToString:@"public.image"])
+    {
+        NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
+        self.smallImageData = [NSData dataWithContentsOfURL:videoURL];
+        
+        [picker dismissViewControllerAnimated:YES completion:NULL];
+
+    }
+    else
+    {
+        self.chosenImage = info[UIImagePickerControllerOriginalImage];
+        self.classPhotoImageView.image = self.chosenImage;
+        self.smallImageData = UIImageJPEGRepresentation(self.chosenImage, 0.5);
+        [picker dismissViewControllerAnimated:YES completion:NULL];
+    }
+    
 }
 
 
@@ -120,7 +145,7 @@
              course.time = self.classTimeTextField.text;
              course.address = self.classAddressTextField.text;
              PFFile *imageFile = [PFFile fileWithData:self.smallImageData];
-             course.coursePhoto = imageFile;
+             course.courseMedia = imageFile;
              course.teacher = [User currentUser];
              course.location = [PFGeoPoint geoPointWithLocation:self.courseLocation];
              PFRelation *relation = [course relationForKey:@"skillsTaught"];

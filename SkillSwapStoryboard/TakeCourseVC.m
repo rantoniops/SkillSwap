@@ -1,5 +1,4 @@
 #import "TakeCourseVC.h"
-#import <MobileCoreServices/UTCoreTypes.h>
 
 @interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate>
 
