@@ -72,7 +72,6 @@
        
     }];
     
-    
     [alert addAction:cancelAction];
     [alert addAction:confirmClass];
     [self presentViewController:alert animated:true completion:nil];

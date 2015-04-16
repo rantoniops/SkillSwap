@@ -9,6 +9,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionText;
 
+@property NSArray *coursesArray;
+
 
 @property UIImage *chosenImage;
 @property NSData *smallImageData;
@@ -41,8 +43,10 @@
     [relation.query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (error == nil) {
-             NSLog(@"here are the course %@", objects);
-             NSLog(@"%@", currentUser);
+             self.coursesArray = [NSArray arrayWithArray:objects];
+             [self.tableVIew reloadData];
+//             NSLog(@"here are the course %@", objects);
+//             NSLog(@"here is your current user: %@", currentUser);
          }
      }];
     self.name.text = currentUser.username;
@@ -103,20 +107,21 @@
     self.profileImage.image = self.chosenImage;
     self.smallImageData = UIImageJPEGRepresentation(self.chosenImage, 0.5);
     [picker dismissViewControllerAnimated:YES completion:NULL];
-    [self saveImage];
 }
 
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     return nil;
 }
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return self.coursesArray.count;
 }
 
 
@@ -124,6 +129,7 @@
 
 - (IBAction)onSaveButtonPressed:(UIButton *)sender
 {
+        [self saveImage];
     
 }
 -(void)saveImage
@@ -131,6 +137,7 @@
     User *userToSave = [User currentUser];
     PFFile *imageFile = [PFFile fileWithData:self.smallImageData];
     userToSave.profilePic = imageFile;
+    NSLog(@"image file : %@   and user to save profile pic is: %@", imageFile, userToSave.profilePic);
     [userToSave saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
          if (succeeded)
