@@ -46,7 +46,7 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error)
         {
-            NSLog(@"Successfully retrieved %lu courses.", (unsigned long)objects.count);
+//            NSLog(@"Successfully retrieved %lu courses.", (unsigned long)objects.count);
             for (Course *object in objects)
             {
                 if ([object isKindOfClass:[Course class]]) {
@@ -196,6 +196,10 @@
     {
         NSLog(@"segue called");
     }
+    else if ([segue.identifier isEqualToString:@"messages"])
+    {
+        NSLog(@"going to messages");
+    }
     else
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
@@ -220,8 +224,7 @@
 - (IBAction)listButtonPress:(UIButton *)sender {
 }
 
-- (IBAction)msgButtonPress:(UIButton *)sender {
-}
+
 
 //zoom to the user's location
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
