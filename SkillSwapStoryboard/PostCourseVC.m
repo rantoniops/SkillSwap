@@ -26,6 +26,9 @@
      {
          if (succeeded)
          {
+
+             self.items = [NSMutableArray arrayWithObjects:@"one", @"two", nil];
+
              NSLog(@"skill saved");
 
              // CREATING COURSE
