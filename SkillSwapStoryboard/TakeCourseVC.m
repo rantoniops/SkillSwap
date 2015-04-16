@@ -1,5 +1,5 @@
 #import "TakeCourseVC.h"
-
+#import <MobileCoreServices/UTCoreTypes.h>
 
 @interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -29,6 +29,9 @@
             self.courseImage.image = image;
             NSLog(@"pause here");
             // image can now be set on a UIImageView
+            
+            ////to do - add image to mkpointAnnotation
+            ////experiment with video
         }
     }];
 }

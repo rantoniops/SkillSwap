@@ -14,6 +14,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.classTitleTextField.delegate = self;
+    self.classTimeTextField.delegate = self;
+    self.classAddressTextField.delegate = self;
+    self.classSkillTextField.delegate = self;
+    self.classDescriptionTextField.delegate = self;
+    
     self.classAddressTextField.text = self.selectedAddress;
     UIImage *profileImage = [UIImage imageNamed:@"emptyProfile"];
     self.classPhotoImageView.image = profileImage;
@@ -25,9 +31,13 @@
     [self.classPhotoImageView addGestureRecognizer:photoTap];
 
     
-
 }
 
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
+}
 
 -(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
@@ -39,22 +49,31 @@
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Choose photo option" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *takePhoto = [UIAlertAction actionWithTitle:@"Use Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self showCameraPhotoView];
+        [self showTakePhotoView];
     }];
     UIAlertAction *pullLibrary = [UIAlertAction actionWithTitle:@"Choose From Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showCameraPhotoView];
     }];
+    
+    UIAlertAction *takeMovie = [UIAlertAction actionWithTitle:@"Take a movie" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self showMovieView];
+    }];
+    
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         nil;
     }];
     
     [alert addAction:takePhoto];
     [alert addAction:pullLibrary];
+    [alert addAction:takeMovie];
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:true completion:nil];
 }
 
-
+-(void)showMovieView
+{
+    
+}
 
 -(void)showTakePhotoView
 {
