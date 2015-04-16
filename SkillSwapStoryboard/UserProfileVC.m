@@ -14,7 +14,15 @@
 {
     [super viewDidLoad];
     User *currentUser = [User currentUser];
-
+    PFQuery *queryForCourses = [User query];
+    [queryForCourses whereKey:@"courses" equalTo:currentUser];
+    [queryForCourses findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
+        if (error == nil) {
+            NSLog(@"%@", objects);
+        }
+    }];
+    
     self.name.text = currentUser.username;
 //    self.skills.text = currentUser.skills;
 

@@ -15,6 +15,7 @@ import Foundation
     @NSManaged var rating : Int
 
     @NSManaged var skills : Skill
+    @NSManaged var courses : PFRelation
 
 
 
