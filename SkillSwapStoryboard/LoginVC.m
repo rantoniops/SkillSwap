@@ -10,11 +10,12 @@
 {
     [super viewDidLoad];
     self.passwordTextField.secureTextEntry = YES;
+
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self.view resignFirstResponder];
+    [textField resignFirstResponder];
     return true;
 }
 
@@ -54,6 +55,8 @@
         }
     }];
 }
+
+
 
 
 

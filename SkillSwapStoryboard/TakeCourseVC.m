@@ -1,6 +1,5 @@
 #import "TakeCourseVC.h"
 
-
 @interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *courseImage;
@@ -23,12 +22,36 @@
     self.courseDesciption.text = self.selectedCourse.courseDescription;
     self.courseDuration.text = self.selectedCourse.time;
     self.teacherName.text = self.selectedCourse.teacher.username;
-    
+    [self.selectedCourse.courseMedia getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!error) {
+            UIImage *image = [UIImage imageWithData:data];
+            self.courseImage.image = image;
+            NSLog(@"pause here");
+            // image can now be set on a UIImageView
+            
+            ////to do - add image to mkpointAnnotation
+            ////experiment with video
+        }
+    }];
 }
 
 
 
-- (IBAction)takeClass:(UIButton *)sender {
+- (IBAction)takeClass:(UIButton *)sender
+{
+    
+    
+    
+    
+}
+
+-(void)confirmAlert
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Choose photo option" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *takePhoto = [UIAlertAction actionWithTitle:@"Take a Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self showTakePhotoView];
+    }];
+    
 }
 
 - (IBAction)nopeButtonTap:(UIButton *)sender {

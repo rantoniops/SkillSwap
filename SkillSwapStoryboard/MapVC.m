@@ -141,14 +141,16 @@
 - (IBAction)onAddButtonTap:(UIButton *)sender
 {
     [self addCenterPinImageAndButton];
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.01,0.01);
+    [self.mapView setRegion:MKCoordinateRegionMake(self.mapView.centerCoordinate,span) animated:true];
 }
 
 //add the image to map - gets called on addButton tap
 -(void)addCenterPinImageAndButton
 {
-    UIImage *pinImage = [UIImage imageNamed:@"pointer"];
+    UIImage *pinImage = [UIImage imageNamed:@"newpin"];
     self.pin = [[UIImageView alloc]initWithImage:pinImage];
-    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -75  , self.mapView.bounds.size.height/2 - 75, 150, 50);
+    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -75  , self.mapView.bounds.size.height/2 - 65, 150, 75);
     UITapGestureRecognizer *pinTap = [[UITapGestureRecognizer alloc]init];
     [self imageview:self.pin addGestureRecognizer:pinTap];
     [self.mapView addSubview:self.pin];
@@ -169,7 +171,7 @@
 {
     [self addAnnotation];
     self.pin.hidden = YES;
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.01,0.01);
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.007,0.007);
     [self.mapView setRegion:MKCoordinateRegionMake(self.mapView.centerCoordinate,span) animated:true];
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -186,7 +188,6 @@
     if ([segue.identifier isEqualToString:@"postClass"])
     {
         PostCourseVC *postVC = segue.destinationViewController;
-        postVC.selectedAddress = self.formattedAdress;
         CLLocation *locationToPass = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
         postVC.selectedAddress = self.formattedAdress;
         postVC.courseLocation = locationToPass;
