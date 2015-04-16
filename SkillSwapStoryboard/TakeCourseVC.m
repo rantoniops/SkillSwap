@@ -22,7 +22,7 @@
     self.courseDesciption.text = self.selectedCourse.courseDescription;
     self.courseDuration.text = self.selectedCourse.time;
     self.teacherName.text = self.selectedCourse.teacher.username;
-    [self.selectedCourse.coursePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+    [self.selectedCourse.courseMedia getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {
             UIImage *image = [UIImage imageWithData:data];
             self.courseImage.image = image;
@@ -37,7 +37,21 @@
 
 
 
-- (IBAction)takeClass:(UIButton *)sender {
+- (IBAction)takeClass:(UIButton *)sender
+{
+    
+    
+    
+    
+}
+
+-(void)confirmAlert
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Choose photo option" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *takePhoto = [UIAlertAction actionWithTitle:@"Take a Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self showTakePhotoView];
+    }];
+    
 }
 
 - (IBAction)nopeButtonTap:(UIButton *)sender {

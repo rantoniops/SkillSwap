@@ -1,6 +1,9 @@
 #import "PostCourseVC.h"
 #import "SkillSwapStoryboard-Swift.h"
 #import <MobileCoreServices/UTCoreTypes.h>
+#import <AVFoundation/AVFoundation.h>
+
+@import MediaPlayer;
 
 @interface PostCourseVC () <UITextFieldDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *classTitleTextField;
@@ -12,6 +15,8 @@
 
 @property UIImage *chosenImage;
 @property NSData *smallImageData;
+
+
 @end
 @implementation PostCourseVC
 - (void)viewDidLoad
@@ -29,7 +34,7 @@
     UIImage *profileImage = [UIImage imageNamed:@"emptyProfile"];
     self.classPhotoImageView.image = profileImage;
     self.classPhotoImageView.frame = CGRectMake(0, 0, 250, 250);
-    self.classPhotoImageView.layer.cornerRadius = self.classPhotoImageView.frame.size.width / 2;
+//    self.classPhotoImageView.layer.cornerRadius = self.classPhotoImageView.frame.size.width / 2;
     self.classPhotoImageView.layer.masksToBounds = YES;
     self.classPhotoImageView.layer.borderWidth = 1;
     UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
@@ -37,6 +42,8 @@
 
     
 }
+
+///to do figure out how to play an image somewhere and if we will need to save the thumbnail or can just creat a new one each time
 
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -104,6 +111,7 @@
     [self presentViewController:picker animated:true completion:NULL];
 }
 
+
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
@@ -111,9 +119,16 @@
     {
         NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
         self.smallImageData = [NSData dataWithContentsOfURL:videoURL];
-        
+        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
+        AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+        generator.appliesPreferredTrackTransform = YES;
+        NSError *err = NULL;
+        CMTime time = CMTimeMake(1, 2);
+        CGImageRef oneRef = [generator copyCGImageAtTime:time actualTime:NULL error:&err];
+        UIImage *one = [[UIImage alloc] initWithCGImage:oneRef];
+        self.classPhotoImageView.image = one;
         [picker dismissViewControllerAnimated:YES completion:NULL];
-
+        
     }
     else
     {
@@ -124,6 +139,7 @@
     }
     
 }
+
 
 
 - (IBAction)onPostButtonPressed:(UIButton *)sender
