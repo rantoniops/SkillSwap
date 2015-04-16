@@ -38,11 +38,45 @@
 - (IBAction)takeClass:(UIButton *)sender
 {
     
-    
+    [self confirmAlert];
     
     
 }
 
+-(void)confirmAlert
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Confirm sign up" message:@"The poster will be sent a notification"preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *confirmClass = [UIAlertAction actionWithTitle:@"Confirm Class" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+    {
+        User *currentUser = [User currentUser];
+        PFRelation *relation = [currentUser relationForKey:@"courses"];
+        [relation addObject: self.selectedCourse];
+//        self.selectedCourse.students = [User currentUser];
+//        currentUser.course = self.selectedCourse;
+        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (succeeded)
+             {
+                 NSLog(@"course saved");
+             }
+             else
+             {
+                 NSLog(@"course NOT saved");
+             }
+         }];
+
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+    {
+       
+    }];
+    
+    [alert addAction:cancelAction];
+    [alert addAction:confirmClass];
+    [self presentViewController:alert animated:true completion:nil];
+    
+}
 
 
 - (IBAction)nopeButtonTap:(UIButton *)sender {

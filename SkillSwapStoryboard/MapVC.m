@@ -22,6 +22,7 @@
 {
     [super viewDidLoad];
     [self showUserLocation];
+    NSLog(@"%@", [User currentUser]);
 }
 
 
@@ -200,6 +201,10 @@
     {
         NSLog(@"going to messages");
     }
+    else if ([segue.identifier isEqualToString:@"profile"])
+      {
+          
+      }
     else
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
