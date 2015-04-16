@@ -17,8 +17,11 @@ class Message : PFObject, PFSubclassing
 
 
 
-    @NSManaged var messager : User
     @NSManaged var messageBody : String
+    
+    @NSManaged var messageSender : User
+    @NSManaged var messageReceiver : User
+
 
 
 

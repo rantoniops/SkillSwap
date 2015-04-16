@@ -147,12 +147,11 @@
     // CREATING SKILL
     Skill *skill = [Skill new];
     skill.name = self.classSkillTextField.text;
-    skill.owner = [User currentUser];
+//    skill.owner = [User currentUser]; // WE NEED TO SAVE SKILL ON THE CURRENT USER AS A RELATION
     [skill saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
          if (succeeded)
          {
-
              self.items = [NSMutableArray arrayWithObjects:@"one", @"two", nil];
 
              NSLog(@"skill saved");

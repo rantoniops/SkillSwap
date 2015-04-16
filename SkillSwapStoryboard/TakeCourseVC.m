@@ -1,7 +1,6 @@
 #import "TakeCourseVC.h"
-
+#import "MessageConversationVC.h"
 @interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate>
-
 @property (weak, nonatomic) IBOutlet UIImageView *courseImage;
 @property (weak, nonatomic) IBOutlet UILabel *teacherName;
 @property (weak, nonatomic) IBOutlet UILabel *courseRating;
@@ -12,10 +11,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @end
-
 @implementation TakeCourseVC
-
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
@@ -45,14 +43,7 @@
     
 }
 
--(void)confirmAlert
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Choose photo option" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *takePhoto = [UIAlertAction actionWithTitle:@"Take a Photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self showTakePhotoView];
-    }];
-    
-}
+
 
 - (IBAction)nopeButtonTap:(UIButton *)sender {
     [self dismissViewControllerAnimated:true completion:nil];
@@ -74,5 +65,18 @@
 {
     return 0;
 }
+
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"messageTeacher"])
+    {
+        MessageConversationVC *messageVC = segue.destinationViewController;
+        messageVC.selectedTeacher = self.selectedCourse.teacher;
+    }
+}
+
+
 
 @end

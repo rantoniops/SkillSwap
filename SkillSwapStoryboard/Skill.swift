@@ -18,8 +18,8 @@ class Skill : PFObject, PFSubclassing
 
     @NSManaged var name: String
 
-    @NSManaged var owner : User
-    @NSManaged var course : Course
+//    @NSManaged var owner : User // THIS IS NOW A PFRELATION FROM THE USER SIDE
+//    @NSManaged var course : Course // THIS IS NOW A PFRELATION FROM THE COURSE SIDE
 
     
     

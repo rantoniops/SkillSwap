@@ -17,6 +17,8 @@ class Credit : PFObject, PFSubclassing
 
 
 
+    @NSManaged var creditSender : User
+    @NSManaged var creditReceiver : User
     @NSManaged var owner : User
 
 
