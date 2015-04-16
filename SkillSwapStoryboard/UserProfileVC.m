@@ -37,9 +37,8 @@
 -(void)queryForUserInfo
 {
     User *currentUser = [User currentUser];
-    PFQuery *queryForCourses = [User query];
-    [queryForCourses whereKey:@"courses" equalTo:currentUser];
-    [queryForCourses findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    PFRelation *relation = [currentUser relationForKey:@("courses")];
+    [relation.query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (error == nil) {
              NSLog(@"here are the course %@", objects);
@@ -48,8 +47,6 @@
      }];
     self.name.text = currentUser.username;
     //    self.skills.text = currentUser.skills;
-    
-    
 }
 
 
