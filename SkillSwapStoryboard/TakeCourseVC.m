@@ -23,7 +23,14 @@
     self.courseDesciption.text = self.selectedCourse.courseDescription;
     self.courseDuration.text = self.selectedCourse.time;
     self.teacherName.text = self.selectedCourse.teacher.username;
-    
+    [self.selectedCourse.coursePhoto getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        if (!error) {
+            UIImage *image = [UIImage imageWithData:data];
+            self.courseImage.image = image;
+            NSLog(@"pause here");
+            // image can now be set on a UIImageView
+        }
+    }];
 }
 
 
