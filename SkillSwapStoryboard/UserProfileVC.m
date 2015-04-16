@@ -113,9 +113,14 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    Course *course = self.coursesArray[indexPath.row];
+    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", course.title, course.time];
+    cell.detailTextLabel.text = course.address;
+    cell.textLabel.text = titleAndTime;
     
     
-    return nil;
+    return cell;
 }
 
 
