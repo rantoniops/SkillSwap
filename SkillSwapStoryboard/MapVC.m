@@ -22,6 +22,7 @@
 {
     [super viewDidLoad];
     [self showUserLocation];
+    NSLog(@"%@", [User currentUser]);
 }
 
 
