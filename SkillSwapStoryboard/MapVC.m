@@ -15,6 +15,8 @@
 @property double *eventLatitude;
 @property double *eventLongitude;
 @property MKPointAnnotation *anotherAnnotation;
+@property NSDate *now;
+
 @end
 @implementation MapVC
 - (void)viewDidLoad
@@ -22,6 +24,7 @@
     [super viewDidLoad];
     [self showUserLocation];
     NSLog(@"%@", [User currentUser]);
+    self.now = [NSDate date];
 }
 
 
@@ -43,6 +46,7 @@
 {
     PFQuery *query = [Course query];
     [query includeKey:@"teacher"];
+    [query whereKey:@"time" greaterThanOrEqualTo:self.now];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
         if (!error)
