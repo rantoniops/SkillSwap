@@ -19,14 +19,13 @@
     [self queryConversations];
 }
 
-//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//
-//
-//    [self performSegueWithIdentifier:@"messageConversation" sender:self];
-//    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-//    NSLog(@"going to prepare for segue");
-//}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"messageConversation" sender:self];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    NSLog(@"going to prepare for segue");
+}
 
 
 //-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -35,11 +34,11 @@
 ////    messageConversationVC.selectedConversation = 
 //}
 
+
 -(void)queryConversations
 {
     PFQuery *query = [Conversation query];
-    [query whereKey:@"firstUser" equalTo:[User currentUser]] || [query whereKey:@"secondUser" equalTo:[User currentUser]];
-//    [query includeKey:@"messages"];
+    [query whereKey:@"users" equalTo:[User currentUser]];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -55,30 +54,6 @@
          }
      }];
 }
-
-
-
-//-(void)queryMessages
-//{
-//    PFQuery *query = [Message query];
-//    [query whereKey:@"messageReceiver" equalTo:[User currentUser]];
-//    [query includeKey:@"messageSender"];
-//    [query includeKey:@"course"];
-//    [query orderByDescending:@"createdAt"];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//     {
-//         if (!error)
-//         {
-//             NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
-//             self.messages = objects;
-//             [self.tableView reloadData];
-//         }
-//         else
-//         {
-//             NSLog(@"Error: %@ %@", error, [error userInfo]);
-//         }
-//     }];
-//}
 
 
 
@@ -100,17 +75,21 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Conversation *conversationToShow = self.conversations[indexPath.row];
 
-    cell.textLabel.text = [NSString stringWithFormat:@"last message will show here"];
+    cell.textLabel.text = @"last message will show here";
 
 
-    if (conversationToShow.firstUser == [User currentUser])
+    for (User *user in conversationToShow.users)
     {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", conversationToShow.secondUser];
+        if (user == [User currentUser])
+        {
+            NSLog(@"not him");
+        }
+        else
+        {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", user.username];
+        }
     }
-    else if (conversationToShow.secondUser == [User currentUser])
-    {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", conversationToShow.firstUser];
-    }
+
 
     return cell;
 }

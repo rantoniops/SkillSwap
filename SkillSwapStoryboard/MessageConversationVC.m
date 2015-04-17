@@ -3,7 +3,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *messages;
-@property NSArray *conversation;
+@property Conversation *conversation;
 @end
 @implementation MessageConversationVC
 - (void)viewDidLoad
@@ -20,6 +20,7 @@
     }
     else
     {
+        NSLog(@"Existing convo not found");
         //        PFQuery *teacherIsCurrentUser = [Conversation query];
         //        [teacherIsCurrentUser whereKey:@"teacher" equalTo:[User currentUser]];
         //        PFQuery *studentIsCurrentUser = [Conversation query];
@@ -37,7 +38,9 @@
 -(void)queryMessagesInExistingConversation
 {
     PFQuery *query = [Message query];
+    NSLog(@"querying for messages in existing convo");
     [query whereKey:@"conversation" equalTo:self.conversation];
+    NSLog(@"no more");
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -93,84 +96,80 @@
     [query whereKey:@"course" equalTo:self.selectedCourse];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         if (objects)
+         if (error)
          {
-             NSLog(@"Successfully retrieved %lu convos.", (unsigned long)objects.count);
-             self.conversation = objects;
-
-             Message *newMessage = [Message new];
-             newMessage.messageBody = self.messageTextField.text;
-             newMessage.messageSender = [User currentUser];
-             newMessage.messageReceiver = self.selectedTeacher;
-             newMessage.course = self.selectedCourse;
-             newMessage.conversation = self.conversation;
-             [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-              {
-                  if (succeeded)
-                  {
-                      NSLog(@"msg saved");
-
-                      [self queryMessagesInExistingConversation];
-                  }
-                  else
-                  {
-                      NSLog(@"msg NOT saved");
-                  }
-              }];
-
-
+             NSLog(@"error, convo not found, create new convo???");
          }
          else
          {
-             NSLog(@"conversation not found, let's create one");
-
-
-             Conversation *newConversation = [Conversation new];
-             //        newConversation.student = [User currentUser];
-             //        newConversation.teacher = self.selectedTeacher;
-
-             [newConversation addObject:[User currentUser] forKey:@"users"];
-             [newConversation addObject:self.selectedTeacher forKey:@"users"];
-
-             newConversation.course = self.selectedCourse;
-             [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-              {
-                  if (succeeded)
+             if (objects.count > 0)
+             {
+                 NSLog(@"Successfully retrieved %lu convos.", (unsigned long)objects.count);
+                 self.conversation = objects.firstObject;
+                 Message *newMessage = [Message new];
+                 newMessage.messageBody = self.messageTextField.text;
+                 newMessage.messageSender = [User currentUser];
+                 newMessage.messageReceiver = self.selectedTeacher;
+                 newMessage.course = self.selectedCourse;
+                 newMessage.conversation = self.conversation;
+                 [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                   {
-                      NSLog(@"conversation created");
+                      if (succeeded)
+                      {
+                          NSLog(@"msg saved");
 
+                          [self queryMessagesInExistingConversation];
+                      }
+                      else
+                      {
+                          NSLog(@"msg NOT saved");
+                      }
+                  }];
 
-                      Message *newMessage = [Message new];
-                      newMessage.messageBody = self.messageTextField.text;
-                      newMessage.messageSender = [User currentUser];
-                      newMessage.messageReceiver = self.selectedTeacher;
-                      newMessage.course = self.selectedCourse;
-
-                      self.conversation = newConversation;
-//                      newMessage.conversation = newConversation;
-
-                      [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-                       {
-                           if (succeeded)
-                           {
-                               NSLog(@"msg saved");
-                               
-                               [self queryMessagesInExistingConversation];
-                           }
-                           else
-                           {
-                               NSLog(@"msg NOT saved");
-                           }
-                       }];
-
-
-                      
-                  }
-                  else
+             }
+             else
+             {
+                 NSLog(@"making new convo");
+                 Conversation *newConversation = [Conversation new];
+                 [newConversation addObject:[User currentUser] forKey:@"users"];
+                 [newConversation addObject:self.selectedTeacher forKey:@"users"];
+                 newConversation.course = self.selectedCourse;
+                 [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                   {
-                      NSLog(@"msg NOT created");
-                  }
-              }];
+                      if (succeeded)
+                      {
+                          NSLog(@"conversation created");
+                          Message *newMessage = [Message new];
+                          newMessage.messageBody = self.messageTextField.text;
+                          newMessage.messageSender = [User currentUser];
+                          newMessage.messageReceiver = self.selectedTeacher;
+                          newMessage.course = self.selectedCourse;
+
+                          self.conversation = newConversation;
+                          newMessage.conversation = newConversation;
+                          [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                           {
+                               if (succeeded)
+                               {
+                                   NSLog(@"msg saved");
+                                   [self queryMessagesInExistingConversation];
+                               }
+                               else
+                               {
+                                   NSLog(@"msg NOT saved");
+                               }
+                           }];
+                      }
+                      else
+                      {
+                          NSLog(@"conversation NOT created");
+                      }
+                  }];
+             }
+
+
+
+
 
 
          }
@@ -179,6 +178,10 @@
 
 
 }
+
+
+
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

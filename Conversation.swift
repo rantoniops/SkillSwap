@@ -1,5 +1,5 @@
 import Foundation
-class Conversation : PFObject, PFSubclassing
+@objc class Conversation : PFObject, PFSubclassing
 {
     override class func initialize()
     {
@@ -16,14 +16,8 @@ class Conversation : PFObject, PFSubclassing
     }
 
 
-//    @NSManaged var student : User
-//    @NSManaged var teacher : User
-
     @NSManaged var users : [User]
 
 
-
     @NSManaged var course : Course
-
-
 }
