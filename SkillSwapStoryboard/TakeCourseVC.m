@@ -35,10 +35,7 @@
 
 - (IBAction)takeClass:(UIButton *)sender
 {
-    
     [self confirmAlert];
-    
-    
 }
 
 -(void)confirmAlert
@@ -77,7 +74,8 @@
 }
 
 
-- (IBAction)nopeButtonTap:(UIButton *)sender {
+- (IBAction)nopeButtonTap:(UIButton *)sender
+{
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
@@ -86,7 +84,8 @@
     return nil;
     
 }
-- (IBAction)dismissButton:(id)sender {
+- (IBAction)dismissButton:(id)sender
+{
     [self dismissViewControllerAnimated:true completion:nil];    
 }
 
@@ -105,7 +104,8 @@
     if ([segue.identifier isEqualToString:@"messageTeacher"])
     {
         MessageConversationVC *messageVC = segue.destinationViewController;
-        messageVC.selectedTeacher = self.selectedCourse.teacher;
+        messageVC.otherUser = self.selectedCourse.teacher;
+//        NSLog(@"selected teacher is %@", self.selectedCourse.teacher);
         messageVC.selectedCourse = self.selectedCourse;
     }
 }

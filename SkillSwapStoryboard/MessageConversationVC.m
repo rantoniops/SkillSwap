@@ -51,14 +51,14 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self resignFirstResponder];
+    [textField resignFirstResponder];
     return true;
 }
 
 - (IBAction)onSendButtonPressed:(UIButton *)sender
 {
     PFQuery *query = [Conversation query];
-    [query whereKey:@"users" containsAllObjectsInArray:@[ [User currentUser], self.selectedTeacher]];
+    [query whereKey:@"users" containsAllObjectsInArray:@[ [User currentUser], self.otherUser] ];
     [query whereKey:@"course" equalTo:self.selectedCourse];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -75,7 +75,7 @@
                  Message *newMessage = [Message new];
                  newMessage.messageBody = self.messageTextField.text;
                  newMessage.messageSender = [User currentUser];
-                 newMessage.messageReceiver = self.selectedTeacher;
+                 newMessage.messageReceiver = self.otherUser;
                  newMessage.course = self.selectedCourse;
                  newMessage.conversation = self.conversation;
                  [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
@@ -96,7 +96,7 @@
                  NSLog(@"making new convo");
                  Conversation *newConversation = [Conversation new];
                  [newConversation addObject:[User currentUser] forKey:@"users"];
-                 [newConversation addObject:self.selectedTeacher forKey:@"users"];
+                 [newConversation addObject:self.otherUser forKey:@"users"];
                  newConversation.course = self.selectedCourse;
                  [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                   {
@@ -106,7 +106,7 @@
                           Message *newMessage = [Message new];
                           newMessage.messageBody = self.messageTextField.text;
                           newMessage.messageSender = [User currentUser];
-                          newMessage.messageReceiver = self.selectedTeacher;
+                          newMessage.messageReceiver = self.otherUser;
                           newMessage.course = self.selectedCourse;
 
                           self.conversation = newConversation;
