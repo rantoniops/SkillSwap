@@ -15,6 +15,7 @@ import Foundation
         return "Course"
     }
 
+    
 
     @NSManaged var title: String
     @NSManaged var courseDescription: String
@@ -26,4 +27,27 @@ import Foundation
     @NSManaged var skillsTaught : PFRelation
 
     @NSManaged var teacher : User
+    
+    var callOutImage = UIImage()
+    var sizedCallOutImage = UIImage()
+    
+//    
+//    func fetchCallOutImage(complete:(error: NSError!)-> Void) {
+//        self.courseMedia.getDataInBackgroundWithBlock
+//            {
+//                (data, error) -> Void in
+//                
+//                if (data != nil)
+//                {
+//                    self.callOutImage = UIImage(data:data!)!;
+//                    complete(error: nil)
+//                }
+//        }
+//
+//        
+//    }
+//    override init()
+//    {
+//            super.init()
+//    }
 }

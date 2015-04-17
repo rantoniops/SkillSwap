@@ -16,6 +16,7 @@
 @property double *eventLongitude;
 @property MKPointAnnotation *anotherAnnotation;
 @property NSDate *now;
+@property UIImage *callOutImage;
 
 @end
 @implementation MapVC
@@ -41,39 +42,71 @@
 }
 
 
+
+
 //pulls all the pins for existing events
 - (void)queryForMap
 {
     PFQuery *query = [Course query];
     [query includeKey:@"teacher"];
     [query whereKey:@"time" greaterThanOrEqualTo:self.now];
+    NSLog(@"Mapquery is called");
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
         if (!error)
         {
-//            NSLog(@"Successfully retrieved %lu courses.", (unsigned long)objects.count);
             for (Course *object in objects)
             {
                 if ([object isKindOfClass:[Course class]]) {
-//                    NSLog(@"%@", object.teacher.username);
                     CourseAnnotationVC *coursePointAnnotation = [[CourseAnnotationVC alloc]init];
                     coursePointAnnotation.course = object;
-                    coursePointAnnotation.title = object[@"title"];
-                    coursePointAnnotation.subtitle = object[@"address"];
-                    PFGeoPoint *geoPoint = object[@"location"];
-                    coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
-                    [self.mapView addAnnotation:coursePointAnnotation];
-//                    NSLog(@"%@", coursePointAnnotation.course);
+                    coursePointAnnotation.title = object.title;
+                    
+                    PFFile *imageFile = object.courseMedia;
+                    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+                     {
+                         if (!error)
+                         {
+                             NSLog(@"image retrieved");
+//                             UIImage *image =
+//                             UIImage *smallerImage = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
+//                             self.callOutImage = smallerImage;
+//                             coursePointAnnotation.image = self.callOutImage;
+                             object.callOutImage = [UIImage imageWithData:data];
+                             object.sizedCallOutImage = [self imageWithImage: object.callOutImage scaledToSize:CGSizeMake(40, 40)];
+                             coursePointAnnotation.subtitle = object.address;
+                             PFGeoPoint *geoPoint = object.location;
+                             coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+                             [self.mapView addAnnotation:coursePointAnnotation];
+                         }
+                     }];
+
                 }
             }
         }
         else
         {
-//            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
 }
 
+///I am having trouble setting up an image for the view for annotation...i think it's a timing problem but I'm not completely sure...should I consider using a reuse identifier?
+//-(void)fetchCourseImage
+//{
+//    self.userImageFile = [currentUser valueForKey:@"profilePic"];
+//    NSLog(@"%@", self.userImageFile);
+//    [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+//     {
+//         if (!error)
+//         {
+//             UIImage *image = [UIImage imageWithData:data];
+//             [self loadrofilePicwithImage:image];
+//             NSLog(@"we have the image");
+//         }
+//     }];
+//
+//}
 
 //fetch the user's location
 -(void)showUserLocation
@@ -117,24 +150,27 @@
     [self performSegueWithIdentifier:@"mapToSkill" sender:view.annotation];
 }
 
--(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
-{
-    NSLog(@"ready to segue");
-}
 
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    if (![annotation isEqual:self.mapView.userLocation])
+    if ([annotation isKindOfClass:[CourseAnnotationVC class]])
     {
-        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
-        newPin.canShowCallout = true;
-        newPin.pinColor = MKPinAnnotationColorPurple;
-        newPin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        return newPin;
+
+       NSLog(@"custom annotation is called");
+       MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
+        CourseAnnotationVC *theAnnotation = newPin.annotation;
+       newPin.canShowCallout = true;
+       newPin.pinColor = MKPinAnnotationColorPurple;
+//       UIImage *image = [UIImage imageNamed:@"emptyProfile"];
+//       UIImage *smallerImage = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
+       newPin.leftCalloutAccessoryView = [[UIImageView alloc]initWithImage:theAnnotation.course.sizedCallOutImage];
+       newPin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+       return newPin;
     }
     else
     {
+        NSLog(@"user annotation is called");
         return nil;
     }
     
@@ -142,6 +178,19 @@
 ////////Need to figure out how to delete the latest pin dropped if the user does not add a new course, it isn't saved but it stays on map//////
 ////pins should be colored based on whether current user is course coordinator or not/////
 
+
+///resize image
+
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 
 - (IBAction)onAddButtonTap:(UIButton *)sender
 {
@@ -215,18 +264,14 @@
         CourseAnnotationVC *courseAnnotation = sender;
         Course *courseToShow = courseAnnotation.course;
         takeVC.selectedCourse = courseToShow;
-        
-        
-//        CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
-//        [self reverseGeocodeLocation: location];
-//        takeVC.selectedAddress = self.formattedAdressTwo;
-        //still needs to be changed to be updated for location and not address
     }
 }
 
 - (IBAction)profileButtonPress:(UIButton *)sender
 {
     [self performSegueWithIdentifier:@"profile" sender:self];
+    NSLog(@"%@", [User currentUser]);
+
 }
 
 
