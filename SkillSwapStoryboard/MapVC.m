@@ -4,8 +4,8 @@
 #import "SkillSwapStoryboard-Swift.h"
 #import "PostCourseVC.h"
 #import "TakeCourseVC.h"
-#import "CourseAnnotationVC.h"
-@interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate>
+#import "CustomCourseAnnotation.h"
+@interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate, PostVCDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -17,6 +17,11 @@
 @property MKPointAnnotation *anotherAnnotation;
 @property NSDate *now;
 @property UIImage *callOutImage;
+@property NSArray *filteredResults;
+@property NSArray *results;
+@property NSArray *lastAnnotationArray;
+@property CLLocation *locationToPass;
+
 
 @end
 @implementation MapVC
@@ -24,10 +29,15 @@
 {
     [super viewDidLoad];
     [self showUserLocation];
+    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
     NSLog(@"%@", [User currentUser]);
     self.now = [NSDate date];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = YES;
+}
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -44,6 +54,8 @@
 
 
 
+
+
 //pulls all the pins for existing events
 - (void)queryForMap
 {
@@ -55,10 +67,13 @@
     {
         if (!error)
         {
+            self.results = objects;
+
             for (Course *object in objects)
             {
-                if ([object isKindOfClass:[Course class]]) {
-                    CourseAnnotationVC *coursePointAnnotation = [[CourseAnnotationVC alloc]init];
+                if ([object isKindOfClass:[Course class]])
+                {
+                    CustomCourseAnnotation *coursePointAnnotation = [[CustomCourseAnnotation alloc]init];
                     coursePointAnnotation.course = object;
                     coursePointAnnotation.title = object.title;
                     
@@ -68,10 +83,6 @@
                          if (!error)
                          {
                              NSLog(@"image retrieved");
-//                             UIImage *image =
-//                             UIImage *smallerImage = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
-//                             self.callOutImage = smallerImage;
-//                             coursePointAnnotation.image = self.callOutImage;
                              object.callOutImage = [UIImage imageWithData:data];
                              object.sizedCallOutImage = [self imageWithImage: object.callOutImage scaledToSize:CGSizeMake(40, 40)];
                              coursePointAnnotation.subtitle = object.address;
@@ -91,22 +102,6 @@
     }];
 }
 
-///I am having trouble setting up an image for the view for annotation...i think it's a timing problem but I'm not completely sure...should I consider using a reuse identifier?
-//-(void)fetchCourseImage
-//{
-//    self.userImageFile = [currentUser valueForKey:@"profilePic"];
-//    NSLog(@"%@", self.userImageFile);
-//    [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-//     {
-//         if (!error)
-//         {
-//             UIImage *image = [UIImage imageWithData:data];
-//             [self loadrofilePicwithImage:image];
-//             NSLog(@"we have the image");
-//         }
-//     }];
-//
-//}
 
 //fetch the user's location
 -(void)showUserLocation
@@ -122,11 +117,13 @@
 ///Create new pin on tap
 -(void)addAnnotation
 {
-    self.anotherAnnotation = [[MKPointAnnotation alloc]init];
-    self.anotherAnnotation.coordinate = self.mapView.centerCoordinate;
-    CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
+    CustomCourseAnnotation *newAnnotation = [[CustomCourseAnnotation alloc]init];
+    newAnnotation.coordinate = self.mapView.centerCoordinate;
+    CLLocation *location = [[CLLocation alloc]initWithLatitude:newAnnotation.coordinate.latitude longitude:newAnnotation.coordinate.longitude];
+    self.locationToPass = location;
     [self reverseGeocodeLocation: location];
-    [self.mapView addAnnotation:self.anotherAnnotation];
+    [self.mapView addAnnotation:newAnnotation];
+    self.lastAnnotationArray = [[NSArray alloc]initWithObjects:newAnnotation, nil];
     
 }
 
@@ -138,7 +135,7 @@
     {
         CLPlacemark *placeMark = [placemarks objectAtIndex:0];
        self.formattedAdress = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
-         self.formattedAdressTwo = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
+
         }];
 }
 
@@ -146,7 +143,6 @@
 //triggers segway to event detailVC
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    
     [self performSegueWithIdentifier:@"mapToSkill" sender:view.annotation];
 }
 
@@ -154,16 +150,13 @@
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    if ([annotation isKindOfClass:[CourseAnnotationVC class]])
+    if ([annotation isKindOfClass:[CustomCourseAnnotation class]])
     {
-
        NSLog(@"custom annotation is called");
        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
-        CourseAnnotationVC *theAnnotation = newPin.annotation;
+        CustomCourseAnnotation *theAnnotation = newPin.annotation;
        newPin.canShowCallout = true;
        newPin.pinColor = MKPinAnnotationColorPurple;
-//       UIImage *image = [UIImage imageNamed:@"emptyProfile"];
-//       UIImage *smallerImage = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
        newPin.leftCalloutAccessoryView = [[UIImageView alloc]initWithImage:theAnnotation.course.sizedCallOutImage];
        newPin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
        return newPin;
@@ -242,9 +235,9 @@
     if ([segue.identifier isEqualToString:@"postClass"])
     {
         PostCourseVC *postVC = segue.destinationViewController;
-        CLLocation *locationToPass = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
+        [postVC setDelegate:self];
         postVC.selectedAddress = self.formattedAdress;
-        postVC.courseLocation = locationToPass;
+        postVC.courseLocation = self.locationToPass;
     }
     else if ([segue.identifier isEqualToString:@"loginSegue"])
     {
@@ -261,7 +254,7 @@
     else
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
-        CourseAnnotationVC *courseAnnotation = sender;
+        CustomCourseAnnotation *courseAnnotation = sender;
         Course *courseToShow = courseAnnotation.course;
         takeVC.selectedCourse = courseToShow;
     }
@@ -286,9 +279,106 @@
     CLLocationCoordinate2D location;
     location.latitude = userLocation.coordinate.latitude;
     location.longitude = userLocation.coordinate.longitude;
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.05,0.05);
-    [self.mapView setRegion:MKCoordinateRegionMake(location,span) animated:true];
+}
+
+# pragma mark PostVCDelegate Methods
+
+
+
+
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (![searchText isEqualToString:@""]) // if searchbar text is not empty
+    {
+        NSMutableArray *tempSearchArray = [NSMutableArray new];
+        for ( Course *course in self.results )
+        {
+
+            ////////////////////////// OPTION 1 ////////////////////////////////////
+
+            // MISSING FILTERING FOR SKILLSTAUGHT
+            if ( [course.title localizedCaseInsensitiveContainsString:searchText] || [course.courseDescription localizedCaseInsensitiveContainsString:searchText] || [course.address localizedCaseInsensitiveContainsString:searchText] || [course.teacher.username localizedCaseInsensitiveContainsString:searchText] )
+            {
+                [tempSearchArray addObject:course];
+            }
+
+            ////////////////////////////////////////////////////////////////////////
+
+            ////////////////////////// OPTION 2 ////////////////////////////////////
+
+//            NSRange textRange = [course.title rangeOfString:searchText options:NSCaseInsensitiveSearch];
+//            if (textRange.location != NSNotFound)
+//            {
+//                [tempSearchArray addObject:course];
+//            }
+
+            ////////////////////////////////////////////////////////////////////////
+
+        }
+        self.filteredResults = tempSearchArray;
+        NSLog(@"FILTERED ASSIGN %@", self.filteredResults);
+    }
+    else
+    {
+        self.filteredResults = [self.results mutableCopy];
+    }
+
+    [self.mapView removeAnnotations:self.mapView.annotations];
+
+    for (Course *object in self.filteredResults)
+    {
+        if ([object isKindOfClass:[Course class]])
+        {
+            NSLog(@"FILTERED SHOW %@", self.filteredResults);
+            CustomCourseAnnotation *coursePointAnnotation = [[CustomCourseAnnotation alloc]init];
+            coursePointAnnotation.course = object;
+            coursePointAnnotation.title = object.title;
+
+            PFFile *imageFile = object.courseMedia;
+            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+             {
+                 if (!error)
+                 {
+                     NSLog(@"image retrieved");
+                     //                             UIImage *image =
+                     //                             UIImage *smallerImage = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
+                     //                             self.callOutImage = smallerImage;
+                     //                             coursePointAnnotation.image = self.callOutImage;
+                     object.callOutImage = [UIImage imageWithData:data];
+                     object.sizedCallOutImage = [self imageWithImage: object.callOutImage scaledToSize:CGSizeMake(40, 40)];
+                     coursePointAnnotation.subtitle = object.address;
+                     PFGeoPoint *geoPoint = object.location;
+                     coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+                     [self.mapView addAnnotation:coursePointAnnotation];
+                 }
+             }];
+        }
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+-(void)didIcreateACourse:(BOOL *)didCreate
+{
+    if (didCreate == false)
+    {
+        [self.mapView removeAnnotation:self.lastAnnotationArray.lastObject];
+    }
+    else
+    {
+        
+    }
     
 }
+
 
 @end

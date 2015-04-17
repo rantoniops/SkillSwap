@@ -9,6 +9,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -25,6 +26,10 @@
     }
 }
 
+- (IBAction)onGoBackPressed:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:true completion:nil];
+}
 
 -(void)queryMessagesInExistingConversation
 {

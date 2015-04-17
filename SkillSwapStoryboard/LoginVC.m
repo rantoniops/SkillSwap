@@ -13,11 +13,18 @@
 
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = YES;
+    NSLog(@"current user is %@", [User currentUser]);
+}
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return true;
 }
+
 
 
 - (IBAction)loginButtonPress:(UIButton *)sender
@@ -27,7 +34,8 @@
     {
         if (user)
         {
-            [self dismissViewControllerAnimated:true completion:nil];
+            [self performSegueWithIdentifier:@"fromLoginToMap" sender:self];
+//            [self dismissViewControllerAnimated:true completion:nil];
         } else
         {
 //            [self showAlert("There was an error with your login", error: returnedError!)];
@@ -47,7 +55,8 @@
     {
         if (succeeded)
         {
-            [self dismissViewControllerAnimated:true completion:nil];
+            [self performSegueWithIdentifier:@"fromLoginToMap" sender:self];
+//            [self dismissViewControllerAnimated:true completion:nil];
         }
         else
         {
