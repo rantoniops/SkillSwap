@@ -1,5 +1,6 @@
 #import "UserProfileVC.h"
 #import "SkillSwapStoryboard-Swift.h"
+#import "LoginVC.h"
 @interface UserProfileVC () <UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *rating;
@@ -8,8 +9,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *skills;
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionText;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editAndDoneButton;
 @property PFFile *userImageFile;
 
 @property NSArray *coursesArray;
@@ -25,15 +24,18 @@
 {
     [super viewDidLoad];
     [self loadrofilePicwithImage:[UIImage imageNamed:@"emptyProfile"]];
-    self.backButton.title = @"Return";
-    self.editAndDoneButton.title = @"Edit";
-
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.navigationController.navigationBarHidden = NO;
     [self queryForUserInfo];
+}
 
+- (IBAction)onLogoutButtonTapped:(UIBarButtonItem *)sender
+{
+    [User logOut];
+    [self performSegueWithIdentifier:@"fromUserToLogin" sender:self];
 }
 
 
@@ -163,18 +165,18 @@
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
-- (IBAction)editButton:(id)sender
-{
-    [self saveImage];
-    if ([self.editAndDoneButton.title isEqualToString:@"Edit"])
-    {
-        self.editAndDoneButton.title = @"Done";
-    }
-    else
-    {
-        self.editAndDoneButton.title = @"Edit";
-    }
-}
+//- (IBAction)editButton:(id)sender
+//{
+//    [self saveImage];
+//    if ([self.editAndDoneButton.title isEqualToString:@"Edit"])
+//    {
+//        self.editAndDoneButton.title = @"Done";
+//    }
+//    else
+//    {
+//        self.editAndDoneButton.title = @"Edit";
+//    }
+//}
 
 
 

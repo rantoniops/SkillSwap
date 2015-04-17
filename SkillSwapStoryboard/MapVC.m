@@ -4,7 +4,7 @@
 #import "SkillSwapStoryboard-Swift.h"
 #import "PostCourseVC.h"
 #import "TakeCourseVC.h"
-#import "CourseAnnotationVC.h"
+#import "CustomCourseAnnotation.h"
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
@@ -17,6 +17,8 @@
 @property MKPointAnnotation *anotherAnnotation;
 @property NSDate *now;
 @property UIImage *callOutImage;
+@property NSArray *filteredResults;
+@property NSArray *results;
 
 @end
 @implementation MapVC
@@ -31,6 +33,10 @@
     self.now = [NSDate date];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = YES;
+}
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -58,10 +64,13 @@
     {
         if (!error)
         {
+            self.results = objects;
+
             for (Course *object in objects)
             {
-                if ([object isKindOfClass:[Course class]]) {
-                    CourseAnnotationVC *coursePointAnnotation = [[CourseAnnotationVC alloc]init];
+                if ([object isKindOfClass:[Course class]])
+                {
+                    CustomCourseAnnotation *coursePointAnnotation = [[CustomCourseAnnotation alloc]init];
                     coursePointAnnotation.course = object;
                     coursePointAnnotation.title = object.title;
                     
@@ -133,7 +142,6 @@
 //triggers segway to event detailVC
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    
     [self performSegueWithIdentifier:@"mapToSkill" sender:view.annotation];
 }
 
@@ -141,12 +149,11 @@
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    if ([annotation isKindOfClass:[CourseAnnotationVC class]])
+    if ([annotation isKindOfClass:[CustomCourseAnnotation class]])
     {
-
        NSLog(@"custom annotation is called");
        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
-        CourseAnnotationVC *theAnnotation = newPin.annotation;
+        CustomCourseAnnotation *theAnnotation = newPin.annotation;
        newPin.canShowCallout = true;
        newPin.pinColor = MKPinAnnotationColorPurple;
 //       UIImage *image = [UIImage imageNamed:@"emptyProfile"];
@@ -248,7 +255,7 @@
     else
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
-        CourseAnnotationVC *courseAnnotation = sender;
+        CustomCourseAnnotation *courseAnnotation = sender;
         Course *courseToShow = courseAnnotation.course;
         takeVC.selectedCourse = courseToShow;
     }
@@ -274,6 +281,90 @@
     location.latitude = userLocation.coordinate.latitude;
     location.longitude = userLocation.coordinate.longitude;
 }
+
+
+
+
+
+
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (![searchText isEqualToString:@""]) // if searchbar text is not empty
+    {
+        NSMutableArray *tempSearchArray = [NSMutableArray new];
+        for ( Course *course in self.results )
+        {
+
+            ////////////////////////// OPTION 1 ////////////////////////////////////
+
+            // MISSING FILTERING FOR SKILLSTAUGHT
+            if ( [course.title localizedCaseInsensitiveContainsString:searchText] || [course.courseDescription localizedCaseInsensitiveContainsString:searchText] || [course.address localizedCaseInsensitiveContainsString:searchText] || [course.teacher.username localizedCaseInsensitiveContainsString:searchText] )
+            {
+                [tempSearchArray addObject:course];
+            }
+
+            ////////////////////////////////////////////////////////////////////////
+
+            ////////////////////////// OPTION 2 ////////////////////////////////////
+
+//            NSRange textRange = [course.title rangeOfString:searchText options:NSCaseInsensitiveSearch];
+//            if (textRange.location != NSNotFound)
+//            {
+//                [tempSearchArray addObject:course];
+//            }
+
+            ////////////////////////////////////////////////////////////////////////
+
+        }
+        self.filteredResults = tempSearchArray;
+        NSLog(@"FILTERED ASSIGN %@", self.filteredResults);
+    }
+    else
+    {
+        self.filteredResults = [self.results mutableCopy];
+    }
+
+    [self.mapView removeAnnotations:self.mapView.annotations];
+
+    for (Course *object in self.filteredResults)
+    {
+        if ([object isKindOfClass:[Course class]])
+        {
+            NSLog(@"FILTERED SHOW %@", self.filteredResults);
+            CustomCourseAnnotation *coursePointAnnotation = [[CustomCourseAnnotation alloc]init];
+            coursePointAnnotation.course = object;
+            coursePointAnnotation.title = object.title;
+
+            PFFile *imageFile = object.courseMedia;
+            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+             {
+                 if (!error)
+                 {
+                     NSLog(@"image retrieved");
+                     //                             UIImage *image =
+                     //                             UIImage *smallerImage = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
+                     //                             self.callOutImage = smallerImage;
+                     //                             coursePointAnnotation.image = self.callOutImage;
+                     object.callOutImage = [UIImage imageWithData:data];
+                     object.sizedCallOutImage = [self imageWithImage: object.callOutImage scaledToSize:CGSizeMake(40, 40)];
+                     coursePointAnnotation.subtitle = object.address;
+                     PFGeoPoint *geoPoint = object.location;
+                     coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+                     [self.mapView addAnnotation:coursePointAnnotation];
+                 }
+             }];
+        }
+    }
+
+
+}
+
+
+
+
+
+
+
 
 
 @end

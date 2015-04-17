@@ -18,7 +18,9 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.navigationController.navigationBarHidden = NO;
     [self queryConversations];
+
 }
 
 
@@ -97,10 +99,22 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Conversation *conversationToShow = self.conversations[indexPath.row];
-
-    cell.textLabel.text = @"last message will show here";
-
-
+    PFQuery *query = [Message query];
+    [query whereKey:@"conversation" equalTo: conversationToShow];
+    [query orderByDescending:@"createdAt"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (!error)
+         {
+             NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
+             Message *message = objects.firstObject;
+             cell.textLabel.text = message.messageBody;
+         }
+         else
+         {
+             NSLog(@"Error: %@ %@", error, [error userInfo]);
+         }
+     }];
     for (User *user in conversationToShow.users)
     {
         if (user != [User currentUser])
@@ -108,7 +122,6 @@
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", user.username];
         }
     }
-
     return cell;
 }
 
