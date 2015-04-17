@@ -12,5 +12,7 @@
 @interface CourseAnnotationVC : MKPointAnnotation
 
 @property Course *course;
+@property UIImage *image;
+
 
 @end
