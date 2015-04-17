@@ -5,6 +5,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *messages;
 @property NSArray *conversations;
+@property Conversation *conversationToPass;
 @end
 @implementation MessagesVC
 
@@ -22,23 +23,25 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.conversationToPass = self.conversations[indexPath.row];
     [self performSegueWithIdentifier:@"messageConversation" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSLog(@"going to prepare for segue");
 }
 
 
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    MessageConversationVC *messageConversationVC = segue.destinationViewController;
-////    messageConversationVC.selectedConversation = 
-//}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    MessageConversationVC *messageConversationVC = segue.destinationViewController;
+    messageConversationVC.selectedConversation = self.conversationToPass;
+}
 
 
 -(void)queryConversations
 {
     PFQuery *query = [Conversation query];
     [query whereKey:@"users" equalTo:[User currentUser]];
+    [query includeKey:@"users"];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -80,16 +83,11 @@
 
     for (User *user in conversationToShow.users)
     {
-        if (user == [User currentUser])
-        {
-            NSLog(@"not him");
-        }
-        else
+        if (user != [User currentUser])
         {
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", user.username];
         }
     }
-
 
     return cell;
 }

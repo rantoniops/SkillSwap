@@ -15,22 +15,13 @@
 {
     if (self.selectedConversation)
     {
+        NSLog(@"selected conversation found");
+        self.conversation = self.selectedConversation;
         [self queryMessagesInExistingConversation];
-//        [self.tableView reloadData];
     }
     else
     {
-        NSLog(@"Existing convo not found");
-        //        PFQuery *teacherIsCurrentUser = [Conversation query];
-        //        [teacherIsCurrentUser whereKey:@"teacher" equalTo:[User currentUser]];
-        //        PFQuery *studentIsCurrentUser = [Conversation query];
-        //        [studentIsCurrentUser whereKey:@"student" equalTo:[User currentUser]];
-        //        PFQuery *query = [PFQuery orQueryWithSubqueries:@[teacherIsCurrentUser,studentIsCurrentUser]];
-        //        [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error)
-        //        {
-        //
-        //        }];
-
+        NSLog(@"selected conversation NOT found");
     }
 }
 
@@ -40,8 +31,7 @@
     PFQuery *query = [Message query];
     NSLog(@"querying for messages in existing convo");
     [query whereKey:@"conversation" equalTo:self.conversation];
-    NSLog(@"no more");
-    [query orderByDescending:@"createdAt"];
+    [query orderByAscending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (!error)
@@ -57,30 +47,6 @@
      }];
 }
 
-
-
-
-//-(void)queryMessages
-//{
-//    PFQuery *query = [Message query];
-//    [query whereKey:@"messageSender" equalTo:[User currentUser]];
-//    [query whereKey:@"messageReceiver" equalTo:self.selectedTeacher];
-//    [query whereKey:@"course" equalTo:self.selectedCourse];
-//    [query orderByDescending:@"createdAt"];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//     {
-//         if (!error)
-//         {
-//             NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
-//             self.messages = objects;
-//             [self.tableView reloadData];
-//         }
-//         else
-//         {
-//             NSLog(@"Error: %@ %@", error, [error userInfo]);
-//         }
-//     }];
-//}
 
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -117,7 +83,6 @@
                       if (succeeded)
                       {
                           NSLog(@"msg saved");
-
                           [self queryMessagesInExistingConversation];
                       }
                       else
@@ -125,7 +90,6 @@
                           NSLog(@"msg NOT saved");
                       }
                   }];
-
              }
              else
              {
@@ -166,17 +130,8 @@
                       }
                   }];
              }
-
-
-
-
-
-
          }
      }];
-
-
-
 }
 
 
