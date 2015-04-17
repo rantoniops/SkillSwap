@@ -10,6 +10,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionText;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editAndDoneButton;
+@property PFFile *userImageFile;
 
 @property NSArray *coursesArray;
 
@@ -23,30 +24,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self queryForUserInfo];
+    [self loadrofilePicwithImage:[UIImage imageNamed:@"emptyProfile"]];
     self.backButton.title = @"Return";
     self.editAndDoneButton.title = @"Edit";
 
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self queryForUserInfo];
 
--(void)loadStockProfilePic withImage(UIImage *)image
+}
+
+
+-(void)loadrofilePicwithImage:(UIImage *)image
 {
     
     self.profileImage.userInteractionEnabled = YES;
-    UIImage *profileImage = [UIImage imageNamed:@"emptyProfile"];
+    UIImage *profileImage = image;
     self.profileImage.image = profileImage;
-    
     self.profileImage.frame = CGRectMake(0, 0, 250, 250);
     self.profileImage.layer.masksToBounds = YES;
     self.profileImage.layer.borderWidth = 1;
     UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [self.profileImage addGestureRecognizer:photoTap];
 }
-
-
-
 
 
 -(void)queryForUserInfo
@@ -58,19 +60,23 @@
          if (error == nil) {
              self.coursesArray = [NSArray arrayWithArray:objects];
              [self.tableVIew reloadData];
-             if (currentUser.profilePic == nil)
-             {
-                 [self loadStockProfilePic];
+             self.name.text = currentUser.username;
+             NSLog(@"%@", currentUser);
+             self.userImageFile = [currentUser valueForKey:@"profilePic"];
+             NSLog(@"%@", self.userImageFile);
+            [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+                  {
+                      if (!error)
+                      {
+                          UIImage *image = [UIImage imageWithData:data];
+                          [self loadrofilePicwithImage:image];
+                          NSLog(@"we have the image");
+                      }
+                  }];
              }
-             else
-             {
-                 
-             }
-         }
      }];
-    self.name.text = currentUser.username;
-    //    self.skills.text = currentUser.skills;
 }
+
 
 
 -(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
