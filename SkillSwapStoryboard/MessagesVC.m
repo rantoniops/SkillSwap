@@ -38,7 +38,8 @@
 -(void)queryConversations
 {
     PFQuery *query = [Conversation query];
-    [query whereKey:@"users" equalTo:[User currentUser]];
+    [query whereKey:@"firstUser" equalTo:[User currentUser]] || [query whereKey:@"secondUser" equalTo:[User currentUser]];
+//    [query includeKey:@"messages"];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -94,14 +95,25 @@
     return self.conversations.count;
 }
 
-//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-//    Conversation *conversationToShow = self.conversations[indexPath.row];
-//    cell.textLabel.text = messageToShow.messageBody;
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
-//    return cell;
-//}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    Conversation *conversationToShow = self.conversations[indexPath.row];
+
+    cell.textLabel.text = [NSString stringWithFormat:@"last message will show here"];
+
+
+    if (conversationToShow.firstUser == [User currentUser])
+    {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", conversationToShow.secondUser];
+    }
+    else if (conversationToShow.secondUser == [User currentUser])
+    {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", conversationToShow.firstUser];
+    }
+
+    return cell;
+}
 
 
 @end

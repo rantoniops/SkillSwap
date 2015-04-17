@@ -16,8 +16,14 @@ class Conversation : PFObject, PFSubclassing
     }
 
 
+//    @NSManaged var student : User
+//    @NSManaged var teacher : User
+
     @NSManaged var users : [User]
 
-    @NSManaged var messages : Message
+
+
+    @NSManaged var course : Course
+
 
 }
