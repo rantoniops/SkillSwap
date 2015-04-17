@@ -8,6 +8,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *skills;
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionText;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *editAndDoneButton;
 
 @property NSArray *coursesArray;
 
@@ -23,6 +25,14 @@
     [super viewDidLoad];
     
     [self queryForUserInfo];
+    self.backButton.title = @"Return";
+    self.editAndDoneButton.title = @"Edit";
+
+}
+
+
+-(void)loadStockProfilePic withImage(UIImage *)image
+{
     
     self.profileImage.userInteractionEnabled = YES;
     UIImage *profileImage = [UIImage imageNamed:@"emptyProfile"];
@@ -36,6 +46,9 @@
 }
 
 
+
+
+
 -(void)queryForUserInfo
 {
     User *currentUser = [User currentUser];
@@ -45,8 +58,14 @@
          if (error == nil) {
              self.coursesArray = [NSArray arrayWithArray:objects];
              [self.tableVIew reloadData];
-//             NSLog(@"here are the course %@", objects);
-//             NSLog(@"here is your current user: %@", currentUser);
+             if (currentUser.profilePic == nil)
+             {
+                 [self loadStockProfilePic];
+             }
+             else
+             {
+                 
+             }
          }
      }];
     self.name.text = currentUser.username;
@@ -107,6 +126,7 @@
     self.profileImage.image = self.chosenImage;
     self.smallImageData = UIImageJPEGRepresentation(self.chosenImage, 0.5);
     [picker dismissViewControllerAnimated:YES completion:NULL];
+    NSLog(@"image should be ready to save");
 }
 
 
@@ -130,6 +150,25 @@
 }
 
 
+- (IBAction)backButtonTap:(id)sender
+{
+    [self dismissViewControllerAnimated:true completion:nil];
+}
+
+- (IBAction)editButton:(id)sender
+{
+    [self saveImage];
+    if ([self.editAndDoneButton.title isEqualToString:@"Edit"])
+    {
+        self.editAndDoneButton.title = @"Done";
+    }
+    else
+    {
+        self.editAndDoneButton.title = @"Edit";
+    }
+}
+
+
 
 
 - (IBAction)onSaveButtonPressed:(UIButton *)sender
@@ -141,8 +180,7 @@
 {
     User *userToSave = [User currentUser];
     PFFile *imageFile = [PFFile fileWithData:self.smallImageData];
-    userToSave.profilePic = imageFile;
-    NSLog(@"image file : %@   and user to save profile pic is: %@", imageFile, userToSave.profilePic);
+    [userToSave setValue:imageFile forKey:@"profilePic"];
     [userToSave saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
          if (succeeded)
