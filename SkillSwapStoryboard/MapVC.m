@@ -5,7 +5,6 @@
 #import "PostCourseVC.h"
 #import "TakeCourseVC.h"
 #import "CourseAnnotationVC.h"
-
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
@@ -22,6 +21,7 @@
 {
     [super viewDidLoad];
     [self showUserLocation];
+    NSLog(@"%@", [User currentUser]);
 }
 
 
@@ -43,14 +43,15 @@
 {
     PFQuery *query = [Course query];
     [query includeKey:@"teacher"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
         if (!error)
         {
-            NSLog(@"Successfully retrieved %lu courses.", (unsigned long)objects.count);
+//            NSLog(@"Successfully retrieved %lu courses.", (unsigned long)objects.count);
             for (Course *object in objects)
             {
                 if ([object isKindOfClass:[Course class]]) {
-                    NSLog(@"%@", object.teacher.username);
+//                    NSLog(@"%@", object.teacher.username);
                     CourseAnnotationVC *coursePointAnnotation = [[CourseAnnotationVC alloc]init];
                     coursePointAnnotation.course = object;
                     coursePointAnnotation.title = object[@"title"];
@@ -58,13 +59,13 @@
                     PFGeoPoint *geoPoint = object[@"location"];
                     coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
                     [self.mapView addAnnotation:coursePointAnnotation];
-                    NSLog(@"%@", coursePointAnnotation.course);
+//                    NSLog(@"%@", coursePointAnnotation.course);
                 }
             }
         }
         else
         {
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
+//            NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
 }
@@ -141,14 +142,16 @@
 - (IBAction)onAddButtonTap:(UIButton *)sender
 {
     [self addCenterPinImageAndButton];
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.01,0.01);
+    [self.mapView setRegion:MKCoordinateRegionMake(self.mapView.centerCoordinate,span) animated:true];
 }
 
 //add the image to map - gets called on addButton tap
 -(void)addCenterPinImageAndButton
 {
-    UIImage *pinImage = [UIImage imageNamed:@"pointer"];
+    UIImage *pinImage = [UIImage imageNamed:@"newpin"];
     self.pin = [[UIImageView alloc]initWithImage:pinImage];
-    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -75  , self.mapView.bounds.size.height/2 - 75, 150, 50);
+    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -75  , self.mapView.bounds.size.height/2 - 65, 150, 75);
     UITapGestureRecognizer *pinTap = [[UITapGestureRecognizer alloc]init];
     [self imageview:self.pin addGestureRecognizer:pinTap];
     [self.mapView addSubview:self.pin];
@@ -169,7 +172,7 @@
 {
     [self addAnnotation];
     self.pin.hidden = YES;
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.01,0.01);
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.007,0.007);
     [self.mapView setRegion:MKCoordinateRegionMake(self.mapView.centerCoordinate,span) animated:true];
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -186,15 +189,22 @@
     if ([segue.identifier isEqualToString:@"postClass"])
     {
         PostCourseVC *postVC = segue.destinationViewController;
-        postVC.selectedAddress = self.formattedAdress;
         CLLocation *locationToPass = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
         postVC.selectedAddress = self.formattedAdress;
         postVC.courseLocation = locationToPass;
     }
     else if ([segue.identifier isEqualToString:@"loginSegue"])
     {
-        NSLog(@"segue called");
+        NSLog(@"login segue called");
     }
+    else if ([segue.identifier isEqualToString:@"messages"])
+    {
+        NSLog(@"going to messages");
+    }
+    else if ([segue.identifier isEqualToString:@"profile"])
+      {
+          
+      }
     else
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
@@ -219,8 +229,7 @@
 - (IBAction)listButtonPress:(UIButton *)sender {
 }
 
-- (IBAction)msgButtonPress:(UIButton *)sender {
-}
+
 
 //zoom to the user's location
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation

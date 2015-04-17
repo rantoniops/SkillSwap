@@ -20,13 +20,10 @@ import Foundation
     @NSManaged var courseDescription: String
     @NSManaged var time: String
     @NSManaged var address: String
-    @NSManaged var coursePhoto: PFFile
+    @NSManaged var courseMedia: PFFile
     @NSManaged var location: PFGeoPoint
 
     @NSManaged var skillsTaught : PFRelation
 
     @NSManaged var teacher : User
-    @NSManaged var students : User
-
-    
 }

@@ -1,5 +1,5 @@
 import Foundation
-class Credit : PFObject, PFSubclassing
+@objc class Conversation : PFObject, PFSubclassing
 {
     override class func initialize()
     {
@@ -12,18 +12,12 @@ class Credit : PFObject, PFSubclassing
 
     class func parseClassName() -> String
     {
-        return "Credit"
+        return "Conversation"
     }
 
 
-
-    @NSManaged var creditSender : User
-    @NSManaged var creditReceiver : User
-    @NSManaged var owner : User
+    @NSManaged var users : [User]
 
 
-
-    
-    
-    
+    @NSManaged var course : Course
 }

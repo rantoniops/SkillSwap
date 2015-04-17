@@ -7,20 +7,22 @@ import Foundation
     }
 
 
-    @NSManaged var friends: User
-    @NSManaged var teachers: User
-    @NSManaged var students: User
-
     @NSManaged var profilePic: PFFile
     @NSManaged var rating : Int
 
-    @NSManaged var skills : Skill
+    @NSManaged var friends: PFRelation
+    @NSManaged var teachers: PFRelation
+    @NSManaged var students: PFRelation
+    
+    @NSManaged var skills : PFRelation
+    @NSManaged var conversations : PFRelation
+
+    @NSManaged var coursesToTake : PFRelation
+    
 
 
 
-    
-    
-    
+
     
     
 
