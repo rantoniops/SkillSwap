@@ -24,6 +24,9 @@
 {
     [super viewDidLoad];
     [self showUserLocation];
+    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
+    
+//    [self loadZoom];
     NSLog(@"%@", [User currentUser]);
     self.now = [NSDate date];
 }
@@ -91,22 +94,6 @@
     }];
 }
 
-///I am having trouble setting up an image for the view for annotation...i think it's a timing problem but I'm not completely sure...should I consider using a reuse identifier?
-//-(void)fetchCourseImage
-//{
-//    self.userImageFile = [currentUser valueForKey:@"profilePic"];
-//    NSLog(@"%@", self.userImageFile);
-//    [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-//     {
-//         if (!error)
-//         {
-//             UIImage *image = [UIImage imageWithData:data];
-//             [self loadrofilePicwithImage:image];
-//             NSLog(@"we have the image");
-//         }
-//     }];
-//
-//}
 
 //fetch the user's location
 -(void)showUserLocation
@@ -286,9 +273,7 @@
     CLLocationCoordinate2D location;
     location.latitude = userLocation.coordinate.latitude;
     location.longitude = userLocation.coordinate.longitude;
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.05,0.05);
-    [self.mapView setRegion:MKCoordinateRegionMake(location,span) animated:true];
-    
 }
+
 
 @end

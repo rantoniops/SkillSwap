@@ -173,6 +173,21 @@
                   if (succeeded)
                   {
                       NSLog(@"course saved");
+                      User *currentUser = [User currentUser];
+                      PFRelation *teacherRelation = [currentUser relationForKey:@"courses"];
+                      [teacherRelation addObject: course];
+                      [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                       {
+                           if (succeeded)
+                           {
+                               NSLog(@"teacher relation saved");
+                           }
+                           else
+                           {
+                               NSLog(@"teacher relation NOT saved");
+                           }
+                       }];
+
                   }
                   else
                   {
@@ -187,6 +202,7 @@
      }];
     [self dismissViewControllerAnimated:true completion:nil];
 }
+
 
 -(void)setTime
 {
