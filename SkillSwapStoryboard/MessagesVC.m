@@ -3,9 +3,10 @@
 #import "SkillSwapStoryboard-Swift.h"
 @interface MessagesVC () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property NSArray *messages;
 @property NSArray *conversations;
 @property Conversation *conversationToPass;
+@property User *otherUserToPass;
+@property Course *courseToPass;
 @end
 @implementation MessagesVC
 
@@ -24,9 +25,25 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.conversationToPass = self.conversations[indexPath.row];
+    self.courseToPass = self.conversationToPass.course;
+
+    for (Conversation *conversation in self.conversations)
+    {
+        for (User *user in conversation.users)
+        {
+            if (user == [User currentUser])
+            {
+                NSLog(@"iteratedUser is current user");
+            }
+            else
+            {
+                self.otherUserToPass = user;
+            }
+        }
+    }
+
     [self performSegueWithIdentifier:@"messageConversation" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    NSLog(@"going to prepare for segue");
 }
 
 
@@ -34,6 +51,8 @@
 {
     MessageConversationVC *messageConversationVC = segue.destinationViewController;
     messageConversationVC.selectedConversation = self.conversationToPass;
+    messageConversationVC.otherUser = self.otherUserToPass;
+    messageConversationVC.selectedCourse = self.courseToPass;
 }
 
 
@@ -42,6 +61,7 @@
     PFQuery *query = [Conversation query];
     [query whereKey:@"users" equalTo:[User currentUser]];
     [query includeKey:@"users"];
+    [query includeKey:@"course"];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {

@@ -5,7 +5,6 @@
 #import "PostCourseVC.h"
 #import "TakeCourseVC.h"
 #import "CourseAnnotationVC.h"
-
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
@@ -196,7 +195,7 @@
     }
     else if ([segue.identifier isEqualToString:@"loginSegue"])
     {
-        NSLog(@"segue called");
+        NSLog(@"login segue called");
     }
     else if ([segue.identifier isEqualToString:@"messages"])
     {
