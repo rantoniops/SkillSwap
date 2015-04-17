@@ -79,8 +79,8 @@
 		6B7846761ADCAA3800EAD40D /* Credit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credit.swift; sourceTree = "<group>"; };
 		6B7846781ADCAA6500EAD40D /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		6B78467A1ADCAAFA00EAD40D /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		6B9B1F201AE0A611005219AF /* Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
-		6B9B1F221AE0A673005219AF /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		6B9B1F201AE0A611005219AF /* Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Conversation.swift; path = ../Conversation.swift; sourceTree = "<group>"; };
+		6B9B1F221AE0A673005219AF /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Course.swift; path = ../Course.swift; sourceTree = "<group>"; };
 		6BAEDE261AE0390F00282CFB /* MessagesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesVC.h; sourceTree = "<group>"; };
 		6BAEDE271AE0390F00282CFB /* MessagesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesVC.m; sourceTree = "<group>"; };
 		964E39191AE1703500123AA9 /* MapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapVC.m; sourceTree = "<group>"; };
@@ -188,8 +188,6 @@
 		6B78463A1ADC988B00EAD40D = {
 			isa = PBXGroup;
 			children = (
-				6B9B1F201AE0A611005219AF /* Conversation.swift */,
-				6B9B1F221AE0A673005219AF /* Course.swift */,
 				6B78467C1ADCAB2B00EAD40D /* Frameworks */,
 				6B16B5151ADDC9E70040B4EB /* STORYBOARD CONDOM */,
 				6B7846451ADC988B00EAD40D /* SkillSwap */,
@@ -278,6 +276,8 @@
 		6B78467D1ADCAB7A00EAD40D /* Parse Subclasses */ = {
 			isa = PBXGroup;
 			children = (
+				6B9B1F201AE0A611005219AF /* Conversation.swift */,
+				6B9B1F221AE0A673005219AF /* Course.swift */,
 				6B7846701ADCA8F500EAD40D /* User.swift */,
 				6B7846761ADCAA3800EAD40D /* Credit.swift */,
 				6B7846781ADCAA6500EAD40D /* Review.swift */,
