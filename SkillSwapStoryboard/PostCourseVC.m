@@ -8,10 +8,10 @@
 @interface PostCourseVC () <UITextFieldDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *classTitleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *classDescriptionTextField;
-@property (weak, nonatomic) IBOutlet UITextField *classTimeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *classAddressTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *classPhotoImageView;
 @property (weak, nonatomic) IBOutlet UITextField *classSkillTextField;
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 
 @property UIImage *chosenImage;
 @property NSData *smallImageData;
@@ -23,7 +23,6 @@
 {
     [super viewDidLoad];
     self.classTitleTextField.delegate = self;
-    self.classTimeTextField.delegate = self;
     self.classAddressTextField.delegate = self;
     self.classSkillTextField.delegate = self;
     self.classDescriptionTextField.delegate = self;
@@ -145,6 +144,7 @@
 - (IBAction)onPostButtonPressed:(UIButton *)sender
 {
     // CREATING SKILL
+    [self setTime];
     Skill *skill = [Skill new];
     skill.name = self.classSkillTextField.text;
 //    skill.owner = [User currentUser]; // WE NEED TO SAVE SKILL ON THE CURRENT USER AS A RELATION
@@ -160,10 +160,10 @@
              Course *course = [Course new];
              course.title = self.classTitleTextField.text;
              course.courseDescription = self.classDescriptionTextField.text;
-             course.time = self.classTimeTextField.text;
              course.address = self.classAddressTextField.text;
              PFFile *imageFile = [PFFile fileWithData:self.smallImageData];
              course.courseMedia = imageFile;
+             course.time = self.datePicker.date;
              course.teacher = [User currentUser];
              course.location = [PFGeoPoint geoPointWithLocation:self.courseLocation];
              PFRelation *relation = [course relationForKey:@"skillsTaught"];
@@ -188,12 +188,25 @@
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
+-(void)setTime
+{
+    NSLog(@"%@", self.datePicker.date);
+    NSDateFormatter *timeDate = [[NSDateFormatter alloc]init];
+    
+    NSString *timeString = [timeDate stringFromDate: self.datePicker.date];
+    
+    
+    
+    
+}
 
 
 
 - (IBAction)onXButtonPressed:(UIButton *)sender
 {
     [self dismissViewControllerAnimated:true completion:nil];
+    
+   
 }
 
 

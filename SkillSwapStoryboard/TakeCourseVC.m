@@ -18,7 +18,9 @@
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
     self.courseDesciption.text = self.selectedCourse.courseDescription;
-    self.courseDuration.text = self.selectedCourse.time;
+    NSString *timeString = [NSDateFormatter localizedStringFromDate:self.selectedCourse.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+    NSLog(@"%@", timeString);
+    self.courseDuration.text = timeString;
     self.teacherName.text = self.selectedCourse.teacher.username;
     [self.selectedCourse.courseMedia getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         if (!error) {

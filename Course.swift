@@ -18,7 +18,7 @@ import Foundation
 
     @NSManaged var title: String
     @NSManaged var courseDescription: String
-    @NSManaged var time: String
+    @NSManaged var time: NSDate
     @NSManaged var address: String
     @NSManaged var courseMedia: PFFile
     @NSManaged var location: PFGeoPoint

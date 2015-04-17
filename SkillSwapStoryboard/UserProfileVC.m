@@ -141,8 +141,10 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Course *course = self.coursesArray[indexPath.row];
-    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", course.title, course.time];
     cell.detailTextLabel.text = course.address;
+    NSString *timeString = [NSDateFormatter localizedStringFromDate:course.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+    NSLog(@"%@", timeString);
+    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", course.title, timeString];
     cell.textLabel.text = titleAndTime;
     
     
