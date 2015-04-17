@@ -271,6 +271,9 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="20" width="600" height="512"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="URm-GF-Pdy" id="vEQ-PG-85Q"/>
                                     <outlet property="delegate" destination="URm-GF-Pdy" id="IIP-xe-SGD"/>
@@ -281,8 +284,20 @@
                                 <state key="normal" title="send">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="526" y="562" width="34" height="30"/>
+                                </variation>
                                 <connections>
                                     <action selector="onSendButtonPressed:" destination="URm-GF-Pdy" eventType="touchUpInside" id="Q5z-Es-KNc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FC7-mr-ZBg">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="go back">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onGoBackPressed:" destination="URm-GF-Pdy" eventType="touchUpInside" id="k7e-CC-MUp"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -309,10 +324,12 @@
                             <constraint firstItem="YYD-pZ-LVL" firstAttribute="top" secondItem="0CF-ek-WdD" secondAttribute="bottom" constant="52" id="mUI-yd-cPj">
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
+                            <constraint firstItem="FC7-mr-ZBg" firstAttribute="top" secondItem="0CF-ek-WdD" secondAttribute="bottom" id="oJG-7W-GAJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eMa-Yg-mJA" secondAttribute="trailing" constant="24" id="pn2-ot-ipl"/>
                             <constraint firstItem="lzJ-Xg-THh" firstAttribute="top" secondItem="YYD-pZ-LVL" secondAttribute="bottom" constant="30" id="qxz-65-WEp"/>
                             <constraint firstItem="lzJ-Xg-THh" firstAttribute="leading" secondItem="ck4-ET-guo" secondAttribute="leadingMargin" id="t2R-iR-dge"/>
                             <constraint firstItem="eMa-Yg-mJA" firstAttribute="top" secondItem="YYD-pZ-LVL" secondAttribute="bottom" constant="30" id="udV-wa-xYp"/>
+                            <constraint firstItem="FC7-mr-ZBg" firstAttribute="trailing" secondItem="ck4-ET-guo" secondAttribute="trailingMargin" id="vH5-sN-hRu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eMa-Yg-mJA" secondAttribute="trailing" constant="12" id="vPV-HM-7Qh"/>
                             <constraint firstItem="YYD-pZ-LVL" firstAttribute="top" secondItem="ck4-ET-guo" secondAttribute="topMargin" id="yf4-t0-aab">
                                 <variation key="widthClass=compact" constant="72"/>
@@ -324,14 +341,23 @@
                                 <exclude reference="lzJ-Xg-THh"/>
                                 <exclude reference="YYD-pZ-LVL"/>
                                 <exclude reference="eMa-Yg-mJA"/>
+                                <exclude reference="FC7-mr-ZBg"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="3sz-1K-WUJ"/>
+                                <exclude reference="DM5-XQ-jNJ"/>
+                                <exclude reference="NPH-bO-vHU"/>
+                                <exclude reference="dFB-OH-NNe"/>
+                                <exclude reference="mUI-yd-cPj"/>
+                                <exclude reference="yf4-t0-aab"/>
+                                <exclude reference="oJG-7W-GAJ"/>
+                                <exclude reference="vH5-sN-hRu"/>
+                                <exclude reference="qxz-65-WEp"/>
+                                <exclude reference="t2R-iR-dge"/>
                                 <exclude reference="16v-d9-21g"/>
                                 <exclude reference="XKq-x0-2H7"/>
                                 <exclude reference="dV6-QI-xBr"/>
                                 <exclude reference="zgD-pe-Mhu"/>
-                                <exclude reference="qxz-65-WEp"/>
-                                <exclude reference="t2R-iR-dge"/>
                                 <exclude reference="3ej-fh-9Uj"/>
                                 <exclude reference="AHX-si-Klt"/>
                                 <exclude reference="DN7-hn-4QK"/>
@@ -340,12 +366,6 @@
                                 <exclude reference="pn2-ot-ipl"/>
                                 <exclude reference="udV-wa-xYp"/>
                                 <exclude reference="vPV-HM-7Qh"/>
-                                <exclude reference="3sz-1K-WUJ"/>
-                                <exclude reference="DM5-XQ-jNJ"/>
-                                <exclude reference="NPH-bO-vHU"/>
-                                <exclude reference="dFB-OH-NNe"/>
-                                <exclude reference="mUI-yd-cPj"/>
-                                <exclude reference="yf4-t0-aab"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -353,14 +373,23 @@
                                 <include reference="lzJ-Xg-THh"/>
                                 <include reference="YYD-pZ-LVL"/>
                                 <include reference="eMa-Yg-mJA"/>
+                                <include reference="FC7-mr-ZBg"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="3sz-1K-WUJ"/>
+                                <exclude reference="DM5-XQ-jNJ"/>
+                                <include reference="NPH-bO-vHU"/>
+                                <exclude reference="dFB-OH-NNe"/>
+                                <include reference="mUI-yd-cPj"/>
+                                <exclude reference="yf4-t0-aab"/>
+                                <include reference="oJG-7W-GAJ"/>
+                                <include reference="vH5-sN-hRu"/>
+                                <exclude reference="qxz-65-WEp"/>
+                                <include reference="t2R-iR-dge"/>
                                 <include reference="16v-d9-21g"/>
                                 <exclude reference="XKq-x0-2H7"/>
                                 <exclude reference="dV6-QI-xBr"/>
                                 <include reference="zgD-pe-Mhu"/>
-                                <exclude reference="qxz-65-WEp"/>
-                                <include reference="t2R-iR-dge"/>
                                 <exclude reference="3ej-fh-9Uj"/>
                                 <include reference="AHX-si-Klt"/>
                                 <exclude reference="DN7-hn-4QK"/>
@@ -369,12 +398,6 @@
                                 <include reference="pn2-ot-ipl"/>
                                 <exclude reference="udV-wa-xYp"/>
                                 <exclude reference="vPV-HM-7Qh"/>
-                                <include reference="3sz-1K-WUJ"/>
-                                <exclude reference="DM5-XQ-jNJ"/>
-                                <include reference="NPH-bO-vHU"/>
-                                <exclude reference="dFB-OH-NNe"/>
-                                <include reference="mUI-yd-cPj"/>
-                                <exclude reference="yf4-t0-aab"/>
                             </mask>
                         </variation>
                     </view>
@@ -431,6 +454,9 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="tqw-9H-PPP" id="V7b-jk-fV0"/>
                                     <outlet property="delegate" destination="tqw-9H-PPP" id="rvu-en-J0w"/>
@@ -493,6 +519,12 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Huc-1f-hRt">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="76" width="600" height="524"/>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="76" width="400" height="524"/>
+                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="C6z-MJ-OJR" id="CO7-Qq-QSm"/>
                                 </connections>
@@ -512,11 +544,15 @@
                                         <exclude reference="Lah-kI-SmK"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="538" y="550" width="30" height="30"/>
                                     <mask key="constraints">
                                         <include reference="0zf-8F-GwU"/>
                                         <include reference="Lah-kI-SmK"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="338" y="550" width="30" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="onAddButtonTap:" destination="C6z-MJ-OJR" eventType="touchUpInside" id="Vvv-Id-SVo"/>
@@ -550,6 +586,9 @@
                             <searchBar contentMode="redraw" text="" placeholder="what do you wanna learn?" translatesAutoresizingMaskIntoConstraints="NO" id="gaa-Yj-AFh">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="61" y="20" width="486" height="44"/>
+                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="C6z-MJ-OJR" id="LJZ-Of-XoB"/>
                                 </connections>
@@ -569,7 +608,8 @@
                                         <exclude reference="eDK-Pb-Kg4"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="552" y="27" width="32" height="30"/>
                                     <mask key="constraints">
                                         <include reference="cWB-Yb-yMg"/>
                                         <include reference="eDK-Pb-Kg4"/>
@@ -851,7 +891,7 @@
                                     <rect key="frame" x="141" y="550" width="118" height="30"/>
                                 </variation>
                                 <connections>
-                                    <segue destination="URm-GF-Pdy" kind="show" identifier="messageTeacher" id="WcH-cb-mK9"/>
+                                    <segue destination="URm-GF-Pdy" kind="presentation" identifier="messageTeacher" id="WcH-cb-mK9"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1344,6 +1384,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="196" y="188" width="210" height="30"/>
+                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="REZ-1m-KA0" id="OMr-M4-ibP"/>
                                 </connections>
@@ -1358,6 +1401,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="196" y="302" width="210" height="30"/>
+                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="REZ-1m-KA0" id="Bm8-cL-MYD"/>
                                 </connections>
@@ -1371,6 +1417,9 @@
                                 <state key="normal" title="Sign Up">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="273" y="527" width="55" height="30"/>
+                                </variation>
                                 <connections>
                                     <action selector="signUpButtonPress:" destination="REZ-1m-KA0" eventType="touchUpInside" id="nD1-W2-WAT"/>
                                 </connections>
@@ -1384,6 +1433,9 @@
                                 <state key="normal" title="Login">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="276" y="411" width="48" height="30"/>
+                                </variation>
                                 <connections>
                                     <action selector="loginButtonPress:" destination="REZ-1m-KA0" eventType="touchUpInside" id="bbg-74-Gk6"/>
                                 </connections>
@@ -1402,7 +1454,8 @@
                                         <exclude reference="slh-Ty-VtJ"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="195" y="81" width="210" height="30"/>
                                     <mask key="constraints">
                                         <include reference="CN7-qr-KVs"/>
                                         <include reference="slh-Ty-VtJ"/>

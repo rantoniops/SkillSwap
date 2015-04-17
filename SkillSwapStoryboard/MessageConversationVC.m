@@ -26,6 +26,10 @@
     }
 }
 
+- (IBAction)onGoBackPressed:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:true completion:nil];
+}
 
 -(void)queryMessagesInExistingConversation
 {
