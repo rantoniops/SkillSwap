@@ -27,13 +27,11 @@
     self.classSkillTextField.delegate = self;
     self.classDescriptionTextField.delegate = self;
     
-//    [self configureImagePicker];
     
     self.classAddressTextField.text = self.selectedAddress;
     UIImage *profileImage = [UIImage imageNamed:@"emptyProfile"];
     self.classPhotoImageView.image = profileImage;
     self.classPhotoImageView.frame = CGRectMake(0, 0, 250, 250);
-//    self.classPhotoImageView.layer.cornerRadius = self.classPhotoImageView.frame.size.width / 2;
     self.classPhotoImageView.layer.masksToBounds = YES;
     self.classPhotoImageView.layer.borderWidth = 1;
     UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
@@ -144,7 +142,6 @@
 - (IBAction)onPostButtonPressed:(UIButton *)sender
 {
     // CREATING SKILL
-    [self setTime];
     Skill *skill = [Skill new];
     skill.name = self.classSkillTextField.text;
 //    skill.owner = [User currentUser]; // WE NEED TO SAVE SKILL ON THE CURRENT USER AS A RELATION
@@ -181,6 +178,8 @@
                            if (succeeded)
                            {
                                NSLog(@"teacher relation saved");
+                               [self dismissViewControllerAnimated:true completion:nil];
+                               [self.delegate didIcreateACourse:true];
                            }
                            else
                            {
@@ -200,28 +199,15 @@
              NSLog(@"skill NOT saved");
          }
      }];
-    [self dismissViewControllerAnimated:true completion:nil];
-}
-
-
--(void)setTime
-{
-    NSLog(@"%@", self.datePicker.date);
-    NSDateFormatter *timeDate = [[NSDateFormatter alloc]init];
-    
-    NSString *timeString = [timeDate stringFromDate: self.datePicker.date];
-    
-    
-    
-    
 }
 
 
 
 - (IBAction)onXButtonPressed:(UIButton *)sender
 {
-    [self dismissViewControllerAnimated:true completion:nil];
     
+    [self dismissViewControllerAnimated:true completion:nil];
+    [self.delegate didIcreateACourse:false];
    
 }
 

@@ -5,7 +5,7 @@
 #import "PostCourseVC.h"
 #import "TakeCourseVC.h"
 #import "CustomCourseAnnotation.h"
-@interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate>
+@interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate, PostVCDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -19,6 +19,9 @@
 @property UIImage *callOutImage;
 @property NSArray *filteredResults;
 @property NSArray *results;
+@property NSArray *lastAnnotationArray;
+@property CLLocation *locationToPass;
+
 
 @end
 @implementation MapVC
@@ -27,8 +30,6 @@
     [super viewDidLoad];
     [self showUserLocation];
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-    
-//    [self loadZoom];
     NSLog(@"%@", [User currentUser]);
     self.now = [NSDate date];
 }
@@ -49,6 +50,8 @@
         [self queryForMap];
     }
 }
+
+
 
 
 
@@ -80,10 +83,6 @@
                          if (!error)
                          {
                              NSLog(@"image retrieved");
-//                             UIImage *image =
-//                             UIImage *smallerImage = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
-//                             self.callOutImage = smallerImage;
-//                             coursePointAnnotation.image = self.callOutImage;
                              object.callOutImage = [UIImage imageWithData:data];
                              object.sizedCallOutImage = [self imageWithImage: object.callOutImage scaledToSize:CGSizeMake(40, 40)];
                              coursePointAnnotation.subtitle = object.address;
@@ -118,11 +117,13 @@
 ///Create new pin on tap
 -(void)addAnnotation
 {
-    self.anotherAnnotation = [[MKPointAnnotation alloc]init];
-    self.anotherAnnotation.coordinate = self.mapView.centerCoordinate;
-    CLLocation *location = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
+    CustomCourseAnnotation *newAnnotation = [[CustomCourseAnnotation alloc]init];
+    newAnnotation.coordinate = self.mapView.centerCoordinate;
+    CLLocation *location = [[CLLocation alloc]initWithLatitude:newAnnotation.coordinate.latitude longitude:newAnnotation.coordinate.longitude];
+    self.locationToPass = location;
     [self reverseGeocodeLocation: location];
-    [self.mapView addAnnotation:self.anotherAnnotation];
+    [self.mapView addAnnotation:newAnnotation];
+    self.lastAnnotationArray = [[NSArray alloc]initWithObjects:newAnnotation, nil];
     
 }
 
@@ -134,7 +135,7 @@
     {
         CLPlacemark *placeMark = [placemarks objectAtIndex:0];
        self.formattedAdress = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
-         self.formattedAdressTwo = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
+
         }];
 }
 
@@ -156,8 +157,6 @@
         CustomCourseAnnotation *theAnnotation = newPin.annotation;
        newPin.canShowCallout = true;
        newPin.pinColor = MKPinAnnotationColorPurple;
-//       UIImage *image = [UIImage imageNamed:@"emptyProfile"];
-//       UIImage *smallerImage = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
        newPin.leftCalloutAccessoryView = [[UIImageView alloc]initWithImage:theAnnotation.course.sizedCallOutImage];
        newPin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
        return newPin;
@@ -236,9 +235,9 @@
     if ([segue.identifier isEqualToString:@"postClass"])
     {
         PostCourseVC *postVC = segue.destinationViewController;
-        CLLocation *locationToPass = [[CLLocation alloc]initWithLatitude:self.anotherAnnotation.coordinate.latitude longitude:self.anotherAnnotation.coordinate.longitude];
+        [postVC setDelegate:self];
         postVC.selectedAddress = self.formattedAdress;
-        postVC.courseLocation = locationToPass;
+        postVC.courseLocation = self.locationToPass;
     }
     else if ([segue.identifier isEqualToString:@"loginSegue"])
     {
@@ -282,6 +281,7 @@
     location.longitude = userLocation.coordinate.longitude;
 }
 
+# pragma mark PostVCDelegate Methods
 
 
 
@@ -365,6 +365,20 @@
 
 
 
+
+
+-(void)didIcreateACourse:(BOOL *)didCreate
+{
+    if (didCreate == false)
+    {
+        [self.mapView removeAnnotation:self.lastAnnotationArray.lastObject];
+    }
+    else
+    {
+        
+    }
+    
+}
 
 
 @end
