@@ -2,6 +2,6 @@
 #import "SkillSwapStoryboard-Swift.h"
 @interface MessageConversationVC : UIViewController
 @property User *selectedTeacher;
-@property NSArray *selectedConversation;
+@property Conversation *selectedConversation;
 @property Course *selectedCourse;
 @end

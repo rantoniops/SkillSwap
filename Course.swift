@@ -26,6 +26,4 @@ import Foundation
     @NSManaged var skillsTaught : PFRelation
 
     @NSManaged var teacher : User
-    @NSManaged var conversation : Conversation
-
 }

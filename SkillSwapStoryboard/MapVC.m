@@ -44,14 +44,15 @@
 {
     PFQuery *query = [Course query];
     [query includeKey:@"teacher"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    {
         if (!error)
         {
 //            NSLog(@"Successfully retrieved %lu courses.", (unsigned long)objects.count);
             for (Course *object in objects)
             {
                 if ([object isKindOfClass:[Course class]]) {
-                    NSLog(@"%@", object.teacher.username);
+//                    NSLog(@"%@", object.teacher.username);
                     CourseAnnotationVC *coursePointAnnotation = [[CourseAnnotationVC alloc]init];
                     coursePointAnnotation.course = object;
                     coursePointAnnotation.title = object[@"title"];
@@ -59,13 +60,13 @@
                     PFGeoPoint *geoPoint = object[@"location"];
                     coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
                     [self.mapView addAnnotation:coursePointAnnotation];
-                    NSLog(@"%@", coursePointAnnotation.course);
+//                    NSLog(@"%@", coursePointAnnotation.course);
                 }
             }
         }
         else
         {
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
+//            NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
 }

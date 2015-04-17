@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6B16B51A1ADDCD3D0040B4EB /* PostCourseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B16B5191ADDCD3D0040B4EB /* PostCourseVC.m */; };
-		6B16B51C1ADDD09F0040B4EB /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B16B51B1ADDD09F0040B4EB /* Course.swift */; };
 		6B7846491ADC988B00EAD40D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B7846481ADC988B00EAD40D /* main.m */; };
 		6B78464C1ADC988B00EAD40D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B78464B1ADC988B00EAD40D /* AppDelegate.m */; };
 		6B78464F1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6B78464D1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld */; };
@@ -22,7 +21,8 @@
 		6B7846771ADCAA3800EAD40D /* Credit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7846761ADCAA3800EAD40D /* Credit.swift */; };
 		6B7846791ADCAA6500EAD40D /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7846781ADCAA6500EAD40D /* Review.swift */; };
 		6B78467B1ADCAAFA00EAD40D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B78467A1ADCAAFA00EAD40D /* Message.swift */; };
-		6B894FEA1AE06AAD00160ECC /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B894FE91AE06AAD00160ECC /* Conversation.swift */; };
+		6B9B1F211AE0A611005219AF /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9B1F201AE0A611005219AF /* Conversation.swift */; };
+		6B9B1F231AE0A673005219AF /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9B1F221AE0A673005219AF /* Course.swift */; };
 		6BAEDE281AE0390F00282CFB /* MessagesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAEDE271AE0390F00282CFB /* MessagesVC.m */; };
 		96A50BE91ADEF52C007C82E5 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E46083B1ADC9D0800AFF702 /* Bolts.framework */; };
 		96A50BEB1ADEF52F007C82E5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608391ADC9CFC00AFF702 /* Parse.framework */; };
@@ -60,7 +60,6 @@
 /* Begin PBXFileReference section */
 		6B16B5181ADDCD3D0040B4EB /* PostCourseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCourseVC.h; sourceTree = "<group>"; };
 		6B16B5191ADDCD3D0040B4EB /* PostCourseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCourseVC.m; sourceTree = "<group>"; };
-		6B16B51B1ADDD09F0040B4EB /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		6B7846431ADC988B00EAD40D /* SkillSwapStoryboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkillSwapStoryboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B7846471ADC988B00EAD40D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B7846481ADC988B00EAD40D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -81,7 +80,8 @@
 		6B7846761ADCAA3800EAD40D /* Credit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credit.swift; sourceTree = "<group>"; };
 		6B7846781ADCAA6500EAD40D /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		6B78467A1ADCAAFA00EAD40D /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		6B894FE91AE06AAD00160ECC /* Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		6B9B1F201AE0A611005219AF /* Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		6B9B1F221AE0A673005219AF /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		6BAEDE261AE0390F00282CFB /* MessagesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesVC.h; sourceTree = "<group>"; };
 		6BAEDE271AE0390F00282CFB /* MessagesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesVC.m; sourceTree = "<group>"; };
 		96E2A9C01ADECED100727E09 /* CourseAnnotationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseAnnotationVC.h; sourceTree = "<group>"; };
@@ -188,6 +188,8 @@
 		6B78463A1ADC988B00EAD40D = {
 			isa = PBXGroup;
 			children = (
+				6B9B1F201AE0A611005219AF /* Conversation.swift */,
+				6B9B1F221AE0A673005219AF /* Course.swift */,
 				6B78467C1ADCAB2B00EAD40D /* Frameworks */,
 				6B16B5151ADDC9E70040B4EB /* STORYBOARD CONDOM */,
 				6B7846451ADC988B00EAD40D /* SkillSwap */,
@@ -280,9 +282,7 @@
 				6B7846761ADCAA3800EAD40D /* Credit.swift */,
 				6B7846781ADCAA6500EAD40D /* Review.swift */,
 				6B78467A1ADCAAFA00EAD40D /* Message.swift */,
-				6B894FE91AE06AAD00160ECC /* Conversation.swift */,
 				6B7846721ADCA98600EAD40D /* Skill.swift */,
-				6B16B51B1ADDD09F0040B4EB /* Course.swift */,
 			);
 			name = "Parse Subclasses";
 			path = SkillSwapStoryboard;
@@ -390,18 +390,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				96E2A9C21ADECED100727E09 /* CourseAnnotationVC.m in Sources */,
-				6B16B51C1ADDD09F0040B4EB /* Course.swift in Sources */,
 				B126D4831ADD78BC002E6F99 /* LoginVC.m in Sources */,
 				6B78464C1ADC988B00EAD40D /* AppDelegate.m in Sources */,
 				6B7846791ADCAA6500EAD40D /* Review.swift in Sources */,
 				6B16B51A1ADDCD3D0040B4EB /* PostCourseVC.m in Sources */,
 				6B7846771ADCAA3800EAD40D /* Credit.swift in Sources */,
 				B126D4891ADD7B46002E6F99 /* MessageConversationVC.m in Sources */,
-				6B894FEA1AE06AAD00160ECC /* Conversation.swift in Sources */,
+				6B9B1F211AE0A611005219AF /* Conversation.swift in Sources */,
 				B126D48C1ADD8254002E6F99 /* UserProfileVC.m in Sources */,
 				6B78464F1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld in Sources */,
 				B126D47D1ADCFADC002E6F99 /* CourseListVC.m in Sources */,
 				B126D4861ADD7AEE002E6F99 /* TeachingCourseVC.m in Sources */,
+				6B9B1F231AE0A673005219AF /* Course.swift in Sources */,
 				6B7846521ADC988B00EAD40D /* MapVC.m in Sources */,
 				6BAEDE281AE0390F00282CFB /* MessagesVC.m in Sources */,
 				6B7846731ADCA98600EAD40D /* Skill.swift in Sources */,

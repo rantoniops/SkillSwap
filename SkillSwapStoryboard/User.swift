@@ -16,6 +16,8 @@ import Foundation
     
     @NSManaged var skills : PFRelation
     @NSManaged var conversations : PFRelation
+
+    @NSManaged var coursesToTake : PFRelation
     
 
 
