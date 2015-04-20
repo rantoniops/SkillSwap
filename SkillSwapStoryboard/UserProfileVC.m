@@ -56,14 +56,14 @@
 -(void)queryForUserInfo
 {
     User *currentUser = [User currentUser];
-    PFRelation *relation = [currentUser relationForKey:@("courses")];
+    PFRelation *relation = [currentUser relationForKey:@"coursesToTake"];
     [relation.query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (error == nil) {
-             self.coursesArray = [NSArray arrayWithArray:objects];
+             self.credits.text = [[currentUser valueForKey:@"credits"] stringValue];
+             self.coursesArray = objects;
              [self.tableVIew reloadData];
              self.name.text = currentUser.username;
-//             NSLog(@"%@", currentUser);
              self.userImageFile = [currentUser valueForKey:@"profilePic"];
              NSLog(@"image file is %@", self.userImageFile);
             [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
@@ -143,10 +143,8 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Course *course = self.coursesArray[indexPath.row];
-    NSLog(@"course address is %@", course.address);
     cell.detailTextLabel.text = course.address;
     NSString *timeString = [NSDateFormatter localizedStringFromDate:course.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-    NSLog(@"timestring is %@", timeString);
     NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", course.title, timeString];
     cell.textLabel.text = titleAndTime;
     

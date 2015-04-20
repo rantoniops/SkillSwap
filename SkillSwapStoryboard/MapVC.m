@@ -260,12 +260,12 @@
     }
 }
 
-- (IBAction)profileButtonPress:(UIButton *)sender
-{
-    [self performSegueWithIdentifier:@"profile" sender:self];
-    NSLog(@"profile button pressed, current user is %@", [User currentUser]);
-
-}
+//- (IBAction)profileButtonPress:(UIButton *)sender
+//{
+//    [self performSegueWithIdentifier:@"profile" sender:self];
+//    NSLog(@"profile button pressed, current user is %@", [User currentUser]);
+//
+//}
 
 
 - (IBAction)listButtonPress:(UIButton *)sender {

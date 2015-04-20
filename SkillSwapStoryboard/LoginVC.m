@@ -34,8 +34,7 @@
     {
         if (user)
         {
-            [self performSegueWithIdentifier:@"fromLoginToMap" sender:self];
-//            [self dismissViewControllerAnimated:true completion:nil];
+            [self dismissViewControllerAnimated:true completion:nil];
         } else
         {
 //            [self showAlert("There was an error with your login", error: returnedError!)];
@@ -55,8 +54,9 @@
     {
         if (succeeded)
         {
-            [self performSegueWithIdentifier:@"fromLoginToMap" sender:self];
-//            [self dismissViewControllerAnimated:true completion:nil];
+            user.credits = [NSNumber numberWithInt:1];
+            [self dismissViewControllerAnimated:true completion:nil];
+
         }
         else
         {
