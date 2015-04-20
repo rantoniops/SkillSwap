@@ -171,7 +171,7 @@
                   {
                       NSLog(@"course saved");
                       User *currentUser = [User currentUser];
-                      PFRelation *teacherRelation = [currentUser relationForKey:@"courses"];
+                      PFRelation *teacherRelation = [currentUser relationForKey:@"coursesToTake"];
                       [teacherRelation addObject: course];
                       [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                        {
