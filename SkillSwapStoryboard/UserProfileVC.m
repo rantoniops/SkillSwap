@@ -63,9 +63,9 @@
              self.coursesArray = [NSArray arrayWithArray:objects];
              [self.tableVIew reloadData];
              self.name.text = currentUser.username;
-             NSLog(@"%@", currentUser);
+//             NSLog(@"%@", currentUser);
              self.userImageFile = [currentUser valueForKey:@"profilePic"];
-             NSLog(@"%@", self.userImageFile);
+             NSLog(@"image file is %@", self.userImageFile);
             [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
                   {
                       if (!error)
@@ -143,9 +143,10 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Course *course = self.coursesArray[indexPath.row];
+    NSLog(@"course address is %@", course.address);
     cell.detailTextLabel.text = course.address;
     NSString *timeString = [NSDateFormatter localizedStringFromDate:course.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-    NSLog(@"%@", timeString);
+    NSLog(@"timestring is %@", timeString);
     NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", course.title, timeString];
     cell.textLabel.text = titleAndTime;
     
