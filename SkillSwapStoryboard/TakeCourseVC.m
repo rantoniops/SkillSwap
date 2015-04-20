@@ -46,7 +46,7 @@
     UIAlertAction *confirmClass = [UIAlertAction actionWithTitle:@"Confirm Class" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
     {
         User *currentUser = [User currentUser];
-        PFRelation *relation = [currentUser relationForKey:@"courses"];
+        PFRelation *relation = [currentUser relationForKey:@"coursesToTake"];
         [relation addObject: self.selectedCourse];
 //        self.selectedCourse.students = [User currentUser];
 //        currentUser.course = self.selectedCourse;
@@ -54,7 +54,11 @@
          {
              if (succeeded)
              {
+                 int newCreditCount = [currentUser.credits intValue] -1 ;
+                 NSNumber *creditCount = [NSNumber numberWithInt:newCreditCount];
+                 currentUser.credits = creditCount;
                  NSLog(@"course saved");
+                 NSLog(@"credit count %@", currentUser.credits);
              }
              else
              {

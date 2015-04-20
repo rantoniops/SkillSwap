@@ -30,7 +30,7 @@
     [super viewDidLoad];
     [self showUserLocation];
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-    NSLog(@"%@", [User currentUser]);
+//    NSLog(@"%@", [User currentUser]);
     self.now = [NSDate date];
 }
 
@@ -260,12 +260,12 @@
     }
 }
 
-- (IBAction)profileButtonPress:(UIButton *)sender
-{
-    [self performSegueWithIdentifier:@"profile" sender:self];
-    NSLog(@"%@", [User currentUser]);
-
-}
+//- (IBAction)profileButtonPress:(UIButton *)sender
+//{
+//    [self performSegueWithIdentifier:@"profile" sender:self];
+//    NSLog(@"profile button pressed, current user is %@", [User currentUser]);
+//
+//}
 
 
 - (IBAction)listButtonPress:(UIButton *)sender {
@@ -317,7 +317,6 @@
 
         }
         self.filteredResults = tempSearchArray;
-        NSLog(@"FILTERED ASSIGN %@", self.filteredResults);
     }
     else
     {
@@ -330,7 +329,6 @@
     {
         if ([object isKindOfClass:[Course class]])
         {
-            NSLog(@"FILTERED SHOW %@", self.filteredResults);
             CustomCourseAnnotation *coursePointAnnotation = [[CustomCourseAnnotation alloc]init];
             coursePointAnnotation.course = object;
             coursePointAnnotation.title = object.title;
