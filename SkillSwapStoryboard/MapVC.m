@@ -47,6 +47,7 @@
     }
     else
     {
+        [self.mapView removeAnnotations:self.mapView.annotations];
         [self queryForMap];
     }
 }

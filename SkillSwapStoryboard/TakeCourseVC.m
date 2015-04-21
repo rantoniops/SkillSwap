@@ -46,7 +46,7 @@
     UIAlertAction *confirmClass = [UIAlertAction actionWithTitle:@"Confirm Class" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
     {
         User *currentUser = [User currentUser];
-        PFRelation *relation = [currentUser relationForKey:@"coursesToTake"];
+        PFRelation *relation = [currentUser relationForKey:@"courses"];
         [relation addObject: self.selectedCourse];
 //        self.selectedCourse.students = [User currentUser];
 //        currentUser.course = self.selectedCourse;
@@ -54,11 +54,11 @@
          {
              if (succeeded)
              {
-                 int newCreditCount = [currentUser.credits intValue] -1 ;
+                 // IF WE TRY TO SET AND GET CREDITS WITH DOT NOTATION THE APP WILL CRASH SAYING UNRECOGNIZED SELECTOR SENT TO INSTANCE, IF WE CHANGE IT TO VALUEFORKEY AND SETVALUEFORKEY IT WORKS FINE. THIS IS WEIRD
+                 int newCreditCount = [[currentUser valueForKey:@"credits"] intValue] -1;
                  NSNumber *creditCount = [NSNumber numberWithInt:newCreditCount];
-                 currentUser.credits = creditCount;
+                 [currentUser setValue:creditCount forKey:@"credits"];
                  NSLog(@"course saved");
-                 NSLog(@"credit count %@", currentUser.credits);
              }
              else
              {

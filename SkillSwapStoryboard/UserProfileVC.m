@@ -56,7 +56,7 @@
 -(void)queryForUserInfo
 {
     User *currentUser = [User currentUser];
-    PFRelation *relation = [currentUser relationForKey:@"coursesToTake"];
+    PFRelation *relation = [currentUser relationForKey:@"courses"];
     [relation.query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (error == nil) {
@@ -143,6 +143,8 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Course *course = self.coursesArray[indexPath.row];
+    NSLog(@"courses array is %@", self.coursesArray);
+    NSLog(@"address is %@", course.address);
     cell.detailTextLabel.text = course.address;
     NSString *timeString = [NSDateFormatter localizedStringFromDate:course.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
     NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", course.title, timeString];
