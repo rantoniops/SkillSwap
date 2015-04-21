@@ -49,14 +49,13 @@
     user.username = self.nameTextField.text;
     user.password = self.passwordTextField.text;
     user.email = self.emailTextField.text;
+    user.credits = [NSNumber numberWithInt:1];
 
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
     {
         if (succeeded)
         {
-            user.credits = [NSNumber numberWithInt:1];
             [self dismissViewControllerAnimated:true completion:nil];
-
         }
         else
         {
