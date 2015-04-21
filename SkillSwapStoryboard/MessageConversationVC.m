@@ -44,6 +44,52 @@
              NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
              self.messages = objects;
              [self.tableView reloadData];
+
+
+             ///////////////////////////////// PUSH NOTICATION STUFF ////////////////////////////////
+
+
+             PFInstallation *installation = [PFInstallation currentInstallation];
+//             [installation setObject:@YES forKey:@"scores"];
+             installation[@"receiverUser"] = self.otherUser;
+             [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+              {
+                   if (succeeded)
+                   {
+                       NSLog(@"installation saved");
+
+
+                       /////////////////////////////// NOW DO THIS ////////////////////////////////
+
+                       PFQuery *pushQuery = [PFInstallation query];
+                       [pushQuery whereKey:@"receiverUser" equalTo: self.otherUser];
+                       PFPush *push = [[PFPush alloc] init];
+                       [push setQuery:pushQuery];
+                       [push setMessage: self.messageTextField.text];
+                       [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                        {
+                            if (succeeded)
+                            {
+                                NSLog(@"push success");
+                            }
+                            else
+                            {
+                                NSLog(@"push error");
+                            }
+                        }];
+
+                       ////////////////////////////////////////////////////////////////////////////
+
+                   }
+                   else
+                   {
+                       NSLog(@"installation error");
+                   }
+               }];
+
+             ///////////////////////////////// PUSH NOTICATION STUFF ////////////////////////////////
+
+
          }
          else
          {
@@ -69,7 +115,7 @@
      {
          if (error)
          {
-             NSLog(@"error, convo not found, create new convo???");
+             NSLog(@"error");
          }
          else
          {
@@ -87,12 +133,12 @@
                   {
                       if (succeeded)
                       {
-                          NSLog(@"msg saved");
+                          NSLog(@"msg fron existing convo saved");
                           [self queryMessagesInExistingConversation];
                       }
                       else
                       {
-                          NSLog(@"msg NOT saved");
+                          NSLog(@"msg from existing convo NOT saved");
                       }
                   }];
              }
@@ -114,24 +160,25 @@
                           newMessage.messageReceiver = self.otherUser;
                           newMessage.course = self.selectedCourse;
 
+
                           self.conversation = newConversation;
                           newMessage.conversation = newConversation;
                           [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                            {
                                if (succeeded)
                                {
-                                   NSLog(@"msg saved");
+                                   NSLog(@"msg fron new convo saved");
                                    [self queryMessagesInExistingConversation];
                                }
                                else
                                {
-                                   NSLog(@"msg NOT saved");
+                                   NSLog(@"msg from new convo NOT saved");
                                }
                            }];
                       }
                       else
                       {
-                          NSLog(@"conversation NOT created");
+                          NSLog(@"error, conversation NOT created");
                       }
                   }];
              }

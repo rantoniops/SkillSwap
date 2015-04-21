@@ -57,7 +57,9 @@
 {
     User *currentUser = [User currentUser];
     PFRelation *relation = [currentUser relationForKey:@"courses"];
-    [relation.query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+    PFQuery *relationQuery = relation.query;
+    [relationQuery orderByAscending:@"createdAt"];
+    [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (error == nil) {
              self.credits.text = [[currentUser valueForKey:@"credits"] stringValue];
@@ -78,6 +80,9 @@
              }
      }];
 }
+
+
+
 
 
 
@@ -144,8 +149,9 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Course *course = self.coursesArray[indexPath.row];
     NSLog(@"courses array is %@", self.coursesArray);
-    NSLog(@"address is %@", course.address);
+//    NSLog(@"address is %@", course.address);
     cell.detailTextLabel.text = course.address;
+//    cell.detailTextLabel.text = [course valueForKey:@"address"];
     NSString *timeString = [NSDateFormatter localizedStringFromDate:course.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
     NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", course.title, timeString];
     cell.textLabel.text = titleAndTime;
