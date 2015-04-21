@@ -141,6 +141,14 @@
 
 - (IBAction)onPostButtonPressed:(UIButton *)sender
 {
+    sender.enabled = NO;
+    if (self.classAddressTextField.text == nil || self.classDescriptionTextField.text == nil || self.classTitleTextField.text == nil || [self.classPhotoImageView.image isEqual:[UIImage imageNamed:@"emptyProfile"]])
+    {
+        [self fillOutAllfields];
+        NSLog(@"can't proceed");
+    }
+    else
+    {
     // CREATING SKILL
     Skill *skill = [Skill new];
     skill.name = self.classSkillTextField.text;
@@ -199,6 +207,17 @@
              NSLog(@"skill NOT saved");
          }
      }];
+}
+}
+
+-(void)fillOutAllfields
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please complete all fields" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    }];
+    
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:true completion:nil];
 }
 
 

@@ -157,7 +157,15 @@
        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
         CustomCourseAnnotation *theAnnotation = newPin.annotation;
        newPin.canShowCallout = true;
-       newPin.pinColor = MKPinAnnotationColorPurple;
+        if (theAnnotation.course.teacher == [PFUser currentUser])
+        {
+            newPin.pinColor = MKPinAnnotationColorGreen;
+        }
+        else
+        {
+            newPin.pinColor = MKPinAnnotationColorPurple;
+            
+        }
        newPin.leftCalloutAccessoryView = [[UIImageView alloc]initWithImage:theAnnotation.course.sizedCallOutImage];
        newPin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
        return newPin;
