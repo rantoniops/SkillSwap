@@ -31,7 +31,6 @@
     [self showUserLocation];
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
 //    NSLog(@"%@", [User currentUser]);
-    self.now = [NSDate date];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -47,7 +46,7 @@
     }
     else
     {
-        [self.mapView removeAnnotations:self.mapView.annotations];
+        self.now = [NSDate date];
         [self queryForMap];
     }
 }
