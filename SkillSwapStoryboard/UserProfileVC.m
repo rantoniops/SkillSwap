@@ -146,8 +146,6 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Course *course = self.coursesArray[indexPath.row];
     NSLog(@"%@", [User currentUser]);
-    NSLog(@"courses array is %@", self.coursesArray);
-    NSLog(@"address is %@", course.address);
     cell.detailTextLabel.text = course.address;
     NSString *timeString = [NSDateFormatter localizedStringFromDate:course.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
     NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", course.title, timeString];
@@ -166,14 +164,18 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.courseAtRow = self.coursesArray[indexPath.row];
-    [self performSegueWithIdentifier:<#(NSString *)#> sender:self];
+    NSLog(@"cell tapped");
+    NSLog(@"here is our course %@", self.courseAtRow);
+    [self performSegueWithIdentifier:@"showCourse" sender:self];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    NSLog(@"segue called");
     TakeCourseVC *takeCourseVC = segue.destinationViewController;
-    takeCourseVC.selectedCourse = self.courseAtRow;
+    Course *course = self.coursesArray[[self.tableVIew indexPathForSelectedRow].row];
+    takeCourseVC.selectedCourse = course;
+    
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

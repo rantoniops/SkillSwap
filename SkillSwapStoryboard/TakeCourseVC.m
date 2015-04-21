@@ -33,6 +33,10 @@
     }];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = NO;
+}
 
 
 - (IBAction)takeClass:(UIButton *)sender
