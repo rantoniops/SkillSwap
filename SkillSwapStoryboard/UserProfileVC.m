@@ -1,6 +1,7 @@
 #import "UserProfileVC.h"
 #import "SkillSwapStoryboard-Swift.h"
 #import "LoginVC.h"
+#import "TakeCourseVC.h"
 @interface UserProfileVC () <UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *rating;
@@ -10,6 +11,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionText;
 @property PFFile *userImageFile;
+@property Course *courseAtRow;
 
 @property NSArray *coursesArray;
 
@@ -143,6 +145,7 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Course *course = self.coursesArray[indexPath.row];
+    NSLog(@"%@", [User currentUser]);
     NSLog(@"courses array is %@", self.coursesArray);
     NSLog(@"address is %@", course.address);
     cell.detailTextLabel.text = course.address;
@@ -154,6 +157,24 @@
     return cell;
 }
 
+
+-(void)followButtonTap
+{
+    //needs to be changed so we are looking at another users profile
+    User *selectedUser = [User currentUser];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.courseAtRow = self.coursesArray[indexPath.row];
+    [self performSegueWithIdentifier:<#(NSString *)#> sender:self];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    TakeCourseVC *takeCourseVC = segue.destinationViewController;
+    takeCourseVC.selectedCourse = self.courseAtRow;
+}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
