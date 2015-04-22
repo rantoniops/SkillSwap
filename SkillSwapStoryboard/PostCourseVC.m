@@ -87,7 +87,6 @@
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:picker animated:true completion:NULL];
-    
 }
 
 -(void)showCameraPhotoView
@@ -170,16 +169,17 @@
                       NSLog(@"course saved");
                       User *currentUser = [User currentUser];
                       PFRelation *teacherRelation = [currentUser relationForKey:@"courses"];
+                      PFRelation *userSkillRelation = [currentUser relationForKey:@"skills"];
                       [teacherRelation addObject: course];
-                      PFRelation *skillRelation = [currentUser relationForKey:@"skills"];
-                      [skillRelation addObject: skill];
+                      [userSkillRelation addObject: skill];
                       [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                        {
                            if (succeeded)
                            {
                                NSLog(@"teacher relation saved");
-                               [self dismissViewControllerAnimated:true completion:nil];
+                               [self.navigationController popViewControllerAnimated:YES];
                                [self.delegate didIcreateACourse:true];
+
                            }
                            else
                            {
@@ -217,7 +217,8 @@
 - (IBAction)onXButtonPressed:(UIButton *)sender
 {
     
-    [self dismissViewControllerAnimated:true completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+
     [self.delegate didIcreateACourse:false];
    
 }

@@ -35,11 +35,13 @@
 
                  if (objects.count > 0) // convo exists, we continue using existing one
                  {
+                     NSLog(@"there's an existing convo, we'll use that one");
                      self.conversation = objects.firstObject;
                      [self queryMessagesInExistingConversation];
                  }
                  else // convo doesn't exist, we create a new one and we'll trash it in viewwilldissappear if no messaging occurs
                  {
+                     NSLog(@"no existing convos, we create a new one");
                      Conversation *newConversation = [Conversation new];
                      [newConversation addObject:[User currentUser] forKey:@"users"];
                      [newConversation addObject:self.otherUser forKey:@"users"]; // OTHER USER HERE IS THE TEACHER

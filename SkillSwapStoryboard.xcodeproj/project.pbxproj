@@ -23,6 +23,9 @@
 		6B9B1F211AE0A611005219AF /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9B1F201AE0A611005219AF /* Conversation.swift */; };
 		6B9B1F231AE0A673005219AF /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9B1F221AE0A673005219AF /* Course.swift */; };
 		6BAEDE281AE0390F00282CFB /* MessagesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAEDE271AE0390F00282CFB /* MessagesVC.m */; };
+		6BC2F6A81AE842E700F9AFA3 /* com.crashlytics.missing-devices.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6BC2F6A71AE842E700F9AFA3 /* com.crashlytics.missing-devices.txt */; };
+		6BFF24861AE83CEB00CBD130 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */; };
+		6BFF24871AE83CEB00CBD130 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFF24851AE83CEB00CBD130 /* Fabric.framework */; };
 		964E391A1AE1703500123AA9 /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 964E39191AE1703500123AA9 /* MapVC.m */; };
 		96A50BE91ADEF52C007C82E5 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E46083B1ADC9D0800AFF702 /* Bolts.framework */; };
 		96A50BEB1ADEF52F007C82E5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608391ADC9CFC00AFF702 /* Parse.framework */; };
@@ -83,6 +86,9 @@
 		6B9B1F221AE0A673005219AF /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Course.swift; path = ../Course.swift; sourceTree = "<group>"; };
 		6BAEDE261AE0390F00282CFB /* MessagesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesVC.h; sourceTree = "<group>"; };
 		6BAEDE271AE0390F00282CFB /* MessagesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesVC.m; sourceTree = "<group>"; };
+		6BC2F6A71AE842E700F9AFA3 /* com.crashlytics.missing-devices.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "com.crashlytics.missing-devices.txt"; sourceTree = "<group>"; };
+		6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
+		6BFF24851AE83CEB00CBD130 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		964E39191AE1703500123AA9 /* MapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapVC.m; sourceTree = "<group>"; };
 		96E2A9C01ADECED100727E09 /* CustomCourseAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCourseAnnotation.h; sourceTree = "<group>"; };
 		96E2A9C11ADECED100727E09 /* CustomCourseAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCourseAnnotation.m; sourceTree = "<group>"; };
@@ -124,10 +130,12 @@
 				9E4608321ADC9CA500AFF702 /* StoreKit.framework in Frameworks */,
 				9E46082E1ADC9C7C00AFF702 /* QuartzCore.framework in Frameworks */,
 				9E4608301ADC9C8100AFF702 /* Security.framework in Frameworks */,
+				6BFF24861AE83CEB00CBD130 /* Crashlytics.framework in Frameworks */,
 				96A50BEB1ADEF52F007C82E5 /* Parse.framework in Frameworks */,
 				9E46082C1ADC9C7500AFF702 /* MobileCoreServices.framework in Frameworks */,
 				9E46083C1ADC9D0800AFF702 /* Bolts.framework in Frameworks */,
 				9E46082A1ADC9C6D00AFF702 /* AudioToolbox.framework in Frameworks */,
+				6BFF24871AE83CEB00CBD130 /* Fabric.framework in Frameworks */,
 				9E4608281ADC9C6700AFF702 /* CFNetwork.framework in Frameworks */,
 				9E4608261ADC9C6100AFF702 /* CoreLocation.framework in Frameworks */,
 				9E4608241ADC9C5A00AFF702 /* MapKit.framework in Frameworks */,
@@ -186,6 +194,9 @@
 		6B78463A1ADC988B00EAD40D = {
 			isa = PBXGroup;
 			children = (
+				6BC2F6A71AE842E700F9AFA3 /* com.crashlytics.missing-devices.txt */,
+				6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */,
+				6BFF24851AE83CEB00CBD130 /* Fabric.framework */,
 				6B78467C1ADCAB2B00EAD40D /* Frameworks */,
 				6B16B5151ADDC9E70040B4EB /* STORYBOARD CONDOM */,
 				6B7846451ADC988B00EAD40D /* SkillSwap */,
@@ -298,6 +309,7 @@
 				6B78463F1ADC988B00EAD40D /* Sources */,
 				6B7846401ADC988B00EAD40D /* Frameworks */,
 				6B7846411ADC988B00EAD40D /* Resources */,
+				6BFF24831AE83C7A00CBD130 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -337,6 +349,7 @@
 				TargetAttributes = {
 					6B7846421ADC988B00EAD40D = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = YV5E3UUJ4P;
 					};
 					6B78465E1ADC988B00EAD40D = {
 						CreatedOnToolsVersion = 6.3;
@@ -372,6 +385,7 @@
 				6B7846551ADC988B00EAD40D /* Main.storyboard in Resources */,
 				6B78465A1ADC988B00EAD40D /* LaunchScreen.xib in Resources */,
 				6B7846571ADC988B00EAD40D /* Images.xcassets in Resources */,
+				6BC2F6A81AE842E700F9AFA3 /* com.crashlytics.missing-devices.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +397,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6BFF24831AE83C7A00CBD130 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 6fd26c3d4aaf71dc4c5b39e05db51159b1406100 9510f229d88197a34367eb01cdde02a806c7d3ce293b8d79c758f0fffe8ddb89";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6B78463F1ADC988B00EAD40D /* Sources */ = {
@@ -467,8 +497,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -490,7 +520,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "28a2c974-1c98-4130-b487-b41a0320f101";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -512,8 +542,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -528,7 +558,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "28a2c974-1c98-4130-b487-b41a0320f101";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -540,7 +570,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -550,7 +580,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "28a2c974-1c98-4130-b487-b41a0320f101";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SkillSwapStoryboard/SkillSwapStoryboard-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -562,7 +592,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -572,7 +602,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "28a2c974-1c98-4130-b487-b41a0320f101";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SkillSwapStoryboard/SkillSwapStoryboard-Bridging-Header.h";
 			};
 			name = Release;
