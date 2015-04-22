@@ -113,6 +113,7 @@
         messageVC.otherUser = self.selectedCourse.teacher;
 //        NSLog(@"selected teacher is %@", self.selectedCourse.teacher);
         messageVC.selectedCourse = self.selectedCourse;
+        messageVC.origin = @"takeCourse";
     }
 }
 
