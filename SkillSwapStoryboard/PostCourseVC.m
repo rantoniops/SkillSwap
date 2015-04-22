@@ -186,8 +186,9 @@
                            if (succeeded)
                            {
                                NSLog(@"teacher relation saved");
-                               [self dismissViewControllerAnimated:true completion:nil];
+                               [self.navigationController popViewControllerAnimated:YES];
                                [self.delegate didIcreateACourse:true];
+
                            }
                            else
                            {
@@ -225,7 +226,8 @@
 - (IBAction)onXButtonPressed:(UIButton *)sender
 {
     
-    [self dismissViewControllerAnimated:true completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+
     [self.delegate didIcreateACourse:false];
    
 }

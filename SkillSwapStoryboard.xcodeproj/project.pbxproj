@@ -45,6 +45,7 @@
 		B126D4861ADD7AEE002E6F99 /* TeachingCourseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D4851ADD7AEE002E6F99 /* TeachingCourseVC.m */; };
 		B126D4891ADD7B46002E6F99 /* MessageConversationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D4881ADD7B46002E6F99 /* MessageConversationVC.m */; };
 		B126D48C1ADD8254002E6F99 /* UserProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D48B1ADD8254002E6F99 /* UserProfileVC.m */; };
+		B1D7C4511AE82DA7007FA4C8 /* LoginBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4501AE82DA7007FA4C8 /* LoginBG@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,7 @@
 		B126D4881ADD7B46002E6F99 /* MessageConversationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageConversationVC.m; sourceTree = "<group>"; };
 		B126D48A1ADD8254002E6F99 /* UserProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileVC.h; sourceTree = "<group>"; };
 		B126D48B1ADD8254002E6F99 /* UserProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileVC.m; sourceTree = "<group>"; };
+		B1D7C4501AE82DA7007FA4C8 /* LoginBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LoginBG@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +210,7 @@
 		6B7846451ADC988B00EAD40D /* SkillSwap */ = {
 			isa = PBXGroup;
 			children = (
+				B1D7C44F1AE82D47007FA4C8 /* ImageAsset */,
 				6B16B5161ADDCA6F0040B4EB /* MapVC and its buttons VCs */,
 				B126D4811ADD78BC002E6F99 /* LoginVC.h */,
 				B126D4821ADD78BC002E6F99 /* LoginVC.m */,
@@ -288,6 +291,14 @@
 			path = SkillSwapStoryboard;
 			sourceTree = "<group>";
 		};
+		B1D7C44F1AE82D47007FA4C8 /* ImageAsset */ = {
+			isa = PBXGroup;
+			children = (
+				B1D7C4501AE82DA7007FA4C8 /* LoginBG@2x.png */,
+			);
+			name = ImageAsset;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -337,10 +348,11 @@
 				TargetAttributes = {
 					6B7846421ADC988B00EAD40D = {
 						CreatedOnToolsVersion = 6.3;
+						DevelopmentTeam = X3M49KGF3D;
 					};
 					6B78465E1ADC988B00EAD40D = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = YV5E3UUJ4P;
+						DevelopmentTeam = X3M49KGF3D;
 						TestTargetID = 6B7846421ADC988B00EAD40D;
 					};
 				};
@@ -370,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B7846551ADC988B00EAD40D /* Main.storyboard in Resources */,
+				B1D7C4511AE82DA7007FA4C8 /* LoginBG@2x.png in Resources */,
 				6B78465A1ADC988B00EAD40D /* LaunchScreen.xib in Resources */,
 				6B7846571ADC988B00EAD40D /* Images.xcassets in Resources */,
 			);
@@ -540,7 +553,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -562,7 +575,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -581,8 +594,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -604,8 +617,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
