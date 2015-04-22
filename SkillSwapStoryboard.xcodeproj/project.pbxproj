@@ -50,6 +50,10 @@
 		B126D48C1ADD8254002E6F99 /* UserProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D48B1ADD8254002E6F99 /* UserProfileVC.m */; };
 		B1D7C4511AE82DA7007FA4C8 /* LoginBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4501AE82DA7007FA4C8 /* LoginBG@2x.png */; };
 		B1D7C4541AE85B37007FA4C8 /* ReviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B1D7C4531AE85B37007FA4C8 /* ReviewVC.m */; };
+		B1D7C45A1AE85FF8007FA4C8 /* bg-sunny-cloud-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4561AE85FF8007FA4C8 /* bg-sunny-cloud-1@2x.png */; };
+		B1D7C45B1AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4571AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png */; };
+		B1D7C45C1AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4581AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png */; };
+		B1D7C45D1AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4591AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +126,10 @@
 		B1D7C4501AE82DA7007FA4C8 /* LoginBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LoginBG@2x.png"; sourceTree = "<group>"; };
 		B1D7C4521AE85B37007FA4C8 /* ReviewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewVC.h; sourceTree = "<group>"; };
 		B1D7C4531AE85B37007FA4C8 /* ReviewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewVC.m; sourceTree = "<group>"; };
+		B1D7C4561AE85FF8007FA4C8 /* bg-sunny-cloud-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sunny-cloud-1@2x.png"; sourceTree = "<group>"; };
+		B1D7C4571AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sunny-cloud-2@2x.png"; sourceTree = "<group>"; };
+		B1D7C4581AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sunny-cloud-3@2x.png"; sourceTree = "<group>"; };
+		B1D7C4591AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sunny-cloud-4@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +318,10 @@
 		B1D7C44F1AE82D47007FA4C8 /* ImageAsset */ = {
 			isa = PBXGroup;
 			children = (
+				B1D7C4561AE85FF8007FA4C8 /* bg-sunny-cloud-1@2x.png */,
+				B1D7C4571AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png */,
+				B1D7C4581AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png */,
+				B1D7C4591AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png */,
 				B1D7C4501AE82DA7007FA4C8 /* LoginBG@2x.png */,
 			);
 			name = ImageAsset;
@@ -326,6 +338,7 @@
 				6B7846401ADC988B00EAD40D /* Frameworks */,
 				6B7846411ADC988B00EAD40D /* Resources */,
 				6BFF24831AE83C7A00CBD130 /* ShellScript */,
+				B1D7C4551AE85E47007FA4C8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -399,10 +412,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B7846551ADC988B00EAD40D /* Main.storyboard in Resources */,
+				B1D7C45A1AE85FF8007FA4C8 /* bg-sunny-cloud-1@2x.png in Resources */,
 				B1D7C4511AE82DA7007FA4C8 /* LoginBG@2x.png in Resources */,
+				B1D7C45C1AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png in Resources */,
+				B1D7C45D1AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png in Resources */,
 				6B78465A1ADC988B00EAD40D /* LaunchScreen.xib in Resources */,
 				6B7846571ADC988B00EAD40D /* Images.xcassets in Resources */,
 				6BC2F6A81AE842E700F9AFA3 /* com.crashlytics.missing-devices.txt in Resources */,
+				B1D7C45B1AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,7 +444,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run 6fd26c3d4aaf71dc4c5b39e05db51159b1406100 9510f229d88197a34367eb01cdde02a806c7d3ce293b8d79c758f0fffe8ddb89";
+			shellScript = "./Fabric.framework/run 4da6a960f5c977a72fc4134611df971b43ada4fd b5d564fe4ecb56df27d613b8f84e8ff20847a90f9263577fd76b422e28305cad";
+		};
+		B1D7C4551AE85E47007FA4C8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
 
