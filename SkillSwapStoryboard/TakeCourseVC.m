@@ -11,6 +11,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
+@property User *currentUser;
 
 
 
@@ -19,8 +20,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    User *currentUser = [User currentUser];
-    if (self.selectedCourse.teacher == currentUser) {
+    self.currentUser = [User currentUser];
+    if (self.selectedCourse.teacher == self.currentUser) {
         self.followButton.hidden = YES;
     }
     
@@ -51,8 +52,27 @@
 
 - (IBAction)takeClass:(UIButton *)sender
 {
-    [self confirmAlert];
+    NSLog(@"Here are the current users credits: %@" , [[User currentUser]valueForKey:@"credits"]);
+    int creditCount = [[[User currentUser]valueForKey:@"credits"] intValue];
+    
+//    if (creditCount < 1)
+//    {
+//        [self denyAlert];
+//    }
+//    else
+//    {
+        [self confirmAlert];
+//    }
 }
+
+-(void)denyAlert
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Insufficient Credits" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler: nil];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:true completion:nil];
+}
+
 
 -(void)confirmAlert
 {
@@ -62,17 +82,17 @@
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         [relation addObject: self.selectedCourse];
-//        self.selectedCourse.students = [User currentUser];
-//        currentUser.course = self.selectedCourse;
+        [self exchangeCredits];
+        [self.selectedCourse.teacher saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+         }];
         [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
              if (succeeded)
              {
                  // IF WE TRY TO SET AND GET CREDITS WITH DOT NOTATION THE APP WILL CRASH SAYING UNRECOGNIZED SELECTOR SENT TO INSTANCE, IF WE CHANGE IT TO VALUEFORKEY AND SETVALUEFORKEY IT WORKS FINE. THIS IS WEIRD
-                 int newCreditCount = [[currentUser valueForKey:@"credits"] intValue] -1;
-                 NSNumber *creditCount = [NSNumber numberWithInt:newCreditCount];
-                 [currentUser setValue:creditCount forKey:@"credits"];
                  NSLog(@"course saved");
+                 NSLog(@"%@", self.selectedCourse.teacher);
              }
              else
              {
@@ -91,6 +111,16 @@
     [alert addAction:confirmClass];
     [self presentViewController:alert animated:true completion:nil];
     
+}
+-(void)exchangeCredits
+{
+    int newCreditCount = [[self.currentUser valueForKey:@"credits"] intValue] -1;
+    int teacherNewCreditCount = [[self.selectedCourse.teacher valueForKey:@"credits"] intValue]+1;
+    NSNumber *teacherCreditCount = [NSNumber numberWithInt:teacherNewCreditCount];
+    NSNumber *creditCount = [NSNumber numberWithInt:newCreditCount];
+    NSNumber *manyCredits = [NSNumber numberWithInt:3];
+    [self.selectedCourse.teacher setValue:manyCredits forKey:@"credits"];
+    [self.currentUser setValue:creditCount forKey:@"credits"];
 }
 
 
