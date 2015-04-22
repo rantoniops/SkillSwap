@@ -14,16 +14,35 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if (self.selectedConversation)
+    if ([self.origin isEqualToString:@"messages"])
     {
-        NSLog(@"selected conversation found");
+        NSLog(@"coming from messages, selected conversation found");
         self.conversation = self.selectedConversation;
         [self queryMessagesInExistingConversation];
     }
-    else
+    else if ([self.origin isEqualToString:@"takeCourse"])
     {
-        NSLog(@"selected conversation NOT found");
+        NSLog(@"coming from takeCourse, selected conversation NOT found");
     }
+
+
+
+
+
+
+//    if (self.selectedConversation)
+//    {
+//        NSLog(@"selected conversation found");
+//        self.conversation = self.selectedConversation;
+//        [self queryMessagesInExistingConversation];
+//    }
+//    else
+//    {
+//        NSLog(@"selected conversation NOT found");
+//    }
+
+
+    
 }
 
 - (IBAction)onGoBackPressed:(UIButton *)sender
@@ -44,52 +63,6 @@
              NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
              self.messages = objects;
              [self.tableView reloadData];
-
-
-             ///////////////////////////////// PUSH NOTICATION STUFF ////////////////////////////////
-
-
-             PFInstallation *installation = [PFInstallation currentInstallation];
-//             [installation setObject:@YES forKey:@"scores"];
-             installation[@"receiverUser"] = self.otherUser;
-             [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-              {
-                   if (succeeded)
-                   {
-                       NSLog(@"installation saved");
-
-
-                       /////////////////////////////// NOW DO THIS ////////////////////////////////
-
-                       PFQuery *pushQuery = [PFInstallation query];
-                       [pushQuery whereKey:@"receiverUser" equalTo: self.otherUser];
-                       PFPush *push = [[PFPush alloc] init];
-                       [push setQuery:pushQuery];
-                       [push setMessage: self.messageTextField.text];
-                       [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-                        {
-                            if (succeeded)
-                            {
-                                NSLog(@"push success");
-                            }
-                            else
-                            {
-                                NSLog(@"push error");
-                            }
-                        }];
-
-                       ////////////////////////////////////////////////////////////////////////////
-
-                   }
-                   else
-                   {
-                       NSLog(@"installation error");
-                   }
-               }];
-
-             ///////////////////////////////// PUSH NOTICATION STUFF ////////////////////////////////
-
-
          }
          else
          {
@@ -134,6 +107,56 @@
                       if (succeeded)
                       {
                           NSLog(@"msg fron existing convo saved");
+
+
+
+                          ///////////////////////////////// PUSH NOTICATION STUFF ////////////////////////////////
+
+
+                          PFInstallation *installation = [PFInstallation currentInstallation];
+                          //             [installation setObject:@YES forKey:@"scores"];
+                          installation[@"senderUser"] = [User currentUser];
+                          installation[@"receiverUser"] = self.otherUser;
+                          [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                           {
+                               if (succeeded)
+                               {
+                                   NSLog(@"installation saved");
+
+
+                                   /////////////////////////////// NOW DO THIS ////////////////////////////////
+
+                                   PFQuery *pushQuery = [PFInstallation query];
+                                   [pushQuery whereKey:@"receiverUser" equalTo: self.otherUser];
+                                   PFPush *push = [[PFPush alloc] init];
+                                   [push setQuery:pushQuery];
+                                   [push setMessage: self.messageTextField.text];
+                                   [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                                    {
+                                        if (succeeded)
+                                        {
+                                            NSLog(@"push success");
+                                        }
+                                        else
+                                        {
+                                            NSLog(@"push error");
+                                        }
+                                    }];
+
+                                   ////////////////////////////////////////////////////////////////////////////
+
+                               }
+                               else
+                               {
+                                   NSLog(@"installation error");
+                               }
+                           }];
+
+                          ///////////////////////////////// PUSH NOTICATION STUFF ////////////////////////////////
+
+
+
+
                           [self queryMessagesInExistingConversation];
                       }
                       else
@@ -168,6 +191,57 @@
                                if (succeeded)
                                {
                                    NSLog(@"msg fron new convo saved");
+
+
+
+
+                                   ///////////////////////////////// PUSH NOTICATION STUFF ////////////////////////////////
+
+
+                                   PFInstallation *installation = [PFInstallation currentInstallation];
+                                   //             [installation setObject:@YES forKey:@"scores"];
+                                   installation[@"senderUser"] = [User currentUser];
+                                   installation[@"receiverUser"] = self.otherUser;
+                                   [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                                    {
+                                        if (succeeded)
+                                        {
+                                            NSLog(@"installation saved");
+
+
+                                            /////////////////////////////// NOW DO THIS ////////////////////////////////
+
+                                            PFQuery *pushQuery = [PFInstallation query];
+                                            [pushQuery whereKey:@"receiverUser" equalTo: self.otherUser];
+                                            PFPush *push = [[PFPush alloc] init];
+                                            [push setQuery:pushQuery];
+                                            [push setMessage: self.messageTextField.text];
+                                            [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                                             {
+                                                 if (succeeded)
+                                                 {
+                                                     NSLog(@"push success");
+                                                 }
+                                                 else
+                                                 {
+                                                     NSLog(@"push error");
+                                                 }
+                                             }];
+                                            
+                                            ////////////////////////////////////////////////////////////////////////////
+                                            
+                                        }
+                                        else
+                                        {
+                                            NSLog(@"installation error");
+                                        }
+                                    }];
+                                   
+                                   ///////////////////////////////// PUSH NOTICATION STUFF ////////////////////////////////
+
+
+
+
                                    [self queryMessagesInExistingConversation];
                                }
                                else

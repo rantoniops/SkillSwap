@@ -4,4 +4,5 @@
 @property User *otherUser;
 @property Conversation *selectedConversation;
 @property Course *selectedCourse;
+@property NSString *origin;
 @end

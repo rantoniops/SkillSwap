@@ -55,6 +55,7 @@
     messageConversationVC.selectedConversation = self.conversationToPass;
     messageConversationVC.otherUser = self.otherUserToPass;
     messageConversationVC.selectedCourse = self.courseToPass;
+    messageConversationVC.origin = @"messages";
 }
 
 
