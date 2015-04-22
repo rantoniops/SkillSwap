@@ -1,0 +1,2 @@
+Device ID	Device Name
+6868688c26b98e374bee25fb418025cb7cd5174d	sha - iPhone 6 Plus

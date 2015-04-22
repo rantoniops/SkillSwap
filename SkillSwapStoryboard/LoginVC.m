@@ -1,10 +1,23 @@
 #import "LoginVC.h"
 #import "SkillSwapStoryboard-Swift.h"
+
 @interface LoginVC () <UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIButton *logingButton;
+@property (weak, nonatomic) IBOutlet UIButton *signupButton;
+@property (weak, nonatomic) IBOutlet UILabel *heading;
+
+@property (weak, nonatomic) IBOutlet UIImageView *cloud1;
+@property (weak, nonatomic) IBOutlet UIImageView *cloud2;
+@property (weak, nonatomic) IBOutlet UIImageView *cloud3;
+@property (weak, nonatomic) IBOutlet UIImageView *cloud4;
+
 @end
+
+
 @implementation LoginVC
 - (void)viewDidLoad
 {
@@ -15,13 +28,33 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
     self.navigationController.navigationBarHidden = YES;
     NSLog(@"current user is %@", [User currentUser]);
     if ([User currentUser] != nil)
     {
         [self performSegueWithIdentifier:@"logIn" sender:self];
     }
+    
+    self.heading.alpha = 0;
+    [self moveTextfieldOffScreen:self.nameTextField];
+    [self moveTextfieldOffScreen:self.emailTextField];
+    [self moveTextfieldOffScreen:self.passwordTextField];
+    
 }
+
+-(void) moveTextfieldOffScreen:(UITextField * )textField
+{
+    CGPoint nCenter = textField.center;
+    nCenter.x -= self.view.bounds.size.width;
+    textField.center = nCenter;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    
+}
+
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {

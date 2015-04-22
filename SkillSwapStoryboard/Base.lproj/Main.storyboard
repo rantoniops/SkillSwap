@@ -163,7 +163,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1588.5" y="1502"/>
+            <point key="canvasLocation" x="1675.5" y="1490"/>
         </scene>
         <!--Teaching CourseVC-->
         <scene sceneID="obs-Ef-tMe">
@@ -501,7 +501,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tdr-bj-3DO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2446.5" y="1524"/>
+            <point key="canvasLocation" x="2518.5" y="1524"/>
         </scene>
         <!--MapVC-->
         <scene sceneID="0BY-85-1ks">
@@ -1023,6 +1023,24 @@
             </objects>
             <point key="canvasLocation" x="4041" y="1524"/>
         </scene>
+        <!--ReviewVC-->
+        <scene sceneID="3gY-tx-BYa">
+            <objects>
+                <viewController id="8x6-aK-RoZ" customClass="ReviewVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dzH-qa-UA0"/>
+                        <viewControllerLayoutGuide type="bottom" id="hUE-CF-qq8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7uS-g4-Mcb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D9d-1f-9jT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3196.5" y="2293"/>
+        </scene>
         <!--Post CourseVC-->
         <scene sceneID="Lfn-7W-mM9">
             <objects>
@@ -1428,7 +1446,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FEu-SC-VzW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3237" y="1524"/>
+            <point key="canvasLocation" x="4077" y="2293"/>
         </scene>
         <!--LoginVC-->
         <scene sceneID="kPA-m9-567">
@@ -1444,6 +1462,24 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginBG.png" translatesAutoresizingMaskIntoConstraints="NO" id="Vph-Xd-EZh">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-sunny-cloud-1.png" translatesAutoresizingMaskIntoConstraints="NO" id="7Rr-kn-s0G">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="223" y="334" width="161" height="61"/>
+                                </variation>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-sunny-cloud-3.png" translatesAutoresizingMaskIntoConstraints="NO" id="uRO-qI-3wn">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="284" y="50" width="87" height="42"/>
+                                </variation>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-sunny-cloud-4.png" translatesAutoresizingMaskIntoConstraints="NO" id="LDe-wO-kj6">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="28" y="122" width="124" height="41"/>
+                                </variation>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="your email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qzI-Fz-Qq1">
                                 <rect key="frame" x="252" y="151" width="97" height="30"/>
@@ -1569,6 +1605,12 @@
                                     <action selector="signUpButtonPress:" destination="REZ-1m-KA0" eventType="touchUpInside" id="nD1-W2-WAT"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-sunny-cloud-2.png" translatesAutoresizingMaskIntoConstraints="NO" id="EbF-R1-Ib2">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="101" y="236" width="104" height="40"/>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1608,8 +1650,12 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="Vph-Xd-EZh"/>
+                                <exclude reference="7Rr-kn-s0G"/>
+                                <exclude reference="uRO-qI-3wn"/>
+                                <exclude reference="LDe-wO-kj6"/>
                                 <exclude reference="hkq-Ae-krN"/>
                                 <exclude reference="vQ7-gI-Iam"/>
+                                <exclude reference="EbF-R1-Ib2"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="3Wh-Tm-Rxs"/>
@@ -1631,8 +1677,12 @@
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="Vph-Xd-EZh"/>
+                                <include reference="7Rr-kn-s0G"/>
+                                <include reference="uRO-qI-3wn"/>
+                                <include reference="LDe-wO-kj6"/>
                                 <include reference="hkq-Ae-krN"/>
                                 <include reference="vQ7-gI-Iam"/>
+                                <include reference="EbF-R1-Ib2"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="3Wh-Tm-Rxs"/>
@@ -1658,9 +1708,16 @@
                     </view>
                     <navigationItem key="navigationItem" id="BDv-0G-qUT"/>
                     <connections>
+                        <outlet property="cloud1" destination="7Rr-kn-s0G" id="t7R-lo-vNZ"/>
+                        <outlet property="cloud2" destination="EbF-R1-Ib2" id="due-uC-4PS"/>
+                        <outlet property="cloud3" destination="uRO-qI-3wn" id="mFF-o6-OM6"/>
+                        <outlet property="cloud4" destination="LDe-wO-kj6" id="KWu-zY-FBC"/>
                         <outlet property="emailTextField" destination="qzI-Fz-Qq1" id="6IS-JL-hj5"/>
+                        <outlet property="heading" destination="vQ7-gI-Iam" id="e5u-bc-nP3"/>
+                        <outlet property="logingButton" destination="zng-CC-rM9" id="Ifb-ea-OGe"/>
                         <outlet property="nameTextField" destination="hkq-Ae-krN" id="JhU-v2-PzK"/>
                         <outlet property="passwordTextField" destination="HZH-e4-P2U" id="gKM-gm-noK"/>
+                        <outlet property="signupButton" destination="UnI-nb-Bgr" id="rxJ-wX-WG6"/>
                         <segue destination="C6z-MJ-OJR" kind="show" identifier="logIn" id="jLA-xh-0Ut"/>
                     </connections>
                 </viewController>
@@ -1707,10 +1764,14 @@
     </scenes>
     <resources>
         <image name="LoginBG.png" width="375" height="667"/>
+        <image name="bg-sunny-cloud-1.png" width="159" height="50"/>
+        <image name="bg-sunny-cloud-2.png" width="138" height="49"/>
+        <image name="bg-sunny-cloud-3.png" width="74" height="35"/>
+        <image name="bg-sunny-cloud-4.png" width="115" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="jLA-xh-0Ut"/>
-        <segue reference="5U3-6a-ZrJ"/>
-        <segue reference="WcH-cb-mK9"/>
+        <segue reference="qe4-rW-6Zk"/>
+        <segue reference="uaL-Q6-g67"/>
     </inferredMetricsTieBreakers>
 </document>
