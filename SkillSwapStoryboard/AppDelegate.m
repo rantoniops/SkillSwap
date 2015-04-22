@@ -1,13 +1,9 @@
-//
-//  AppDelegate.m
-//  SkillSwapStoryboard
-//
-//  Created by Antonio Perez on 4/13/15.
-//  Copyright (c) 2015 antonioperez. All rights reserved.
-//
-
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
+
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
 
 @interface AppDelegate ()
 
@@ -40,6 +36,10 @@
     [application registerForRemoteNotifications];
 
 
+    [Fabric with:@[CrashlyticsKit]];
+
+
+
 
     // ...
     return YES;
@@ -69,7 +69,10 @@
 
 
 // CODIED FROM PARSE PUSH NOTIFICATIONS, THIS ALLOWS PARSE TO HANDLE PUSH NOTIFICATIONS FOR US USING A MODAL VIEW WHEN THE APP IS RUNNING
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+//    NSNotificationCenter *notiCenter = [NSNotificationCenter new];
+//    [notiCenter postNotification:@"messageReceived"];
     [PFPush handlePush:userInfo];
 }
 
