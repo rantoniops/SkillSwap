@@ -21,9 +21,6 @@ import Foundation
 
     @NSManaged var courses : PFRelation
 
-//    @NSManaged var coursesToTake : PFRelation
-//    @NSManaged var coursesToTeach : PFRelation
-
     @NSManaged var credits : NSNumber
 
 

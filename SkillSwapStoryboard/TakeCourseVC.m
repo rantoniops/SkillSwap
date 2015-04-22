@@ -203,6 +203,7 @@
         MessageConversationVC *messageVC = segue.destinationViewController;
         messageVC.otherUser = self.selectedCourse.teacher;
         messageVC.selectedCourse = self.selectedCourse;
+        messageVC.origin = @"takeCourse";
     }
 }
 

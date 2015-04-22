@@ -38,6 +38,25 @@
     {
         if (user)
         {
+            NSLog(@"setting current user to the installation from the login");
+
+            // push notifications
+            [[PFInstallation currentInstallation] setObject:[User currentUser] forKey:@"user"];
+            [[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+             {
+                 if (succeeded)
+                 {
+                     NSLog(@"installation saved");
+                 }
+                 else
+                 {
+                     NSLog(@"error, installation NOT saved");
+                 }
+             }];
+
+
+
+            [self dismissViewControllerAnimated:true completion:nil];
             [self performSegueWithIdentifier:@"logIn" sender:self];
         } else
         {
@@ -59,6 +78,23 @@
     {
         if (succeeded)
         {
+            NSLog(@"setting current user to the installation from the signup");
+
+            // push notifications
+            [[PFInstallation currentInstallation] setObject:[User currentUser] forKey:@"user"];
+            [[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+             {
+                 if (succeeded)
+                 {
+                     NSLog(@"installation saved");
+                 }
+                 else
+                 {
+                     NSLog(@"error, installation NOT saved");
+                 }
+             }];
+
+            [self dismissViewControllerAnimated:true completion:nil];
             [self performSegueWithIdentifier:@"logIn" sender:self];
 
         }
