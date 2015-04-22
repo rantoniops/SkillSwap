@@ -6,7 +6,7 @@
 @property NSArray *conversations;
 @property Conversation *conversationToPass;
 @property User *otherUserToPass;
-@property Course *courseToPass;
+//@property Course *courseToPass;
 @end
 @implementation MessagesVC
 
@@ -27,22 +27,40 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.conversationToPass = self.conversations[indexPath.row];
-    self.courseToPass = self.conversationToPass.course;
 
-    for (Conversation *conversation in self.conversations)
+
+//    self.courseToPass = self.conversationToPass.course;
+
+//    for (Conversation *conversation in self.conversations)
+//    {
+//        for (User *user in conversation.users)
+//        {
+//            if (user == [User currentUser])
+//            {
+//                NSLog(@"iteratedUser is current user");
+//            }
+//            else
+//            {
+//                self.otherUserToPass = user;
+//            }
+//        }
+//    }
+
+
+
+    for (User *user in self.conversationToPass.users)
     {
-        for (User *user in conversation.users)
+        if (user == [User currentUser])
         {
-            if (user == [User currentUser])
-            {
-                NSLog(@"iteratedUser is current user");
-            }
-            else
-            {
-                self.otherUserToPass = user;
-            }
+            NSLog(@"iteratedUser is current user");
+        }
+        else
+        {
+            self.otherUserToPass = user;
         }
     }
+
+
 
     [self performSegueWithIdentifier:@"messageConversation" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
@@ -54,7 +72,7 @@
     MessageConversationVC *messageConversationVC = segue.destinationViewController;
     messageConversationVC.selectedConversation = self.conversationToPass;
     messageConversationVC.otherUser = self.otherUserToPass;
-    messageConversationVC.selectedCourse = self.courseToPass;
+//    messageConversationVC.selectedCourse = self.courseToPass;
     messageConversationVC.origin = @"messages";
 }
 
