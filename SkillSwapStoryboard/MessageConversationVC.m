@@ -11,7 +11,6 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
-    self.conversationGotUsed = 0;
 }
 
 
@@ -25,23 +24,47 @@
     }
     else if ([self.origin isEqualToString:@"takeCourse"]) // SOMEONE IS MESSAGING A TEACHER
     {
-        NSLog(@"coming from takeCourse, creating new conversation, we'll trash it in viewwilldissappear if no messaging occurs");
-        Conversation *newConversation = [Conversation new];
-        [newConversation addObject:[User currentUser] forKey:@"users"];
-        [newConversation addObject:self.otherUser forKey:@"users"]; // OTHER USER HERE IS THE TEACHER
-        newConversation.course = self.selectedCourse;
-        self.conversation = newConversation;
-        [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+        // CHECKING IF THERE'S ALREADY AN EXISTING CONVO BETWEEN THIS TEACHER, THIS USER ABOUT THIS COURSE
+        PFQuery *query = [Conversation query];
+        [query whereKey:@"course" equalTo:self.selectedCourse];
+        [query whereKey:@"users" containedIn:@[ [User currentUser] , self.otherUser ] ];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
-             if (succeeded)
+             if (!error)
              {
-                 NSLog(@"conversation created");
+
+                 if (objects.count > 0) // convo exists, we continue using existing one
+                 {
+                     self.conversation = objects.firstObject;
+                     [self queryMessagesInExistingConversation];
+                 }
+                 else // convo doesn't exist, we create a new one and we'll trash it in viewwilldissappear if no messaging occurs
+                 {
+                     Conversation *newConversation = [Conversation new];
+                     [newConversation addObject:[User currentUser] forKey:@"users"];
+                     [newConversation addObject:self.otherUser forKey:@"users"]; // OTHER USER HERE IS THE TEACHER
+                     newConversation.course = self.selectedCourse;
+                     self.conversation = newConversation;
+                     [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                      {
+                          if (succeeded)
+                          {
+                              NSLog(@"conversation created");
+                          }
+                          else
+                          {
+                              NSLog(@"error, conversation NOT created");
+                          }
+                      }];
+                 }
+
              }
              else
              {
-                 NSLog(@"error, conversation NOT created");
+                 NSLog(@"Error searching for existing conversation: %@ %@", error, [error userInfo]);
              }
          }];
+
     }
 }
 
@@ -114,7 +137,7 @@
                   }
               }];
 
-             /////////////////// PUSH NOTIFICATIONS /////////////////////
+             /////////////////// PUSH NOTIFICATIONS END /////////////////
 
              
              [self queryMessagesInExistingConversation];
@@ -170,7 +193,7 @@
 
 
 
-// bullshit methods //
+// other methods //
 
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
