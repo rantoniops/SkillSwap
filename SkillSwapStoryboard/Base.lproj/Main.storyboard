@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14C2061" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="etR-4f-bF4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="etR-4f-bF4">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -799,7 +799,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gYI-KG-qhU" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2950.5" y="666"/>
+            <point key="canvasLocation" x="3075" y="676"/>
         </scene>
         <!--Take CourseVC-->
         <scene sceneID="JCF-4q-sO3">
@@ -1452,28 +1452,8 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="196" y="188" width="210" height="30"/>
-                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="REZ-1m-KA0" id="OMr-M4-ibP"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter a password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HZH-e4-P2U">
-                                <rect key="frame" x="252" y="255" width="97" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="70H-ez-6gU">
-                                        <variation key="widthClass=compact" constant="210"/>
-                                    </constraint>
-                                    <constraint firstAttribute="height" constant="30" id="TDJ-UU-NQ2"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="196" y="302" width="210" height="30"/>
-                                </variation>
-                                <connections>
-                                    <outlet property="delegate" destination="REZ-1m-KA0" id="Bm8-cL-MYD"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnI-nb-Bgr">
@@ -1485,9 +1465,6 @@
                                 <state key="normal" title="Sign Up">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="173" y="527" width="55" height="30"/>
-                                </variation>
                                 <connections>
                                     <action selector="signUpButtonPress:" destination="REZ-1m-KA0" eventType="touchUpInside" id="nD1-W2-WAT"/>
                                 </connections>
@@ -1501,9 +1478,6 @@
                                 <state key="normal" title="Login">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="176" y="411" width="48" height="30"/>
-                                </variation>
                                 <connections>
                                     <action selector="loginButtonPress:" destination="REZ-1m-KA0" eventType="touchUpInside" id="bbg-74-Gk6"/>
                                 </connections>
@@ -1532,16 +1506,31 @@
                                     <outlet property="delegate" destination="REZ-1m-KA0" id="7Lf-J9-9aX"/>
                                 </connections>
                             </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter a password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HZH-e4-P2U">
+                                <rect key="frame" x="252" y="255" width="97" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="97" id="70H-ez-6gU">
+                                        <variation key="widthClass=compact" constant="210"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" constant="30" id="TDJ-UU-NQ2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="REZ-1m-KA0" id="Bm8-cL-MYD"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="qzI-Fz-Qq1" firstAttribute="top" secondItem="hkq-Ae-krN" secondAttribute="bottom" constant="38" id="3SO-dL-wB1"/>
                             <constraint firstAttribute="centerX" secondItem="HZH-e4-P2U" secondAttribute="centerX" id="5xb-Qa-1Dn"/>
                             <constraint firstItem="HZH-e4-P2U" firstAttribute="top" secondItem="qzI-Fz-Qq1" secondAttribute="bottom" constant="74" id="CgA-Ai-XA7">
-                                <variation key="widthClass=compact" constant="84"/>
+                                <variation key="widthClass=compact" constant="62"/>
                             </constraint>
                             <constraint firstAttribute="centerX" secondItem="zng-CC-rM9" secondAttribute="centerX" id="DCC-pz-jSD"/>
                             <constraint firstItem="zng-CC-rM9" firstAttribute="top" secondItem="HZH-e4-P2U" secondAttribute="bottom" constant="54" id="NKH-0Q-9o1">
-                                <variation key="widthClass=compact" constant="79"/>
+                                <variation key="widthClass=compact" constant="96"/>
                             </constraint>
                             <constraint firstAttribute="centerX" secondItem="UnI-nb-Bgr" secondAttribute="centerX" id="OwD-7f-22K"/>
                             <constraint firstAttribute="centerX" secondItem="qzI-Fz-Qq1" secondAttribute="centerX" id="V01-0x-u0v"/>
@@ -1561,6 +1550,7 @@
                             <mask key="constraints">
                                 <exclude reference="ctQ-jY-hrX"/>
                                 <exclude reference="vma-IS-cvj"/>
+                                <exclude reference="3SO-dL-wB1"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1570,6 +1560,8 @@
                             <mask key="constraints">
                                 <include reference="ctQ-jY-hrX"/>
                                 <include reference="vma-IS-cvj"/>
+                                <include reference="3SO-dL-wB1"/>
+                                <exclude reference="jmC-W1-OUS"/>
                             </mask>
                         </variation>
                     </view>
@@ -1583,7 +1575,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E9B-6n-VvC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4908" y="-151"/>
+            <point key="canvasLocation" x="3075" y="-149"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1tm-fP-PBX">
@@ -1601,7 +1593,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUf-Ow-E0c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2044.5" y="686"/>
+            <point key="canvasLocation" x="2350.5" y="686"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KhE-Mw-e8x">
@@ -1619,12 +1611,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EBW-k5-5Ai" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3990" y="-151"/>
+            <point key="canvasLocation" x="2292" y="-149"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="jLA-xh-0Ut"/>
-        <segue reference="qe4-rW-6Zk"/>
+        <segue reference="5U3-6a-ZrJ"/>
         <segue reference="WcH-cb-mK9"/>
     </inferredMetricsTieBreakers>
 </document>
