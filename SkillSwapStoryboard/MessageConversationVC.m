@@ -114,7 +114,7 @@
                   }
               }];
 
-             /////////////////// PUSH NOTIFICATIONS /////////////////////
+             /////////////////// PUSH NOTIFICATIONS END /////////////////
 
              
              [self queryMessagesInExistingConversation];
@@ -170,7 +170,7 @@
 
 
 
-// bullshit methods //
+// other methods //
 
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
