@@ -17,6 +17,10 @@
 {
     self.navigationController.navigationBarHidden = YES;
     NSLog(@"current user is %@", [User currentUser]);
+    if ([User currentUser] != nil)
+    {
+        [self performSegueWithIdentifier:@"logIn" sender:self];
+    }
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -34,7 +38,7 @@
     {
         if (user)
         {
-            [self dismissViewControllerAnimated:true completion:nil];
+            [self performSegueWithIdentifier:@"logIn" sender:self];
         } else
         {
 //            [self showAlert("There was an error with your login", error: returnedError!)];
@@ -55,7 +59,8 @@
     {
         if (succeeded)
         {
-            [self dismissViewControllerAnimated:true completion:nil];
+            [self performSegueWithIdentifier:@"logIn" sender:self];
+
         }
         else
         {

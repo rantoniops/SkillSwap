@@ -16,11 +16,15 @@
 @property double *eventLongitude;
 @property MKPointAnnotation *anotherAnnotation;
 @property NSDate *now;
+@property NSDate *tomorrow;
 @property UIImage *callOutImage;
 @property NSArray *filteredResults;
 @property NSArray *results;
 @property NSArray *lastAnnotationArray;
 @property CLLocation *locationToPass;
+@property NSArray *friendsArray;
+@property BOOL ifNow;
+@property BOOL checkEveryone;
 
 
 @end
@@ -32,6 +36,10 @@
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
 //    NSLog(@"%@", [User currentUser]);
     self.now = [NSDate date];
+    NSTimeInterval fourteenHours = 14*60*60;
+    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+    self.ifNow = YES;
+    self.checkEveryone = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -53,31 +61,103 @@
 }
 
 
+-(void)queryMapForFriends
+{
+    User *currentUser = [User currentUser];
+    PFRelation *friendRelation = [currentUser relationForKey:@"friends"];
+    PFQuery *query = friendRelation.query;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *allFriends, NSError *error)
+     {
+         if (!error)
+         {
+             self.friendsArray = [[NSArray alloc]initWithArray:allFriends];
+             
+             PFQuery *courseQuery = [Course query];
+             [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
+             [courseQuery includeKey:@"teacher"];
+             if (self.ifNow == YES)
+             {
+                 [courseQuery whereKey:@"time" greaterThanOrEqualTo:self.now];
+                 [courseQuery whereKey:@"time" lessThanOrEqualTo:self.tomorrow];
 
-
-
+             }
+             else
+             {
+                 [courseQuery whereKey:@"time" greaterThanOrEqualTo:self.tomorrow];
+             }
+             [courseQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+                  {
+                      if (!error)
+                      {
+                          self.results = objects;
+                          NSLog(@"the query returned %@", objects);
+                          for (Course *object in objects)
+                          {
+                              if ([object isKindOfClass:[Course class]])
+                              {
+                                  CustomCourseAnnotation *coursePointAnnotation = [[CustomCourseAnnotation alloc]init];
+                                  coursePointAnnotation.course = object;
+                                  NSString *timeString = [NSDateFormatter localizedStringFromDate:object.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+                                  NSString *titleAndTime = [NSString stringWithFormat:@"%@ @ %@", object.title, timeString];
+                                  coursePointAnnotation.title = titleAndTime;
+                                  PFFile *imageFile = object.courseMedia;
+                                  [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+                                   {
+                                       if (!error)
+                                       {
+                                           NSLog(@"image retrieved");
+                                           object.callOutImage = [UIImage imageWithData:data];
+                                           object.sizedCallOutImage = [self imageWithImage: object.callOutImage scaledToSize:CGSizeMake(40, 40)];
+                                           coursePointAnnotation.subtitle = object.address;
+                                           PFGeoPoint *geoPoint = object.location;
+                                           coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+                                           [self.mapView addAnnotation:coursePointAnnotation];
+                                       }
+                                   }];
+                                  
+                              }
+                          }
+                      }
+                      else
+                      {
+                          NSLog(@"Error: %@ %@", error, [error userInfo]);
+                      }
+                  }];
+              }
+     }];
+}
+     
 
 //pulls all the pins for existing events
 - (void)queryForMap
 {
     PFQuery *query = [Course query];
     [query includeKey:@"teacher"];
-    [query whereKey:@"time" greaterThanOrEqualTo:self.now];
-    NSLog(@"Mapquery is called");
+    if (self.ifNow == YES)
+    {
+        [query whereKey:@"time" greaterThanOrEqualTo:self.now];
+        [query whereKey:@"time" lessThanOrEqualTo:self.tomorrow];
+        
+    }
+    else
+    {
+        [query whereKey:@"time" greaterThanOrEqualTo:self.tomorrow];
+    }
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
         if (!error)
         {
             self.results = objects;
-
+            NSLog(@"the query returned %@", objects);
             for (Course *object in objects)
             {
                 if ([object isKindOfClass:[Course class]])
                 {
                     CustomCourseAnnotation *coursePointAnnotation = [[CustomCourseAnnotation alloc]init];
                     coursePointAnnotation.course = object;
-                    coursePointAnnotation.title = object.title;
-                    
+                    NSString *timeString = [NSDateFormatter localizedStringFromDate:object.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+                    NSString *titleAndTime = [NSString stringWithFormat:@"%@ @ %@", object.title, timeString];
+                    coursePointAnnotation.title = titleAndTime;
                     PFFile *imageFile = object.courseMedia;
                     [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
                      {
@@ -340,7 +420,9 @@
         {
             CustomCourseAnnotation *coursePointAnnotation = [[CustomCourseAnnotation alloc]init];
             coursePointAnnotation.course = object;
-            coursePointAnnotation.title = object.title;
+            NSString *timeString = [NSDateFormatter localizedStringFromDate:object.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+            NSString *titleAndTime = [NSString stringWithFormat:@"%@ @ %@", object.title, timeString];
+            coursePointAnnotation.title = titleAndTime;
 
             PFFile *imageFile = object.courseMedia;
             [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
@@ -367,12 +449,64 @@
 }
 
 
+/// segment Control for everyone vs. friends
+
+- (IBAction)segmentTap:(UISegmentedControl *)sender
+{
+    
+    if(sender.selectedSegmentIndex == 1)
+    {
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        [self queryMapForFriends];
+        self.checkEveryone = NO;
+        
+    }
+    else
+    {
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        [self queryForMap];
+        self.checkEveryone = YES;
+    }
+}
+
+
+- (IBAction)nowOrLater:(UISegmentedControl *)sender
+{
+    if(sender.selectedSegmentIndex == 0)
+    {
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        self.ifNow = YES;
+        if (self.checkEveryone == YES)
+        {
+            [self queryForMap];
+        }
+        else
+        {
+            [self queryMapForFriends];
+        }
+    }
+    else
+    {
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        self.ifNow = NO;
+        if (self.checkEveryone == YES)
+        {
+            [self queryForMap];
+        }
+        else
+        {
+            [self queryMapForFriends];
+        }
+    }
+    
+}
 
 
 
 
 
 
+//delegate method when returning from postCourse
 
 -(void)didIcreateACourse:(BOOL *)didCreate
 {

@@ -171,10 +171,13 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"segue called");
-    TakeCourseVC *takeCourseVC = segue.destinationViewController;
-    Course *course = self.coursesArray[[self.tableVIew indexPathForSelectedRow].row];
-    takeCourseVC.selectedCourse = course;
+    if ([segue.identifier isEqualToString:@"showCourse"])
+    {
+        NSLog(@"segue called");
+        TakeCourseVC *takeCourseVC = segue.destinationViewController;
+        Course *course = self.coursesArray[[self.tableVIew indexPathForSelectedRow].row];
+        takeCourseVC.selectedCourse = course;
+    }
     
 }
 

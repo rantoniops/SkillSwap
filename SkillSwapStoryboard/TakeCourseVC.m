@@ -10,11 +10,21 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseDuration;
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
+@property (weak, nonatomic) IBOutlet UIButton *followButton;
+
+
+
 @end
 @implementation TakeCourseVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    User *currentUser = [User currentUser];
+    if (self.selectedCourse.teacher == currentUser) {
+        self.followButton.hidden = YES;
+    }
+    
+    
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
     self.courseDesciption.text = self.selectedCourse.courseDescription;
@@ -99,6 +109,49 @@
     [self dismissViewControllerAnimated:true completion:nil];    
 }
 
+- (IBAction)followButtonTap:(UIButton *)sender
+{
+   
+    User *currentUser = [User currentUser];
+    PFRelation *friendRelation = [currentUser relationForKey:@"friends"];
+    if ([self.followButton.titleLabel.text isEqualToString: @"Follow"]) {
+        [friendRelation addObject:self.selectedCourse.teacher];
+        [self.followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (succeeded)
+             {
+                 NSLog(@"friend saved");
+                 NSLog(@"Here are my friends after adding %@" , [currentUser relationForKey:@"friends"]);
+                 
+             }
+             else
+             {
+                 NSLog(@"add friend NOT saved");
+             }
+         }];
+
+    }
+    else
+    {
+        [friendRelation removeObject:self.selectedCourse.teacher];
+        [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (succeeded)
+             {
+                 NSLog(@"friend removed");
+                 NSLog(@"Here are my friends after removing %@" , [currentUser relationForKey:@"friends"]);
+             }
+             else
+             {
+                 NSLog(@"remove friend NOT saved");
+             }
+         }];
+    }
+
+
+}
 
 
 
@@ -115,7 +168,6 @@
     {
         MessageConversationVC *messageVC = segue.destinationViewController;
         messageVC.otherUser = self.selectedCourse.teacher;
-//        NSLog(@"selected teacher is %@", self.selectedCourse.teacher);
         messageVC.selectedCourse = self.selectedCourse;
     }
 }
