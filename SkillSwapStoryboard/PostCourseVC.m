@@ -2,9 +2,7 @@
 #import "SkillSwapStoryboard-Swift.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <AVFoundation/AVFoundation.h>
-
 @import MediaPlayer;
-
 @interface PostCourseVC () <UITextFieldDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *classTitleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *classDescriptionTextField;
@@ -12,11 +10,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *classPhotoImageView;
 @property (weak, nonatomic) IBOutlet UITextField *classSkillTextField;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
-
 @property UIImage *chosenImage;
 @property NSData *smallImageData;
-
-
 @end
 @implementation PostCourseVC
 - (void)viewDidLoad
@@ -26,8 +21,6 @@
     self.classAddressTextField.delegate = self;
     self.classSkillTextField.delegate = self;
     self.classDescriptionTextField.delegate = self;
-    
-    
     self.classAddressTextField.text = self.selectedAddress;
     UIImage *profileImage = [UIImage imageNamed:@"emptyProfile"];
     self.classPhotoImageView.image = profileImage;
@@ -36,8 +29,6 @@
     self.classPhotoImageView.layer.borderWidth = 1;
     UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [self.classPhotoImageView addGestureRecognizer:photoTap];
-
-    
 }
 
 ///to do figure out how to play an image somewhere and if we will need to save the thumbnail or can just creat a new one each time
@@ -152,7 +143,6 @@
     // CREATING SKILL
     Skill *skill = [Skill new];
     skill.name = self.classSkillTextField.text;
-//    skill.owner = [User currentUser]; // WE NEED TO SAVE SKILL ON THE CURRENT USER AS A RELATION
     [skill saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
          if (succeeded)
@@ -181,6 +171,8 @@
                       User *currentUser = [User currentUser];
                       PFRelation *teacherRelation = [currentUser relationForKey:@"courses"];
                       [teacherRelation addObject: course];
+                      PFRelation *skillRelation = [currentUser relationForKey:@"skills"];
+                      [skillRelation addObject: skill];
                       [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                        {
                            if (succeeded)
