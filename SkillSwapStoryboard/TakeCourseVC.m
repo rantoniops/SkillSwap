@@ -1,6 +1,8 @@
 #import "TakeCourseVC.h"
 #import "MessageConversationVC.h"
-@interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate>
+#import <MediaPlayer/MediaPlayer.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+@interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *courseImage;
 @property (weak, nonatomic) IBOutlet UILabel *teacherName;
 @property (weak, nonatomic) IBOutlet UILabel *courseRating;
@@ -12,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
 @property User *currentUser;
+@property (strong, nonatomic) MPMoviePlayerController *videoController;
 
 
 
@@ -24,7 +27,8 @@
     if (self.selectedCourse.teacher == self.currentUser) {
         self.followButton.hidden = YES;
     }
-    
+    UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
+    [self.courseImage addGestureRecognizer:photoTap];
     
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
@@ -202,6 +206,24 @@
     }
 }
 
+
+-(void)playCourseVideo
+{
+    self.videoController = [[MPMoviePlayerController alloc] init];
+    
+    [self.videoController setContentURL:self.videoURL];
+    [self.videoController.view setFrame:CGRectMake (0, 0, 320, 460)];
+    [self.view addSubview:self.videoController.view];
+    
+    [self.videoController play];
+}
+
+
+-(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    NSLog(@"successful Tap");
+    [self playCourseVideo];
+}
 
 
 @end
