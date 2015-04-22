@@ -96,7 +96,6 @@
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:picker animated:true completion:NULL];
-    
 }
 
 -(void)showCameraPhotoView
@@ -152,7 +151,6 @@
     // CREATING SKILL
     Skill *skill = [Skill new];
     skill.name = self.classSkillTextField.text;
-//    skill.owner = [User currentUser]; // WE NEED TO SAVE SKILL ON THE CURRENT USER AS A RELATION
     [skill saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
          if (succeeded)
@@ -180,7 +178,9 @@
                       NSLog(@"course saved");
                       User *currentUser = [User currentUser];
                       PFRelation *teacherRelation = [currentUser relationForKey:@"courses"];
+                      PFRelation *userSkillRelation = [currentUser relationForKey:@"skills"];
                       [teacherRelation addObject: course];
+                      [userSkillRelation addObject: skill];
                       [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                        {
                            if (succeeded)
