@@ -4,32 +4,47 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSArray *messages;
 @property Conversation *conversation;
+@property int conversationGotUsed;
 @end
 @implementation MessageConversationVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
+    self.conversationGotUsed = 0;
 }
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if (self.selectedConversation)
+    if ([self.origin isEqualToString:@"messages"])
     {
-        NSLog(@"selected conversation found");
+        NSLog(@"coming from messages, selected conversation found");
         self.conversation = self.selectedConversation;
         [self queryMessagesInExistingConversation];
     }
-    else
+    else if ([self.origin isEqualToString:@"takeCourse"]) // SOMEONE IS MESSAGING A TEACHER
     {
-        NSLog(@"selected conversation NOT found");
+        NSLog(@"coming from takeCourse, creating new conversation, we'll trash it in viewwilldissappear if no messaging occurs");
+        Conversation *newConversation = [Conversation new];
+        [newConversation addObject:[User currentUser] forKey:@"users"];
+        [newConversation addObject:self.otherUser forKey:@"users"]; // OTHER USER HERE IS THE TEACHER
+        newConversation.course = self.selectedCourse;
+        self.conversation = newConversation;
+        [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (succeeded)
+             {
+                 NSLog(@"conversation created");
+             }
+             else
+             {
+                 NSLog(@"error, conversation NOT created");
+             }
+         }];
     }
 }
 
-- (IBAction)onGoBackPressed:(UIButton *)sender
-{
-    [self dismissViewControllerAnimated:true completion:nil];
-}
 
 -(void)queryMessagesInExistingConversation
 {
@@ -41,6 +56,11 @@
      {
          if (!error)
          {
+             if (objects.count > 0)
+             {
+                 self.conversationGotUsed = 1;
+             }
+
              NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
              self.messages = objects;
              [self.tableView reloadData];
@@ -54,93 +74,115 @@
 
 
 
+
+- (IBAction)onSendButtonPressed:(UIButton *)sender
+{
+    self.conversationGotUsed = 1;
+    Message *newMessage = [Message new];
+    newMessage.messageBody = self.messageTextField.text;
+    newMessage.messageSender = [User currentUser];
+    newMessage.messageReceiver = self.otherUser; // THIS WILL DEPEND ON THE ORIGIN
+    newMessage.course = self.conversation.course;
+    newMessage.conversation = self.conversation;
+    [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         if (succeeded)
+         {
+             NSLog(@"msg fron new convo saved");
+
+             /////////////////// PUSH NOTIFICATIONS /////////////////////
+
+             // Find users
+             PFQuery *userQuery = [User query];
+             [userQuery whereKey:@"objectId" equalTo:self.otherUser.objectId];
+             // Find devices associated with these users
+             PFQuery *pushQuery = [PFInstallation query];
+             [pushQuery whereKey:@"user" matchesQuery:userQuery];
+             // Send push notification to query
+             PFPush *push = [[PFPush alloc] init];
+             [push setQuery:pushQuery]; // Set our Installation query
+             [push setMessage: self.messageTextField.text];
+             [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+              {
+                  if (succeeded)
+                  {
+                      NSLog(@"push success");
+                  }
+                  else
+                  {
+                      NSLog(@"push error");
+                  }
+              }];
+
+             /////////////////// PUSH NOTIFICATIONS /////////////////////
+
+             
+             [self queryMessagesInExistingConversation];
+
+         }
+         else
+         {
+             NSLog(@"msg from new convo NOT saved");
+         }
+     }];
+
+}
+
+
+
+
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"view will dissappear");
+    if (self.conversationGotUsed == 1)
+    {
+        NSLog(@"conversation got used, will not get deleted");
+    }
+    else
+    {
+        NSLog(@"conversation didnt get used, will get deleted");
+        [self.conversation deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (succeeded)
+             {
+                 NSLog(@"conversation deleted");
+             }
+             else
+             {
+                 NSLog(@"error, conversation NOT deleted");
+             }
+         }];
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// bullshit methods //
+
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return true;
 }
 
-- (IBAction)onSendButtonPressed:(UIButton *)sender
+- (IBAction)onGoBackPressed:(UIButton *)sender
 {
-    PFQuery *query = [Conversation query];
-    [query whereKey:@"users" containsAllObjectsInArray:@[ [User currentUser], self.otherUser] ];
-    [query whereKey:@"course" equalTo:self.selectedCourse];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         if (error)
-         {
-             NSLog(@"error, convo not found, create new convo???");
-         }
-         else
-         {
-             if (objects.count > 0)
-             {
-                 NSLog(@"Successfully retrieved %lu convos.", (unsigned long)objects.count);
-                 self.conversation = objects.firstObject;
-                 Message *newMessage = [Message new];
-                 newMessage.messageBody = self.messageTextField.text;
-                 newMessage.messageSender = [User currentUser];
-                 newMessage.messageReceiver = self.otherUser;
-                 newMessage.course = self.selectedCourse;
-                 newMessage.conversation = self.conversation;
-                 [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-                  {
-                      if (succeeded)
-                      {
-                          NSLog(@"msg saved");
-                          [self queryMessagesInExistingConversation];
-                      }
-                      else
-                      {
-                          NSLog(@"msg NOT saved");
-                      }
-                  }];
-             }
-             else
-             {
-                 NSLog(@"making new convo");
-                 Conversation *newConversation = [Conversation new];
-                 [newConversation addObject:[User currentUser] forKey:@"users"];
-                 [newConversation addObject:self.otherUser forKey:@"users"];
-                 newConversation.course = self.selectedCourse;
-                 [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-                  {
-                      if (succeeded)
-                      {
-                          NSLog(@"conversation created");
-                          Message *newMessage = [Message new];
-                          newMessage.messageBody = self.messageTextField.text;
-                          newMessage.messageSender = [User currentUser];
-                          newMessage.messageReceiver = self.otherUser;
-                          newMessage.course = self.selectedCourse;
-
-                          self.conversation = newConversation;
-                          newMessage.conversation = newConversation;
-                          [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-                           {
-                               if (succeeded)
-                               {
-                                   NSLog(@"msg saved");
-                                   [self queryMessagesInExistingConversation];
-                               }
-                               else
-                               {
-                                   NSLog(@"msg NOT saved");
-                               }
-                           }];
-                      }
-                      else
-                      {
-                          NSLog(@"conversation NOT created");
-                      }
-                  }];
-             }
-         }
-     }];
+    [self dismissViewControllerAnimated:true completion:nil];
 }
-
-
-
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -156,5 +198,8 @@
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
     return cell;
 }
+
+
+
 
 @end

@@ -82,7 +82,7 @@
                      {
                          if (!error)
                          {
-                             NSLog(@"image retrieved");
+//                             NSLog(@"image retrieved");
                              object.callOutImage = [UIImage imageWithData:data];
                              object.sizedCallOutImage = [self imageWithImage: object.callOutImage scaledToSize:CGSizeMake(40, 40)];
                              coursePointAnnotation.subtitle = object.address;
@@ -152,7 +152,7 @@
 {
     if ([annotation isKindOfClass:[CustomCourseAnnotation class]])
     {
-       NSLog(@"custom annotation is called");
+//       NSLog(@"custom annotation is called");
        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
         CustomCourseAnnotation *theAnnotation = newPin.annotation;
        newPin.canShowCallout = true;
@@ -346,7 +346,7 @@
              {
                  if (!error)
                  {
-                     NSLog(@"image retrieved");
+//                     NSLog(@"image retrieved");
                      //                             UIImage *image =
                      //                             UIImage *smallerImage = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
                      //                             self.callOutImage = smallerImage;
