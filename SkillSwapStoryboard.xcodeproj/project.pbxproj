@@ -378,11 +378,11 @@
 				TargetAttributes = {
 					6B7846421ADC988B00EAD40D = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = X3M49KGF3D;
+						DevelopmentTeam = YV5E3UUJ4P;
 					};
 					6B78465E1ADC988B00EAD40D = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = X3M49KGF3D;
+						DevelopmentTeam = YV5E3UUJ4P;
 						TestTargetID = 6B7846421ADC988B00EAD40D;
 					};
 				};
@@ -545,8 +545,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -590,8 +590,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -617,8 +617,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -639,8 +639,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

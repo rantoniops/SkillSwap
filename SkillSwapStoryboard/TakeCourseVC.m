@@ -145,7 +145,6 @@
 
 - (IBAction)followButtonTap:(UIButton *)sender
 {
-   
     User *currentUser = [User currentUser];
     PFRelation *friendRelation = [currentUser relationForKey:@"friends"];
     if ([self.followButton.titleLabel.text isEqualToString: @"Follow"]) {
