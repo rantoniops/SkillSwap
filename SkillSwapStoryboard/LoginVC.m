@@ -49,30 +49,30 @@
     textField.center = nCenter;
 }
 
--(void) moveTextFieldInScreen:(UITextField *)textField
-{
-    CGPoint nCenter = textField.center;
-    nCenter.x += self.view.bounds.size.width;
-    NSLog(@"move the right");
-    textField.center = nCenter;
-}
+//-(void) moveTextFieldInScreen:(UITextField *)textField
+//{
+//    CGPoint nCenter = textField.center;
+//    nCenter.x += self.view.bounds.size.width;
+//    NSLog(@"move the right");
+//    textField.center = nCenter;
+//}
 
--(void) animateCloud:(UIImageView *)cloud
-{
-    double cloudSpeed = 20.0/(self.view.frame.size.width);
-    double viewHeight = self.view.frame.size.width - cloud.frame.origin.x;
-    NSTimeInterval duration  = viewHeight*cloudSpeed;
-    
-    [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        CGPoint cOrigin = cloud.frame.origin;
-        cOrigin.x = self.view.bounds.size.width;
-//        cloud.frame.origin = cOrigin;
-    } completion:^(BOOL finished) {
-        CGPoint cOrigin = cloud.frame.origin;
-        cOrigin.x -= self.view.bounds.size.width;
-//        cloud.frame.origin = cOrigin;
-    }];
-}
+//-(void) animateCloud:(UIImageView *)cloud
+//{
+//    double cloudSpeed = 20.0/(self.view.frame.size.width);
+//    double viewHeight = self.view.frame.size.width - cloud.frame.origin.x;
+//    NSTimeInterval duration  = viewHeight*cloudSpeed;
+//    
+//    [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//        CGPoint cOrigin = cloud.frame.origin;
+//        cOrigin.x = self.view.bounds.size.width;
+////        cloud.frame.origin = cOrigin;
+//    } completion:^(BOOL finished) {
+//        CGPoint cOrigin = cloud.frame.origin;
+//        cOrigin.x -= self.view.bounds.size.width;
+////        cloud.frame.origin = cOrigin;
+//    }];
+//}
 
 
 //-(void)viewDidAppear:(BOOL)animated
@@ -124,7 +124,7 @@
 
 
 
-            [self dismissViewControllerAnimated:true completion:nil];
+//            [self dismissViewControllerAnimated:true completion:nil];
             [self performSegueWithIdentifier:@"logIn" sender:self];
         } else
         {
@@ -141,6 +141,7 @@
     user.password = self.passwordTextField.text;
     user.email = self.emailTextField.text;
     user.credits = [NSNumber numberWithInt:1];
+    user.completedReview = @1;
 
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
     {
@@ -162,7 +163,7 @@
                  }
              }];
 
-            [self dismissViewControllerAnimated:true completion:nil];
+//            [self dismissViewControllerAnimated:true completion:nil];
             [self performSegueWithIdentifier:@"logIn" sender:self];
 
         }

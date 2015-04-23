@@ -86,7 +86,11 @@
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         [relation addObject: self.selectedCourse];
-        [self exchangeCredits];
+        //user and teacher both have reviews to complete
+        [self.selectedCourse.teacher setValue:@0 forKey:@"completedReview"];
+        [currentUser setValue:@0 forKey:@"completedReview"];
+        
+//        [self exchangeCredits];
         [self.selectedCourse.teacher saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
          }];
