@@ -5,6 +5,8 @@
 #import "PostCourseVC.h"
 #import "TakeCourseVC.h"
 #import "CustomCourseAnnotation.h"
+#import "CourseListVC.h"
+#import "ReviewVC.h"
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate, PostVCDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
@@ -25,8 +27,6 @@
 @property NSArray *friendsArray;
 @property BOOL ifNow;
 @property BOOL checkEveryone;
-
-
 @end
 @implementation MapVC
 - (void)viewDidLoad
@@ -40,6 +40,29 @@
     self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
     self.ifNow = YES;
     self.checkEveryone = YES;
+    
+    [self ifUserHasAnExpiredCourse];
+}
+
+-(void)ifUserHasAnExpiredCourse
+{
+    User *currentUser = [User currentUser];
+    PFRelation *relation = [currentUser relationForKey:@"courses"];
+    PFQuery *relationQuery = relation.query;
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ReviewVC *reviewVC = [storyBoard instantiateViewControllerWithIdentifier:@"ReviewVCID"];
+    [relationQuery whereKey:@"time" lessThanOrEqualTo:self.now];
+    [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *courses, NSError *error)
+     {
+         if (!error)
+         {
+             if (courses)
+             {
+                 NSLog(@"should be sent to review");
+                 [self presentViewController:reviewVC animated:true completion:nil];
+             }
+         }
+     }];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -90,7 +113,6 @@
                       if (!error)
                       {
                           self.results = objects;
-                          NSLog(@"the query returned %@", objects);
                           for (Course *object in objects)
                           {
                               if ([object isKindOfClass:[Course class]])
@@ -148,7 +170,6 @@
         if (!error)
         {
             self.results = objects;
-            NSLog(@"the query returned %@", objects);
             for (Course *object in objects)
             {
                 if ([object isKindOfClass:[Course class]])
@@ -336,10 +357,16 @@
     {
         NSLog(@"going to messages");
     }
+    else if ([segue.identifier isEqualToString:@"mapToList"]) 
+    {
+        CourseListVC *listVC = segue.destinationViewController;
+        // delegate stuff here?
+        listVC.courses = self.results;
+    }
     else if ([segue.identifier isEqualToString:@"profile"])
-      {
+    {
           
-      }
+    }
     else
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
@@ -357,7 +384,9 @@
 //}
 
 
-- (IBAction)listButtonPress:(UIButton *)sender {
+- (IBAction)listButtonPress:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:@"mapToList" sender:self];
 }
 
 
