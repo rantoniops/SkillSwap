@@ -37,13 +37,19 @@
 }
 */
 
-- (IBAction)underWhelmingButtonTap:(UIButton *)sender {
+- (IBAction)underWhelmingButtonTap:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
-- (IBAction)satisfactoryButtonTap:(UIButton *)sender {
+- (IBAction)satisfactoryButtonTap:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
-- (IBAction)bestInClassButtonTap:(UIButton *)sender {
+- (IBAction)bestInClassButtonTap:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 

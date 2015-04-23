@@ -52,7 +52,7 @@
     PFRelation *relation = [currentUser relationForKey:@"courses"];
     PFQuery *relationQuery = relation.query;
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ReviewVC *reviewVC = [storyBoard instantiateViewControllerWithIdentifier:@"ReviewVC"];
+    ReviewVC *reviewVC = [storyBoard instantiateViewControllerWithIdentifier:@"ReviewVCID"];
     [relationQuery whereKey:@"time" lessThanOrEqualTo:self.now];
     [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *courses, NSError *error)
      {
