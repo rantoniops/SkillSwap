@@ -795,7 +795,7 @@
                         <outlet property="searchBar" destination="gaa-Yj-AFh" id="Ts0-HB-w93"/>
                         <segue destination="1NH-1g-Wdt" kind="show" identifier="postClass" id="mPB-HJ-ttb"/>
                         <segue destination="Dzz-ZH-zxG" kind="presentation" identifier="mapToSkill" id="5U3-6a-ZrJ"/>
-                        <segue destination="Prt-wG-T1c" kind="show" id="je5-rV-1ES"/>
+                        <segue destination="Prt-wG-T1c" kind="show" identifier="mapToList" id="je5-rV-1ES"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gYI-KG-qhU" sceneMemberID="firstResponder"/>
