@@ -39,16 +39,17 @@
     self.heading.alpha = 0;
     
     
-//    [self moveTextFieldOffScreen:self.nameTextField];
-//    [self moveTextFieldOffScreen:self.emailTextField];
-//    [self moveTextFieldOffScreen:self.passwordTextField];
+    [self moveTextFieldOffScreen:self.nameTextField];
+    [self moveTextFieldOffScreen:self.emailTextField];
+    [self moveTextFieldOffScreen:self.passwordTextField];
     
 }
 
 -(void) moveTextFieldOffScreen:(UITextField * )textField
 {
     CGPoint nCenter = textField.center;
-    nCenter.x -= 1000;
+    nCenter.x -= self.view.bounds.size.width;
+    NSLog(@"move the left edge");
     textField.center = nCenter;
 }
 
@@ -56,29 +57,42 @@
 {
     CGPoint nCenter = textField.center;
     nCenter.x += self.view.bounds.size.width;
+    NSLog(@"move the right");
     textField.center = nCenter;
 }
 
-//-(void) animateCloud(UIImageView *)cloud
-//{
-//    double cloudSpeed = 20.0/(self.view.frame.size.width);
-//    double viewHeight
-//    double duration: NSTimeInterval = (view.frame.size.)
-//}
-//-(void)viewDidAppear:(BOOL)animated
-//{
-//    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-//        [self moveTextFieldInScreen:self.nameTextField];
-//    } completion:nil];
-//    
-//    [UIView animateWithDuration:0.5 delay:0.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
-//        [self moveTextFieldInScreen:self.passwordTextField];
-//    } completion:nil];
-//    
-//    [UIView animateWithDuration:0.5 delay:0.3 options:UIViewAnimationOptionCurveEaseOut animations:^{
-//        [self moveTextFieldInScreen:self.emailTextField];
-//    } completion:nil];
-//}
+-(void) animateCloud:(UIImageView *)cloud
+{
+    double cloudSpeed = 20.0/(self.view.frame.size.width);
+    double viewHeight = self.view.frame.size.width - cloud.frame.origin.x;
+    NSTimeInterval duration  = viewHeight*cloudSpeed;
+    
+    [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        CGPoint cOrigin = cloud.frame.origin;
+        cOrigin.x = self.view.bounds.size.width;
+        cloud.frame.origin = cOrigin;
+    } completion:^(BOOL finished) {
+        CGPoint cOrigin = cloud.frame.origin;
+        cOrigin.x -= self.view.bounds.size.width;
+        cloud.frame.origin = cOrigin;
+    }];
+}
+
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [self moveTextFieldInScreen:self.nameTextField];
+    } completion:nil];
+    
+    [UIView animateWithDuration:0.5 delay:0.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [self moveTextFieldInScreen:self.passwordTextField];
+    } completion:nil];
+    
+    [UIView animateWithDuration:0.5 delay:0.3 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [self moveTextFieldInScreen:self.emailTextField];
+    } completion:nil];
+}
 
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
