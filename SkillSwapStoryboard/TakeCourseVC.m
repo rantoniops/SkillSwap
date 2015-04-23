@@ -220,11 +220,11 @@
 }
 
 
--(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
-{
-    NSLog(@"successful Tap");
-    [self playCourseVideo];
-}
+//-(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
+//{
+//    NSLog(@"successful Tap");
+//    [self playCourseVideo];
+//}
 
 
 @end
