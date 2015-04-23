@@ -6,6 +6,7 @@
 #import "TakeCourseVC.h"
 #import "CustomCourseAnnotation.h"
 #import "CourseListVC.h"
+#import "ReviewVC.h"
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate, PostVCDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
@@ -39,6 +40,27 @@
     self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
     self.ifNow = YES;
     self.checkEveryone = YES;
+//    [self ifUserHasAnExpiredCourse];
+}
+
+-(void)ifUserHasAnExpiredCourse
+{
+    User *currentUser = [User currentUser];
+    PFRelation *relation = [currentUser relationForKey:@"courses"];
+    PFQuery *relationQuery = relation.query;
+    ReviewVC *reviewVC = [[UIViewController alloc]init];
+    [relationQuery whereKey:@"time" lessThanOrEqualTo:self.now];
+    [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *courses, NSError *error)
+     {
+         if (!error)
+         {
+             if (courses)
+             {
+                 NSLog(@"should be sent to review");
+                 [self presentViewController:reviewVC animated:true completion:nil];
+             }
+         }
+     }];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -89,7 +111,6 @@
                       if (!error)
                       {
                           self.results = objects;
-                          NSLog(@"the query returned %@", objects);
                           for (Course *object in objects)
                           {
                               if ([object isKindOfClass:[Course class]])
@@ -147,7 +168,6 @@
         if (!error)
         {
             self.results = objects;
-            NSLog(@"the query returned %@", objects);
             for (Course *object in objects)
             {
                 if ([object isKindOfClass:[Course class]])
