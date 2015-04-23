@@ -71,8 +71,7 @@
 // CODIED FROM PARSE PUSH NOTIFICATIONS, THIS ALLOWS PARSE TO HANDLE PUSH NOTIFICATIONS FOR US USING A MODAL VIEW WHEN THE APP IS RUNNING
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-//    NSNotificationCenter *notiCenter = [NSNotificationCenter new];
-//    [notiCenter postNotification:@"messageReceived"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"messageReceived" object:self];
     [PFPush handlePush:userInfo];
 }
 
