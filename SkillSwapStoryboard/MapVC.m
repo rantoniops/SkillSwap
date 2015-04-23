@@ -26,8 +26,6 @@
 @property NSArray *friendsArray;
 @property BOOL ifNow;
 @property BOOL checkEveryone;
-
-
 @end
 @implementation MapVC
 - (void)viewDidLoad
@@ -337,7 +335,7 @@
     {
         NSLog(@"going to messages");
     }
-    else if ([segue.identifier isEqualToString:@"list"]) ////////////????
+    else if ([segue.identifier isEqualToString:@"mapToList"]) 
     {
         CourseListVC *listVC = segue.destinationViewController;
         // delegate stuff here?
@@ -364,7 +362,9 @@
 //}
 
 
-- (IBAction)listButtonPress:(UIButton *)sender {
+- (IBAction)listButtonPress:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:@"mapToList" sender:self];
 }
 
 
