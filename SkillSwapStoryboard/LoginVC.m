@@ -70,11 +70,11 @@
     [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         CGPoint cOrigin = cloud.frame.origin;
         cOrigin.x = self.view.bounds.size.width;
-        cloud.frame.origin = cOrigin;
+//        cloud.frame.origin = cOrigin;
     } completion:^(BOOL finished) {
         CGPoint cOrigin = cloud.frame.origin;
         cOrigin.x -= self.view.bounds.size.width;
-        cloud.frame.origin = cOrigin;
+//        cloud.frame.origin = cOrigin;
     }];
 }
 
