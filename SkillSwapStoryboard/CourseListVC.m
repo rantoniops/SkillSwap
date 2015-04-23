@@ -18,8 +18,8 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Course *course = self.courses[indexPath.row];
-    cell.textLabel.text = course.title;
-    cell.detailTextLabel.text = course.address;
+    cell.textLabel.text = [course valueForKey:@"title"];
+    cell.detailTextLabel.text = [course valueForKey:@"address"];
     return cell;
 }
 
