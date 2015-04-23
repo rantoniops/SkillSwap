@@ -1,20 +1,8 @@
-//
-//  ReviewVC.m
-//  SkillSwapStoryboard
-//
-//  Created by Sha Zhu on 4/22/15.
-//  Copyright (c) 2015 antonioperez. All rights reserved.
-//
-
 #import "ReviewVC.h"
-
 @interface ReviewVC () <UITextViewDelegate>
-
 @property (weak, nonatomic) IBOutlet UITextView *textField;
 @property NSString *placeHolderString;
-
 @end
-
 @implementation ReviewVC
 
 - (void)viewDidLoad {
