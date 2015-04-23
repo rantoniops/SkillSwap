@@ -23,7 +23,6 @@
 		6B9B1F211AE0A611005219AF /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9B1F201AE0A611005219AF /* Conversation.swift */; };
 		6B9B1F231AE0A673005219AF /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9B1F221AE0A673005219AF /* Course.swift */; };
 		6BAEDE281AE0390F00282CFB /* MessagesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAEDE271AE0390F00282CFB /* MessagesVC.m */; };
-		6BC2F6A81AE842E700F9AFA3 /* com.crashlytics.missing-devices.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6BC2F6A71AE842E700F9AFA3 /* com.crashlytics.missing-devices.txt */; };
 		6BFF24861AE83CEB00CBD130 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */; };
 		6BFF24871AE83CEB00CBD130 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFF24851AE83CEB00CBD130 /* Fabric.framework */; };
 		964E391A1AE1703500123AA9 /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 964E39191AE1703500123AA9 /* MapVC.m */; };
@@ -92,7 +91,6 @@
 		6B9B1F221AE0A673005219AF /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Course.swift; path = ../Course.swift; sourceTree = "<group>"; };
 		6BAEDE261AE0390F00282CFB /* MessagesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesVC.h; sourceTree = "<group>"; };
 		6BAEDE271AE0390F00282CFB /* MessagesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesVC.m; sourceTree = "<group>"; };
-		6BC2F6A71AE842E700F9AFA3 /* com.crashlytics.missing-devices.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "com.crashlytics.missing-devices.txt"; sourceTree = "<group>"; };
 		6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		6BFF24851AE83CEB00CBD130 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		964E39191AE1703500123AA9 /* MapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapVC.m; sourceTree = "<group>"; };
@@ -207,7 +205,6 @@
 		6B78463A1ADC988B00EAD40D = {
 			isa = PBXGroup;
 			children = (
-				6BC2F6A71AE842E700F9AFA3 /* com.crashlytics.missing-devices.txt */,
 				6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */,
 				6BFF24851AE83CEB00CBD130 /* Fabric.framework */,
 				6B78467C1ADCAB2B00EAD40D /* Frameworks */,
@@ -418,7 +415,6 @@
 				B1D7C45D1AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png in Resources */,
 				6B78465A1ADC988B00EAD40D /* LaunchScreen.xib in Resources */,
 				6B7846571ADC988B00EAD40D /* Images.xcassets in Resources */,
-				6BC2F6A81AE842E700F9AFA3 /* com.crashlytics.missing-devices.txt in Resources */,
 				B1D7C45B1AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -659,8 +655,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -682,8 +678,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
