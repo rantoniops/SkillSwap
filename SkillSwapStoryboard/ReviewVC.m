@@ -9,7 +9,7 @@
     [super viewDidLoad];
     self.textField.delegate = self;
     self.textField.editable = YES;
-    self.placeHolderString = [NSString stringWithFormat:@"%@ was very...", self.reviewCourse.title];
+    self.placeHolderString = [NSString stringWithFormat:@"%@ was very...", [self.reviewCourse valueForKey:@"title"]];
     self.textField.text = self.placeHolderString;
     self.textField.textColor = [UIColor lightGrayColor];
     
@@ -44,7 +44,7 @@
 {
     Review *review = [Review new];
     review.reviewContent = self.textField.text;
-    review.reviewed = self.reviewCourse.teacher;
+    review.reviewed = [self.reviewCourse valueForKey:@"teacher"];
     User *currentUser = [User currentUser];
     review.reviewer = currentUser;
     [currentUser setValue:@1 forKey:@"completedReview"];
