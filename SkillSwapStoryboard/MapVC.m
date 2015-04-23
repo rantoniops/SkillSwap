@@ -5,6 +5,7 @@
 #import "PostCourseVC.h"
 #import "TakeCourseVC.h"
 #import "CustomCourseAnnotation.h"
+#import "CourseListVC.h"
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate, PostVCDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
@@ -336,10 +337,16 @@
     {
         NSLog(@"going to messages");
     }
+    else if ([segue.identifier isEqualToString:@"list"]) ////////////????
+    {
+        CourseListVC *listVC = segue.destinationViewController;
+        // delegate stuff here?
+        listVC.courses = self.results;
+    }
     else if ([segue.identifier isEqualToString:@"profile"])
-      {
+    {
           
-      }
+    }
     else
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
