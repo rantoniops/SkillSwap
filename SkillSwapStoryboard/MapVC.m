@@ -36,7 +36,6 @@
     [super viewDidLoad];
     [self showUserLocation];
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-//    NSLog(@"%@", [User currentUser]);
     self.now = [NSDate date];
     NSTimeInterval fourteenHours = 14*60*60;
     self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
@@ -61,6 +60,8 @@
              if (courses)
              {
                  NSLog(@"should be sent to review");
+                 NSLog(@"Courses are these %@", courses);
+                 reviewVC.reviewCourse = courses.lastObject;
                  [self presentViewController:reviewVC animated:true completion:nil];
              }
          }

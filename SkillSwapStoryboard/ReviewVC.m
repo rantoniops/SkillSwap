@@ -8,10 +8,11 @@
 
 #import "ReviewVC.h"
 
-@interface ReviewVC ()
+@interface ReviewVC () <UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *textField;
-
+@property Review *review;
+@property NSString *placeHolderString;
 
 @end
 
@@ -19,40 +20,53 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.textField.delegate = self;
+    NSLog(@"here is the course I'm reviewing: %@", self.reviewCourse);
+    self.textField.editable = YES;
+    self.placeHolderString = @"We had an experience that was very...";
+    self.textField.text = self.placeHolderString;
+    self.textField.textColor = [UIColor lightGrayColor];
+    
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    self.textField.text = @"";
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)underWhelmingButtonTap:(UIButton *)sender
 {
     [self dismissViewControllerAnimated:true completion:nil];
+    [self saveTheReview];
 }
 
 - (IBAction)satisfactoryButtonTap:(UIButton *)sender
 {
     [self dismissViewControllerAnimated:true completion:nil];
+    [self saveTheReview];
 }
 
 - (IBAction)bestInClassButtonTap:(UIButton *)sender
 {
     [self dismissViewControllerAnimated:true completion:nil];
+    [self saveTheReview];
 }
 
-
+-(void)saveTheReview
+{
+    self.review.reviewContent = self.textField.text;
+    [self.review saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         if (succeeded)
+         {
+             NSLog(@"review saved");
+         }
+     }];
+}
+     
 
 
 @end
