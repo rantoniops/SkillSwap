@@ -34,17 +34,14 @@
     [super viewDidLoad];
     [self showUserLocation];
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-//    NSLog(@"%@", [User currentUser]);
     self.now = [NSDate date];
     NSTimeInterval fourteenHours = 14*60*60;
     self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
     self.ifNow = YES;
     self.checkEveryone = YES;
-    
-    [self ifUserHasAnExpiredCourse];
 }
 
--(void)ifUserHasAnExpiredCourse
+-(void)ifUserHasAnExpiredCourseSansReview
 {
     User *currentUser = [User currentUser];
     PFRelation *relation = [currentUser relationForKey:@"courses"];
@@ -56,10 +53,14 @@
      {
          if (!error)
          {
-             if (courses)
+             if (courses.count != nil)
              {
-                 NSLog(@"should be sent to review");
-                 [self presentViewController:reviewVC animated:true completion:nil];
+                 NSLog(@"user has history of courses, here they are: %@", courses);
+                 if ([currentUser valueForKey:@"reviewCompleted"] == 0) {
+                     reviewVC.reviewCourse = courses.lastObject;
+                     [self presentViewController:reviewVC animated:true completion:nil];
+                     NSLog(@"%@ has not yet reviewed %@", currentUser.username, courses.lastObject);
+                 }
              }
          }
      }];
@@ -68,6 +69,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
+    [self ifUserHasAnExpiredCourseSansReview];
 }
 
 -(void)viewDidAppear:(BOOL)animated

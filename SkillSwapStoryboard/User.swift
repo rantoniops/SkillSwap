@@ -14,7 +14,7 @@ import Foundation
     @NSManaged var teachers: PFRelation
     @NSManaged var students: PFRelation
     @NSManaged var isAFriend: Bool
-    @NSManaged var completedReview: Bool
+    @NSManaged var completedReview: NSNumber
 
     
     @NSManaged var skills : PFRelation
