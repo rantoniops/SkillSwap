@@ -150,10 +150,10 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Course *course = self.coursesArray[indexPath.row];
-    cell.detailTextLabel.text = course.address;
-//    cell.detailTextLabel.text = [course valueForKey:@"address"];
-    NSString *timeString = [NSDateFormatter localizedStringFromDate:course.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", course.title, timeString];
+//    cell.detailTextLabel.text = course.address;
+    cell.detailTextLabel.text = [course valueForKey:@"address"];
+    NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", [course valueForKey:@"title"], timeString];
     cell.textLabel.text = titleAndTime;
     
     

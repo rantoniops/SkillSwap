@@ -11,7 +11,6 @@
 @interface ReviewVC () <UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextView *textField;
-@property Review *review;
 @property NSString *placeHolderString;
 
 @end
@@ -31,9 +30,11 @@
 }
 
 
--(void)textFieldDidBeginEditing:(UITextField *)textField
+
+-(void)textViewDidBeginEditing:(UITextView *)textView
 {
     self.textField.text = @"";
+    self.textField.textColor = [UIColor blackColor];
 }
 
 
@@ -57,12 +58,24 @@
 
 -(void)saveTheReview
 {
-    self.review.reviewContent = self.textField.text;
-    [self.review saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+    Review *review = [Review new];
+    review.reviewContent = self.textField.text;
+    review.reviewed = self.reviewCourse.teacher;
+    User *currentUser = [User currentUser];
+    review.reviewer = currentUser;
+//    currentUser.completedReview = true;
+
+    [currentUser setValue:@1 forKey:@"completedReview"];
+    [review saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
          if (succeeded)
          {
+             
              NSLog(@"review saved");
+             [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+              {
+                  NSLog(@"%@", currentUser);
+              }];
          }
      }];
 }

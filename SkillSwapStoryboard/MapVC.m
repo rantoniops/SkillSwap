@@ -42,10 +42,10 @@
     self.ifNow = YES;
     self.checkEveryone = YES;
     
-    [self ifUserHasAnExpiredCourse];
+    [self ifUserHasAnExpiredCourseSansReview];
 }
 
--(void)ifUserHasAnExpiredCourse
+-(void)ifUserHasAnExpiredCourseSansReview
 {
     User *currentUser = [User currentUser];
     PFRelation *relation = [currentUser relationForKey:@"courses"];
@@ -57,12 +57,14 @@
      {
          if (!error)
          {
-             if (courses)
+             if (courses.count != nil)
              {
                  NSLog(@"should be sent to review");
                  NSLog(@"Courses are these %@", courses);
-                 reviewVC.reviewCourse = courses.lastObject;
-                 [self presentViewController:reviewVC animated:true completion:nil];
+                 if ([currentUser valueForKey:@"reviewCompleted"] == 0) {
+                     reviewVC.reviewCourse = courses.lastObject;
+                     [self presentViewController:reviewVC animated:true completion:nil];
+                 }
              }
          }
      }];
