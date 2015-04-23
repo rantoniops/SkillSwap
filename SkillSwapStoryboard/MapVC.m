@@ -40,7 +40,8 @@
     self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
     self.ifNow = YES;
     self.checkEveryone = YES;
-//    [self ifUserHasAnExpiredCourse];
+    
+    [self ifUserHasAnExpiredCourse];
 }
 
 -(void)ifUserHasAnExpiredCourse
@@ -48,7 +49,8 @@
     User *currentUser = [User currentUser];
     PFRelation *relation = [currentUser relationForKey:@"courses"];
     PFQuery *relationQuery = relation.query;
-    ReviewVC *reviewVC = [[UIViewController alloc]init];
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ReviewVC *reviewVC = [storyBoard instantiateViewControllerWithIdentifier:@"ReviewVCID"];
     [relationQuery whereKey:@"time" lessThanOrEqualTo:self.now];
     [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *courses, NSError *error)
      {

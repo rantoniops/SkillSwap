@@ -10,6 +10,9 @@
 
 @interface ReviewVC ()
 
+@property (weak, nonatomic) IBOutlet UITextView *textField;
+
+
 @end
 
 @implementation ReviewVC
@@ -33,5 +36,23 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)underWhelmingButtonTap:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:true completion:nil];
+}
+
+- (IBAction)satisfactoryButtonTap:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:true completion:nil];
+}
+
+- (IBAction)bestInClassButtonTap:(UIButton *)sender
+{
+    [self dismissViewControllerAnimated:true completion:nil];
+}
+
+
+
 
 @end
