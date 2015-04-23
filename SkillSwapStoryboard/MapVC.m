@@ -59,11 +59,11 @@
          {
              if (courses.count != nil)
              {
-                 NSLog(@"should be sent to review");
-                 NSLog(@"Courses are these %@", courses);
+                 NSLog(@"user has history of courses, here they are: %@", courses);
                  if ([currentUser valueForKey:@"reviewCompleted"] == 0) {
                      reviewVC.reviewCourse = courses.lastObject;
                      [self presentViewController:reviewVC animated:true completion:nil];
+                     NSLog(@"%@ has not yet reviewed %@", currentUser.username, courses.lastObject);
                  }
              }
          }

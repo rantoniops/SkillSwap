@@ -20,9 +20,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.textField.delegate = self;
-    NSLog(@"here is the course I'm reviewing: %@", self.reviewCourse);
     self.textField.editable = YES;
-    self.placeHolderString = @"We had an experience that was very...";
+    self.placeHolderString = [NSString stringWithFormat:@"%@ was very...", self.reviewCourse.title];
     self.textField.text = self.placeHolderString;
     self.textField.textColor = [UIColor lightGrayColor];
     
@@ -40,19 +39,16 @@
 
 - (IBAction)underWhelmingButtonTap:(UIButton *)sender
 {
-    [self dismissViewControllerAnimated:true completion:nil];
     [self saveTheReview];
 }
 
 - (IBAction)satisfactoryButtonTap:(UIButton *)sender
 {
-    [self dismissViewControllerAnimated:true completion:nil];
     [self saveTheReview];
 }
 
 - (IBAction)bestInClassButtonTap:(UIButton *)sender
 {
-    [self dismissViewControllerAnimated:true completion:nil];
     [self saveTheReview];
 }
 
@@ -63,8 +59,6 @@
     review.reviewed = self.reviewCourse.teacher;
     User *currentUser = [User currentUser];
     review.reviewer = currentUser;
-//    currentUser.completedReview = true;
-
     [currentUser setValue:@1 forKey:@"completedReview"];
     [review saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
@@ -74,7 +68,8 @@
              NSLog(@"review saved");
              [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
               {
-                  NSLog(@"%@", currentUser);
+                  NSLog(@"Our completed review score should now be 1, and it is : %@", [currentUser valueForKey:@"completedReview"]);
+                  [self dismissViewControllerAnimated:true completion:nil];
               }];
          }
      }];

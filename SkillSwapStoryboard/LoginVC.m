@@ -128,7 +128,7 @@
 
 
 
-            [self dismissViewControllerAnimated:true completion:nil];
+//            [self dismissViewControllerAnimated:true completion:nil];
             [self performSegueWithIdentifier:@"logIn" sender:self];
         } else
         {
@@ -167,7 +167,7 @@
                  }
              }];
 
-            [self dismissViewControllerAnimated:true completion:nil];
+//            [self dismissViewControllerAnimated:true completion:nil];
             [self performSegueWithIdentifier:@"logIn" sender:self];
 
         }
