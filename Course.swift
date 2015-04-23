@@ -24,6 +24,7 @@ import Foundation
     @NSManaged var courseMedia: PFFile
     @NSManaged var location: PFGeoPoint
 
+
     @NSManaged var skillsTaught : PFRelation
 
     @NSManaged var teacher : User
