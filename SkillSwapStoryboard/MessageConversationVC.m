@@ -11,6 +11,25 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"messageReceived" object:nil];
+}
+
+// do i need to do this one?
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [super dealloc];
+}
+
+
+- (void)handleNotification:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:@"messageReceived"])
+    {
+        NSLog (@"Notification is successfully received!");
+        [self queryMessagesInExistingConversation];
+    }
+
 }
 
 
@@ -69,6 +88,10 @@
 
     }
 }
+
+
+
+
 
 
 -(void)queryMessagesInExistingConversation
