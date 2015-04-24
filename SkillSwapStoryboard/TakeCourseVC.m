@@ -227,7 +227,7 @@
     if ([segue.identifier isEqualToString:@"messageTeacher"])
     {
         MessageConversationVC *messageVC = segue.destinationViewController;
-        messageVC.otherUser = self.selectedTeacher;
+        messageVC.otherUser = self.selectedCourse.teacher;
         messageVC.selectedCourse = self.selectedCourse;
         messageVC.origin = @"takeCourse";
     }

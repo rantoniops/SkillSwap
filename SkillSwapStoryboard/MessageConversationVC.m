@@ -107,6 +107,7 @@
         // CHECKING IF THERE'S ALREADY AN EXISTING CONVO BETWEEN THIS TEACHER, THIS USER ABOUT THIS COURSE
         PFQuery *query = [Conversation query];
         [query whereKey:@"course" equalTo:self.selectedCourse];
+        NSLog(@"other user %@", self.otherUser);
         [query whereKey:@"users" containedIn:@[ [User currentUser] , self.otherUser ] ];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
