@@ -148,10 +148,8 @@
 
 
 
-- (IBAction)nopeButtonTap:(UIButton *)sender
-{
-    [self dismissViewControllerAnimated:true completion:nil];
-}
+
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
