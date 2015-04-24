@@ -255,14 +255,14 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-//    Course *course = self.coursesArray[indexPath.row];
-    User *user = self.friendsArray[indexPath.row];
+    Course *course = self.coursesArray[indexPath.row];
+//    User *user = self.friendsArray[indexPath.row];
     
-    cell.textLabel.text = [user valueForKey:@"username"];
-//    cell.detailTextLabel.text = [course valueForKey:@"address"];
-//    NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-//    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", [course valueForKey:@"title"] , timeString];
-//    cell.textLabel.text = titleAndTime;
+//    cell.textLabel.text = [user valueForKey:@"username"];
+    cell.detailTextLabel.text = [course valueForKey:@"address"];
+    NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", [course valueForKey:@"title"] , timeString];
+    cell.textLabel.text = titleAndTime;
     return cell;
 }
 
@@ -276,8 +276,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"cell tapped");
-    self.userAtRow = self.friendsArray[indexPath.row];
-//    self.courseAtRow = self.coursesArray[indexPath.row];
+//    self.userAtRow = self.friendsArray[indexPath.row];
+    self.courseAtRow = self.coursesArray[indexPath.row];
     [self performSegueWithIdentifier:@"showCourse" sender:self];
 }
 
