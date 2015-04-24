@@ -2,6 +2,7 @@
 @interface ReviewVC () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *textField;
 @property NSString *placeHolderString;
+@property NSNumber *givenRating;
 @end
 @implementation ReviewVC
 - (void)viewDidLoad
@@ -25,21 +26,25 @@
 
 - (IBAction)underWhelmingButtonTap:(UIButton *)sender
 {
+    self.givenRating = @0;
     [self saveTheReview];
 }
 
 - (IBAction)satisfactoryButtonTap:(UIButton *)sender
 {
+    self.givenRating = @1;
     [self saveTheReview];
 }
 
 - (IBAction)bestInClassButtonTap:(UIButton *)sender
 {
+    self.givenRating = @2;
     [self saveTheReview];
 }
 
 -(void)saveTheReview
 {
+    self.givenRating = self.givenRating;
     self.reviewToReview.reviewContent = self.textField.text;
     self.reviewToReview.hasBeenReviewed = @1;
     [self.reviewToReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
