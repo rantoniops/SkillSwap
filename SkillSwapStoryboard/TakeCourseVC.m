@@ -21,8 +21,8 @@
 {
     [super viewDidLoad];
     self.currentUser = [User currentUser];
-    NSLog(@"selected course teacher is %@", self.selectedCourse.teacher.username);
-    if (self.selectedCourse.teacher == self.currentUser)
+    NSLog(@"selected course teacher is %@", self.selectedTeacher.username);
+    if (self.selectedTeacher == self.currentUser)
     {
         self.followButton.hidden = YES;
     }
@@ -35,7 +35,7 @@
     NSString *timeString = [NSDateFormatter localizedStringFromDate:self.selectedCourse.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
     NSLog(@"%@", timeString);
     self.courseDuration.text = timeString;
-    [self.teacherName setTitle:self.selectedCourse.teacher.username forState:UIControlStateNormal];
+    [self.teacherName setTitle:self.selectedTeacher.username forState:UIControlStateNormal];
     [self.selectedCourse.courseMedia getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
     {
         if (!error)
@@ -166,7 +166,7 @@
     User *currentUser = [User currentUser];
     PFRelation *friendRelation = [currentUser relationForKey:@"friends"];
     if ([self.followButton.titleLabel.text isEqualToString: @"Follow"]) {
-        [friendRelation addObject:self.selectedCourse.teacher];
+        [friendRelation addObject:self.selectedTeacher];
         [self.followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
         [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
@@ -185,7 +185,7 @@
     }
     else
     {
-        [friendRelation removeObject:self.selectedCourse.teacher];
+        [friendRelation removeObject:self.selectedTeacher];
         [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
         [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
@@ -218,14 +218,14 @@
     if ([segue.identifier isEqualToString:@"messageTeacher"])
     {
         MessageConversationVC *messageVC = segue.destinationViewController;
-        messageVC.otherUser = self.selectedCourse.teacher;
+        messageVC.otherUser = self.selectedTeacher;
         messageVC.selectedCourse = self.selectedCourse;
         messageVC.origin = @"takeCourse";
     }
     else if ([segue.identifier isEqualToString:@"takeCourseToTeacherProfile"])
     {
         UserProfileVC *profileVC = segue.destinationViewController;
-        profileVC.selectedUser = self.selectedCourse.teacher;
+        profileVC.selectedUser = self.selectedTeacher;
     }
 }
 
