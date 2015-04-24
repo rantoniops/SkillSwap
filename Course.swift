@@ -25,7 +25,6 @@ import Foundation
     @NSManaged var location: PFGeoPoint
 
 
-//    @NSManaged var reviews : PFRelation
     @NSManaged var skillsTaught : PFRelation
 
     @NSManaged var teacher : User
@@ -33,23 +32,5 @@ import Foundation
     var callOutImage = UIImage()
     var sizedCallOutImage = UIImage()
     
-//    
-//    func fetchCallOutImage(complete:(error: NSError!)-> Void) {
-//        self.courseMedia.getDataInBackgroundWithBlock
-//            {
-//                (data, error) -> Void in
-//                
-//                if (data != nil)
-//                {
-//                    self.callOutImage = UIImage(data:data!)!;
-//                    complete(error: nil)
-//                }
-//        }
-//
-//        
-//    }
-//    override init()
-//    {
-//            super.init()
-//    }
+
 }

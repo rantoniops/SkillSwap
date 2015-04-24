@@ -41,12 +41,13 @@
 -(void)saveTheReview
 {
     self.reviewToReview.reviewContent = self.textField.text;
+    self.reviewToReview.hasBeenReviewed = @1;
     [self.reviewToReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
          if (succeeded)
          {
-             self.reviewToReview.hasBeenReviewed = @1;
              NSLog(@"review with content saved");
+             [self dismissViewControllerAnimated:true completion:nil];
          }
      }];
 }

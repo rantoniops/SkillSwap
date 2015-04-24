@@ -35,46 +35,28 @@
     [super viewDidLoad];
     [self showUserLocation];
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-    self.now = [NSDate date];
-    NSTimeInterval fourteenHours = 14*60*60;
-    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
     self.ifNow = YES;
     self.checkEveryone = YES;
 }
 
-//-(void)ifUserHasAnExpiredCourseSansReview
-//{
-//    User *currentUser = [User currentUser];
-//    PFRelation *relation = [currentUser relationForKey:@"courses"];
-//    PFQuery *relationQuery = relation.query;
-////    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-////    ReviewVC *reviewVC = [storyBoard instantiateViewControllerWithIdentifier:@"ReviewVCID"];
-//    [relationQuery whereKey:@"time" lessThanOrEqualTo:self.now];
-//    [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *courses, NSError *error)
-//     {
-//         if (!error)
-//         {
-//             if (courses.count != nil)
-//             {
-//                 NSLog(@"user has history of courses, here they are: %@", courses);
-//                 if ([currentUser valueForKey:@"reviewCompleted"] == 0) {
-////                     reviewVC.reviewCourse = courses.lastObject; // WE DIDNT PASTE THIS DOWN, BUT WITHOUT COMMENTING OUT,WILL CRASH
-////                     [self presentViewController:reviewVC animated:true completion:nil];
-//                     NSLog(@"%@ has not yet reviewed %@", currentUser.username, courses.lastObject);
-//                 }
-//             }
-//         }
-//     }];
-//}
-
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
+
+    self.now = [NSDate date];
+    NSTimeInterval fourteenHours = 14*60*60;
+    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+
+    PFQuery *courseQuery = [Course query];
+    [courseQuery whereKey:@"time" lessThan:self.now];
+    // Find reviews associated with these courses
     PFQuery *reviewsQuery = [Review query];
-    [reviewsQuery includeKey:@"course.time"];
+    [reviewsQuery whereKey:@"course" matchesQuery:courseQuery];
+
+//    [reviewsQuery includeKey:@"course"];
     [reviewsQuery whereKey:@"reviewer" equalTo:[User currentUser]];
     [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@0];
-    [reviewsQuery whereKey:@"course.time" lessThan:self.now];
+//    [reviewsQuery whereKey:@"course.time" lessThan:self.now];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          NSLog(@"review query was called at all");
@@ -116,7 +98,7 @@
     }
     else
     {
-        self.now = [NSDate date];
+//        self.now = [NSDate date];
         [self queryForMap];
     }
 }
