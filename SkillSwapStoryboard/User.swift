@@ -15,14 +15,10 @@ import Foundation
     @NSManaged var students: PFRelation
     @NSManaged var isAFriend: Bool
     
-    
     @NSManaged var skills : PFRelation
-
-//    @NSManaged var conversations : PFRelation
-
     @NSManaged var courses : PFRelation
 
-    @NSManaged var credits : NSNumber
+
 
 
     

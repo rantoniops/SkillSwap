@@ -5,6 +5,8 @@
 #import "PostCourseVC.h"
 #import "TakeCourseVC.h"
 #import "CustomCourseAnnotation.h"
+#import "CourseListVC.h"
+#import "ReviewVC.h"
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate, PostVCDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
@@ -25,8 +27,7 @@
 @property NSArray *friendsArray;
 @property BOOL ifNow;
 @property BOOL checkEveryone;
-
-
+@property NSArray *reviews;
 @end
 @implementation MapVC
 - (void)viewDidLoad
@@ -34,10 +35,6 @@
     [super viewDidLoad];
     [self showUserLocation];
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-//    NSLog(@"%@", [User currentUser]);
-    self.now = [NSDate date];
-    NSTimeInterval fourteenHours = 14*60*60;
-    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
     self.ifNow = YES;
     self.checkEveryone = YES;
 }
@@ -45,6 +42,51 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
+
+    self.now = [NSDate date];
+    NSTimeInterval fourteenHours = 14*60*60;
+    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+
+    // Finding courses that expired
+    PFQuery *expiredCoursesQuery = [Course query];
+    [expiredCoursesQuery whereKey:@"time" lessThan:self.now];
+
+    // Find reviews associated with these courses
+    PFQuery *reviewsQuery = [Review query];
+    [reviewsQuery whereKey:@"course" matchesQuery:expiredCoursesQuery];
+    [reviewsQuery whereKey:@"reviewer" equalTo:[User currentUser]];
+    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@0];
+    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         NSLog(@"review query was called at all");
+         if (!error)
+         {
+             if (objects.count > 0)
+             {
+                 NSLog(@"Successfully retrieved %lu empty reviews.", (unsigned long)objects.count);
+                 self.reviews = objects;
+
+                 for (Review *review in objects)
+                 {
+                     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                     ReviewVC *reviewVC = [storyBoard instantiateViewControllerWithIdentifier:@"ReviewVCID"];
+                     reviewVC.reviewToReview = review;
+                     [self presentViewController:reviewVC animated:true completion:nil];
+                 }
+
+             }
+             else
+             {
+                 NSLog(@"review query didnt return any objects");
+             }
+
+         }
+         else
+         {
+             NSLog(@"review query had error : %@ %@", error, [error userInfo]);
+         }
+     }];
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -55,7 +97,7 @@
     }
     else
     {
-        self.now = [NSDate date];
+//        self.now = [NSDate date];
         [self queryForMap];
     }
 }
@@ -73,13 +115,12 @@
              self.friendsArray = [[NSArray alloc]initWithArray:allFriends];
              
              PFQuery *courseQuery = [Course query];
-             [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
              [courseQuery includeKey:@"teacher"];
+             [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
              if (self.ifNow == YES)
              {
                  [courseQuery whereKey:@"time" greaterThanOrEqualTo:self.now];
                  [courseQuery whereKey:@"time" lessThanOrEqualTo:self.tomorrow];
-
              }
              else
              {
@@ -90,7 +131,6 @@
                       if (!error)
                       {
                           self.results = objects;
-                          NSLog(@"the query returned %@", objects);
                           for (Course *object in objects)
                           {
                               if ([object isKindOfClass:[Course class]])
@@ -148,7 +188,6 @@
         if (!error)
         {
             self.results = objects;
-            NSLog(@"the query returned %@", objects);
             for (Course *object in objects)
             {
                 if ([object isKindOfClass:[Course class]])
@@ -257,16 +296,12 @@
     }
     
 }
-////////Need to figure out how to delete the latest pin dropped if the user does not add a new course, it isn't saved but it stays on map//////
-////pins should be colored based on whether current user is course coordinator or not/////
+
 
 
 ///resize image
-
-- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
-    //UIGraphicsBeginImageContext(newSize);
-    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
-    // Pass 1.0 to force exact pixel size.
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize
+{
     UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -312,9 +347,9 @@
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void)
-                   {
-                       [self performSegueWithIdentifier:@"postClass" sender:self];
-                   });
+   {
+       [self performSegueWithIdentifier:@"postClass" sender:self];
+   });
 }
 
 
@@ -336,10 +371,15 @@
     {
         NSLog(@"going to messages");
     }
+    else if ([segue.identifier isEqualToString:@"mapToList"]) 
+    {
+        CourseListVC *listVC = segue.destinationViewController;
+        listVC.courses = self.results;
+    }
     else if ([segue.identifier isEqualToString:@"profile"])
-      {
+    {
           
-      }
+    }
     else
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
@@ -349,15 +389,10 @@
     }
 }
 
-//- (IBAction)profileButtonPress:(UIButton *)sender
-//{
-//    [self performSegueWithIdentifier:@"profile" sender:self];
-//    NSLog(@"profile button pressed, current user is %@", [User currentUser]);
-//
-//}
 
-
-- (IBAction)listButtonPress:(UIButton *)sender {
+- (IBAction)listButtonPress:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:@"mapToList" sender:self];
 }
 
 
@@ -369,11 +404,6 @@
     location.latitude = userLocation.coordinate.latitude;
     location.longitude = userLocation.coordinate.longitude;
 }
-
-# pragma mark PostVCDelegate Methods
-
-
-
 
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -514,11 +544,6 @@
     {
         [self.mapView removeAnnotation:self.lastAnnotationArray.lastObject];
     }
-    else
-    {
-        
-    }
-    
 }
 
 

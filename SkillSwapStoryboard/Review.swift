@@ -23,6 +23,12 @@ class Review : PFObject, PFSubclassing
     @NSManaged var reviewer : User
     @NSManaged var reviewed : User
 
+    @NSManaged var course : Course
+
+    @NSManaged var hasBeenReviewed : NSNumber
+
+
+
 
 
     
