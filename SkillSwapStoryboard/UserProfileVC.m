@@ -11,7 +11,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionText;
 @property PFFile *userImageFile;
 @property Course *courseAtRow;
+@property User *userAtRow;
 @property NSArray *coursesArray;
+@property NSArray *friendsArray;
 @property UIImage *chosenImage;
 @property NSData *smallImageData;
 @end
@@ -19,7 +21,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self loadProfilePicwithImage:[UIImage imageNamed:@"emptyProfile"]];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -37,10 +38,16 @@
 
 -(void)loadProfilePicwithImage:(UIImage *)image
 {
+    if (self.selectedUser)
+    {
+        self.profileImage.userInteractionEnabled = NO;
+    }
+    else
+    {
     self.profileImage.userInteractionEnabled = YES;
+    }
     UIImage *profileImage = image;
     self.profileImage.image = profileImage;
-    self.profileImage.frame = CGRectMake(0, 0, 250, 250);
     self.profileImage.layer.masksToBounds = YES;
     self.profileImage.layer.borderWidth = 1;
     UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
@@ -55,6 +62,7 @@
         PFRelation *relation = [self.selectedUser relationForKey:@"courses"];
         PFQuery *relationQuery = relation.query;
         [relationQuery includeKey:@"teacher"];
+        [relationQuery whereKey:@"teacher" equalTo: self.selectedUser];
         [relationQuery orderByAscending:@"createdAt"];
         [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
@@ -65,15 +73,32 @@
                  self.name.text = self.selectedUser.username;
                  self.userImageFile = [self.selectedUser valueForKey:@"profilePic"];
                  NSLog(@"image file is %@", self.userImageFile);
-                 [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-                  {
-                      if (!error)
+                 if (self.userImageFile == NULL)
+                 {
+                     [self loadProfilePicwithImage:[UIImage imageNamed:@"emptyProfile"]];
+                     
+                 }
+                 else
+                 {
+                     [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
                       {
-                          UIImage *image = [UIImage imageWithData:data];
-                          [self loadProfilePicwithImage:image];
-                          NSLog(@"we have the image");
-                      }
-                  }];
+                          if (!error)
+                          {
+                              UIImage *image = [UIImage imageWithData:data];
+                              [self loadProfilePicwithImage:image];
+                          }
+                      }];
+                 }
+             }
+        }];
+        PFRelation *relationFriends = [self.selectedUser relationForKey:@"friends"];
+        PFQuery *relationFriendsQuery = relationFriends.query;
+        [relationFriendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             if (error == nil)
+             {
+                 self.friendsArray = objects;
+                 [self.tableVIew reloadData];
              }
          }];
     }
@@ -82,7 +107,9 @@
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         PFQuery *relationQuery = relation.query;
+        [relationQuery includeKey:@"teacher"];
         [relationQuery orderByAscending:@"createdAt"];
+        [relationQuery whereKey:@"teacher" equalTo:currentUser];
         [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
              if (error == nil)
@@ -92,17 +119,36 @@
                  self.name.text = currentUser.username;
                  self.userImageFile = [currentUser valueForKey:@"profilePic"];
                  NSLog(@"image file is %@", self.userImageFile);
-                 [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-                  {
-                      if (!error)
+                 if (self.userImageFile == NULL)
+                 {
+                     [self loadProfilePicwithImage:[UIImage imageNamed:@"emptyProfile"]];
+
+                 }
+                 else
+                 {
+                     [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
                       {
-                          UIImage *image = [UIImage imageWithData:data];
-                          [self loadProfilePicwithImage:image];
-                          NSLog(@"we have the image");
-                      }
-                  }];
+                          if (!error)
+                          {
+                                  UIImage *image = [UIImage imageWithData:data];
+                                  [self loadProfilePicwithImage:image];
+                          }
+                          }];
+
+                 }
              }
          }];
+        PFRelation *relationFriends = [currentUser relationForKey:@"friends"];
+        PFQuery *relationFriendsQuery = relationFriends.query;
+        [relationFriendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+              if (error == nil)
+              {
+                  self.friendsArray = objects;
+                  [self.tableVIew reloadData];
+              }
+        }];
+        
     }
 
 }
@@ -115,6 +161,8 @@
 -(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     NSLog(@"successful Tap");
+    
+    NSLog(@"Here is my list of friends %@", self.friendsArray);
     [self showAlertOnViewController];
 }
 
@@ -160,10 +208,13 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     self.chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.profileImage.image = self.chosenImage;
+//    self.profileImage.image = self.chosenImage;
     self.smallImageData = UIImageJPEGRepresentation(self.chosenImage, 0.5);
     [picker dismissViewControllerAnimated:YES completion:NULL];
     NSLog(@"image should be ready to save");
+    [self saveImage];
+    [self loadProfilePicwithImage:self.chosenImage];
+    
 }
 
 
@@ -171,14 +222,14 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    Course *course = self.coursesArray[indexPath.row];
-//    cell.detailTextLabel.text = course.address;
-    cell.detailTextLabel.text = [course valueForKey:@"address"];
-//    NSString *timeString = [NSDateFormatter localizedStringFromDate:course.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-    NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-//    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", course.title, timeString];
-    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", [course valueForKey:@"title"] , timeString];
-    cell.textLabel.text = titleAndTime;
+//    Course *course = self.coursesArray[indexPath.row];
+    User *user = self.friendsArray[indexPath.row];
+    
+    cell.textLabel.text = [user valueForKey:@"username"];
+//    cell.detailTextLabel.text = [course valueForKey:@"address"];
+//    NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+//    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", [course valueForKey:@"title"] , timeString];
+//    cell.textLabel.text = titleAndTime;
     return cell;
 }
 
@@ -192,7 +243,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"cell tapped");
-    self.courseAtRow = self.coursesArray[indexPath.row];
+    self.userAtRow = self.friendsArray[indexPath.row];
+//    self.courseAtRow = self.coursesArray[indexPath.row];
     [self performSegueWithIdentifier:@"showCourse" sender:self];
 }
 
@@ -211,7 +263,8 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.coursesArray.count;
+//    return self.coursesArray.count;
+    return self.friendsArray.count;
 }
 
 
@@ -220,26 +273,7 @@
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
-//- (IBAction)editButton:(id)sender
-//{
-//    [self saveImage];
-//    if ([self.editAndDoneButton.title isEqualToString:@"Edit"])
-//    {
-//        self.editAndDoneButton.title = @"Done";
-//    }
-//    else
-//    {
-//        self.editAndDoneButton.title = @"Edit";
-//    }
-//}
 
-
-
-
-- (IBAction)onSaveButtonPressed:(UIButton *)sender
-{
-    [self saveImage];
-}
 
 -(void)saveImage
 {

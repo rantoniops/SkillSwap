@@ -63,7 +63,7 @@
         nil;
     }];
     
-    [alert addAction:takeMovie];
+//    [alert addAction:takeMovie];
     [alert addAction:takePhoto];
     [alert addAction:pullLibrary];
    
