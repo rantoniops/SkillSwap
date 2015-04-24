@@ -9,14 +9,18 @@
 @end
 @implementation MessagesVC
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
 }
 
 
 -(void)viewWillAppear:(BOOL)animated
 {
+   
     self.navigationController.navigationBarHidden = NO;
     [self queryConversations];
 }
@@ -119,6 +123,11 @@
     return cell;
 }
 
+//- (void)keyboardWillShow:(NSNotification *)notification
+//{
+//    // move the view up so that the login button is 8 points above the keyboard
+//    [self adjustScreenForKeyboard:notification target:self. offset:8.0f];
+//}
 
 
 
