@@ -141,7 +141,7 @@
                         <outlet property="skills" destination="xL5-Ch-sFh" id="phJ-ux-9lo"/>
                         <outlet property="tableVIew" destination="Imf-Lt-PuZ" id="ReS-5W-Id1"/>
                         <segue destination="etR-4f-bF4" kind="show" identifier="fromUserToLogin" id="k1H-ee-weg"/>
-                        <segue destination="Dzz-ZH-zxG" kind="show" identifier="showCourse" id="qe4-rW-6Zk"/>
+                        <segue destination="Dzz-ZH-zxG" kind="show" identifier="showCourse" id="aeD-cB-7cP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H6S-jG-N0L" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -785,8 +785,8 @@
                         <outlet property="mapView" destination="Huc-1f-hRt" id="yNo-By-3rg"/>
                         <outlet property="searchBar" destination="gaa-Yj-AFh" id="Ts0-HB-w93"/>
                         <segue destination="1NH-1g-Wdt" kind="show" identifier="postClass" id="mPB-HJ-ttb"/>
-                        <segue destination="Dzz-ZH-zxG" kind="presentation" identifier="mapToSkill" id="5U3-6a-ZrJ"/>
                         <segue destination="Prt-wG-T1c" kind="show" identifier="mapToList" id="je5-rV-1ES"/>
+                        <segue destination="Dzz-ZH-zxG" kind="presentation" identifier="mapToSkill" id="WLm-8o-MZr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gYI-KG-qhU" sceneMemberID="firstResponder"/>
@@ -841,15 +841,6 @@
                                     <rect key="frame" x="21" y="214" width="284" height="21"/>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="teacher name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b3G-c0-KEU">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="142" y="104" width="105" height="21"/>
-                                </variation>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="rating" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rx-Fk-F4Y">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -862,8 +853,21 @@
                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j3V-5r-Sah">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <gestureRecognizers/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="21" y="81" width="77" height="67"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="77" id="6wy-be-OQN"/>
+                                    <constraint firstAttribute="height" constant="67" id="wpc-F1-plZ"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="6wy-be-OQN"/>
+                                        <exclude reference="wpc-F1-plZ"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="6wy-be-OQN"/>
+                                        <include reference="wpc-F1-plZ"/>
+                                    </mask>
                                 </variation>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="EjQ-Ed-9H5" appends="YES" id="oxY-bH-fUU"/>
@@ -941,15 +945,43 @@
                                     <action selector="followButtonTap:" destination="Dzz-ZH-zxG" eventType="touchUpInside" id="be3-Ki-3ZQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vMX-D0-mWY">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="94" id="Hmf-ja-Sne"/>
+                                </constraints>
+                                <state key="normal" title="teacher name">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Hmf-ja-Sne"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Hmf-ja-Sne"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="onTeacherNameButtonTapped:" destination="Dzz-ZH-zxG" eventType="touchUpInside" id="gOV-fP-wHj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="j3V-5r-Sah" firstAttribute="leading" secondItem="geS-1b-2d2" secondAttribute="leadingMargin" constant="5" id="7iw-BF-yrQ"/>
+                            <constraint firstItem="vMX-D0-mWY" firstAttribute="top" secondItem="D7w-qj-t0m" secondAttribute="bottom" constant="17" id="Ted-Mt-Xr9"/>
+                            <constraint firstItem="j3V-5r-Sah" firstAttribute="top" secondItem="D7w-qj-t0m" secondAttribute="bottom" constant="17" id="Uu7-Y9-CEu"/>
+                            <constraint firstItem="vMX-D0-mWY" firstAttribute="leading" secondItem="j3V-5r-Sah" secondAttribute="trailing" constant="67" id="rSZ-bl-a1K"/>
+                            <constraint firstAttribute="centerX" secondItem="vMX-D0-mWY" secondAttribute="centerX" id="sD3-qo-lvZ"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="AqQ-uX-kDJ"/>
                                 <exclude reference="DMu-bf-X36"/>
                                 <exclude reference="Ur5-O7-dFr"/>
                                 <exclude reference="04F-2y-GWY"/>
-                                <exclude reference="b3G-c0-KEU"/>
                                 <exclude reference="6rx-Fk-F4Y"/>
                                 <exclude reference="j3V-5r-Sah"/>
                                 <exclude reference="28b-My-q1E"/>
@@ -958,6 +990,14 @@
                                 <exclude reference="vU5-W5-XDe"/>
                                 <exclude reference="e0Q-b5-gC9"/>
                                 <exclude reference="QSY-wQ-5uj"/>
+                                <exclude reference="vMX-D0-mWY"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="7iw-BF-yrQ"/>
+                                <exclude reference="Uu7-Y9-CEu"/>
+                                <exclude reference="Ted-Mt-Xr9"/>
+                                <exclude reference="rSZ-bl-a1K"/>
+                                <exclude reference="sD3-qo-lvZ"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -966,7 +1006,6 @@
                                 <include reference="DMu-bf-X36"/>
                                 <include reference="Ur5-O7-dFr"/>
                                 <include reference="04F-2y-GWY"/>
-                                <include reference="b3G-c0-KEU"/>
                                 <include reference="6rx-Fk-F4Y"/>
                                 <include reference="j3V-5r-Sah"/>
                                 <include reference="28b-My-q1E"/>
@@ -975,6 +1014,14 @@
                                 <include reference="vU5-W5-XDe"/>
                                 <include reference="e0Q-b5-gC9"/>
                                 <include reference="QSY-wQ-5uj"/>
+                                <include reference="vMX-D0-mWY"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="7iw-BF-yrQ"/>
+                                <include reference="Uu7-Y9-CEu"/>
+                                <include reference="Ted-Mt-Xr9"/>
+                                <exclude reference="rSZ-bl-a1K"/>
+                                <include reference="sD3-qo-lvZ"/>
                             </mask>
                         </variation>
                     </view>
@@ -994,14 +1041,14 @@
                         <outlet property="courseRating" destination="6rx-Fk-F4Y" id="ICc-fe-LSA"/>
                         <outlet property="courseTableView" destination="28b-My-q1E" id="1sY-9A-rLG"/>
                         <outlet property="followButton" destination="QSY-wQ-5uj" id="VSV-bo-TB3"/>
-                        <outlet property="teacherName" destination="b3G-c0-KEU" id="wTT-7g-R8L"/>
-                        <segue destination="WVF-Eu-zvm" kind="show" identifier="teacherProfile" id="fs6-1Z-XI9"/>
+                        <outlet property="teacherName" destination="vMX-D0-mWY" id="hQc-Nv-8fd"/>
+                        <segue destination="hgs-oW-eJb" kind="show" identifier="takeCourseToTeacherProfile" id="Xpx-Xz-AQt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A0U-ZX-YKJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="EjQ-Ed-9H5"/>
             </objects>
-            <point key="canvasLocation" x="4041" y="1524"/>
+            <point key="canvasLocation" x="4959" y="1524"/>
         </scene>
         <!--ReviewVC-->
         <scene sceneID="3gY-tx-BYa">
@@ -1018,7 +1065,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How was your experience?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Klk-FS-yjh">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="96" y="141" width="208" height="21"/>
@@ -1073,7 +1120,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anything left to say?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRH-10-YyD">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="122" y="352" width="157" height="21"/>
@@ -1409,45 +1456,6 @@
                 <tapGestureRecognizer id="MKr-kH-32c"/>
             </objects>
             <point key="canvasLocation" x="4209" y="686"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="Bua-jL-bIR">
-            <objects>
-                <viewController id="WVF-Eu-zvm" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="09Y-ol-1lK"/>
-                        <viewControllerLayoutGuide type="bottom" id="aup-ya-kdE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="KAK-Vj-bUS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="teachers profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ub-03-4FH">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="147" y="166" width="119" height="21"/>
-                                </variation>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="6Ub-03-4FH"/>
-                            </mask>
-                        </variation>
-                        <variation key="widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="6Ub-03-4FH"/>
-                            </mask>
-                        </variation>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ncs-gQ-ES8" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4869" y="1524"/>
         </scene>
         <!--Course ListVC-->
         <scene sceneID="2Zb-UG-TWV">
@@ -1830,6 +1838,24 @@
             </objects>
             <point key="canvasLocation" x="2292" y="-149"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Gc2-RF-4G5">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T3p-6U-rVQ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gxG-fJ-uAY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Dzz-ZH-zxG" kind="relationship" relationship="rootViewController" id="bwq-B5-OY0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MVZ-JH-b3l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5745" y="1034"/>
+        </scene>
     </scenes>
     <resources>
         <image name="LoginBG.png" width="375" height="667"/>
@@ -1839,8 +1865,9 @@
         <image name="bg-sunny-cloud-4.png" width="115" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jLA-xh-0Ut"/>
-        <segue reference="qe4-rW-6Zk"/>
+        <segue reference="bwq-B5-OY0"/>
         <segue reference="WcH-cb-mK9"/>
+        <segue reference="Xpx-Xz-AQt"/>
+        <segue reference="jLA-xh-0Ut"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -1,10 +1,11 @@
 #import "TakeCourseVC.h"
+#import "UserProfileVC.h"
 #import "MessageConversationVC.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 @interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *courseImage;
-@property (weak, nonatomic) IBOutlet UILabel *teacherName;
+@property (weak, nonatomic) IBOutlet UIButton *teacherName;
 @property (weak, nonatomic) IBOutlet UILabel *courseRating;
 @property (weak, nonatomic) IBOutlet UILabel *courseName;
 @property (weak, nonatomic) IBOutlet UILabel *courseDesciption;
@@ -33,9 +34,11 @@
     NSString *timeString = [NSDateFormatter localizedStringFromDate:self.selectedCourse.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
     NSLog(@"%@", timeString);
     self.courseDuration.text = timeString;
-    self.teacherName.text = self.selectedCourse.teacher.username;
-    [self.selectedCourse.courseMedia getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        if (!error) {
+    [self.teacherName setTitle:self.selectedCourse.teacher.username forState:UIControlStateNormal];
+    [self.selectedCourse.courseMedia getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+    {
+        if (!error)
+        {
             UIImage *image = [UIImage imageWithData:data];
             self.courseImage.image = image;
             NSLog(@"pause here");
@@ -45,6 +48,10 @@
     }];
 }
 
+- (IBAction)onTeacherNameButtonTapped:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:@"takeCourseToTeacherProfile" sender:self];
+}
 
 
 - (IBAction)onTakeClassButtonPressed:(UIButton *)sender
@@ -70,38 +77,55 @@
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         [relation addObject: self.selectedCourse];
-
-        Review *emptyReview = [Review new];
-        emptyReview.reviewer = [User currentUser];
-        emptyReview.reviewed = [self.selectedCourse objectForKey:@"teacher"];
-        emptyReview.hasBeenReviewed = @0;
-        emptyReview.course = self.selectedCourse;
-        [emptyReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
              if (succeeded)
              {
-                 NSLog(@"review saved");
-                 
-                 [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-                  {
-                      if (succeeded)
-                      {
-                          NSLog(@"current user saved");
-                          [self dismissViewControllerAnimated:true completion:nil];
-
-                      }
-                      else
-                      {
-                          NSLog(@"current user NOT saved");
-                      }
-                  }];
-
-
-
+                 NSLog(@"current user saved");
+                 [self dismissViewControllerAnimated:true completion:nil];
              }
              else
              {
-                 NSLog(@"review NOT saved");
+                 NSLog(@"current user NOT saved");
+             }
+         }];
+
+
+        // CREATING EMTPY REVIEW FOR TEACHER TO RATE STUDENT LATER
+        Review *emptyTeacherToStudentReview = [Review new];
+        emptyTeacherToStudentReview.reviewer = [self.selectedCourse objectForKey:@"teacher"];
+        emptyTeacherToStudentReview.reviewed = [User currentUser];
+        emptyTeacherToStudentReview.hasBeenReviewed = @0;
+        emptyTeacherToStudentReview.course = self.selectedCourse;
+        [emptyTeacherToStudentReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (succeeded)
+             {
+                 NSLog(@"review for teacher to rate student saved");
+             }
+             else
+             {
+                 NSLog(@"review for teacher to rate student NOT saved");
+             }
+         }];
+
+
+
+        // CREATING EMPTY REVIEW FOR STUDENT TO RATE TEACHER LATER
+        Review *emptyStudentToTeacherReview = [Review new];
+        emptyStudentToTeacherReview.reviewer = [User currentUser];
+        emptyStudentToTeacherReview.reviewed = [self.selectedCourse objectForKey:@"teacher"];
+        emptyStudentToTeacherReview.hasBeenReviewed = @0;
+        emptyStudentToTeacherReview.course = self.selectedCourse;
+        [emptyStudentToTeacherReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (succeeded)
+             {
+                 NSLog(@"review for student to rate teacher saved");
+             }
+             else
+             {
+                 NSLog(@"review for student to rate teacher NOT saved");
              }
          }];
 
@@ -198,6 +222,11 @@
         messageVC.otherUser = self.selectedCourse.teacher;
         messageVC.selectedCourse = self.selectedCourse;
         messageVC.origin = @"takeCourse";
+    }
+    else if ([segue.identifier isEqualToString:@"takeCourseToTeacherProfile"])
+    {
+        UserProfileVC *profileVC = segue.destinationViewController;
+        profileVC.selectedUser = self.selectedCourse.teacher;
     }
 }
 
