@@ -1,10 +1,11 @@
 #import "TakeCourseVC.h"
+#import "UserProfileVC.h"
 #import "MessageConversationVC.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 @interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *courseImage;
-@property (weak, nonatomic) IBOutlet UILabel *teacherName;
+@property (weak, nonatomic) IBOutlet UIButton *teacherName;
 @property (weak, nonatomic) IBOutlet UILabel *courseRating;
 @property (weak, nonatomic) IBOutlet UILabel *courseName;
 @property (weak, nonatomic) IBOutlet UILabel *courseDesciption;
@@ -33,9 +34,11 @@
     NSString *timeString = [NSDateFormatter localizedStringFromDate:self.selectedCourse.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
     NSLog(@"%@", timeString);
     self.courseDuration.text = timeString;
-    self.teacherName.text = self.selectedCourse.teacher.username;
-    [self.selectedCourse.courseMedia getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        if (!error) {
+    [self.teacherName setTitle:self.selectedCourse.teacher.username forState:UIControlStateNormal];
+    [self.selectedCourse.courseMedia getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+    {
+        if (!error)
+        {
             UIImage *image = [UIImage imageWithData:data];
             self.courseImage.image = image;
             NSLog(@"pause here");
@@ -45,6 +48,10 @@
     }];
 }
 
+- (IBAction)onTeacherNameButtonTapped:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:@"takeCourseToTeacherProfile" sender:self];
+}
 
 
 - (IBAction)onTakeClassButtonPressed:(UIButton *)sender
@@ -215,6 +222,11 @@
         messageVC.otherUser = self.selectedCourse.teacher;
         messageVC.selectedCourse = self.selectedCourse;
         messageVC.origin = @"takeCourse";
+    }
+    else if ([segue.identifier isEqualToString:@"takeCourseToTeacherProfile"])
+    {
+        UserProfileVC *profileVC = segue.destinationViewController;
+        profileVC.selectedUser = self.selectedCourse.teacher;
     }
 }
 
