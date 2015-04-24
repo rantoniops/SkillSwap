@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
+@property NSArray *courseReviews;
 @property User *currentUser;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
 @end
@@ -147,15 +148,21 @@
 }
 
 
-
-
-
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)queryForCourseReviews
 {
-    return nil;
-    
+    PFQuery *reviewsQuery = [Review query];
+    [reviewsQuery whereKey:@"course" equalTo:self.selectedCourse];
+    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (!error)
+         {
+             self.courseReviews = objects;
+             
+         }
+     }];
 }
+
+
 - (IBAction)dismissButton:(id)sender
 {
     [self dismissViewControllerAnimated:true completion:nil];    
@@ -204,11 +211,15 @@
 
 }
 
-
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    
+}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return self.courseReviews.count;
 }
 
 
