@@ -297,8 +297,8 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    return self.coursesArray.count;
-    return self.friendsArray.count;
+    return self.coursesArray.count;
+//    return self.friendsArray.count;
 }
 
 
