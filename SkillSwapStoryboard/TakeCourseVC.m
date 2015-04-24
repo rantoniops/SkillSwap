@@ -70,38 +70,55 @@
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         [relation addObject: self.selectedCourse];
-
-        Review *emptyReview = [Review new];
-        emptyReview.reviewer = [User currentUser];
-        emptyReview.reviewed = [self.selectedCourse objectForKey:@"teacher"];
-        emptyReview.hasBeenReviewed = @0;
-        emptyReview.course = self.selectedCourse;
-        [emptyReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
              if (succeeded)
              {
-                 NSLog(@"review saved");
-                 
-                 [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-                  {
-                      if (succeeded)
-                      {
-                          NSLog(@"current user saved");
-                          [self dismissViewControllerAnimated:true completion:nil];
-
-                      }
-                      else
-                      {
-                          NSLog(@"current user NOT saved");
-                      }
-                  }];
-
-
-
+                 NSLog(@"current user saved");
+                 [self dismissViewControllerAnimated:true completion:nil];
              }
              else
              {
-                 NSLog(@"review NOT saved");
+                 NSLog(@"current user NOT saved");
+             }
+         }];
+
+
+        // CREATING EMTPY REVIEW FOR TEACHER TO RATE STUDENT LATER
+        Review *emptyTeacherToStudentReview = [Review new];
+        emptyTeacherToStudentReview.reviewer = [self.selectedCourse objectForKey:@"teacher"];
+        emptyTeacherToStudentReview.reviewed = [User currentUser];
+        emptyTeacherToStudentReview.hasBeenReviewed = @0;
+        emptyTeacherToStudentReview.course = self.selectedCourse;
+        [emptyTeacherToStudentReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (succeeded)
+             {
+                 NSLog(@"review for teacher to rate student saved");
+             }
+             else
+             {
+                 NSLog(@"review for teacher to rate student NOT saved");
+             }
+         }];
+
+
+
+        // CREATING EMPTY REVIEW FOR STUDENT TO RATE TEACHER LATER
+        Review *emptyStudentToTeacherReview = [Review new];
+        emptyStudentToTeacherReview.reviewer = [User currentUser];
+        emptyStudentToTeacherReview.reviewed = [self.selectedCourse objectForKey:@"teacher"];
+        emptyStudentToTeacherReview.hasBeenReviewed = @0;
+        emptyStudentToTeacherReview.course = self.selectedCourse;
+        [emptyStudentToTeacherReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (succeeded)
+             {
+                 NSLog(@"review for student to rate teacher saved");
+             }
+             else
+             {
+                 NSLog(@"review for student to rate teacher NOT saved");
              }
          }];
 
