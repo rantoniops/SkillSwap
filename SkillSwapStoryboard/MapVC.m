@@ -27,6 +27,7 @@
 @property NSArray *friendsArray;
 @property BOOL ifNow;
 @property BOOL checkEveryone;
+@property NSArray *reviews;
 @end
 @implementation MapVC
 - (void)viewDidLoad
@@ -46,8 +47,8 @@
     User *currentUser = [User currentUser];
     PFRelation *relation = [currentUser relationForKey:@"courses"];
     PFQuery *relationQuery = relation.query;
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ReviewVC *reviewVC = [storyBoard instantiateViewControllerWithIdentifier:@"ReviewVCID"];
+//    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    ReviewVC *reviewVC = [storyBoard instantiateViewControllerWithIdentifier:@"ReviewVCID"];
     [relationQuery whereKey:@"time" lessThanOrEqualTo:self.now];
     [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *courses, NSError *error)
      {
@@ -57,8 +58,8 @@
              {
                  NSLog(@"user has history of courses, here they are: %@", courses);
                  if ([currentUser valueForKey:@"reviewCompleted"] == 0) {
-                     reviewVC.reviewCourse = courses.lastObject;
-                     [self presentViewController:reviewVC animated:true completion:nil];
+//                     reviewVC.reviewCourse = courses.lastObject; // WE DIDNT PASTE THIS DOWN, BUT WITHOUT COMMENTING OUT,WILL CRASH
+//                     [self presentViewController:reviewVC animated:true completion:nil];
                      NSLog(@"%@ has not yet reviewed %@", currentUser.username, courses.lastObject);
                  }
              }
@@ -70,6 +71,38 @@
 {
     self.navigationController.navigationBarHidden = YES;
     [self ifUserHasAnExpiredCourseSansReview];
+
+    PFQuery *reviewsQuery = [Review query];
+    [reviewsQuery includeKey:@"course"];
+    [reviewsQuery whereKey:@"reviewer" equalTo:[User currentUser]];
+    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@0];
+    [reviewsQuery whereKey:@"course.time" lessThan:self.now];
+    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (!error)
+         {
+             if (objects.count > 0)
+             {
+                 NSLog(@"Successfully retrieved %lu empty reviews.", (unsigned long)objects.count);
+                 self.reviews = objects;
+
+                 for (Review *review in objects)
+                 {
+                     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                     ReviewVC *reviewVC = [storyBoard instantiateViewControllerWithIdentifier:@"ReviewVCID"];
+                     reviewVC.reviewToReview = review;
+                     [self presentViewController:reviewVC animated:true completion:nil];
+                 }
+
+             }
+
+         }
+         else
+         {
+             NSLog(@"Error: %@ %@", error, [error userInfo]);
+         }
+     }];
+
 }
 
 -(void)viewDidAppear:(BOOL)animated

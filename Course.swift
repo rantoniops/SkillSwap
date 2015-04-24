@@ -25,6 +25,7 @@ import Foundation
     @NSManaged var location: PFGeoPoint
 
 
+//    @NSManaged var reviews : PFRelation
     @NSManaged var skillsTaught : PFRelation
 
     @NSManaged var teacher : User

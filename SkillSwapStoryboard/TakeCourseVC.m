@@ -54,28 +54,7 @@
 }
 
 
-- (IBAction)takeClass:(UIButton *)sender
-{
-    NSLog(@"Here are the current users credits: %@" , [[User currentUser]valueForKey:@"credits"]);
-    int creditCount = [[[User currentUser]valueForKey:@"credits"] intValue];
-    
-//    if (creditCount < 1)
-//    {
-//        [self denyAlert];
-//    }
-//    else
-//    {
-        [self confirmAlert];
-//    }
-}
 
--(void)denyAlert
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Insufficient Credits" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler: nil];
-    [alert addAction:cancelAction];
-    [self presentViewController:alert animated:true completion:nil];
-}
 
 
 -(void)confirmAlert
@@ -86,29 +65,44 @@
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         [relation addObject: self.selectedCourse];
-        //user and teacher both have reviews to complete
-        [self.selectedCourse.teacher setValue:@0 forKey:@"completedReview"];
-        [currentUser setValue:@0 forKey:@"completedReview"];
-        
-//        [self exchangeCredits];
-        [self.selectedCourse.teacher saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-         {
-         }];
-        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+
+        Review *emptyReview = [Review new];
+        emptyReview.reviewer = [User currentUser];
+        emptyReview.reviewed = [self.selectedCourse objectForKey:@"teacher"];
+        emptyReview.hasBeenReviewed = @0;
+        emptyReview.course = self.selectedCourse;
+        [emptyReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
              if (succeeded)
              {
-                 // IF WE TRY TO SET AND GET CREDITS WITH DOT NOTATION THE APP WILL CRASH SAYING UNRECOGNIZED SELECTOR SENT TO INSTANCE, IF WE CHANGE IT TO VALUEFORKEY AND SETVALUEFORKEY IT WORKS FINE. THIS IS WEIRD
-                 NSLog(@"course saved");
-                 NSLog(@"%@", self.selectedCourse.teacher);
+
+                 
+                 [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                  {
+                      if (succeeded)
+                      {
+                          NSLog(@"current user saved");
+
+                      }
+                      else
+                      {
+                          NSLog(@"current user NOT saved");
+                      }
+                  }];
+
+
+
              }
              else
              {
-                 NSLog(@"course NOT saved");
+                 NSLog(@"review NOT saved");
              }
          }];
 
+
     }];
+
+
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
     {
@@ -120,6 +114,7 @@
     [self presentViewController:alert animated:true completion:nil];
     
 }
+
 -(void)exchangeCredits
 {
     int newCreditCount = [[self.currentUser valueForKey:@"credits"] intValue] -1;

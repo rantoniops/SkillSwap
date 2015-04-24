@@ -4,16 +4,14 @@
 @property NSString *placeHolderString;
 @end
 @implementation ReviewVC
-
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.textField.delegate = self;
     self.textField.editable = YES;
     self.placeHolderString = [NSString stringWithFormat:@"%@ was very...", [self.reviewCourse valueForKey:@"title"]];
     self.textField.text = self.placeHolderString;
     self.textField.textColor = [UIColor lightGrayColor];
-    
-    // Do any additional setup after loading the view.
 }
 
 
@@ -42,23 +40,12 @@
 
 -(void)saveTheReview
 {
-    Review *review = [Review new];
-    review.reviewContent = self.textField.text;
-    review.reviewed = [self.reviewCourse valueForKey:@"teacher"];
-    User *currentUser = [User currentUser];
-    review.reviewer = currentUser;
-    [currentUser setValue:@1 forKey:@"completedReview"];
-    [review saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+    self.reviewToReview.reviewContent = self.textField.text;
+    [self.reviewToReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
          if (succeeded)
          {
-             
-             NSLog(@"review saved");
-             [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-              {
-                  NSLog(@"Our completed review score should now be 1, and it is : %@", [currentUser valueForKey:@"completedReview"]);
-                  [self dismissViewControllerAnimated:true completion:nil];
-              }];
+             NSLog(@"review with content saved");
          }
      }];
 }

@@ -139,6 +139,9 @@
     }
     else
     {
+
+
+
     // CREATING SKILL
     Skill *skill = [Skill new];
     skill.name = self.classSkillTextField.text;
@@ -160,6 +163,8 @@
              course.time = self.datePicker.date;
              course.teacher = [User currentUser];
              course.location = [PFGeoPoint geoPointWithLocation:self.courseLocation];
+
+
              PFRelation *relation = [course relationForKey:@"skillsTaught"];
              [relation addObject: skill];
              [course saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
