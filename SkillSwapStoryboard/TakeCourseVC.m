@@ -7,7 +7,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *teacherName;
 @property (weak, nonatomic) IBOutlet UILabel *courseRating;
 @property (weak, nonatomic) IBOutlet UILabel *courseName;
-@property (weak, nonatomic) IBOutlet UILabel *courseCredit;
 @property (weak, nonatomic) IBOutlet UILabel *courseDesciption;
 @property (weak, nonatomic) IBOutlet UILabel *courseDuration;
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
@@ -15,21 +14,19 @@
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
 @property User *currentUser;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
-
-
-
 @end
 @implementation TakeCourseVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.currentUser = [User currentUser];
-    if (self.selectedCourse.teacher == self.currentUser) {
+    if (self.selectedCourse.teacher == self.currentUser)
+    {
         self.followButton.hidden = YES;
     }
+
     UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [self.courseImage addGestureRecognizer:photoTap];
-    
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
     self.courseDesciption.text = self.selectedCourse.courseDescription;
@@ -48,34 +45,21 @@
     }];
 }
 
+
+
+- (IBAction)onTakeClassButtonPressed:(UIButton *)sender
+{
+    [self confirmAlert];
+}
+
+
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = NO;
 }
 
 
-- (IBAction)takeClass:(UIButton *)sender
-{
-    NSLog(@"Here are the current users credits: %@" , [[User currentUser]valueForKey:@"credits"]);
-    int creditCount = [[[User currentUser]valueForKey:@"credits"] intValue];
-    
-//    if (creditCount < 1)
-//    {
-//        [self denyAlert];
-//    }
-//    else
-//    {
-        [self confirmAlert];
-//    }
-}
 
--(void)denyAlert
-{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Insufficient Credits" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler: nil];
-    [alert addAction:cancelAction];
-    [self presentViewController:alert animated:true completion:nil];
-}
 
 
 -(void)confirmAlert
@@ -86,29 +70,45 @@
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         [relation addObject: self.selectedCourse];
-        //user and teacher both have reviews to complete
-        [self.selectedCourse.teacher setValue:@0 forKey:@"completedReview"];
-        [currentUser setValue:@0 forKey:@"completedReview"];
-        
-//        [self exchangeCredits];
-        [self.selectedCourse.teacher saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-         {
-         }];
-        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+
+        Review *emptyReview = [Review new];
+        emptyReview.reviewer = [User currentUser];
+        emptyReview.reviewed = [self.selectedCourse objectForKey:@"teacher"];
+        emptyReview.hasBeenReviewed = @0;
+        emptyReview.course = self.selectedCourse;
+        [emptyReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
              if (succeeded)
              {
-                 // IF WE TRY TO SET AND GET CREDITS WITH DOT NOTATION THE APP WILL CRASH SAYING UNRECOGNIZED SELECTOR SENT TO INSTANCE, IF WE CHANGE IT TO VALUEFORKEY AND SETVALUEFORKEY IT WORKS FINE. THIS IS WEIRD
-                 NSLog(@"course saved");
-                 NSLog(@"%@", self.selectedCourse.teacher);
+                 NSLog(@"review saved");
+                 
+                 [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                  {
+                      if (succeeded)
+                      {
+                          NSLog(@"current user saved");
+                          [self dismissViewControllerAnimated:true completion:nil];
+
+                      }
+                      else
+                      {
+                          NSLog(@"current user NOT saved");
+                      }
+                  }];
+
+
+
              }
              else
              {
-                 NSLog(@"course NOT saved");
+                 NSLog(@"review NOT saved");
              }
          }];
 
+
     }];
+
+
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
     {
@@ -120,16 +120,7 @@
     [self presentViewController:alert animated:true completion:nil];
     
 }
--(void)exchangeCredits
-{
-    int newCreditCount = [[self.currentUser valueForKey:@"credits"] intValue] -1;
-    int teacherNewCreditCount = [[self.selectedCourse.teacher valueForKey:@"credits"] intValue]+1;
-    NSNumber *teacherCreditCount = [NSNumber numberWithInt:teacherNewCreditCount];
-    NSNumber *creditCount = [NSNumber numberWithInt:newCreditCount];
-    NSNumber *manyCredits = [NSNumber numberWithInt:3];
-    [self.selectedCourse.teacher setValue:manyCredits forKey:@"credits"];
-    [self.currentUser setValue:creditCount forKey:@"credits"];
-}
+
 
 
 - (IBAction)nopeButtonTap:(UIButton *)sender
@@ -223,11 +214,6 @@
 }
 
 
-//-(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
-//{
-//    NSLog(@"successful Tap");
-//    [self playCourseVideo];
-//}
 
 
 @end
