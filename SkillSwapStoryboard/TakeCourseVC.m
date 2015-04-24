@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
+@property NSArray *courseReviews;
 @property User *currentUser;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
 @end
@@ -26,9 +27,6 @@
     {
         self.followButton.hidden = YES;
     }
-
-    UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
-    [self.courseImage addGestureRecognizer:photoTap];
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
     self.courseDesciption.text = self.selectedCourse.courseDescription;
@@ -65,9 +63,6 @@
 {
     self.navigationController.navigationBarHidden = NO;
 }
-
-
-
 
 
 -(void)confirmAlert
@@ -147,15 +142,21 @@
 }
 
 
-
-
-
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)queryForCourseReviews
 {
-    return nil;
-    
+    PFQuery *reviewsQuery = [Review query];
+    [reviewsQuery whereKey:@"course" equalTo:self.selectedCourse];
+    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (!error)
+         {
+             self.courseReviews = objects;
+             
+         }
+     }];
 }
+
+
 - (IBAction)dismissButton:(id)sender
 {
     [self dismissViewControllerAnimated:true completion:nil];    
@@ -204,11 +205,19 @@
 
 }
 
-
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    Review *review = self.courseReviews[indexPath.row];
+    NSString *reviewerString = [NSString stringWithFormat:@"%@",[review valueForKey:@"reviewer"]];
+    cell.detailTextLabel.text = reviewerString;
+    cell.textLabel.text = [review valueForKey:@"reviewContent"];
+    return cell;
+}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return self.courseReviews.count;
 }
 
 
