@@ -21,6 +21,7 @@
 {
     [super viewDidLoad];
     self.currentUser = [User currentUser];
+    NSLog(@"selected course teacher is %@", self.selectedCourse.teacher.username);
     if (self.selectedCourse.teacher == self.currentUser)
     {
         self.followButton.hidden = YES;
@@ -147,10 +148,8 @@
 
 
 
-- (IBAction)nopeButtonTap:(UIButton *)sender
-{
-    [self dismissViewControllerAnimated:true completion:nil];
-}
+
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

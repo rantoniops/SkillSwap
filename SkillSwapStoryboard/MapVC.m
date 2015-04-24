@@ -115,13 +115,12 @@
              self.friendsArray = [[NSArray alloc]initWithArray:allFriends];
              
              PFQuery *courseQuery = [Course query];
-             [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
              [courseQuery includeKey:@"teacher"];
+             [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
              if (self.ifNow == YES)
              {
                  [courseQuery whereKey:@"time" greaterThanOrEqualTo:self.now];
                  [courseQuery whereKey:@"time" lessThanOrEqualTo:self.tomorrow];
-
              }
              else
              {
