@@ -2,6 +2,7 @@
 @interface MessageConversationVC () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property NSArray *messages;
 @property Conversation *conversation;
 @property int conversationGotUsed;
@@ -12,7 +13,66 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"messageReceived" object:nil];
+  
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
+
+
+- (void)keyboardWillShow:(NSNotification*)notification
+{
+    [self moveControls:notification up:YES];
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notification
+{
+    [self moveControls:notification up:NO];
+}
+
+- (void)moveControls:(NSNotification*)notification up:(BOOL)up
+{
+    NSDictionary* userInfo = [notification userInfo];
+    CGRect newFrame = [self getNewControlsFrame:userInfo up:up];
+    
+    [self animateControls:userInfo withFrame:newFrame];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
+
+- (CGRect)getNewControlsFrame:(NSDictionary*)userInfo up:(BOOL)up
+{
+    CGRect kbFrame = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    kbFrame = [self.view convertRect:kbFrame fromView:nil];
+    
+    CGRect newFrame = self.view.frame;
+    newFrame.origin.y += kbFrame.size.height * (up ? -1 : 1);
+    
+    return newFrame;
+}
+
+- (void)animateControls:(NSDictionary*)userInfo withFrame:(CGRect)newFrame
+{
+    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+//    UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    
+    [UIView animateWithDuration:duration
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.view.frame = newFrame;
+                     }
+                     completion:^(BOOL finished){}];
+}
+
 
 // do i need to do this one?
 -(void) dealloc
@@ -31,6 +91,7 @@
     }
 
 }
+
 
 
 -(void)viewWillAppear:(BOOL)animated
@@ -205,19 +266,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // other methods //
 
 
@@ -246,6 +294,8 @@
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
     return cell;
 }
+
+
 
 
 

@@ -52,6 +52,9 @@
 		B1D7C45B1AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4571AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png */; };
 		B1D7C45C1AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4581AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png */; };
 		B1D7C45D1AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4591AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png */; };
+		B1FD4BAF1AEACD9F00151A21 /* addButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B1FD4BAE1AEACD9F00151A21 /* addButton.png */; };
+		B1FD4BB11AEAD85800151A21 /* Message Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1FD4BB01AEAD85800151A21 /* Message Icon@2x.png */; };
+		B1FD4BB31AEADF1800151A21 /* listButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1FD4BB21AEADF1800151A21 /* listButton@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +129,9 @@
 		B1D7C4571AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sunny-cloud-2@2x.png"; sourceTree = "<group>"; };
 		B1D7C4581AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sunny-cloud-3@2x.png"; sourceTree = "<group>"; };
 		B1D7C4591AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sunny-cloud-4@2x.png"; sourceTree = "<group>"; };
+		B1FD4BAE1AEACD9F00151A21 /* addButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addButton.png; sourceTree = "<group>"; };
+		B1FD4BB01AEAD85800151A21 /* Message Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Message Icon@2x.png"; sourceTree = "<group>"; };
+		B1FD4BB21AEADF1800151A21 /* listButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listButton@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,8 +318,11 @@
 		B1D7C44F1AE82D47007FA4C8 /* ImageAsset */ = {
 			isa = PBXGroup;
 			children = (
+				B1FD4BAE1AEACD9F00151A21 /* addButton.png */,
+				B1FD4BB01AEAD85800151A21 /* Message Icon@2x.png */,
 				B1D7C4561AE85FF8007FA4C8 /* bg-sunny-cloud-1@2x.png */,
 				B1D7C4571AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png */,
+				B1FD4BB21AEADF1800151A21 /* listButton@2x.png */,
 				B1D7C4581AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png */,
 				B1D7C4591AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png */,
 				B1D7C4501AE82DA7007FA4C8 /* LoginBG@2x.png */,
@@ -407,9 +416,12 @@
 			files = (
 				6B7846551ADC988B00EAD40D /* Main.storyboard in Resources */,
 				B1D7C45A1AE85FF8007FA4C8 /* bg-sunny-cloud-1@2x.png in Resources */,
+				B1FD4BB31AEADF1800151A21 /* listButton@2x.png in Resources */,
+				B1FD4BB11AEAD85800151A21 /* Message Icon@2x.png in Resources */,
 				B1D7C4511AE82DA7007FA4C8 /* LoginBG@2x.png in Resources */,
 				B1D7C45C1AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png in Resources */,
 				B1D7C45D1AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png in Resources */,
+				B1FD4BAF1AEACD9F00151A21 /* addButton.png in Resources */,
 				6B78465A1ADC988B00EAD40D /* LaunchScreen.xib in Resources */,
 				6B7846571ADC988B00EAD40D /* Images.xcassets in Resources */,
 				B1D7C45B1AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png in Resources */,
