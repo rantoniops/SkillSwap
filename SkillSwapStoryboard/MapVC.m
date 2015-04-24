@@ -47,16 +47,15 @@
     NSTimeInterval fourteenHours = 14*60*60;
     self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
 
-    PFQuery *courseQuery = [Course query];
-    [courseQuery whereKey:@"time" lessThan:self.now];
+    // Finding courses that expired
+    PFQuery *expiredCoursesQuery = [Course query];
+    [expiredCoursesQuery whereKey:@"time" lessThan:self.now];
+
     // Find reviews associated with these courses
     PFQuery *reviewsQuery = [Review query];
-    [reviewsQuery whereKey:@"course" matchesQuery:courseQuery];
-
-//    [reviewsQuery includeKey:@"course"];
+    [reviewsQuery whereKey:@"course" matchesQuery:expiredCoursesQuery];
     [reviewsQuery whereKey:@"reviewer" equalTo:[User currentUser]];
     [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@0];
-//    [reviewsQuery whereKey:@"course.time" lessThan:self.now];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          NSLog(@"review query was called at all");
@@ -116,13 +115,12 @@
              self.friendsArray = [[NSArray alloc]initWithArray:allFriends];
              
              PFQuery *courseQuery = [Course query];
-             [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
              [courseQuery includeKey:@"teacher"];
+             [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
              if (self.ifNow == YES)
              {
                  [courseQuery whereKey:@"time" greaterThanOrEqualTo:self.now];
                  [courseQuery whereKey:@"time" lessThanOrEqualTo:self.tomorrow];
-
              }
              else
              {

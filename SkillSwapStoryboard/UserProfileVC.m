@@ -11,20 +11,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionText;
 @property PFFile *userImageFile;
 @property Course *courseAtRow;
-
 @property NSArray *coursesArray;
-
-
 @property UIImage *chosenImage;
 @property NSData *smallImageData;
-
-
 @end
 @implementation UserProfileVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self loadrofilePicwithImage:[UIImage imageNamed:@"emptyProfile"]];
+    [self loadProfilePicwithImage:[UIImage imageNamed:@"emptyProfile"]];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -40,9 +35,8 @@
 }
 
 
--(void)loadrofilePicwithImage:(UIImage *)image
+-(void)loadProfilePicwithImage:(UIImage *)image
 {
-    
     self.profileImage.userInteractionEnabled = YES;
     UIImage *profileImage = image;
     self.profileImage.image = profileImage;
@@ -56,29 +50,61 @@
 
 -(void)queryForUserInfo
 {
-    User *currentUser = [User currentUser];
-    PFRelation *relation = [currentUser relationForKey:@"courses"];
-    PFQuery *relationQuery = relation.query;
-    [relationQuery orderByAscending:@"createdAt"];
-    [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         if (error == nil) {
-             self.coursesArray = objects;
-             [self.tableVIew reloadData];
-             self.name.text = currentUser.username;
-             self.userImageFile = [currentUser valueForKey:@"profilePic"];
-             NSLog(@"image file is %@", self.userImageFile);
-            [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+    if (self.selectedUser) // IF COMING FROM TAKECOURSEVC AND WANNA SHOW THE TEACHERS PROFILE
+    {
+        PFRelation *relation = [self.selectedUser relationForKey:@"courses"];
+        PFQuery *relationQuery = relation.query;
+        [relationQuery includeKey:@"teacher"];
+        [relationQuery orderByAscending:@"createdAt"];
+        [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             if (error == nil)
+             {
+                 self.coursesArray = objects;
+                 [self.tableVIew reloadData];
+                 self.name.text = self.selectedUser.username;
+                 self.userImageFile = [self.selectedUser valueForKey:@"profilePic"];
+                 NSLog(@"image file is %@", self.userImageFile);
+                 [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
                   {
                       if (!error)
                       {
                           UIImage *image = [UIImage imageWithData:data];
-                          [self loadrofilePicwithImage:image];
+                          [self loadProfilePicwithImage:image];
                           NSLog(@"we have the image");
                       }
                   }];
              }
-     }];
+         }];
+    }
+    else // current user clicked on the profile button and wants to see his own profile
+    {
+        User *currentUser = [User currentUser];
+        PFRelation *relation = [currentUser relationForKey:@"courses"];
+        PFQuery *relationQuery = relation.query;
+        [relationQuery orderByAscending:@"createdAt"];
+        [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             if (error == nil)
+             {
+                 self.coursesArray = objects;
+                 [self.tableVIew reloadData];
+                 self.name.text = currentUser.username;
+                 self.userImageFile = [currentUser valueForKey:@"profilePic"];
+                 NSLog(@"image file is %@", self.userImageFile);
+                 [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+                  {
+                      if (!error)
+                      {
+                          UIImage *image = [UIImage imageWithData:data];
+                          [self loadProfilePicwithImage:image];
+                          NSLog(@"we have the image");
+                      }
+                  }];
+             }
+         }];
+    }
+
 }
 
 
@@ -109,7 +135,6 @@
     
     [alert addAction:takePhoto];
     [alert addAction:pullLibrary];
-    
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:true completion:nil];
 }
@@ -120,7 +145,6 @@
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:picker animated:true completion:NULL];
-    
 }
 
 -(void)showCameraPhotoView
@@ -155,8 +179,6 @@
 //    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", course.title, timeString];
     NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", [course valueForKey:@"title"] , timeString];
     cell.textLabel.text = titleAndTime;
-    
-    
     return cell;
 }
 
@@ -170,7 +192,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"cell tapped");
-    NSLog(@"here is our course %@", self.courseAtRow);
+    self.courseAtRow = self.coursesArray[indexPath.row];
     [self performSegueWithIdentifier:@"showCourse" sender:self];
 }
 
@@ -180,8 +202,9 @@
     {
         NSLog(@"segue called");
         TakeCourseVC *takeCourseVC = segue.destinationViewController;
-        Course *course = self.coursesArray[[self.tableVIew indexPathForSelectedRow].row];
-        takeCourseVC.selectedCourse = course;
+        NSLog(@"selected course is %@", self.courseAtRow);
+        takeCourseVC.selectedCourse = self.courseAtRow;
+        NSLog(@"no crash here");
     }
     
 }
@@ -215,9 +238,9 @@
 
 - (IBAction)onSaveButtonPressed:(UIButton *)sender
 {
-        [self saveImage];
-    
+    [self saveImage];
 }
+
 -(void)saveImage
 {
     User *userToSave = [User currentUser];
@@ -234,8 +257,11 @@
              NSLog(@"profile pic NOT saved");
          }
      }];
-    
-    
 }
+
+
+
+
+
 
 @end
