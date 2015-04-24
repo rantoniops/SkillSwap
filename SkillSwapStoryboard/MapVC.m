@@ -42,15 +42,20 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
-
     self.now = [NSDate date];
+    NSLog(@"right now it is %@", self.now);
     NSTimeInterval fourteenHours = 14*60*60;
     self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+    [self pullReviews];
+}
 
+
+
+-(void)pullReviews
+{
     // Finding courses that expired
     PFQuery *expiredCoursesQuery = [Course query];
     [expiredCoursesQuery whereKey:@"time" lessThan:self.now];
-
     // Find reviews associated with these courses
     PFQuery *reviewsQuery = [Review query];
     [reviewsQuery whereKey:@"course" matchesQuery:expiredCoursesQuery];
@@ -58,14 +63,12 @@
     [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@0];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         NSLog(@"review query was called at all");
          if (!error)
          {
              if (objects.count > 0)
              {
                  NSLog(@"Successfully retrieved %lu empty reviews.", (unsigned long)objects.count);
                  self.reviews = objects;
-
                  for (Review *review in objects)
                  {
                      UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -73,34 +76,33 @@
                      reviewVC.reviewToReview = review;
                      [self presentViewController:reviewVC animated:true completion:nil];
                  }
-
              }
              else
              {
                  NSLog(@"review query didnt return any objects");
              }
-
          }
          else
          {
              NSLog(@"review query had error : %@ %@", error, [error userInfo]);
          }
      }];
-
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    if ([User currentUser] == nil)
-    {
-        [self performSegueWithIdentifier:@"loginSegue" sender:self];
-    }
-    else
-    {
-//        self.now = [NSDate date];
-        [self queryForMap];
-    }
-}
+
+
+//-(void)viewDidAppear:(BOOL)animated
+//{
+//    if ([User currentUser] == nil)
+//    {
+//        [self performSegueWithIdentifier:@"loginSegue" sender:self];
+//    }
+//    else
+//    {
+////        self.now = [NSDate date];
+//        [self queryForMap];
+//    }
+//}
 
 
 -(void)queryMapForFriends
@@ -113,7 +115,6 @@
          if (!error)
          {
              self.friendsArray = [[NSArray alloc]initWithArray:allFriends];
-             
              PFQuery *courseQuery = [Course query];
              [courseQuery includeKey:@"teacher"];
              [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
@@ -154,7 +155,6 @@
                                            [self.mapView addAnnotation:coursePointAnnotation];
                                        }
                                    }];
-                                  
                               }
                           }
                       }
@@ -177,7 +177,6 @@
     {
         [query whereKey:@"time" greaterThanOrEqualTo:self.now];
         [query whereKey:@"time" lessThanOrEqualTo:self.tomorrow];
-        
     }
     else
     {
@@ -202,7 +201,6 @@
                      {
                          if (!error)
                          {
-//                             NSLog(@"image retrieved");
                              object.callOutImage = [UIImage imageWithData:data];
                              object.sizedCallOutImage = [self imageWithImage: object.callOutImage scaledToSize:CGSizeMake(40, 40)];
                              coursePointAnnotation.subtitle = object.address;
@@ -244,7 +242,6 @@
     [self reverseGeocodeLocation: location];
     [self.mapView addAnnotation:newAnnotation];
     self.lastAnnotationArray = [[NSArray alloc]initWithObjects:newAnnotation, nil];
-    
 }
 
 //turn coordinates into an address
@@ -272,7 +269,6 @@
 {
     if ([annotation isKindOfClass:[CustomCourseAnnotation class]])
     {
-//       NSLog(@"custom annotation is called");
        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
         CustomCourseAnnotation *theAnnotation = newPin.annotation;
        newPin.canShowCallout = true;
@@ -283,7 +279,6 @@
         else
         {
             newPin.pinColor = MKPinAnnotationColorPurple;
-            
         }
        newPin.leftCalloutAccessoryView = [[UIImageView alloc]initWithImage:theAnnotation.course.sizedCallOutImage];
        newPin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -405,7 +400,7 @@
     location.longitude = userLocation.coordinate.longitude;
 }
 
-
+// search bar filtering
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     if (![searchText isEqualToString:@""]) // if searchbar text is not empty
@@ -480,7 +475,6 @@
 
 
 /// segment Control for everyone vs. friends
-
 - (IBAction)segmentTap:(UISegmentedControl *)sender
 {
     

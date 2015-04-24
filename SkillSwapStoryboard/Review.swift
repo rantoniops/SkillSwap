@@ -5,7 +5,7 @@ class Review : PFObject, PFSubclassing
     {
         var onceToken : dispatch_once_t = 0;
         dispatch_once(&onceToken)
-            {
+        {
                 self.registerSubclass()
         }
     }
@@ -18,7 +18,7 @@ class Review : PFObject, PFSubclassing
 
 
     @NSManaged var reviewContent : String
-    @NSManaged var rating : Int
+
     
     @NSManaged var reviewer : User
     @NSManaged var reviewed : User
@@ -26,6 +26,8 @@ class Review : PFObject, PFSubclassing
     @NSManaged var course : Course
 
     @NSManaged var hasBeenReviewed : NSNumber
+
+    @NSManaged var reviewRating : NSNumber
 
 
 
