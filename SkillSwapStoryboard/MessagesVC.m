@@ -6,20 +6,28 @@
 @property NSArray *conversations;
 @property Conversation *conversationToPass;
 @property User *otherUserToPass;
+
+
 //@property Course *courseToPass;
 @end
 @implementation MessagesVC
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
 }
 
 
 -(void)viewWillAppear:(BOOL)animated
 {
+   
     self.navigationController.navigationBarHidden = NO;
     [self queryConversations];
+    
+    // register for keyboard notifications
 
 }
 
@@ -143,6 +151,16 @@
     }
     return cell;
 }
+
+//- (void)keyboardWillShow:(NSNotification *)notification
+//{
+//    // move the view up so that the login button is 8 points above the keyboard
+//    [self adjustScreenForKeyboard:notification target:self. offset:8.0f];
+//}
+
+
+
+
 
 
 @end

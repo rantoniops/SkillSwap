@@ -37,7 +37,11 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    return NO;
+    return true;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
 }
 
 -(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
