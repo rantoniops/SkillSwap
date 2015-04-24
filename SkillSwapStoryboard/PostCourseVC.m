@@ -161,6 +161,7 @@
              PFFile *imageFile = [PFFile fileWithData:self.smallImageData];
              course.courseMedia = imageFile;
              course.time = self.datePicker.date;
+             NSLog(@"course time is %@" , course.time);
              course.teacher = [User currentUser];
              course.location = [PFGeoPoint geoPointWithLocation:self.courseLocation];
 
