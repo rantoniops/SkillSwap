@@ -224,8 +224,10 @@
 {
     NSLog(@"cell tapped");
     self.courseAtRow = (Course *)self.coursesArray[indexPath.row];
+
 //    User *teacher = [self.courseAtRow objectForKey:@"teacher"];
     User *teacher = self.courseAtRow.teacher;
+
     [teacher fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error)
     {
         if (error == nil)
