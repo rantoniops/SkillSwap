@@ -45,6 +45,7 @@
      {
          if (succeeded)
          {
+             self.reviewToReview.hasBeenReviewed = @1;
              NSLog(@"review with content saved");
          }
      }];

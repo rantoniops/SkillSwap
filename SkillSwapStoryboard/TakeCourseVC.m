@@ -7,7 +7,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *teacherName;
 @property (weak, nonatomic) IBOutlet UILabel *courseRating;
 @property (weak, nonatomic) IBOutlet UILabel *courseName;
-@property (weak, nonatomic) IBOutlet UILabel *courseCredit;
 @property (weak, nonatomic) IBOutlet UILabel *courseDesciption;
 @property (weak, nonatomic) IBOutlet UILabel *courseDuration;
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
@@ -15,21 +14,19 @@
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
 @property User *currentUser;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
-
-
-
 @end
 @implementation TakeCourseVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.currentUser = [User currentUser];
-    if (self.selectedCourse.teacher == self.currentUser) {
+    if (self.selectedCourse.teacher == self.currentUser)
+    {
         self.followButton.hidden = YES;
     }
+
     UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [self.courseImage addGestureRecognizer:photoTap];
-    
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
     self.courseDesciption.text = self.selectedCourse.courseDescription;
@@ -47,6 +44,14 @@
         }
     }];
 }
+
+
+
+- (IBAction)onTakeClassButtonPressed:(UIButton *)sender
+{
+    [self confirmAlert];
+}
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -75,13 +80,14 @@
          {
              if (succeeded)
              {
-
+                 NSLog(@"review saved");
                  
                  [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                   {
                       if (succeeded)
                       {
                           NSLog(@"current user saved");
+                          [self dismissViewControllerAnimated:true completion:nil];
 
                       }
                       else
@@ -115,16 +121,6 @@
     
 }
 
--(void)exchangeCredits
-{
-    int newCreditCount = [[self.currentUser valueForKey:@"credits"] intValue] -1;
-    int teacherNewCreditCount = [[self.selectedCourse.teacher valueForKey:@"credits"] intValue]+1;
-    NSNumber *teacherCreditCount = [NSNumber numberWithInt:teacherNewCreditCount];
-    NSNumber *creditCount = [NSNumber numberWithInt:newCreditCount];
-    NSNumber *manyCredits = [NSNumber numberWithInt:3];
-    [self.selectedCourse.teacher setValue:manyCredits forKey:@"credits"];
-    [self.currentUser setValue:creditCount forKey:@"credits"];
-}
 
 
 - (IBAction)nopeButtonTap:(UIButton *)sender
@@ -218,11 +214,6 @@
 }
 
 
-//-(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
-//{
-//    NSLog(@"successful Tap");
-//    [self playCourseVideo];
-//}
 
 
 @end

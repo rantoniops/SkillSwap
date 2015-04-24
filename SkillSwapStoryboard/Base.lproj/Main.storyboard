@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C2061" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="etR-4f-bF4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="etR-4f-bF4">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -25,15 +25,6 @@
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="163" y="76" width="81" height="21"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your credits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fg1-qs-ngl">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="163" y="105" width="91" height="21"/>
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your rating" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AVa-Xl-CcQ">
@@ -117,7 +108,6 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="4O1-3u-Hvq"/>
-                                <exclude reference="fg1-qs-ngl"/>
                                 <exclude reference="AVa-Xl-CcQ"/>
                                 <exclude reference="PRd-Fg-E5h"/>
                                 <exclude reference="Imf-Lt-PuZ"/>
@@ -128,7 +118,6 @@
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="4O1-3u-Hvq"/>
-                                <include reference="fg1-qs-ngl"/>
                                 <include reference="AVa-Xl-CcQ"/>
                                 <include reference="PRd-Fg-E5h"/>
                                 <include reference="Imf-Lt-PuZ"/>
@@ -145,7 +134,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="credits" destination="fg1-qs-ngl" id="1Sa-Om-je5"/>
                         <outlet property="descriptionText" destination="d53-YN-FKA" id="jcG-hF-HrT"/>
                         <outlet property="name" destination="4O1-3u-Hvq" id="uy1-cJ-EsB"/>
                         <outlet property="profileImage" destination="PRd-Fg-E5h" id="YJk-Sh-lSs"/>
@@ -905,7 +893,7 @@
                                     <rect key="frame" x="274" y="550" width="91" height="30"/>
                                 </variation>
                                 <connections>
-                                    <action selector="takeClass:" destination="Dzz-ZH-zxG" eventType="touchUpInside" id="nsg-7z-Lgo"/>
+                                    <action selector="onTakeClassButtonPressed:" destination="Dzz-ZH-zxG" eventType="touchUpInside" id="PiB-vU-JpM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxY-d9-2o9">
@@ -920,15 +908,6 @@
                                     <action selector="nopeButtonTap:" destination="Dzz-ZH-zxG" eventType="touchUpInside" id="jFk-Nf-H0O"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="credits price" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNw-qV-2oX">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="272" y="173" width="95" height="21"/>
-                                </variation>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="skill name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vU5-W5-XDe">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -976,7 +955,6 @@
                                 <exclude reference="28b-My-q1E"/>
                                 <exclude reference="y9h-Y7-nWU"/>
                                 <exclude reference="mxY-d9-2o9"/>
-                                <exclude reference="cNw-qV-2oX"/>
                                 <exclude reference="vU5-W5-XDe"/>
                                 <exclude reference="e0Q-b5-gC9"/>
                                 <exclude reference="QSY-wQ-5uj"/>
@@ -994,7 +972,6 @@
                                 <include reference="28b-My-q1E"/>
                                 <include reference="y9h-Y7-nWU"/>
                                 <include reference="mxY-d9-2o9"/>
-                                <include reference="cNw-qV-2oX"/>
                                 <include reference="vU5-W5-XDe"/>
                                 <include reference="e0Q-b5-gC9"/>
                                 <include reference="QSY-wQ-5uj"/>
@@ -1010,7 +987,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="courseAddress" destination="DMu-bf-X36" id="9oI-ve-Iaq"/>
-                        <outlet property="courseCredit" destination="cNw-qV-2oX" id="eFW-6W-UVn"/>
                         <outlet property="courseDesciption" destination="04F-2y-GWY" id="zYv-uX-CRO"/>
                         <outlet property="courseDuration" destination="AqQ-uX-kDJ" id="Hs1-8j-Qwm"/>
                         <outlet property="courseImage" destination="j3V-5r-Sah" id="hqJ-3V-XQB"/>
@@ -1864,7 +1840,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="jLA-xh-0Ut"/>
-        <segue reference="5U3-6a-ZrJ"/>
+        <segue reference="qe4-rW-6Zk"/>
         <segue reference="WcH-cb-mK9"/>
     </inferredMetricsTieBreakers>
 </document>

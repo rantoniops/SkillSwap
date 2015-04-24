@@ -5,7 +5,6 @@
 @interface UserProfileVC () <UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *rating;
-@property (weak, nonatomic) IBOutlet UILabel *credits;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *skills;
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
@@ -64,7 +63,6 @@
     [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (error == nil) {
-             self.credits.text = [[currentUser valueForKey:@"credits"] stringValue];
              self.coursesArray = objects;
              [self.tableVIew reloadData];
              self.name.text = currentUser.username;
