@@ -14,12 +14,41 @@
 @property NSArray *coursesArray;
 @property UIImage *chosenImage;
 @property NSData *smallImageData;
+@property User *selectedTeacher;
 @end
 @implementation UserProfileVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self loadProfilePicwithImage:[UIImage imageNamed:@"emptyProfile"]];
+}
+
+
+-(void)calculateUserRating:(User *)user
+{
+    PFQuery *reviewsQuery = [Review query];
+    [reviewsQuery includeKey:@"reviewed"];
+    [reviewsQuery whereKey:@"reviewed" equalTo:user];
+    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (error == nil)
+         {
+             NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
+             NSArray *reviews = objects;
+             int reviewsSum = 0;
+             for (Review *review in reviews)
+             {
+                 reviewsSum = reviewsSum + [review.reviewRating intValue];
+             }
+             int reviewsAverage = (reviewsSum / reviews.count);
+             NSNumber *average = @(reviewsAverage);
+             self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
+         }
+         else
+         {
+             NSLog(@"error finding reviews");
+         }
+     }];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -52,9 +81,10 @@
 {
     if (self.selectedUser) // IF COMING FROM TAKECOURSEVC AND WANNA SHOW THE TEACHERS PROFILE
     {
+        [self calculateUserRating:self.selectedUser];
+
         PFRelation *relation = [self.selectedUser relationForKey:@"courses"];
         PFQuery *relationQuery = relation.query;
-        [relationQuery includeKey:@"teacher"];
         [relationQuery orderByAscending:@"createdAt"];
         [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
@@ -64,7 +94,6 @@
                  [self.tableVIew reloadData];
                  self.name.text = self.selectedUser.username;
                  self.userImageFile = [self.selectedUser valueForKey:@"profilePic"];
-                 NSLog(@"image file is %@", self.userImageFile);
                  [self.userImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
                   {
                       if (!error)
@@ -79,6 +108,8 @@
     }
     else // current user clicked on the profile button and wants to see his own profile
     {
+        [self calculateUserRating:[User currentUser]];
+        
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         PFQuery *relationQuery = relation.query;
@@ -192,18 +223,41 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"cell tapped");
-    self.courseAtRow = self.coursesArray[indexPath.row];
-    [self performSegueWithIdentifier:@"showCourse" sender:self];
+    self.courseAtRow = (Course *)self.coursesArray[indexPath.row];
+//    User *teacher = [self.courseAtRow objectForKey:@"teacher"];
+    User *teacher = self.courseAtRow.teacher;
+    [teacher fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error)
+    {
+        if (error == nil)
+        {
+            if (object)
+            {
+                NSLog(@"fetched the teacher object %@" , object);
+                self.selectedTeacher = (User *)object;
+                NSLog(@"course teacher is %@", self.selectedTeacher.username);
+                [self performSegueWithIdentifier:@"showCourse" sender:self];
+            }
+            else
+            {
+                NSLog(@"teacher object not found");
+            }
+        }
+        else
+        {
+            NSLog(@"error, didnt fetch the object");
+        }
+    }];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showCourse"])
     {
-        NSLog(@"segue called");
+        NSLog(@"going to show course");
         TakeCourseVC *takeCourseVC = segue.destinationViewController;
         NSLog(@"selected course is %@", self.courseAtRow);
         takeCourseVC.selectedCourse = self.courseAtRow;
+        takeCourseVC.selectedTeacher = self.selectedTeacher;
         NSLog(@"no crash here");
     }
     
