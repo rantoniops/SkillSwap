@@ -151,7 +151,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1675.5" y="1490"/>
+            <point key="canvasLocation" x="1369.5" y="1500"/>
         </scene>
         <!--Teaching CourseVC-->
         <scene sceneID="obs-Ef-tMe">
@@ -489,7 +489,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tdr-bj-3DO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2518.5" y="1524"/>
+            <point key="canvasLocation" x="3436.5" y="1524"/>
         </scene>
         <!--MapVC-->
         <scene sceneID="0BY-85-1ks">
@@ -556,7 +556,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="hgs-oW-eJb" kind="show" identifier="profile" id="gZh-Wr-Xdt"/>
+                                    <segue destination="hgs-oW-eJb" kind="show" identifier="profile" id="yp1-Hy-IgI"/>
                                 </connections>
                             </button>
                             <searchBar contentMode="redraw" text="" placeholder="what do you wanna learn?" translatesAutoresizingMaskIntoConstraints="NO" id="gaa-Yj-AFh">
@@ -993,11 +993,11 @@
                                 <exclude reference="vMX-D0-mWY"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="7iw-BF-yrQ"/>
-                                <exclude reference="Uu7-Y9-CEu"/>
                                 <exclude reference="Ted-Mt-Xr9"/>
                                 <exclude reference="rSZ-bl-a1K"/>
                                 <exclude reference="sD3-qo-lvZ"/>
+                                <exclude reference="7iw-BF-yrQ"/>
+                                <exclude reference="Uu7-Y9-CEu"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1017,21 +1017,15 @@
                                 <include reference="vMX-D0-mWY"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="7iw-BF-yrQ"/>
-                                <include reference="Uu7-Y9-CEu"/>
                                 <include reference="Ted-Mt-Xr9"/>
                                 <exclude reference="rSZ-bl-a1K"/>
                                 <include reference="sD3-qo-lvZ"/>
+                                <include reference="7iw-BF-yrQ"/>
+                                <include reference="Uu7-Y9-CEu"/>
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="Oh4-mp-fzI">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="ZH2-v4-q0p">
-                            <connections>
-                                <action selector="dismissButton:" destination="Dzz-ZH-zxG" id="G15-Cn-yFp"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="Oh4-mp-fzI"/>
                     <connections>
                         <outlet property="courseAddress" destination="DMu-bf-X36" id="9oI-ve-Iaq"/>
                         <outlet property="courseDesciption" destination="04F-2y-GWY" id="zYv-uX-CRO"/>
@@ -1042,13 +1036,13 @@
                         <outlet property="courseTableView" destination="28b-My-q1E" id="1sY-9A-rLG"/>
                         <outlet property="followButton" destination="QSY-wQ-5uj" id="VSV-bo-TB3"/>
                         <outlet property="teacherName" destination="vMX-D0-mWY" id="hQc-Nv-8fd"/>
-                        <segue destination="hgs-oW-eJb" kind="show" identifier="takeCourseToTeacherProfile" id="Xpx-Xz-AQt"/>
+                        <segue destination="hgs-oW-eJb" kind="show" identifier="takeCourseToTeacherProfile" id="9l9-dK-tx5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A0U-ZX-YKJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="EjQ-Ed-9H5"/>
             </objects>
-            <point key="canvasLocation" x="4959" y="1524"/>
+            <point key="canvasLocation" x="4599" y="1516"/>
         </scene>
         <!--ReviewVC-->
         <scene sceneID="3gY-tx-BYa">
@@ -1838,24 +1832,6 @@
             </objects>
             <point key="canvasLocation" x="2292" y="-149"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Gc2-RF-4G5">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T3p-6U-rVQ" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gxG-fJ-uAY">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Dzz-ZH-zxG" kind="relationship" relationship="rootViewController" id="bwq-B5-OY0"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MVZ-JH-b3l" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5745" y="1034"/>
-        </scene>
     </scenes>
     <resources>
         <image name="LoginBG.png" width="375" height="667"/>
@@ -1865,9 +1841,9 @@
         <image name="bg-sunny-cloud-4.png" width="115" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bwq-B5-OY0"/>
+        <segue reference="9l9-dK-tx5"/>
+        <segue reference="aeD-cB-7cP"/>
         <segue reference="WcH-cb-mK9"/>
-        <segue reference="Xpx-Xz-AQt"/>
         <segue reference="jLA-xh-0Ut"/>
     </inferredMetricsTieBreakers>
 </document>

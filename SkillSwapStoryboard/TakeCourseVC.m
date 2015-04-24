@@ -21,6 +21,7 @@
 {
     [super viewDidLoad];
     self.currentUser = [User currentUser];
+    NSLog(@"selected course teacher is %@", self.selectedCourse.teacher.username);
     if (self.selectedCourse.teacher == self.currentUser)
     {
         self.followButton.hidden = YES;
