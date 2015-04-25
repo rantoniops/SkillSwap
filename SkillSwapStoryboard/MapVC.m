@@ -47,6 +47,7 @@
     NSTimeInterval fourteenHours = 14*60*60;
     self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
     [self pullReviews];
+    [self queryForMap];
 }
 
 
