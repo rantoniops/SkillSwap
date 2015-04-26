@@ -16,6 +16,8 @@
 @property NSArray *courseReviews;
 @property User *currentUser;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
+@property (weak, nonatomic) IBOutlet UIButton *takeClassButton;
+@property (weak, nonatomic) IBOutlet UIButton *messageTeacherButton;
 @end
 @implementation TakeCourseVC
 - (void)viewDidLoad

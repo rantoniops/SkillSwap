@@ -1219,7 +1219,9 @@
                         <outlet property="courseName" destination="vU5-W5-XDe" id="Mna-cE-oU5"/>
                         <outlet property="courseRating" destination="6rx-Fk-F4Y" id="ICc-fe-LSA"/>
                         <outlet property="courseTableView" destination="28b-My-q1E" id="1sY-9A-rLG"/>
-                        <outlet property="followButton" destination="QSY-wQ-5uj" id="VSV-bo-TB3"/>
+                        <outlet property="followButton" destination="QSY-wQ-5uj" id="SyB-nA-fad"/>
+                        <outlet property="messageTeacherButton" destination="e0Q-b5-gC9" id="82g-tK-dXT"/>
+                        <outlet property="takeClassButton" destination="y9h-Y7-nWU" id="zTI-9Y-PMa"/>
                         <outlet property="teacherName" destination="vMX-D0-mWY" id="hQc-Nv-8fd"/>
                         <segue destination="hgs-oW-eJb" kind="show" identifier="takeCourseToTeacherProfile" id="9l9-dK-tx5"/>
                     </connections>
