@@ -3,6 +3,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *textField;
 @property NSString *placeHolderString;
 @property NSNumber *givenRating;
+@property (weak, nonatomic) IBOutlet UILabel *propmtTitleLabel;
 @end
 @implementation ReviewVC
 - (void)viewDidLoad
