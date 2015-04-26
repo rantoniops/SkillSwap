@@ -24,6 +24,29 @@
     [super viewDidLoad];
 }
 
+- (IBAction)skillsButtonPressed:(UIButton *)sender
+{
+
+}
+
+- (IBAction)reviewsButtonPressed:(UIButton *)sender
+{
+
+}
+
+- (IBAction)classesButtonPressed:(UIButton *)sender
+{
+
+}
+
+- (IBAction)friendsButtonPressed:(UIButton *)sender
+{
+
+}
+
+
+
+
 
 -(void)calculateUserRating:(User *)user
 {
