@@ -284,7 +284,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Message *messageToShow = self.messages[indexPath.row];
     cell.textLabel.text = messageToShow.messageBody;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.createdAt];
     return cell;
 }
 
