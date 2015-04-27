@@ -24,7 +24,7 @@
 @property NSArray *results;
 @property NSArray *lastAnnotationArray;
 @property CLLocation *locationToPass;
-@property NSArray *friendsArray;
+@property NSMutableArray *friendsArray;
 @property BOOL ifNow;
 @property BOOL checkEveryone;
 @property NSArray *reviews;
@@ -33,24 +33,47 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self showUserLocation];
-    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-    self.ifNow = YES;
-    self.checkEveryone = YES;
+//    [self showUserLocation];
+//    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
+//    self.ifNow = YES;
+//    self.checkEveryone = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
-    self.now = [NSDate date];
-    NSLog(@"right now it is %@", self.now);
-    NSTimeInterval fourteenHours = 14*60*60;
-    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
-    [self pullReviews];
-    [self queryForMap];
+//    self.now = [NSDate date];
+//    NSLog(@"right now it is %@", self.now);
+//    NSTimeInterval fourteenHours = 14*60*60;
+//    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+//    [self pullReviews];
+//    [self queryForMap];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    if ([User currentUser] == nil)
+    {
+        [self performSegueWithIdentifier:@"mapToLogin" sender:self];
+    }
+    else
+    {
+        [self showUserLocation];
+        [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
+        self.ifNow = YES;
+        self.checkEveryone = YES;
 
+        self.navigationController.navigationBarHidden = YES;
+        self.now = [NSDate date];
+        NSLog(@"right now it is %@", self.now);
+        NSTimeInterval fourteenHours = 14*60*60;
+        self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+        [self pullReviews];
+        [self queryForMap];
+
+
+    }
+}
 
 -(void)pullReviews
 {
@@ -118,13 +141,21 @@
 -(void)queryMapForFriends
 {
     User *currentUser = [User currentUser];
-    PFRelation *friendRelation = [currentUser relationForKey:@"friends"];
-    PFQuery *query = friendRelation.query;
-    [query findObjectsInBackgroundWithBlock:^(NSArray *allFriends, NSError *error)
+    PFQuery *followingQuery = [Follow query];
+    [followingQuery whereKey:@"from" equalTo:currentUser];
+    [followingQuery includeKey:@"from"];
+    [followingQuery includeKey:@"from"];
+    [followingQuery findObjectsInBackgroundWithBlock:^(NSArray *allFriends, NSError *error)
      {
          if (!error)
          {
-             self.friendsArray = [[NSArray alloc]initWithArray:allFriends];
+             for (Follow *follow in allFriends)
+             {
+                 User *userToSee = [follow objectForKey:@"to"];
+                 self.friendsArray = [NSMutableArray new];
+                 [self.friendsArray addObject:userToSee];
+             }
+        
              PFQuery *courseQuery = [Course query];
              [courseQuery includeKey:@"teacher"];
              [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
@@ -270,7 +301,7 @@
 //triggers segway to event detailVC
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    [self performSegueWithIdentifier:@"mapToSkill" sender:view.annotation];
+    [self performSegueWithIdentifier:@"mapToCourse" sender:view.annotation];
 }
 
 
@@ -368,7 +399,7 @@
         postVC.selectedAddress = self.formattedAdress;
         postVC.courseLocation = self.locationToPass;
     }
-    else if ([segue.identifier isEqualToString:@"loginSegue"])
+    else if ([segue.identifier isEqualToString:@"mapToLogin"])
     {
         NSLog(@"login segue called");
     }
@@ -385,7 +416,7 @@
     {
           
     }
-    else
+    else if ([segue.identifier isEqualToString:@"mapToCourse"])
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
         CustomCourseAnnotation *courseAnnotation = sender;
@@ -393,6 +424,10 @@
         takeVC.selectedCourse = courseToShow;
         takeVC.selectedTeacher = courseToShow.teacher;
 
+    }
+    else
+    {
+        
     }
 }
 

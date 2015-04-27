@@ -76,13 +76,13 @@
              {
                  reviewsSum = reviewsSum + [review.reviewRating intValue];
              }
-             if (reviews.count == 0)
+             if (self.reviewsArray.count == 0)
              {
                  // dont do anything, since dividing by zero will crash the app
              }
              else
              {
-                 int reviewsAverage = (reviewsSum / reviews.count);
+                 int reviewsAverage = (reviewsSum / self.reviewsArray.count);
                  NSNumber *average = @(reviewsAverage);
                  self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
              }

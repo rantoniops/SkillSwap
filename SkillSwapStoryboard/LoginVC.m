@@ -23,12 +23,12 @@
 {
     
     self.navigationController.navigationBarHidden = YES;
-    NSLog(@"current user is %@", [User currentUser]);
-    if ([User currentUser] != nil)
-    {
-        [self performSegueWithIdentifier:@"logIn" sender:self];
-    }
-    
+
+//    if ([User currentUser] != nil)
+//    {
+//        [self performSegueWithIdentifier:@"loginToMap" sender:self];
+//    }
+
     self.heading.alpha = 0;
     
     
@@ -128,7 +128,7 @@
 
 
 //            [self dismissViewControllerAnimated:true completion:nil];
-            [self performSegueWithIdentifier:@"logIn" sender:self];
+            [self performSegueWithIdentifier:@"loginToMap" sender:self];
         } else
         {
 //            [self showAlert("There was an error with your login", error: returnedError!)];
