@@ -11,7 +11,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden = NO;
+//    self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"messageReceived" object:nil];
   
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -40,11 +40,11 @@
 {
     NSDictionary* userInfo = [notification userInfo];
     CGRect newFrame = [self getNewControlsFrame:userInfo up:up];
-    
     [self animateControls:userInfo withFrame:newFrame];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
     [self.view endEditing:YES];
 }
 
@@ -52,10 +52,8 @@
 {
     CGRect kbFrame = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
     kbFrame = [self.view convertRect:kbFrame fromView:nil];
-    
     CGRect newFrame = self.view.frame;
     newFrame.origin.y += kbFrame.size.height * (up ? -1 : 1);
-    
     return newFrame;
 }
 
@@ -63,7 +61,6 @@
 {
     NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
 //    UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
-    
     [UIView animateWithDuration:duration
                           delay:0
                         options:UIViewAnimationOptionCurveEaseOut
@@ -96,6 +93,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.navigationController.navigationBarHidden = NO;
     if ([self.origin isEqualToString:@"messages"])
     {
         NSLog(@"coming from messages, selected conversation found");
@@ -276,12 +274,6 @@
     return true;
 }
 
-- (IBAction)onGoBackPressed:(UIButton *)sender
-{
-    [self dismissViewControllerAnimated:true completion:nil];
-}
-
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.messages.count;
@@ -292,7 +284,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Message *messageToShow = self.messages[indexPath.row];
     cell.textLabel.text = messageToShow.messageBody;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.createdAt];
     return cell;
 }
 

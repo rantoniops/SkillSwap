@@ -64,9 +64,17 @@
              {
                  reviewsSum = reviewsSum + [review.reviewRating intValue];
              }
-             int reviewsAverage = (reviewsSum / reviews.count);
-             NSNumber *average = @(reviewsAverage);
-             self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
+             if (reviews.count == 0)
+             {
+                 // dont do anything, since dividing by zero will crash the app
+             }
+             else
+             {
+                 int reviewsAverage = (reviewsSum / reviews.count);
+                 NSNumber *average = @(reviewsAverage);
+                 self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
+             }
+
          }
          else
          {
@@ -298,8 +306,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"cell tapped");
-//    self.userAtRow = self.friendsArray[indexPath.row];
+
     self.courseAtRow = self.coursesArray[indexPath.row];
     [self performSegueWithIdentifier:@"showCourse" sender:self];
 }
@@ -308,12 +315,10 @@
 {
     if ([segue.identifier isEqualToString:@"showCourse"])
     {
-        NSLog(@"going to show course");
         TakeCourseVC *takeCourseVC = segue.destinationViewController;
-        NSLog(@"selected course is %@", self.courseAtRow);
         takeCourseVC.selectedCourse = self.courseAtRow;
-        takeCourseVC.selectedTeacher = self.selectedTeacher;
-        NSLog(@"no crash here");
+//        takeCourseVC.selectedTeacher = self.selectedTeacher;
+        takeCourseVC.selectedTeacher = self.courseAtRow.teacher;
     }
     
 }
