@@ -385,7 +385,7 @@
 				TargetAttributes = {
 					6B7846421ADC988B00EAD40D = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = YV5E3UUJ4P;
+						DevelopmentTeam = N28FB6N282;
 					};
 					6B78465E1ADC988B00EAD40D = {
 						CreatedOnToolsVersion = 6.3;
@@ -548,8 +548,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -593,8 +593,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -620,8 +620,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -642,8 +642,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -662,8 +662,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -676,7 +676,7 @@
 				INFOPLIST_FILE = SkillSwapStoryboardTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5edbdcc1-614c-4212-be29-73e98e48f04b";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SkillSwapStoryboard.app/SkillSwapStoryboard";
 			};
 			name = Debug;
@@ -685,8 +685,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -695,7 +695,7 @@
 				INFOPLIST_FILE = SkillSwapStoryboardTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5edbdcc1-614c-4212-be29-73e98e48f04b";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SkillSwapStoryboard.app/SkillSwapStoryboard";
 			};
 			name = Release;
