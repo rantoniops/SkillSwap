@@ -31,6 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.title = @"Profile";
     self.tableViewNumber = @3;
 }
 
@@ -117,6 +118,7 @@
              }
              if (self.reviewsArray.count == 0)
              {
+                 self.rating.text = @"User has no ratings yet.";
                  // dont do anything, since dividing by zero will crash the app
              }
              else
@@ -125,7 +127,6 @@
                  NSNumber *average = @(reviewsAverage);
                  self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
              }
-
          }
          else
          {
@@ -404,11 +405,12 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    if ([self.tableViewNumber  isEqual: @1])
+    if ([self.tableViewNumber  isEqual: @1]) // skills
     {
         Skill *skill = self.skillsArray[indexPath.row];
         cell.textLabel.text = [skill valueForKey:@"name"];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"Since %@", [skill valueForKey:@"createdAt"]];
+        NSString *timeString = [NSDateFormatter localizedStringFromDate:skill.createdAt dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"Since %@", timeString];
     }
     else if ([self.tableViewNumber isEqual: @2]) // reviews
     {

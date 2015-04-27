@@ -9,6 +9,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.title = @"Classes List";
     self.navigationController.navigationBarHidden = NO;
 }
 
