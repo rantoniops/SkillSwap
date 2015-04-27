@@ -45,9 +45,6 @@
         {
             UIImage *image = [UIImage imageWithData:data];
             self.courseImage.image = image;
-            NSLog(@"pause here");
-            // image can now be set on a UIImageView
-
         }
     }];
 }
@@ -72,7 +69,6 @@
         self.followButton.hidden = YES;
         self.takeClassButton.hidden = YES;
         self.messageTeacherButton.hidden = YES;
-        
     }
     [self doIfollowThisGuy];
 }
@@ -182,7 +178,6 @@
          if (!error)
          {
              self.courseReviews = objects;
-             
          }
      }];
 }
@@ -222,7 +217,6 @@
                  {
                      NSLog(@"%@ has been deleted", self.followingObjectsToBeDeleted);
                      [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
-
                  }
              }];
         }
@@ -267,11 +261,8 @@
 -(void)playCourseVideo
 {
     self.videoController = [[MPMoviePlayerController alloc] init];
-    
-//    [self.videoController setContentURL:self.videoURL];
     [self.videoController.view setFrame:CGRectMake (0, 0, 320, 460)];
     [self.view addSubview:self.videoController.view];
-    
     [self.videoController play];
 }
 

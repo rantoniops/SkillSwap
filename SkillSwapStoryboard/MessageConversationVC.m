@@ -11,18 +11,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"messageReceived" object:nil];
-  
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 
@@ -86,7 +77,6 @@
         NSLog (@"Notification is successfully received!");
         [self queryMessagesInExistingConversation];
     }
-
 }
 
 
@@ -105,14 +95,13 @@
         // CHECKING IF THERE'S ALREADY AN EXISTING CONVO BETWEEN THIS TEACHER, THIS USER ABOUT THIS COURSE
         PFQuery *query = [Conversation query];
         [query whereKey:@"course" equalTo:self.selectedCourse];
-        NSLog(@"other user %@", self.otherUser);
-        [query whereKey:@"users" containedIn:@[ [User currentUser] , self.otherUser ] ];
+        [query whereKey:@"users" containsAllObjectsInArray: @[ [User currentUser] , self.otherUser ]];
+//        [query whereKey:@"users" containedIn:@[ [User currentUser] , self.otherUser ] ];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
-             if (!error)
+             if (error == nil)
              {
-
-                 if (objects.count > 0) // convo exists, we continue using existing one
+                 if (objects.count > 0) // convo exists, we continue using the one that already exists
                  {
                      NSLog(@"there's an existing convo, we'll use that one");
                      self.conversation = objects.firstObject;
@@ -138,14 +127,12 @@
                           }
                       }];
                  }
-
              }
              else
              {
                  NSLog(@"Error searching for existing conversation: %@ %@", error, [error userInfo]);
              }
          }];
-
     }
 }
 
@@ -168,7 +155,6 @@
              {
                  self.conversationGotUsed = 1;
              }
-
              NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
              self.messages = objects;
              [self.tableView reloadData];
