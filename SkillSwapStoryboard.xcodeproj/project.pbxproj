@@ -26,6 +26,7 @@
 		6BFF24861AE83CEB00CBD130 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */; };
 		6BFF24871AE83CEB00CBD130 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFF24851AE83CEB00CBD130 /* Fabric.framework */; };
 		964E391A1AE1703500123AA9 /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 964E39191AE1703500123AA9 /* MapVC.m */; };
+		969D466C1AEDB1470062C119 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D466B1AEDB1470062C119 /* Follow.swift */; };
 		96A50BE91ADEF52C007C82E5 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E46083B1ADC9D0800AFF702 /* Bolts.framework */; };
 		96A50BEB1ADEF52F007C82E5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608391ADC9CFC00AFF702 /* Parse.framework */; };
 		96E2A9C21ADECED100727E09 /* CustomCourseAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E2A9C11ADECED100727E09 /* CustomCourseAnnotation.m */; };
@@ -98,6 +99,7 @@
 		6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		6BFF24851AE83CEB00CBD130 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		964E39191AE1703500123AA9 /* MapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapVC.m; sourceTree = "<group>"; };
+		969D466B1AEDB1470062C119 /* Follow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follow.swift; sourceTree = "<group>"; };
 		96E2A9C01ADECED100727E09 /* CustomCourseAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCourseAnnotation.h; sourceTree = "<group>"; };
 		96E2A9C11ADECED100727E09 /* CustomCourseAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCourseAnnotation.m; sourceTree = "<group>"; };
 		9E4608231ADC9C5A00AFF702 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -311,6 +313,7 @@
 			children = (
 				6B9B1F201AE0A611005219AF /* Conversation.swift */,
 				6B9B1F221AE0A673005219AF /* Course.swift */,
+				969D466B1AEDB1470062C119 /* Follow.swift */,
 				6B7846701ADCA8F500EAD40D /* User.swift */,
 				6B7846781ADCAA6500EAD40D /* Review.swift */,
 				6B78467A1ADCAAFA00EAD40D /* Message.swift */,
@@ -484,6 +487,7 @@
 				B126D4891ADD7B46002E6F99 /* MessageConversationVC.m in Sources */,
 				6B9B1F211AE0A611005219AF /* Conversation.swift in Sources */,
 				B126D48C1ADD8254002E6F99 /* UserProfileVC.m in Sources */,
+				969D466C1AEDB1470062C119 /* Follow.swift in Sources */,
 				964E391A1AE1703500123AA9 /* MapVC.m in Sources */,
 				6B78464F1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld in Sources */,
 				B126D47D1ADCFADC002E6F99 /* CourseListVC.m in Sources */,
