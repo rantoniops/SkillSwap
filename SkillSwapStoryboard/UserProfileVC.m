@@ -3,6 +3,7 @@
 #import "LoginVC.h"
 #import "TakeCourseVC.h"
 #import "ConnectionsListVC.h"
+#import "ShowReviewVC.h"
 @interface UserProfileVC () <UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *rating;
@@ -23,7 +24,7 @@
 @property NSData *smallImageData;
 @property User *selectedTeacher;
 @property NSNumber *tableViewNumber;
-
+@property Review *reviewAtRow;
 @end
 @implementation UserProfileVC
 - (void)viewDidLoad
@@ -404,17 +405,17 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    self.userAtRow = self.friendsArray[indexPath.row];
     if ([self.tableViewNumber isEqual:@1])
     {
         NSLog(@"no transition");
         [tableView deselectRowAtIndexPath:indexPath animated:true];
     }
-    if ([self.tableViewNumber isEqual:@2])
+    else if ([self.tableViewNumber isEqual:@2])
     {
-        [tableView deselectRowAtIndexPath:indexPath animated:true];
+        self.reviewAtRow = self.reviewsArray[indexPath.row];
+        [self performSegueWithIdentifier:@"reviews" sender:self];
     }
-    if ([self.tableViewNumber isEqual:@3])
+    else if ([self.tableViewNumber isEqual:@3])
     {
         self.courseAtRow = self.coursesArray[indexPath.row];
         [self performSegueWithIdentifier:@"showCourse" sender:self];
@@ -422,24 +423,34 @@
   
 }
 
+
+
+
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"showCourse"])
+    if ([segue.identifier isEqualToString:@"reviews"])
+    {
+        ShowReviewVC *showReviewVC = segue.destinationViewController;
+        showReviewVC.selectedReview = self.reviewAtRow;
+    }
+    else if ([segue.identifier isEqualToString:@"showCourse"])
     {
         TakeCourseVC *takeCourseVC = segue.destinationViewController;
         takeCourseVC.selectedCourse = self.courseAtRow;
-//        takeCourseVC.selectedTeacher = self.selectedTeacher;
         takeCourseVC.selectedTeacher = self.courseAtRow.teacher;
     }
-    else //take to friends VC
+    else
     {
-        ConnectionsListVC *friendsVC = segue.destinationViewController;
-        friendsVC.followersArray = self.followersArray;
-        friendsVC.followingArray = self.followingArray;
-        NSLog(@"Here are you followers %@, and here who is you are following %@", self.followersArray, self.followingArray);
+        ConnectionsListVC *connectionsVC = segue.destinationViewController;
+        connectionsVC.followersArray = self.followersArray;
+        connectionsVC.followingArray = self.followingArray;
     }
-    
 }
+
+
+
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

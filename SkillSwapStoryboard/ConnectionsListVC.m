@@ -10,22 +10,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.followersOrFollowing = @0;
-}
-
-- (IBAction)followingButtonPressed:(UIButton *)sender
-{
     self.followersOrFollowing = @1;
-    [self.tableView reloadData];
-
 }
 
-- (IBAction)followerButtonPressed:(UIButton *)sender
+
+- (IBAction)segmentedControl:(UISegmentedControl *)sender
 {
-    self.followersOrFollowing = @0;
-    [self.tableView reloadData];
+    if(sender.selectedSegmentIndex == 0)
+    {
+        self.followersOrFollowing = @1;
+        [self.tableView reloadData];
+    }
+    else
+    {
+        self.followersOrFollowing = @0;
+        [self.tableView reloadData];
+    }
 }
-
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
