@@ -28,6 +28,8 @@
     if (self.selectedTeacher == self.currentUser)
     {
         self.followButton.hidden = YES;
+        self.messageTeacherButton.hidden = YES;
+        self.takeClassButton.hidden = YES;
     }
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
@@ -229,7 +231,7 @@
     if ([segue.identifier isEqualToString:@"messageTeacher"])
     {
         MessageConversationVC *messageVC = segue.destinationViewController;
-        messageVC.otherUser = self.selectedCourse.teacher;
+        messageVC.otherUser = self.selectedTeacher;
         messageVC.selectedCourse = self.selectedCourse;
         messageVC.origin = @"takeCourse";
     }

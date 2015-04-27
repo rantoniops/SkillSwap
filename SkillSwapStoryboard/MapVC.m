@@ -391,6 +391,7 @@
         CustomCourseAnnotation *courseAnnotation = sender;
         Course *courseToShow = courseAnnotation.course;
         takeVC.selectedCourse = courseToShow;
+        takeVC.selectedTeacher = courseToShow.teacher;
     }
 }
 
