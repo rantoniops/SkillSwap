@@ -9,6 +9,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *skills;
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionText;
+@property (weak, nonatomic) IBOutlet UIButton *followButton;
 @property PFFile *userImageFile;
 @property Course *courseAtRow;
 @property User *userAtRow;
@@ -45,6 +46,10 @@
 }
 
 
+- (IBAction)followButtonPressed:(UIButton *)sender
+{
+    
+}
 
 
 

@@ -22,6 +22,7 @@
 		6B9B1F211AE0A611005219AF /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9B1F201AE0A611005219AF /* Conversation.swift */; };
 		6B9B1F231AE0A673005219AF /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9B1F221AE0A673005219AF /* Course.swift */; };
 		6BAEDE281AE0390F00282CFB /* MessagesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAEDE271AE0390F00282CFB /* MessagesVC.m */; };
+		6BD061E41AEDECF500B6B85E /* ShowReviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD061E31AEDECF500B6B85E /* ShowReviewVC.m */; };
 		6BFECC3F1AED7188009BF05F /* ConnectionsListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFECC3E1AED7188009BF05F /* ConnectionsListVC.m */; };
 		6BFF24861AE83CEB00CBD130 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */; };
 		6BFF24871AE83CEB00CBD130 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFF24851AE83CEB00CBD130 /* Fabric.framework */; };
@@ -93,6 +94,8 @@
 		6B9B1F221AE0A673005219AF /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Course.swift; path = ../Course.swift; sourceTree = "<group>"; };
 		6BAEDE261AE0390F00282CFB /* MessagesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesVC.h; sourceTree = "<group>"; };
 		6BAEDE271AE0390F00282CFB /* MessagesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesVC.m; sourceTree = "<group>"; };
+		6BD061E21AEDECF500B6B85E /* ShowReviewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowReviewVC.h; sourceTree = "<group>"; };
+		6BD061E31AEDECF500B6B85E /* ShowReviewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowReviewVC.m; sourceTree = "<group>"; };
 		6BFECC3D1AED7188009BF05F /* ConnectionsListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsListVC.h; sourceTree = "<group>"; };
 		6BFECC3E1AED7188009BF05F /* ConnectionsListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsListVC.m; sourceTree = "<group>"; };
 		6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
@@ -238,6 +241,8 @@
 				6B16B5161ADDCA6F0040B4EB /* MapVC and its buttons VCs */,
 				B126D4811ADD78BC002E6F99 /* LoginVC.h */,
 				B126D4821ADD78BC002E6F99 /* LoginVC.m */,
+				6BD061E21AEDECF500B6B85E /* ShowReviewVC.h */,
+				6BD061E31AEDECF500B6B85E /* ShowReviewVC.m */,
 				6BFECC3D1AED7188009BF05F /* ConnectionsListVC.h */,
 				6BFECC3E1AED7188009BF05F /* ConnectionsListVC.m */,
 				B126D47E1ADD70F6002E6F99 /* TakeCourseVC.h */,
@@ -485,6 +490,7 @@
 				6B9B1F211AE0A611005219AF /* Conversation.swift in Sources */,
 				B126D48C1ADD8254002E6F99 /* UserProfileVC.m in Sources */,
 				964E391A1AE1703500123AA9 /* MapVC.m in Sources */,
+				6BD061E41AEDECF500B6B85E /* ShowReviewVC.m in Sources */,
 				6B78464F1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld in Sources */,
 				B126D47D1ADCFADC002E6F99 /* CourseListVC.m in Sources */,
 				B126D4861ADD7AEE002E6F99 /* TeachingCourseVC.m in Sources */,
