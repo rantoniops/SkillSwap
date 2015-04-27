@@ -271,11 +271,12 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
                         <outlet property="tableView" destination="B29-a4-K30" id="xhw-jV-Y01"/>
+                        <segue destination="hgs-oW-eJb" kind="show" identifier="connectionProfile" id="CG5-bI-nlK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EOf-8K-i5E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1630.5" y="2336"/>
+            <point key="canvasLocation" x="1618.5" y="2596"/>
         </scene>
         <!--User ProfileVC-->
         <scene sceneID="1Xf-uu-tSr">
@@ -2837,7 +2838,7 @@
         <segue reference="uaL-Q6-g67"/>
         <segue reference="jLA-xh-0Ut"/>
         <segue reference="QAS-qn-wgW"/>
-        <segue reference="9l9-dK-tx5"/>
+        <segue reference="CG5-bI-nlK"/>
         <segue reference="aeD-cB-7cP"/>
     </inferredMetricsTieBreakers>
 </document>
