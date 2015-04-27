@@ -37,7 +37,11 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    return NO;
+    return true;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
 }
 
 -(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
@@ -63,7 +67,7 @@
         nil;
     }];
     
-    [alert addAction:takeMovie];
+//    [alert addAction:takeMovie];
     [alert addAction:takePhoto];
     [alert addAction:pullLibrary];
    
@@ -184,7 +188,18 @@
                            {
                                NSLog(@"teacher relation saved");
                                [self.navigationController popViewControllerAnimated:YES];
-                               [self.delegate didIcreateACourse:true];
+                               NSDate *now = [NSDate date];
+                               NSTimeInterval fourteenHours = 14*60*60;
+                               NSDate *tomorrow = [now dateByAddingTimeInterval:fourteenHours];
+                               if (self.datePicker.date > tomorrow)
+                               {
+                                   [self.delegate didIcreateACourse:false];
+                               }
+                               else
+                               {
+                                   [self.delegate didIcreateACourse:true];
+
+                               }
 
                            }
                            else

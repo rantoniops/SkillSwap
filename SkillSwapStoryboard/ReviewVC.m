@@ -1,51 +1,65 @@
 #import "ReviewVC.h"
 @interface ReviewVC () <UITextViewDelegate>
-@property (weak, nonatomic) IBOutlet UITextView *textField;
+@property (weak, nonatomic) IBOutlet UITextView *reviewBodyTextField;
 @property NSString *placeHolderString;
-@property NSNumber *givenRating;
+@property (weak, nonatomic) IBOutlet UILabel *reviewCourseLabel;
+@property (weak, nonatomic) IBOutlet UIButton *badButton;
+@property (weak, nonatomic) IBOutlet UIButton *okayButton;
+@property (weak, nonatomic) IBOutlet UIButton *greatButton;
 @end
 @implementation ReviewVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.textField.delegate = self;
-    self.textField.editable = YES;
-    self.placeHolderString = [NSString stringWithFormat:@"%@ was very...", [self.reviewCourse valueForKey:@"title"]];
-    self.textField.text = self.placeHolderString;
-    self.textField.textColor = [UIColor lightGrayColor];
+    self.reviewBodyTextField.delegate = self;
+    self.reviewBodyTextField.editable = YES;
+    self.placeHolderString = [NSString stringWithFormat:@"how was %@ ?", [self.reviewCourse valueForKey:@"title"]];
+    self.reviewCourseLabel.text = self.placeHolderString;
+    self.reviewBodyTextField.text = @"";
 }
 
 
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
-    self.textField.text = @"";
-    self.textField.textColor = [UIColor blackColor];
+    self.reviewBodyTextField.text = @"";
+    self.reviewBodyTextField.textColor = [UIColor blackColor];
+}
+
+- (IBAction)badButtonPressed:(UIButton *)sender
+{
+    self.reviewToReview.reviewRating = @0;
+    self.badButton.tintColor = [UIColor greenColor];
+    self.okayButton.enabled = NO;
+    self.greatButton.enabled = NO;
+}
+
+- (IBAction)okayButtonPressed:(UIButton *)sender
+{
+    self.reviewToReview.reviewRating = @1;
+    self.okayButton.tintColor = [UIColor greenColor];
+    self.badButton.enabled = NO;
+    self.greatButton.enabled = NO;
+}
+
+- (IBAction)greatButtonPressed:(UIButton *)sender
+{
+    self.reviewToReview.reviewRating = @2;
+    self.greatButton.tintColor = [UIColor greenColor];
+    self.badButton.enabled = NO;
+    self.okayButton.enabled = NO;
 }
 
 
-- (IBAction)underWhelmingButtonTap:(UIButton *)sender
+- (IBAction)submitReviewButtonPressed:(UIButton *)sender
 {
-    self.givenRating = @0;
     [self saveTheReview];
 }
 
-- (IBAction)satisfactoryButtonTap:(UIButton *)sender
-{
-    self.givenRating = @1;
-    [self saveTheReview];
-}
-
-- (IBAction)bestInClassButtonTap:(UIButton *)sender
-{
-    self.givenRating = @2;
-    [self saveTheReview];
-}
 
 -(void)saveTheReview
 {
-    self.givenRating = self.givenRating;
-    self.reviewToReview.reviewContent = self.textField.text;
+    self.reviewToReview.reviewContent = self.reviewBodyTextField.text;
     self.reviewToReview.hasBeenReviewed = @1;
     [self.reviewToReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
      {
@@ -57,6 +71,10 @@
      }];
 }
      
+
+
+
+
 
 
 @end

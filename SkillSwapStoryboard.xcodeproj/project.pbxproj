@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		6B16B51A1ADDCD3D0040B4EB /* PostCourseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B16B5191ADDCD3D0040B4EB /* PostCourseVC.m */; };
+		6B65C8D21AEEC327003F7F64 /* SignupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B65C8D11AEEC327003F7F64 /* SignupVC.m */; };
 		6B7846491ADC988B00EAD40D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B7846481ADC988B00EAD40D /* main.m */; };
 		6B78464C1ADC988B00EAD40D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B78464B1ADC988B00EAD40D /* AppDelegate.m */; };
 		6B78464F1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6B78464D1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld */; };
-		6B7846551ADC988B00EAD40D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B7846531ADC988B00EAD40D /* Main.storyboard */; };
 		6B7846571ADC988B00EAD40D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B7846561ADC988B00EAD40D /* Images.xcassets */; };
 		6B78465A1ADC988B00EAD40D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B7846581ADC988B00EAD40D /* LaunchScreen.xib */; };
 		6B7846661ADC988B00EAD40D /* SkillSwapStoryboardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B7846651ADC988B00EAD40D /* SkillSwapStoryboardTests.m */; };
@@ -22,11 +22,15 @@
 		6B9B1F211AE0A611005219AF /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9B1F201AE0A611005219AF /* Conversation.swift */; };
 		6B9B1F231AE0A673005219AF /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9B1F221AE0A673005219AF /* Course.swift */; };
 		6BAEDE281AE0390F00282CFB /* MessagesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAEDE271AE0390F00282CFB /* MessagesVC.m */; };
+		6BD061E41AEDECF500B6B85E /* ShowReviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD061E31AEDECF500B6B85E /* ShowReviewVC.m */; };
+		6BFECC3F1AED7188009BF05F /* ConnectionsListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFECC3E1AED7188009BF05F /* ConnectionsListVC.m */; };
 		6BFF24861AE83CEB00CBD130 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */; };
 		6BFF24871AE83CEB00CBD130 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFF24851AE83CEB00CBD130 /* Fabric.framework */; };
 		964E391A1AE1703500123AA9 /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 964E39191AE1703500123AA9 /* MapVC.m */; };
+		969D466C1AEDB1470062C119 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D466B1AEDB1470062C119 /* Follow.swift */; };
 		96A50BE91ADEF52C007C82E5 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E46083B1ADC9D0800AFF702 /* Bolts.framework */; };
 		96A50BEB1ADEF52F007C82E5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608391ADC9CFC00AFF702 /* Parse.framework */; };
+		96D2D4871AEDE4CE0059F566 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96D2D4861AEDE4CE0059F566 /* Main.storyboard */; };
 		96E2A9C21ADECED100727E09 /* CustomCourseAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E2A9C11ADECED100727E09 /* CustomCourseAnnotation.m */; };
 		9E4608241ADC9C5A00AFF702 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608231ADC9C5A00AFF702 /* MapKit.framework */; };
 		9E4608261ADC9C6100AFF702 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E4608251ADC9C6100AFF702 /* CoreLocation.framework */; };
@@ -52,6 +56,9 @@
 		B1D7C45B1AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4571AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png */; };
 		B1D7C45C1AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4581AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png */; };
 		B1D7C45D1AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4591AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png */; };
+		B1FD4BAF1AEACD9F00151A21 /* addButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B1FD4BAE1AEACD9F00151A21 /* addButton.png */; };
+		B1FD4BB11AEAD85800151A21 /* Message Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1FD4BB01AEAD85800151A21 /* Message Icon@2x.png */; };
+		B1FD4BB31AEADF1800151A21 /* listButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1FD4BB21AEADF1800151A21 /* listButton@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +74,8 @@
 /* Begin PBXFileReference section */
 		6B16B5181ADDCD3D0040B4EB /* PostCourseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCourseVC.h; sourceTree = "<group>"; };
 		6B16B5191ADDCD3D0040B4EB /* PostCourseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCourseVC.m; sourceTree = "<group>"; };
+		6B65C8D01AEEC327003F7F64 /* SignupVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupVC.h; sourceTree = "<group>"; };
+		6B65C8D11AEEC327003F7F64 /* SignupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupVC.m; sourceTree = "<group>"; };
 		6B7846431ADC988B00EAD40D /* SkillSwapStoryboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkillSwapStoryboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B7846471ADC988B00EAD40D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B7846481ADC988B00EAD40D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -74,7 +83,6 @@
 		6B78464B1ADC988B00EAD40D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6B78464E1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SkillSwapStoryboard.xcdatamodel; sourceTree = "<group>"; };
 		6B7846501ADC988B00EAD40D /* MapVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapVC.h; sourceTree = "<group>"; };
-		6B7846541ADC988B00EAD40D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6B7846561ADC988B00EAD40D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6B7846591ADC988B00EAD40D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		6B78465F1ADC988B00EAD40D /* SkillSwapStoryboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkillSwapStoryboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,9 +97,15 @@
 		6B9B1F221AE0A673005219AF /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Course.swift; path = ../Course.swift; sourceTree = "<group>"; };
 		6BAEDE261AE0390F00282CFB /* MessagesVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesVC.h; sourceTree = "<group>"; };
 		6BAEDE271AE0390F00282CFB /* MessagesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesVC.m; sourceTree = "<group>"; };
+		6BD061E21AEDECF500B6B85E /* ShowReviewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowReviewVC.h; sourceTree = "<group>"; };
+		6BD061E31AEDECF500B6B85E /* ShowReviewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowReviewVC.m; sourceTree = "<group>"; };
+		6BFECC3D1AED7188009BF05F /* ConnectionsListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsListVC.h; sourceTree = "<group>"; };
+		6BFECC3E1AED7188009BF05F /* ConnectionsListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsListVC.m; sourceTree = "<group>"; };
 		6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		6BFF24851AE83CEB00CBD130 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		964E39191AE1703500123AA9 /* MapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapVC.m; sourceTree = "<group>"; };
+		969D466B1AEDB1470062C119 /* Follow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follow.swift; sourceTree = "<group>"; };
+		96D2D4861AEDE4CE0059F566 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		96E2A9C01ADECED100727E09 /* CustomCourseAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCourseAnnotation.h; sourceTree = "<group>"; };
 		96E2A9C11ADECED100727E09 /* CustomCourseAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCourseAnnotation.m; sourceTree = "<group>"; };
 		9E4608231ADC9C5A00AFF702 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -126,6 +140,9 @@
 		B1D7C4571AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sunny-cloud-2@2x.png"; sourceTree = "<group>"; };
 		B1D7C4581AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sunny-cloud-3@2x.png"; sourceTree = "<group>"; };
 		B1D7C4591AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-sunny-cloud-4@2x.png"; sourceTree = "<group>"; };
+		B1FD4BAE1AEACD9F00151A21 /* addButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addButton.png; sourceTree = "<group>"; };
+		B1FD4BB01AEAD85800151A21 /* Message Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Message Icon@2x.png"; sourceTree = "<group>"; };
+		B1FD4BB21AEADF1800151A21 /* listButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listButton@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,15 +179,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6B16B5151ADDC9E70040B4EB /* STORYBOARD CONDOM */ = {
-			isa = PBXGroup;
-			children = (
-				6B7846531ADC988B00EAD40D /* Main.storyboard */,
-			);
-			name = "STORYBOARD CONDOM";
-			path = SkillSwapStoryboard;
-			sourceTree = "<group>";
-		};
 		6B16B5161ADDCA6F0040B4EB /* MapVC and its buttons VCs */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,7 +212,6 @@
 				6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */,
 				6BFF24851AE83CEB00CBD130 /* Fabric.framework */,
 				6B78467C1ADCAB2B00EAD40D /* Frameworks */,
-				6B16B5151ADDC9E70040B4EB /* STORYBOARD CONDOM */,
 				6B7846451ADC988B00EAD40D /* SkillSwap */,
 				6B7846621ADC988B00EAD40D /* SkillSwapStoryboardTests */,
 				6B7846441ADC988B00EAD40D /* Products */,
@@ -225,10 +232,17 @@
 		6B7846451ADC988B00EAD40D /* SkillSwap */ = {
 			isa = PBXGroup;
 			children = (
+				96D2D4861AEDE4CE0059F566 /* Main.storyboard */,
 				B1D7C44F1AE82D47007FA4C8 /* ImageAsset */,
 				6B16B5161ADDCA6F0040B4EB /* MapVC and its buttons VCs */,
 				B126D4811ADD78BC002E6F99 /* LoginVC.h */,
 				B126D4821ADD78BC002E6F99 /* LoginVC.m */,
+				6B65C8D01AEEC327003F7F64 /* SignupVC.h */,
+				6B65C8D11AEEC327003F7F64 /* SignupVC.m */,
+				6BD061E21AEDECF500B6B85E /* ShowReviewVC.h */,
+				6BD061E31AEDECF500B6B85E /* ShowReviewVC.m */,
+				6BFECC3D1AED7188009BF05F /* ConnectionsListVC.h */,
+				6BFECC3E1AED7188009BF05F /* ConnectionsListVC.m */,
 				B126D47E1ADD70F6002E6F99 /* TakeCourseVC.h */,
 				B126D47F1ADD70F6002E6F99 /* TakeCourseVC.m */,
 				96E2A9C01ADECED100727E09 /* CustomCourseAnnotation.h */,
@@ -300,6 +314,7 @@
 			children = (
 				6B9B1F201AE0A611005219AF /* Conversation.swift */,
 				6B9B1F221AE0A673005219AF /* Course.swift */,
+				969D466B1AEDB1470062C119 /* Follow.swift */,
 				6B7846701ADCA8F500EAD40D /* User.swift */,
 				6B7846781ADCAA6500EAD40D /* Review.swift */,
 				6B78467A1ADCAAFA00EAD40D /* Message.swift */,
@@ -312,8 +327,11 @@
 		B1D7C44F1AE82D47007FA4C8 /* ImageAsset */ = {
 			isa = PBXGroup;
 			children = (
+				B1FD4BAE1AEACD9F00151A21 /* addButton.png */,
+				B1FD4BB01AEAD85800151A21 /* Message Icon@2x.png */,
 				B1D7C4561AE85FF8007FA4C8 /* bg-sunny-cloud-1@2x.png */,
 				B1D7C4571AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png */,
+				B1FD4BB21AEADF1800151A21 /* listButton@2x.png */,
 				B1D7C4581AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png */,
 				B1D7C4591AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png */,
 				B1D7C4501AE82DA7007FA4C8 /* LoginBG@2x.png */,
@@ -372,7 +390,7 @@
 				TargetAttributes = {
 					6B7846421ADC988B00EAD40D = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = YV5E3UUJ4P;
+						DevelopmentTeam = N28FB6N282;
 					};
 					6B78465E1ADC988B00EAD40D = {
 						CreatedOnToolsVersion = 6.3;
@@ -405,11 +423,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B7846551ADC988B00EAD40D /* Main.storyboard in Resources */,
 				B1D7C45A1AE85FF8007FA4C8 /* bg-sunny-cloud-1@2x.png in Resources */,
+				B1FD4BB31AEADF1800151A21 /* listButton@2x.png in Resources */,
+				B1FD4BB11AEAD85800151A21 /* Message Icon@2x.png in Resources */,
 				B1D7C4511AE82DA7007FA4C8 /* LoginBG@2x.png in Resources */,
 				B1D7C45C1AE85FF8007FA4C8 /* bg-sunny-cloud-3@2x.png in Resources */,
+				96D2D4871AEDE4CE0059F566 /* Main.storyboard in Resources */,
 				B1D7C45D1AE85FF8007FA4C8 /* bg-sunny-cloud-4@2x.png in Resources */,
+				B1FD4BAF1AEACD9F00151A21 /* addButton.png in Resources */,
 				6B78465A1ADC988B00EAD40D /* LaunchScreen.xib in Resources */,
 				6B7846571ADC988B00EAD40D /* Images.xcassets in Resources */,
 				B1D7C45B1AE85FF8007FA4C8 /* bg-sunny-cloud-2@2x.png in Resources */,
@@ -467,15 +488,19 @@
 				B126D4891ADD7B46002E6F99 /* MessageConversationVC.m in Sources */,
 				6B9B1F211AE0A611005219AF /* Conversation.swift in Sources */,
 				B126D48C1ADD8254002E6F99 /* UserProfileVC.m in Sources */,
+				969D466C1AEDB1470062C119 /* Follow.swift in Sources */,
 				964E391A1AE1703500123AA9 /* MapVC.m in Sources */,
+				6BD061E41AEDECF500B6B85E /* ShowReviewVC.m in Sources */,
 				6B78464F1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld in Sources */,
 				B126D47D1ADCFADC002E6F99 /* CourseListVC.m in Sources */,
 				B126D4861ADD7AEE002E6F99 /* TeachingCourseVC.m in Sources */,
 				B1D7C4541AE85B37007FA4C8 /* ReviewVC.m in Sources */,
 				6B9B1F231AE0A673005219AF /* Course.swift in Sources */,
 				6BAEDE281AE0390F00282CFB /* MessagesVC.m in Sources */,
+				6BFECC3F1AED7188009BF05F /* ConnectionsListVC.m in Sources */,
 				6B7846731ADCA98600EAD40D /* Skill.swift in Sources */,
 				6B78467B1ADCAAFA00EAD40D /* Message.swift in Sources */,
+				6B65C8D21AEEC327003F7F64 /* SignupVC.m in Sources */,
 				6B7846711ADCA8F500EAD40D /* User.swift in Sources */,
 				B126D4801ADD70F6002E6F99 /* TakeCourseVC.m in Sources */,
 				6B7846491ADC988B00EAD40D /* main.m in Sources */,
@@ -501,14 +526,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		6B7846531ADC988B00EAD40D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6B7846541ADC988B00EAD40D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		6B7846581ADC988B00EAD40D /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -537,8 +554,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -582,8 +599,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -609,8 +626,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -631,8 +648,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: antonio Perez (YQ2847PR9T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: antonio Perez (YQ2847PR9T)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas Gibbons (CMV3EV3VLR)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -665,7 +682,7 @@
 				INFOPLIST_FILE = SkillSwapStoryboardTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5edbdcc1-614c-4212-be29-73e98e48f04b";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SkillSwapStoryboard.app/SkillSwapStoryboard";
 			};
 			name = Debug;
@@ -684,7 +701,7 @@
 				INFOPLIST_FILE = SkillSwapStoryboardTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5edbdcc1-614c-4212-be29-73e98e48f04b";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SkillSwapStoryboard.app/SkillSwapStoryboard";
 			};
 			name = Release;
