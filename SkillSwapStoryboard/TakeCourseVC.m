@@ -18,6 +18,7 @@
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
 @property (weak, nonatomic) IBOutlet UIButton *takeClassButton;
 @property (weak, nonatomic) IBOutlet UIButton *messageTeacherButton;
+@property NSArray *followingObjectsToBeDeleted;
 @end
 @implementation TakeCourseVC
 - (void)viewDidLoad
@@ -66,8 +67,34 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = NO;
+    if (self.selectedCourse.teacher == self.currentUser)
+    {
+        self.followButton.hidden = YES;
+        self.takeClassButton.hidden = YES;
+        self.messageTeacherButton.hidden = YES;
+        
+    }
+    [self doIfollowThisGuy];
 }
 
+-(void)doIfollowThisGuy
+{
+    PFQuery *followerCheck = [Follow query];
+    [followerCheck whereKey:@"from" equalTo:[PFUser currentUser]];
+    [followerCheck whereKey:@"to" equalTo:self.selectedTeacher];
+    [followerCheck findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+      {
+          if (objects.count > 0)
+          {
+              [self.followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+              self.followingObjectsToBeDeleted = objects;
+          }
+          else
+          {
+               [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+          }
+      }];
+}
 
 -(void)confirmAlert
 {
@@ -169,43 +196,37 @@
 - (IBAction)followButtonTap:(UIButton *)sender
 {
     User *currentUser = [User currentUser];
-    PFRelation *friendRelation = [currentUser relationForKey:@"friends"];
-    if ([self.followButton.titleLabel.text isEqualToString: @"Follow"]) {
-        [friendRelation addObject:self.selectedTeacher];
-        [self.followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
-        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+    if ([self.followButton.titleLabel.text isEqualToString:@"Follow"])
+    {
+        Follow *follow = [Follow new];
+        [follow setObject:currentUser forKey:@"from"];
+        [follow setObject:self.selectedTeacher forKey:@"to"];
+        [follow setObject:[NSDate date] forKey:@"friendTime"];
+        [follow saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
              if (succeeded)
              {
                  NSLog(@"friend saved");
-                 NSLog(@"Here are my friends after adding %@" , [currentUser relationForKey:@"friends"]);
-                 
-             }
-             else
-             {
-                 NSLog(@"add friend NOT saved");
+                 [self.followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
              }
          }];
 
     }
     else
     {
-        [friendRelation removeObject:self.selectedTeacher];
-        [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
-        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-         {
-             if (succeeded)
+        for (Follow *follow in self.followingObjectsToBeDeleted)
+        {
+            [follow deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
              {
-                 NSLog(@"friend removed");
-                 NSLog(@"Here are my friends after removing %@" , [currentUser relationForKey:@"friends"]);
-             }
-             else
-             {
-                 NSLog(@"remove friend NOT saved");
-             }
-         }];
-    }
+                 if (error == nil)
+                 {
+                     NSLog(@"%@ has been deleted", self.followingObjectsToBeDeleted);
+                     [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
 
+                 }
+             }];
+        }
+    }
 
 }
 

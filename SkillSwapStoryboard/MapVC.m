@@ -24,7 +24,7 @@
 @property NSArray *results;
 @property NSArray *lastAnnotationArray;
 @property CLLocation *locationToPass;
-@property NSArray *friendsArray;
+@property NSMutableArray *friendsArray;
 @property BOOL ifNow;
 @property BOOL checkEveryone;
 @property NSArray *reviews;
@@ -141,13 +141,21 @@
 -(void)queryMapForFriends
 {
     User *currentUser = [User currentUser];
-    PFRelation *friendRelation = [currentUser relationForKey:@"friends"];
-    PFQuery *query = friendRelation.query;
-    [query findObjectsInBackgroundWithBlock:^(NSArray *allFriends, NSError *error)
+    PFQuery *followingQuery = [Follow query];
+    [followingQuery whereKey:@"from" equalTo:currentUser];
+    [followingQuery includeKey:@"from"];
+    [followingQuery includeKey:@"from"];
+    self.friendsArray = [NSMutableArray new];
+    [followingQuery findObjectsInBackgroundWithBlock:^(NSArray *allFriends, NSError *error)
      {
          if (!error)
          {
-             self.friendsArray = [[NSArray alloc]initWithArray:allFriends];
+             for (Follow *follow in allFriends)
+             {
+                 User *userToSee = [follow objectForKey:@"to"];
+                 [self.friendsArray addObject:userToSee];
+             }
+        
              PFQuery *courseQuery = [Course query];
              [courseQuery includeKey:@"teacher"];
              [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
@@ -293,7 +301,7 @@
 //triggers segway to event detailVC
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    [self performSegueWithIdentifier:@"mapToSkill" sender:view.annotation];
+    [self performSegueWithIdentifier:@"mapToCourse" sender:view.annotation];
 }
 
 
@@ -415,6 +423,7 @@
         Course *courseToShow = courseAnnotation.course;
         takeVC.selectedCourse = courseToShow;
         takeVC.selectedTeacher = courseToShow.teacher;
+
     }
     else
     {
