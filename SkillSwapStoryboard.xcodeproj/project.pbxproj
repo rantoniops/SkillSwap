@@ -47,7 +47,6 @@
 		B126D47D1ADCFADC002E6F99 /* CourseListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D47C1ADCFADC002E6F99 /* CourseListVC.m */; };
 		B126D4801ADD70F6002E6F99 /* TakeCourseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D47F1ADD70F6002E6F99 /* TakeCourseVC.m */; };
 		B126D4831ADD78BC002E6F99 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D4821ADD78BC002E6F99 /* LoginVC.m */; };
-		B126D4861ADD7AEE002E6F99 /* TeachingCourseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D4851ADD7AEE002E6F99 /* TeachingCourseVC.m */; };
 		B126D4891ADD7B46002E6F99 /* MessageConversationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D4881ADD7B46002E6F99 /* MessageConversationVC.m */; };
 		B126D48C1ADD8254002E6F99 /* UserProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B126D48B1ADD8254002E6F99 /* UserProfileVC.m */; };
 		B1D7C4511AE82DA7007FA4C8 /* LoginBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1D7C4501AE82DA7007FA4C8 /* LoginBG@2x.png */; };
@@ -127,8 +126,6 @@
 		B126D47F1ADD70F6002E6F99 /* TakeCourseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TakeCourseVC.m; sourceTree = "<group>"; };
 		B126D4811ADD78BC002E6F99 /* LoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
 		B126D4821ADD78BC002E6F99 /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
-		B126D4841ADD7AEE002E6F99 /* TeachingCourseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeachingCourseVC.h; sourceTree = "<group>"; };
-		B126D4851ADD7AEE002E6F99 /* TeachingCourseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeachingCourseVC.m; sourceTree = "<group>"; };
 		B126D4871ADD7B46002E6F99 /* MessageConversationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageConversationVC.h; sourceTree = "<group>"; };
 		B126D4881ADD7B46002E6F99 /* MessageConversationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageConversationVC.m; sourceTree = "<group>"; };
 		B126D48A1ADD8254002E6F99 /* UserProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileVC.h; sourceTree = "<group>"; };
@@ -179,7 +176,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6B16B5161ADDCA6F0040B4EB /* MapVC and its buttons VCs */ = {
+		6B16B5161ADDCA6F0040B4EB /* main VCs */ = {
 			isa = PBXGroup;
 			children = (
 				6B7846501ADC988B00EAD40D /* MapVC.h */,
@@ -193,7 +190,7 @@
 				6B16B5181ADDCD3D0040B4EB /* PostCourseVC.h */,
 				6B16B5191ADDCD3D0040B4EB /* PostCourseVC.m */,
 			);
-			name = "MapVC and its buttons VCs";
+			name = "main VCs";
 			sourceTree = "<group>";
 		};
 		6B16B5171ADDCB040040B4EB /* App delegate */ = {
@@ -206,12 +203,54 @@
 			path = SkillSwapStoryboard;
 			sourceTree = "<group>";
 		};
+		6B65C8D31AEECF2E003F7F64 /* Non VC classes */ = {
+			isa = PBXGroup;
+			children = (
+				96E2A9C01ADECED100727E09 /* CustomCourseAnnotation.h */,
+				96E2A9C11ADECED100727E09 /* CustomCourseAnnotation.m */,
+			);
+			name = "Non VC classes";
+			path = SkillSwapStoryboard;
+			sourceTree = "<group>";
+		};
+		6B65C8D41AEECF41003F7F64 /* STORYBOARD CONDOM */ = {
+			isa = PBXGroup;
+			children = (
+				96D2D4861AEDE4CE0059F566 /* Main.storyboard */,
+			);
+			name = "STORYBOARD CONDOM";
+			path = SkillSwapStoryboard;
+			sourceTree = "<group>";
+		};
+		6B65C8D51AEECF97003F7F64 /* secondary VCs */ = {
+			isa = PBXGroup;
+			children = (
+				B126D4811ADD78BC002E6F99 /* LoginVC.h */,
+				B126D4821ADD78BC002E6F99 /* LoginVC.m */,
+				6B65C8D01AEEC327003F7F64 /* SignupVC.h */,
+				6B65C8D11AEEC327003F7F64 /* SignupVC.m */,
+				6BD061E21AEDECF500B6B85E /* ShowReviewVC.h */,
+				6BD061E31AEDECF500B6B85E /* ShowReviewVC.m */,
+				6BFECC3D1AED7188009BF05F /* ConnectionsListVC.h */,
+				6BFECC3E1AED7188009BF05F /* ConnectionsListVC.m */,
+				B126D47E1ADD70F6002E6F99 /* TakeCourseVC.h */,
+				B126D47F1ADD70F6002E6F99 /* TakeCourseVC.m */,
+				B1D7C4521AE85B37007FA4C8 /* ReviewVC.h */,
+				B1D7C4531AE85B37007FA4C8 /* ReviewVC.m */,
+				B126D4871ADD7B46002E6F99 /* MessageConversationVC.h */,
+				B126D4881ADD7B46002E6F99 /* MessageConversationVC.m */,
+			);
+			name = "secondary VCs";
+			sourceTree = "<group>";
+		};
 		6B78463A1ADC988B00EAD40D = {
 			isa = PBXGroup;
 			children = (
 				6BFF24841AE83CEB00CBD130 /* Crashlytics.framework */,
 				6BFF24851AE83CEB00CBD130 /* Fabric.framework */,
 				6B78467C1ADCAB2B00EAD40D /* Frameworks */,
+				6B65C8D41AEECF41003F7F64 /* STORYBOARD CONDOM */,
+				6B65C8D31AEECF2E003F7F64 /* Non VC classes */,
 				6B7846451ADC988B00EAD40D /* SkillSwap */,
 				6B7846621ADC988B00EAD40D /* SkillSwapStoryboardTests */,
 				6B7846441ADC988B00EAD40D /* Products */,
@@ -232,27 +271,9 @@
 		6B7846451ADC988B00EAD40D /* SkillSwap */ = {
 			isa = PBXGroup;
 			children = (
-				96D2D4861AEDE4CE0059F566 /* Main.storyboard */,
 				B1D7C44F1AE82D47007FA4C8 /* ImageAsset */,
-				6B16B5161ADDCA6F0040B4EB /* MapVC and its buttons VCs */,
-				B126D4811ADD78BC002E6F99 /* LoginVC.h */,
-				B126D4821ADD78BC002E6F99 /* LoginVC.m */,
-				6B65C8D01AEEC327003F7F64 /* SignupVC.h */,
-				6B65C8D11AEEC327003F7F64 /* SignupVC.m */,
-				6BD061E21AEDECF500B6B85E /* ShowReviewVC.h */,
-				6BD061E31AEDECF500B6B85E /* ShowReviewVC.m */,
-				6BFECC3D1AED7188009BF05F /* ConnectionsListVC.h */,
-				6BFECC3E1AED7188009BF05F /* ConnectionsListVC.m */,
-				B126D47E1ADD70F6002E6F99 /* TakeCourseVC.h */,
-				B126D47F1ADD70F6002E6F99 /* TakeCourseVC.m */,
-				96E2A9C01ADECED100727E09 /* CustomCourseAnnotation.h */,
-				96E2A9C11ADECED100727E09 /* CustomCourseAnnotation.m */,
-				B1D7C4521AE85B37007FA4C8 /* ReviewVC.h */,
-				B1D7C4531AE85B37007FA4C8 /* ReviewVC.m */,
-				B126D4871ADD7B46002E6F99 /* MessageConversationVC.h */,
-				B126D4881ADD7B46002E6F99 /* MessageConversationVC.m */,
-				B126D4841ADD7AEE002E6F99 /* TeachingCourseVC.h */,
-				B126D4851ADD7AEE002E6F99 /* TeachingCourseVC.m */,
+				6B16B5161ADDCA6F0040B4EB /* main VCs */,
+				6B65C8D51AEECF97003F7F64 /* secondary VCs */,
 				6B7846561ADC988B00EAD40D /* Images.xcassets */,
 				6B7846581ADC988B00EAD40D /* LaunchScreen.xib */,
 				6B78464D1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld */,
@@ -493,7 +514,6 @@
 				6BD061E41AEDECF500B6B85E /* ShowReviewVC.m in Sources */,
 				6B78464F1ADC988B00EAD40D /* SkillSwapStoryboard.xcdatamodeld in Sources */,
 				B126D47D1ADCFADC002E6F99 /* CourseListVC.m in Sources */,
-				B126D4861ADD7AEE002E6F99 /* TeachingCourseVC.m in Sources */,
 				B1D7C4541AE85B37007FA4C8 /* ReviewVC.m in Sources */,
 				6B9B1F231AE0A673005219AF /* Course.swift in Sources */,
 				6BAEDE281AE0390F00282CFB /* MessagesVC.m in Sources */,

@@ -31,6 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.title = @"Profile";
     self.tableViewNumber = @3;
 }
 
@@ -117,6 +118,7 @@
              }
              if (self.reviewsArray.count == 0)
              {
+                 self.rating.text = @"User has no ratings yet.";
                  // dont do anything, since dividing by zero will crash the app
              }
              else
@@ -125,7 +127,6 @@
                  NSNumber *average = @(reviewsAverage);
                  self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
              }
-
          }
          else
          {

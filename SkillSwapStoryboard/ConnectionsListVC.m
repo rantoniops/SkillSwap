@@ -12,6 +12,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.title = @"Connections";
     self.followersOrFollowing = @1;
 }
 

@@ -9,9 +9,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.classLabel.text = self.selectedReview.course.title;
+    self.navigationItem.title = @"Review";
+    self.classLabel.text = [NSString stringWithFormat:@"Class : %@", self.selectedReview.course.title];
     self.reviewContentLabel.text = self.selectedReview.reviewContent;
-    self.reviewerLabel.text = self.selectedReview.reviewer.username;
+    self.reviewerLabel.text = [NSString stringWithFormat:@"Reviewer : %@" , self.selectedReview.reviewer.username];
 }
 
 

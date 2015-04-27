@@ -32,7 +32,7 @@
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
-                                    <rect key="frame" x="75" y="36" width="250" height="21"/>
+                                    <rect key="frame" x="75" y="59" width="250" height="21"/>
                                     <mask key="constraints">
                                         <include reference="8CM-vB-vGS"/>
                                     </mask>
@@ -103,15 +103,15 @@
                                 <exclude reference="h0r-mA-fLr"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="HBx-YJ-gW4"/>
+                                <exclude reference="2Dw-Yu-Jaa"/>
+                                <exclude reference="XS1-7R-kxl"/>
+                                <exclude reference="pPk-ZP-Zsp"/>
                                 <exclude reference="kpR-Ic-CQl"/>
                                 <exclude reference="rf6-PY-DhP"/>
                                 <exclude reference="Nkr-yb-zj2"/>
                                 <exclude reference="cx2-DF-YG7"/>
                                 <exclude reference="pht-aX-ztZ"/>
-                                <exclude reference="2Dw-Yu-Jaa"/>
-                                <exclude reference="XS1-7R-kxl"/>
-                                <exclude reference="pPk-ZP-Zsp"/>
+                                <exclude reference="HBx-YJ-gW4"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -121,15 +121,15 @@
                                 <include reference="h0r-mA-fLr"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="HBx-YJ-gW4"/>
+                                <include reference="2Dw-Yu-Jaa"/>
+                                <include reference="XS1-7R-kxl"/>
+                                <include reference="pPk-ZP-Zsp"/>
                                 <include reference="kpR-Ic-CQl"/>
                                 <include reference="rf6-PY-DhP"/>
                                 <include reference="Nkr-yb-zj2"/>
                                 <include reference="cx2-DF-YG7"/>
                                 <include reference="pht-aX-ztZ"/>
-                                <include reference="2Dw-Yu-Jaa"/>
-                                <include reference="XS1-7R-kxl"/>
-                                <include reference="pPk-ZP-Zsp"/>
+                                <include reference="HBx-YJ-gW4"/>
                             </mask>
                         </variation>
                     </view>
@@ -2828,10 +2828,10 @@
             </objects>
             <point key="canvasLocation" x="3253.5" y="-189"/>
         </scene>
-        <!--SignupVC-->
+        <!--Signup-->
         <scene sceneID="7wc-vu-Ndg">
             <objects>
-                <viewController id="apd-QD-DQy" customClass="SignupVC" sceneMemberID="viewController">
+                <viewController title="Signup" id="apd-QD-DQy" customClass="SignupVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7nG-iO-Qa3"/>
                         <viewControllerLayoutGuide type="bottom" id="BHI-Uz-g2x"/>
@@ -3028,10 +3028,10 @@
         <image name="profile" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uaL-Q6-g67"/>
+        <segue reference="WcH-cb-mK9"/>
+        <segue reference="WLm-8o-MZr"/>
         <segue reference="NUw-Cu-Ft4"/>
-        <segue reference="rO2-le-TcN"/>
+        <segue reference="QAS-qn-wgW"/>
         <segue reference="CG5-bI-nlK"/>
-        <segue reference="aeD-cB-7cP"/>
     </inferredMetricsTieBreakers>
 </document>

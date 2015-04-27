@@ -32,6 +32,7 @@
         self.messageTeacherButton.hidden = YES;
         self.takeClassButton.hidden = YES;
     }
+    self.navigationItem.title = @"Take Class";
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
     self.courseDesciption.text = self.selectedCourse.courseDescription;
