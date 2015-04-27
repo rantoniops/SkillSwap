@@ -1,11 +1,11 @@
-#import "SignupVC.h"
+#import "SignUpVC.h"
 #import "SkillSwapStoryboard-Swift.h"
-@interface SignupVC () <UITextFieldDelegate>
+@interface SignUpVC () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @end
-@implementation SignupVC
+@implementation SignUpVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -14,7 +14,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -29,6 +29,10 @@
     return true;
 }
 
+- (IBAction)alreadyButtonPressed:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (IBAction)signUpButtonPress:(UIButton *)sender
 {
@@ -57,7 +61,6 @@
               }];
 
              [self performSegueWithIdentifier:@"signupToMap" sender:self];
-
          }
          else
          {
@@ -79,8 +82,6 @@
 //    alert.addAction(okAction)
 //    presentViewController(alert, animated: true, completion: nil)
 //}
-
-
 
 
 
