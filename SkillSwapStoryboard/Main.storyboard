@@ -1284,7 +1284,8 @@
                                         <exclude reference="dQH-h3-wRx"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="153" y="177" width="294" height="30"/>
                                     <mask key="constraints">
                                         <exclude reference="TDJ-UU-NQ2"/>
                                         <include reference="dQH-h3-wRx"/>
@@ -1308,6 +1309,9 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="153" y="280" width="294" height="36"/>
+                                </variation>
                                 <connections>
                                     <action selector="loginButtonPress:" destination="REZ-1m-KA0" eventType="touchUpInside" id="bbg-74-Gk6"/>
                                 </connections>
@@ -1326,7 +1330,8 @@
                                         <exclude reference="6fh-7Z-SS1"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="153" y="122" width="294" height="30"/>
                                     <mask key="constraints">
                                         <include reference="6fh-7Z-SS1"/>
                                         <exclude reference="slh-Ty-VtJ"/>
@@ -1347,12 +1352,18 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="40"/>
                                 <color key="textColor" red="0.0" green="0.50196078431372548" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="198" y="33" width="197" height="47"/>
+                                </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G6j-RV-2b2">
                                 <rect key="frame" x="82" y="370" width="237" height="30"/>
                                 <state key="normal" title="don't have an account yet? signup">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="178" y="338" width="237" height="30"/>
+                                </variation>
                                 <connections>
                                     <segue destination="apd-QD-DQy" kind="show" identifier="signup" id="ric-5j-4Yq"/>
                                 </connections>
@@ -1404,7 +1415,6 @@
         <!--Sign UpVC-->
         <scene sceneID="7wc-vu-Ndg">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="487-1S-0U7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="apd-QD-DQy" customClass="SignUpVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7nG-iO-Qa3"/>
@@ -1430,7 +1440,8 @@
                                         <exclude reference="tPD-m1-kOM"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="153" y="177" width="294" height="30"/>
                                     <mask key="constraints">
                                         <exclude reference="K8X-Qb-As0"/>
                                         <exclude reference="KJ0-yN-a0A"/>
@@ -1464,7 +1475,8 @@
                                         <exclude reference="AJb-CL-xcC"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="153" y="280" width="294" height="36"/>
                                     <mask key="constraints">
                                         <include reference="5pR-TW-IbQ"/>
                                         <include reference="AJb-CL-xcC"/>
@@ -1492,7 +1504,8 @@
                                         <exclude reference="DXW-zN-baa"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="153" y="122" width="294" height="30"/>
                                     <mask key="constraints">
                                         <include reference="9Fq-Yj-pIC"/>
                                         <include reference="DXW-zN-baa"/>
@@ -1504,7 +1517,7 @@
                                     <outlet property="delegate" destination="REZ-1m-KA0" id="BJT-QW-s1c"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tX8-3Y-1Lk">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tX8-3Y-1Lk">
                                 <rect key="frame" x="82" y="370" width="237" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="213" id="Mbm-Uw-IKh"/>
@@ -1519,7 +1532,8 @@
                                         <exclude reference="hw6-gC-mss"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="194" y="338" width="213" height="30"/>
                                     <mask key="constraints">
                                         <exclude reference="Mbm-Uw-IKh"/>
                                         <exclude reference="hw6-gC-mss"/>
@@ -1545,7 +1559,8 @@
                                         <exclude reference="HkQ-dz-8A2"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="153" y="226" width="294" height="30"/>
                                     <mask key="constraints">
                                         <exclude reference="59g-pi-nhD"/>
                                         <include reference="B5n-1r-HIy"/>
@@ -1615,10 +1630,10 @@
                                 <exclude reference="bYK-29-rmK"/>
                                 <exclude reference="67s-4D-hab"/>
                                 <exclude reference="eSW-Yb-1G1"/>
-                                <exclude reference="DlZ-0V-5Tz"/>
-                                <exclude reference="bL2-iE-ZUm"/>
                                 <exclude reference="jez-rZ-93O"/>
                                 <exclude reference="kkN-lw-993"/>
+                                <exclude reference="DlZ-0V-5Tz"/>
+                                <exclude reference="bL2-iE-ZUm"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1642,11 +1657,11 @@
                                 <exclude reference="RlH-XQ-Gr2"/>
                                 <exclude reference="bDU-BF-QSt"/>
                                 <include reference="eSW-Yb-1G1"/>
-                                <include reference="DlZ-0V-5Tz"/>
-                                <include reference="bL2-iE-ZUm"/>
                                 <exclude reference="jez-rZ-93O"/>
                                 <include reference="kkN-lw-993"/>
                                 <exclude reference="yQn-Rl-rfp"/>
+                                <include reference="DlZ-0V-5Tz"/>
+                                <include reference="bL2-iE-ZUm"/>
                             </mask>
                         </variation>
                     </view>
@@ -1659,6 +1674,7 @@
                         <segue destination="C6z-MJ-OJR" kind="show" identifier="signupToMap" id="NUw-Cu-Ft4"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="487-1S-0U7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5976" y="-191"/>
         </scene>
