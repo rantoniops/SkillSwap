@@ -20,7 +20,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-   
     self.navigationController.navigationBarHidden = NO;
     [self queryConversations];
     self.navigationItem.title = @"Conversations";

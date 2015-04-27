@@ -75,6 +75,7 @@
     [reviewsQuery whereKey:@"course" matchesQuery:expiredCoursesQuery];
     [reviewsQuery whereKey:@"reviewer" equalTo:[User currentUser]];
     [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@0];
+    [reviewsQuery includeKey:@"course"];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (!error)
@@ -83,13 +84,16 @@
              {
                  NSLog(@"Successfully retrieved %lu empty reviews.", (unsigned long)objects.count);
                  self.reviews = objects;
+
                  for (Review *review in objects)
                  {
                      UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                      ReviewVC *reviewVC = [storyBoard instantiateViewControllerWithIdentifier:@"ReviewVCID"];
                      reviewVC.reviewToReview = review;
+                     reviewVC.reviewCourse = review.course;
                      [self presentViewController:reviewVC animated:true completion:nil];
                  }
+                 
              }
              else
              {
