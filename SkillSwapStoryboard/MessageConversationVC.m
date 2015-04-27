@@ -1,4 +1,6 @@
 #import "MessageConversationVC.h"
+#import "MessageCell.h"
+
 @interface MessageConversationVC () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -95,6 +97,8 @@
 {
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = self.otherUser.username;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if ([self.origin isEqualToString:@"messages"])
     {
         NSLog(@"coming from messages, selected conversation found");
@@ -283,10 +287,24 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    MessageCell *cell = (MessageCell *)[tableView dequeueReusableCellWithIdentifier:@"newcellID"];
+    if (cell == nil)
+    {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MessageCell" owner:self options:nil];
+            cell = [nib objectAtIndex:0];
+    }
+    
     cell.detailTextLabel.textAlignment = NSTextAlignmentCenter;
     Message *messageToShow = self.messages[indexPath.row];
+    
+    if (messageToShow.messageSender == [User currentUser])
+    {
+        cell.textLabel.textAlignment = NSTextAlignmentRight;
+    }
+    else
+    {
+        cell.textLabel.textAlignment = NSTextAlignmentLeft;
+    }
     cell.textLabel.text = messageToShow.messageBody;
     NSString *timeString = [NSDateFormatter localizedStringFromDate:messageToShow.createdAt dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"-%@ sent at %@", messageToShow.messageSender.username,timeString];
