@@ -2873,7 +2873,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E9B-6n-VvC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3315" y="-149"/>
+            <point key="canvasLocation" x="3253.5" y="-189"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1tm-fP-PBX">
@@ -2902,10 +2902,10 @@
         <image name="profile" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gbK-2E-8fb"/>
+        <segue reference="jLA-xh-0Ut"/>
+        <segue reference="QAS-qn-wgW"/>
         <segue reference="9l9-dK-tx5"/>
         <segue reference="aeD-cB-7cP"/>
         <segue reference="WcH-cb-mK9"/>
-        <segue reference="QAS-qn-wgW"/>
     </inferredMetricsTieBreakers>
 </document>
