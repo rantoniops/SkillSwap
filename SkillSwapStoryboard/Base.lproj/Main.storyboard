@@ -69,7 +69,8 @@
                                         <exclude reference="C13-Nb-qF0"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="87" y="66" width="62" height="30"/>
                                     <mask key="constraints">
                                         <include reference="659-NJ-T6t"/>
                                         <include reference="C13-Nb-qF0"/>
@@ -94,7 +95,8 @@
                                         <exclude reference="wvx-cC-70u"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="251" y="66" width="62" height="30"/>
                                     <mask key="constraints">
                                         <include reference="QfM-ya-oPx"/>
                                         <include reference="wvx-cC-70u"/>
@@ -2392,6 +2394,7 @@
                     <navigationItem key="navigationItem" id="hbc-AW-yuR"/>
                     <connections>
                         <outlet property="courseListTableView" destination="EFm-aJ-U34" id="n2q-gV-GIt"/>
+                        <segue destination="Dzz-ZH-zxG" kind="show" identifier="listToCourse" id="FYK-Y5-zpc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FEu-SC-VzW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2709,8 +2712,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="gbK-2E-8fb"/>
-        <segue reference="uaL-Q6-g67"/>
+        <segue reference="FYK-Y5-zpc"/>
         <segue reference="9l9-dK-tx5"/>
-        <segue reference="aeD-cB-7cP"/>
+        <segue reference="uaL-Q6-g67"/>
     </inferredMetricsTieBreakers>
 </document>

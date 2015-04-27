@@ -306,8 +306,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"cell tapped");
-//    self.userAtRow = self.friendsArray[indexPath.row];
+
     self.courseAtRow = self.coursesArray[indexPath.row];
     [self performSegueWithIdentifier:@"showCourse" sender:self];
 }
