@@ -145,6 +145,7 @@
     [followingQuery whereKey:@"from" equalTo:currentUser];
     [followingQuery includeKey:@"from"];
     [followingQuery includeKey:@"from"];
+    self.friendsArray = [NSMutableArray new];
     [followingQuery findObjectsInBackgroundWithBlock:^(NSArray *allFriends, NSError *error)
      {
          if (!error)
@@ -152,7 +153,6 @@
              for (Follow *follow in allFriends)
              {
                  User *userToSee = [follow objectForKey:@"to"];
-                 self.friendsArray = [NSMutableArray new];
                  [self.friendsArray addObject:userToSee];
              }
         
