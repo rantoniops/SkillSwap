@@ -25,6 +25,7 @@
 @property User *selectedTeacher;
 @property NSNumber *tableViewNumber;
 @property Review *reviewAtRow;
+@property NSArray *followingObjectsToBeDeleted;
 @end
 @implementation UserProfileVC
 - (void)viewDidLoad
@@ -60,7 +61,38 @@
 
 - (IBAction)followButtonPressed:(UIButton *)sender
 {
-    
+    User *currentUser = [User currentUser];
+    if ([self.followButton.titleLabel.text isEqualToString:@"Follow"])
+    {
+        Follow *follow = [Follow new];
+        [follow setObject:currentUser forKey:@"from"];
+        [follow setObject:self.selectedUser forKey:@"to"];
+        [follow setObject:[NSDate date] forKey:@"friendTime"];
+        [follow saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (succeeded)
+             {
+                 NSLog(@"friend saved");
+                 [self.followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+             }
+         }];
+        
+    }
+    else
+    {
+        for (Follow *follow in self.followingObjectsToBeDeleted)
+        {
+            [follow deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+             {
+                 if (error == nil)
+                 {
+                     NSLog(@"%@ has been deleted", self.followingObjectsToBeDeleted);
+                     [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+                     
+                 }
+             }];
+        }
+    }
 }
 
 
@@ -106,6 +138,7 @@
     self.navigationController.navigationBarHidden = NO;
     [self queryForUserInfo];
     [self queryForFriends];
+    self.followButton.hidden = YES;
 }
 
 - (IBAction)onLogoutButtonTapped:(UIBarButtonItem *)sender
@@ -119,7 +152,9 @@
 {
     if (self.selectedUser)
     {
+        [self doIfollowThisGuy];
         self.profileImage.userInteractionEnabled = NO;
+        self.followButton.hidden = NO;
     }
     else
     {
@@ -493,6 +528,26 @@
          }
      }];
 }
+
+-(void)doIfollowThisGuy
+{
+    PFQuery *followerCheck = [Follow query];
+    [followerCheck whereKey:@"from" equalTo:[PFUser currentUser]];
+    [followerCheck whereKey:@"to" equalTo:self.selectedUser];
+    [followerCheck findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (objects.count > 0)
+         {
+             [self.followButton setTitle:@"Unfollow" forState:UIControlStateNormal];
+             self.followingObjectsToBeDeleted = objects;
+         }
+         else
+         {
+             [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+         }
+     }];
+}
+
 
 
 
