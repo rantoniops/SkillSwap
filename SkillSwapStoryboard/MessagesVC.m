@@ -1,4 +1,4 @@
-#import "MessagesVC.h"
+    #import "MessagesVC.h"
 #import "MessageConversationVC.h"
 #import "SkillSwapStoryboard-Swift.h"
 @interface MessagesVC () <UITableViewDataSource, UITableViewDelegate>
@@ -23,6 +23,7 @@
    
     self.navigationController.navigationBarHidden = NO;
     [self queryConversations];
+    self.navigationItem.title = @"Conversations";
 }
 
 
