@@ -94,8 +94,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = NO;
-    self.navigationItem.title = @"conversation";
-    NSLog(@" here are the users %@", self.conversation.users);
+    self.navigationItem.title = self.otherUser.username;
     if ([self.origin isEqualToString:@"messages"])
     {
         NSLog(@"coming from messages, selected conversation found");
