@@ -485,11 +485,6 @@
              {
                  if (!error)
                  {
-//                     NSLog(@"image retrieved");
-                     //                             UIImage *image =
-                     //                             UIImage *smallerImage = [self imageWithImage:image scaledToSize:CGSizeMake(40, 40)];
-                     //                             self.callOutImage = smallerImage;
-                     //                             coursePointAnnotation.image = self.callOutImage;
                      object.callOutImage = [UIImage imageWithData:data];
                      object.sizedCallOutImage = [self imageWithImage: object.callOutImage scaledToSize:CGSizeMake(40, 40)];
                      coursePointAnnotation.subtitle = object.address;
@@ -568,6 +563,7 @@
     if (didCreate == false)
     {
         [self.mapView removeAnnotation:self.lastAnnotationArray.lastObject];
+        [self.pin removeFromSuperview];
     }
 }
 
