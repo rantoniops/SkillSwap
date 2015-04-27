@@ -2,6 +2,7 @@
 #import "SkillSwapStoryboard-Swift.h"
 #import "LoginVC.h"
 #import "TakeCourseVC.h"
+#import "ConnectionsListVC.h"
 @interface UserProfileVC () <UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *rating;
@@ -13,35 +14,45 @@
 @property Course *courseAtRow;
 @property User *userAtRow;
 @property NSArray *coursesArray;
-@property NSArray *friendsArray;
+@property NSArray *followersArray;
+@property NSArray *followingArray;
+@property NSArray *skillsArray;
+@property NSArray *reviewsArray;
 @property UIImage *chosenImage;
 @property NSData *smallImageData;
 @property User *selectedTeacher;
+@property NSNumber *tableViewNumber;
+
 @end
 @implementation UserProfileVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.tableViewNumber = @3;
 }
 
 - (IBAction)skillsButtonPressed:(UIButton *)sender
 {
-
+    self.tableViewNumber = @1;
+    [self.tableVIew reloadData];
 }
 
 - (IBAction)reviewsButtonPressed:(UIButton *)sender
 {
-
+    self.tableViewNumber = @2;
+    [self.tableVIew reloadData];
+    
 }
 
 - (IBAction)classesButtonPressed:(UIButton *)sender
 {
-
+    self.tableViewNumber = @3;
+    [self.tableVIew reloadData];
 }
 
 - (IBAction)friendsButtonPressed:(UIButton *)sender
 {
-
+    //perform segue
 }
 
 
@@ -52,21 +63,22 @@
 {
     PFQuery *reviewsQuery = [Review query];
     [reviewsQuery includeKey:@"reviewed"];
+    [reviewsQuery includeKey:@"reviewer"];
     [reviewsQuery whereKey:@"reviewed" equalTo:user];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (error == nil)
          {
              NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
-             NSArray *reviews = objects;
+             self.reviewsArray = objects;
              int reviewsSum = 0;
-             for (Review *review in reviews)
+             for (Review *review in self.reviewsArray)
              {
                  reviewsSum = reviewsSum + [review.reviewRating intValue];
              }
-             int reviewsAverage = (reviewsSum / reviews.count);
-             NSNumber *average = @(reviewsAverage);
-             self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
+//             int reviewsAverage = (reviewsSum / reviews.count);
+//             NSNumber *average = @(reviewsAverage);
+//             self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
          }
          else
          {
@@ -79,6 +91,7 @@
 {
     self.navigationController.navigationBarHidden = NO;
     [self queryForUserInfo];
+    [self queryForFriends];
 }
 
 - (IBAction)onLogoutButtonTapped:(UIBarButtonItem *)sender
@@ -145,13 +158,13 @@
                  }
              }
         }];
-        PFRelation *relationFriends = [self.selectedUser relationForKey:@"friends"];
-        PFQuery *relationFriendsQuery = relationFriends.query;
-        [relationFriendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+        PFRelation *relationSkills = [self.selectedUser relationForKey:@"skills"];
+        PFQuery *relationSkillsQuery = relationSkills.query;
+        [relationSkillsQuery findObjectsInBackgroundWithBlock:^(NSArray *skills, NSError *error)
          {
              if (error == nil)
              {
-                 self.friendsArray = objects;
+                 self.skillsArray = skills;
                  [self.tableVIew reloadData];
              }
          }];
@@ -194,31 +207,93 @@
                  }
              }
          }];
-        PFRelation *relationFriends = [currentUser relationForKey:@"friends"];
-        PFQuery *relationFriendsQuery = relationFriends.query;
-        [relationFriendsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+        PFRelation *relationSkills = [currentUser relationForKey:@"skills"];
+        PFQuery *relationSkillsQuery = relationSkills.query;
+        [relationSkillsQuery findObjectsInBackgroundWithBlock:^(NSArray *skills, NSError *error)
          {
-              if (error == nil)
-              {
-                  self.friendsArray = objects;
-                  [self.tableVIew reloadData];
-              }
-        }];
-        
+             if (error == nil)
+             {
+                 self.skillsArray = skills;
+                 [self.tableVIew reloadData];
+             }
+         }];
     }
 
 }
 
-
-
+-(void)queryForFriends
+{
+    if (self.selectedUser)
+    {
+        PFQuery *followerQuery = [Follow query];
+        [followerQuery whereKey:@"to" equalTo:self.selectedUser];
+        [followerQuery includeKey:@"to"];
+        [followerQuery includeKey:@"from"];
+        [followerQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             if (error == nil)
+             {
+                 self.followersArray = objects;
+                 NSLog(@"should not be followed i don't think %@", objects);
+                 
+             }
+             if (error)
+             {
+                 NSLog(@"there was an error %@", error.localizedDescription);
+             }
+         }];
+        PFQuery *followingQuery = [Follow query];
+        [followingQuery includeKey:@"from"];
+        [followingQuery includeKey:@"to"];
+        [followingQuery whereKey:@"from" equalTo:self.selectedUser];
+        [followingQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             if (error == nil)
+             {
+                 self.followingArray = objects;
+                 NSLog(@"should be following someone %@", objects);
+             }
+         }];
+    }
+    else
+    {
+        User *currentUser = [User currentUser];
+        //followers
+        PFQuery *followerQuery = [Follow query];
+        [followerQuery whereKey:@"to" equalTo:currentUser];
+        [followerQuery includeKey:@"to"];
+        [followerQuery includeKey:@"from"];
+        [followerQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             if (error == nil)
+             {
+                 self.followersArray = objects;
+                 NSLog(@"should not be followed i don't think %@", objects);
+                 
+             }
+         }];
+        
+        //following
+        PFQuery *followingQuery = [Follow query];
+        [followingQuery includeKey:@"from"];
+        [followingQuery includeKey:@"to"];
+        [followingQuery whereKey:@"from" equalTo:currentUser];
+        [followingQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             if (error == nil)
+             {
+                 self.followingArray = objects;
+                 NSLog(@"should be following someone %@", objects);
+             }
+         }];
+    }
+}
 
 
 
 -(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     NSLog(@"successful Tap");
-    
-    NSLog(@"Here is my list of friends %@", self.friendsArray);
     [self showAlertOnViewController];
 }
 
@@ -278,14 +353,32 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    Course *course = self.coursesArray[indexPath.row];
-//    User *user = self.friendsArray[indexPath.row];
-    
-//    cell.textLabel.text = [user valueForKey:@"username"];
-    cell.detailTextLabel.text = [course valueForKey:@"address"];
-    NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-    NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", [course valueForKey:@"title"] , timeString];
-    cell.textLabel.text = titleAndTime;
+    if ([self.tableViewNumber  isEqual: @1])
+    {
+        Skill *skill = self.skillsArray[indexPath.row];
+        cell.textLabel.text = [skill valueForKey:@"name"];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"Since %@", [skill valueForKey:@"createdAt"]];
+    }
+    else if ([self.tableViewNumber isEqual: @2])
+    {
+        Review *review = self.reviewsArray[indexPath.row];
+        cell.detailTextLabel.text = [review valueForKey:@"reviewContent"];
+        User *reviewer = [review objectForKey:@"reviewer"];
+        NSLog(@" here is the reviewrer username %@", reviewer);
+        NSString *commentTime = [NSDateFormatter localizedStringFromDate:[reviewer valueForKey:@"createdAt"] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
+        NSString *cellText = [NSString stringWithFormat:@"%@ - %@", [reviewer valueForKey:@"username"],commentTime];
+        cell.textLabel.text = cellText;
+
+    }
+    else
+    {
+        Course *course = self.coursesArray[indexPath.row];
+        NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+        NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", [course valueForKey:@"title"] , timeString];
+        cell.textLabel.text = titleAndTime;
+        cell.detailTextLabel.text = [course valueForKey:@"address"];
+    }
+
     return cell;
 }
 
@@ -298,10 +391,22 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"cell tapped");
 //    self.userAtRow = self.friendsArray[indexPath.row];
-    self.courseAtRow = self.coursesArray[indexPath.row];
-    [self performSegueWithIdentifier:@"showCourse" sender:self];
+    if ([self.tableViewNumber isEqual:@1])
+    {
+        NSLog(@"no transition");
+        [tableView deselectRowAtIndexPath:indexPath animated:true];
+    }
+    if ([self.tableViewNumber isEqual:@2])
+    {
+        [tableView deselectRowAtIndexPath:indexPath animated:true];
+    }
+    if ([self.tableViewNumber isEqual:@3])
+    {
+        self.courseAtRow = self.coursesArray[indexPath.row];
+        [self performSegueWithIdentifier:@"showCourse" sender:self];
+    }
+  
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -315,13 +420,30 @@
         takeCourseVC.selectedTeacher = self.selectedTeacher;
         NSLog(@"no crash here");
     }
+    else //take to friends VC
+    {
+        ConnectionsListVC *friendsVC = segue.destinationViewController;
+        friendsVC.followersArray = self.followersArray;
+        friendsVC.followingArray = self.followingArray;
+        NSLog(@"Here are you followers %@, and here who is you are following %@", self.followersArray, self.followingArray);
+    }
     
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.coursesArray.count;
-//    return self.friendsArray.count;
+    if ([self.tableViewNumber  isEqual: @1])
+    {
+        return self.skillsArray.count;
+    }
+    else if ([self.tableViewNumber  isEqual: @2])
+    {
+        return self.reviewsArray.count;
+    }
+    else
+    {
+        return self.coursesArray.count;
+    }
 }
 
 

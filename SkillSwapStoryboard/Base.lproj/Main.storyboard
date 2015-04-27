@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="etR-4f-bF4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C2061" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="etR-4f-bF4">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -104,14 +104,14 @@
                                 <exclude reference="sIj-O8-ngR"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="n2y-7Y-diy"/>
+                                <exclude reference="0JS-mb-u0B"/>
+                                <exclude reference="abi-uA-a4U"/>
+                                <exclude reference="7rM-Bs-ggh"/>
+                                <exclude reference="Vzg-P7-d5t"/>
                                 <exclude reference="1P0-Ue-g0L"/>
                                 <exclude reference="JZv-A1-dzD"/>
                                 <exclude reference="eVy-Lb-Qa9"/>
-                                <exclude reference="7rM-Bs-ggh"/>
-                                <exclude reference="Vzg-P7-d5t"/>
-                                <exclude reference="0JS-mb-u0B"/>
-                                <exclude reference="abi-uA-a4U"/>
-                                <exclude reference="n2y-7Y-diy"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -121,14 +121,14 @@
                                 <include reference="sIj-O8-ngR"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="n2y-7Y-diy"/>
+                                <include reference="0JS-mb-u0B"/>
+                                <include reference="abi-uA-a4U"/>
+                                <include reference="7rM-Bs-ggh"/>
+                                <include reference="Vzg-P7-d5t"/>
                                 <include reference="1P0-Ue-g0L"/>
                                 <include reference="JZv-A1-dzD"/>
                                 <include reference="eVy-Lb-Qa9"/>
-                                <include reference="7rM-Bs-ggh"/>
-                                <include reference="Vzg-P7-d5t"/>
-                                <include reference="0JS-mb-u0B"/>
-                                <include reference="abi-uA-a4U"/>
-                                <include reference="n2y-7Y-diy"/>
                             </mask>
                         </variation>
                     </view>
@@ -362,7 +362,8 @@
                                         <exclude reference="sKO-35-CGm"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="32" y="556" width="498" height="30"/>
                                     <mask key="constraints">
                                         <exclude reference="8pu-ge-Py5"/>
                                         <exclude reference="Cgw-bp-BkE"/>
@@ -393,7 +394,8 @@
                                         <exclude reference="uNe-uG-Fs5"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="550" y="555" width="34" height="30"/>
                                     <mask key="constraints">
                                         <include reference="it9-eQ-8Ie"/>
                                         <include reference="uNe-uG-Fs5"/>
@@ -418,7 +420,8 @@
                                         <exclude reference="xuL-gn-Jb4"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="519" y="20" width="81" height="30"/>
                                     <mask key="constraints">
                                         <include reference="EZY-uy-xvz"/>
                                         <include reference="xuL-gn-Jb4"/>
@@ -1133,7 +1136,8 @@
                                         <exclude reference="Hmf-ja-Sne"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="253" y="37" width="94" height="30"/>
                                     <mask key="constraints">
                                         <include reference="Hmf-ja-Sne"/>
                                     </mask>
