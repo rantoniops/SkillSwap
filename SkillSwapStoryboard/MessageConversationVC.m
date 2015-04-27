@@ -284,6 +284,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    cell.detailTextLabel.textAlignment = NSTextAlignmentCenter;
     Message *messageToShow = self.messages[indexPath.row];
     cell.textLabel.text = messageToShow.messageBody;
     NSString *timeString = [NSDateFormatter localizedStringFromDate:messageToShow.createdAt dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
