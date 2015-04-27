@@ -149,6 +149,7 @@
          {
              if (error == nil)
              {
+                 NSLog(@"selected user is %@", self.selectedUser);
                  self.coursesArray = objects;
                  [self.tableVIew reloadData];
                  self.name.text = self.selectedUser.username;
