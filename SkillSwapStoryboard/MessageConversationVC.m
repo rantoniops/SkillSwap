@@ -94,6 +94,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = NO;
+    self.navigationItem.title = @"conversation";
+    NSLog(@" here are the users %@", self.conversation.users);
     if ([self.origin isEqualToString:@"messages"])
     {
         NSLog(@"coming from messages, selected conversation found");
@@ -197,6 +199,7 @@
          if (succeeded)
          {
              NSLog(@"msg fron new convo saved");
+             self.messageTextField.text = @"";
 
              /////////////////// PUSH NOTIFICATIONS /////////////////////
 
@@ -284,7 +287,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Message *messageToShow = self.messages[indexPath.row];
     cell.textLabel.text = messageToShow.messageBody;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.createdAt];
+    NSString *timeString = [NSDateFormatter localizedStringFromDate:messageToShow.createdAt dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"-%@ sent at %@", messageToShow.messageSender.username,timeString];
     return cell;
 }
 
