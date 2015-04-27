@@ -33,24 +33,47 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self showUserLocation];
-    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-    self.ifNow = YES;
-    self.checkEveryone = YES;
+//    [self showUserLocation];
+//    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
+//    self.ifNow = YES;
+//    self.checkEveryone = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
-    self.now = [NSDate date];
-    NSLog(@"right now it is %@", self.now);
-    NSTimeInterval fourteenHours = 14*60*60;
-    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
-    [self pullReviews];
-    [self queryForMap];
+//    self.now = [NSDate date];
+//    NSLog(@"right now it is %@", self.now);
+//    NSTimeInterval fourteenHours = 14*60*60;
+//    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+//    [self pullReviews];
+//    [self queryForMap];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    if ([User currentUser] == nil)
+    {
+        [self performSegueWithIdentifier:@"mapToLogin" sender:self];
+    }
+    else
+    {
+        [self showUserLocation];
+        [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
+        self.ifNow = YES;
+        self.checkEveryone = YES;
 
+        self.navigationController.navigationBarHidden = YES;
+        self.now = [NSDate date];
+        NSLog(@"right now it is %@", self.now);
+        NSTimeInterval fourteenHours = 14*60*60;
+        self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+        [self pullReviews];
+        [self queryForMap];
+
+
+    }
+}
 
 -(void)pullReviews
 {
@@ -368,7 +391,7 @@
         postVC.selectedAddress = self.formattedAdress;
         postVC.courseLocation = self.locationToPass;
     }
-    else if ([segue.identifier isEqualToString:@"loginSegue"])
+    else if ([segue.identifier isEqualToString:@"mapToLogin"])
     {
         NSLog(@"login segue called");
     }
@@ -385,13 +408,17 @@
     {
           
     }
-    else
+    else if ([segue.identifier isEqualToString:@"mapToCourse"])
     {
         TakeCourseVC *takeVC = segue.destinationViewController;
         CustomCourseAnnotation *courseAnnotation = sender;
         Course *courseToShow = courseAnnotation.course;
         takeVC.selectedCourse = courseToShow;
         takeVC.selectedTeacher = courseToShow.teacher;
+    }
+    else
+    {
+        
     }
 }
 
