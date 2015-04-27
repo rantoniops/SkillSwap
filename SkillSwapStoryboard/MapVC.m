@@ -33,21 +33,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [self showUserLocation];
-//    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-//    self.ifNow = YES;
-//    self.checkEveryone = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
-//    self.now = [NSDate date];
-//    NSLog(@"right now it is %@", self.now);
-//    NSTimeInterval fourteenHours = 14*60*60;
-//    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
-//    [self pullReviews];
-//    [self queryForMap];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -114,19 +104,6 @@
 }
 
 
-
-//-(void)viewDidAppear:(BOOL)animated
-//{
-//    if ([User currentUser] == nil)
-//    {
-//        [self performSegueWithIdentifier:@"loginSegue" sender:self];
-//    }
-//    else
-//    {
-////        self.now = [NSDate date];
-//        [self queryForMap];
-//    }
-//}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -293,6 +270,13 @@
     {
         CLPlacemark *placeMark = [placemarks objectAtIndex:0];
        self.formattedAdress = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
+
+        if ([self.formattedAdress containsString:@"(null)"])
+        {
+            NSLog(@"CONTAINS NULL, we replace it");
+            NSString *newString = [self.formattedAdress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+            self.formattedAdress = newString;
+        }
 
         }];
 }
