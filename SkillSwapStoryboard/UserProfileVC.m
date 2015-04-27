@@ -103,6 +103,7 @@
     [reviewsQuery includeKey:@"reviewed"];
     [reviewsQuery includeKey:@"reviewer"];
     [reviewsQuery whereKey:@"reviewed" equalTo:user];
+    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (error == nil)
@@ -409,12 +410,11 @@
         cell.textLabel.text = [skill valueForKey:@"name"];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"Since %@", [skill valueForKey:@"createdAt"]];
     }
-    else if ([self.tableViewNumber isEqual: @2])
+    else if ([self.tableViewNumber isEqual: @2]) // reviews
     {
         Review *review = self.reviewsArray[indexPath.row];
         cell.detailTextLabel.text = [review valueForKey:@"reviewContent"];
         User *reviewer = [review objectForKey:@"reviewer"];
-        NSLog(@" here is the reviewrer username %@", reviewer);
         NSString *commentTime = [NSDateFormatter localizedStringFromDate:[reviewer valueForKey:@"createdAt"] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
         NSString *cellText = [NSString stringWithFormat:@"%@ - %@", [reviewer valueForKey:@"username"],commentTime];
         cell.textLabel.text = cellText;
@@ -432,12 +432,6 @@
     return cell;
 }
 
-
--(void)followButtonTap
-{
-    //needs to be changed so we are looking at another users profile
-    User *selectedUser = [User currentUser];
-}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
