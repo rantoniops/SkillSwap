@@ -164,7 +164,7 @@
              }];
 
 //            [self dismissViewControllerAnimated:true completion:nil];
-            [self performSegueWithIdentifier:@"logIn" sender:self];
+            [self performSegueWithIdentifier:@"loginToMap" sender:self];
 
         }
         else

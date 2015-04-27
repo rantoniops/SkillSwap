@@ -476,7 +476,7 @@
         takeCourseVC.selectedCourse = self.courseAtRow;
         takeCourseVC.selectedTeacher = self.courseAtRow.teacher;
     }
-    else
+    else if ([segue.identifier isEqualToString:@"connections"])
     {
         ConnectionsListVC *connectionsVC = segue.destinationViewController;
         connectionsVC.followersArray = self.followersArray;
