@@ -301,7 +301,7 @@
        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
         CustomCourseAnnotation *theAnnotation = newPin.annotation;
        newPin.canShowCallout = true;
-        if (theAnnotation.course.teacher == [PFUser currentUser])
+        if (theAnnotation.course.teacher == [PFUser currentUser] || theAnnotation.course.teacher == nil)
         {
             newPin.pinColor = MKPinAnnotationColorGreen;
         }
@@ -343,9 +343,9 @@
 //add the image to map - gets called on addButton tap
 -(void)addCenterPinImageAndButton
 {
-    UIImage *pinImage = [UIImage imageNamed:@"newpin"];
+    UIImage *pinImage = [UIImage imageNamed:@"secondPin"];
     self.pin = [[UIImageView alloc]initWithImage:pinImage];
-    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -75  , self.mapView.bounds.size.height/2 - 65, 150, 75);
+    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -75  , self.mapView.bounds.size.height/2 - 65, 200, 75);
     UITapGestureRecognizer *pinTap = [[UITapGestureRecognizer alloc]init];
     [self imageview:self.pin addGestureRecognizer:pinTap];
     [self.mapView addSubview:self.pin];
