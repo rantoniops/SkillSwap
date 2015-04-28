@@ -12,27 +12,13 @@
 
 - (void)awakeFromNib
 {
-    self.cellView.layer.cornerRadius = 15;
-    CGRect newFrame = self.cellView.frame;
-    newFrame.size.width = 200;
-    newFrame.size.height = 50;
-    self.cellView.layer.borderWidth = 3.0f;
-    CGRect labelFrame = CGRectOffset(self.cellView.frame, 10, 0);
-//    CGRect labelFram2 = self.label.frame;
-    labelFrame.size.width = 175;
-    labelFrame.size.height = 40;
-    [self.cellView setFrame:newFrame];
+    self.cellViewTwo.layer.cornerRadius = 10;
+    self.cellViewTwo.layer.borderWidth = 3.0f;
 
     
-    newFrame.size.width = labelFrame.size.width +25;
-    newFrame.size.height = labelFrame.size.height +10;
-    
-    self.label = [[UILabel alloc]initWithFrame:labelFrame];
-    self.label.numberOfLines=0;
-    self.label.lineBreakMode= NSLineBreakByWordWrapping;
-    self.label.backgroundColor = [UIColor clearColor];
-    self.label.font = [UIFont fontWithName:@"Helvetica" size:14.0];
-    [self.cellView addSubview:self.label];
+    self.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+    self.titleLabel.numberOfLines = 0;
+    self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     
     
 

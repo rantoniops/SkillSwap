@@ -10,11 +10,11 @@
 
 
 @interface MessageCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIView *cellView;
-@property (weak, nonatomic) IBOutlet UILabel *textLabel;
-@property UILabel *label;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIView *cellViewTwo;
 
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *myMessageConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *yourMessageConstraint;
 
 
 
