@@ -305,7 +305,7 @@
 
 -(void)configureTableView
 {
-    self.tableView.backgroundColor = [[UIColor clearColor];
+    self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 44.0;
