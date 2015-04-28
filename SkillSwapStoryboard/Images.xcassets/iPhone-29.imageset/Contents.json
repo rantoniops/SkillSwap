@@ -2,16 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "addButton.png"
+      "scale" : "2x",
+      "filename" : "iPhone-29@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "iPhone-29@3x.png"
     }
   ],
   "info" : {
