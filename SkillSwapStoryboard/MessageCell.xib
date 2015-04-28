@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14C2061" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,9 +13,49 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1EY-Hp-DJ9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="widthClass=compact" ambiguous="YES">
+                            <rect key="frame" x="-61" y="-79" width="19" height="12"/>
+                        </variation>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="centerY" secondItem="1EY-Hp-DJ9" secondAttribute="centerY" id="Idy-xK-xUh"/>
+                    <constraint firstItem="1EY-Hp-DJ9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="Nza-S0-Dtd"/>
+                    <constraint firstItem="1EY-Hp-DJ9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="dFp-JK-AXh"/>
+                    <constraint firstAttribute="centerX" secondItem="1EY-Hp-DJ9" secondAttribute="centerX" id="f5R-vS-FTN"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="subviews">
+                        <exclude reference="1EY-Hp-DJ9"/>
+                    </mask>
+                    <mask key="constraints">
+                        <exclude reference="Idy-xK-xUh"/>
+                        <exclude reference="Nza-S0-Dtd"/>
+                        <exclude reference="dFp-JK-AXh"/>
+                        <exclude reference="f5R-vS-FTN"/>
+                    </mask>
+                </variation>
+                <variation key="widthClass=compact">
+                    <mask key="subviews">
+                        <include reference="1EY-Hp-DJ9"/>
+                    </mask>
+                    <mask key="constraints">
+                        <exclude reference="Idy-xK-xUh"/>
+                        <exclude reference="Nza-S0-Dtd"/>
+                        <exclude reference="dFp-JK-AXh"/>
+                        <exclude reference="f5R-vS-FTN"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="244" y="201.5"/>
+            <connections>
+                <outlet property="cellView" destination="1EY-Hp-DJ9" id="0Lw-Iy-5F7"/>
+            </connections>
+            <point key="canvasLocation" x="244" y="201"/>
         </tableViewCell>
     </objects>
 </document>

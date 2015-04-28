@@ -10,6 +10,7 @@
 @property int conversationGotUsed;
 @end
 @implementation MessageConversationVC
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -285,17 +286,22 @@
     
     if (messageToShow.messageSender == [User currentUser])
     {
-        cell.textLabel.textAlignment = NSTextAlignmentRight;
+        cell.cellView.layer.borderColor = [UIColor yellowColor].CGColor;
+        cell.cellView.frame = CGRectOffset(cell.cellView.frame, 120, 10);
     }
     else
     {
-        cell.textLabel.textAlignment = NSTextAlignmentLeft;
+        cell.cellView.layer.borderColor = [UIColor blueColor].CGColor;
+        cell.cellView.frame = CGRectOffset(cell.cellView.frame, 5, 10);
+        
     }
-    cell.textLabel.text = messageToShow.messageBody;
+    cell.label.text = messageToShow.messageBody;
     NSString *timeString = [NSDateFormatter localizedStringFromDate:messageToShow.createdAt dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"-%@ sent at %@", messageToShow.messageSender.username,timeString];
+    
     return cell;
 }
+
 
 
 

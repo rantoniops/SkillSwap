@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface MessageCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIView *cellView;
+@property (weak, nonatomic) IBOutlet UILabel *textLabel;
+@property UILabel *label;
+
+
+
+
 
 @end
