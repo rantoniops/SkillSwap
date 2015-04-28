@@ -1,4 +1,6 @@
 #import "MessageConversationVC.h"
+#import "MessageCell.h"
+
 @interface MessageConversationVC () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -8,6 +10,7 @@
 @property int conversationGotUsed;
 @end
 @implementation MessageConversationVC
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -85,6 +88,8 @@
 {
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = self.otherUser.username;
+    [self configureTableView];
+    
     if ([self.origin isEqualToString:@"messages"])
     {
         NSLog(@"coming from messages, selected conversation found");
@@ -269,15 +274,48 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    cell.textLabel.textAlignment = NSTextAlignmentCenter;
-    cell.detailTextLabel.textAlignment = NSTextAlignmentCenter;
+    MessageCell *cell = (MessageCell *)[tableView dequeueReusableCellWithIdentifier:@"newcellID"];
+    if (cell == nil)
+    {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MessageCell" owner:self options:nil];
+            cell = [nib objectAtIndex:0];
+    }
+    
     Message *messageToShow = self.messages[indexPath.row];
-    cell.textLabel.text = messageToShow.messageBody;
-    NSString *timeString = [NSDateFormatter localizedStringFromDate:messageToShow.createdAt dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"-%@ sent at %@", messageToShow.messageSender.username,timeString];
+    
+    if (messageToShow.messageSender == [User currentUser])
+    {
+        cell.cellViewTwo.layer.borderColor = [UIColor yellowColor].CGColor;
+        cell.cellViewTwo.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.2f];
+        
+        cell.cellViewTwo.frame = CGRectOffset(cell.cellViewTwo.frame, 120, 10);
+        cell.myMessageConstraint.constant = 150;
+    }
+    else
+    {
+        cell.cellViewTwo.layer.borderColor = [UIColor blueColor].CGColor;
+         cell.cellViewTwo.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.4f];
+        cell.cellViewTwo.frame = CGRectOffset(cell.cellViewTwo.frame, 5, 10);
+        cell.yourMessageConstraint.constant = 150;
+        cell.titleLabel.textColor = [UIColor whiteColor];
+    }
+    cell.titleLabel.text = messageToShow.messageBody;
     return cell;
 }
+
+-(void)configureTableView
+{
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 44.0;
+}
+
+//    NSString *timeString = [NSDateFormatter localizedStringFromDate:messageToShow.createdAt dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"-%@ sent at %@", messageToShow.messageSender.username,timeString];
+//
+
+
 
 
 
