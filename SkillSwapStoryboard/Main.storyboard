@@ -13,7 +13,7 @@
                         <viewControllerLayoutGuide type="top" id="RTe-Sy-wpx"/>
                         <viewControllerLayoutGuide type="bottom" id="0XL-kv-MwA"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ldq-zV-Atc">
+                    <view key="view" alpha="0.44999999999999962" contentMode="scaleToFill" id="Ldq-zV-Atc">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -194,7 +194,7 @@
                                     <outletCollection property="gestureRecognizers" destination="WcB-v5-jZh" appends="YES" id="YWz-Mt-LYU"/>
                                 </connections>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="81" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Imf-Lt-PuZ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="81" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Imf-Lt-PuZ">
                                 <rect key="frame" x="0.0" y="205" width="400" height="395"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -233,16 +233,16 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q6i-wP-wLi">
-                                <rect key="frame" x="26" y="161" width="34" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1kk-gh-X2l">
+                                <rect key="frame" x="103" y="161" width="34" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Xrw-6R-siH"/>
+                                    <constraint firstAttribute="height" constant="30" id="DEz-gE-ckA"/>
                                 </constraints>
                                 <state key="normal" title="skills">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="skillsButtonPressed:" destination="hgs-oW-eJb" eventType="touchUpInside" id="XwU-wB-zDP"/>
+                                    <action selector="skillsButtonPressed:" destination="hgs-oW-eJb" eventType="touchUpInside" id="VAT-xE-7Hu"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6Z-7t-6Yp">
@@ -257,23 +257,22 @@
                                     <action selector="followButtonPressed:" destination="hgs-oW-eJb" eventType="touchUpInside" id="UCn-Jb-Q2G"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7f-jc-gKb">
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7f-jc-gKb">
                                 <rect key="frame" x="194" y="161" width="95" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="mJQ-Wc-B5m"/>
+                                    <constraint firstAttribute="height" constant="30" id="VWr-fx-grb"/>
                                 </constraints>
-                                <state key="normal" title="classes">
+                                <state key="normal" title="reviews">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="classesButtonPressed:" destination="hgs-oW-eJb" eventType="touchUpInside" id="Cla-Mj-6Pf"/>
+                                    <action selector="reviewsButtonPressed:" destination="hgs-oW-eJb" eventType="touchUpInside" id="BXr-dt-Uvo"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2Z-bY-TuD">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2Z-bY-TuD">
                                 <rect key="frame" x="297" y="161" width="47" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="CVD-Aa-GPJ"/>
-                                    <constraint firstAttribute="width" constant="47" id="aX9-vk-VOI"/>
                                 </constraints>
                                 <state key="normal" title="friends">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -283,16 +282,16 @@
                                     <segue destination="rph-Xh-NzY" kind="show" identifier="friends" id="gL0-gd-9e9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1kk-gh-X2l">
-                                <rect key="frame" x="103" y="161" width="52" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q6i-wP-wLi">
+                                <rect key="frame" x="25" y="161" width="52" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="d6R-JZ-Wwu"/>
+                                    <constraint firstAttribute="height" constant="30" id="ANW-PK-d39"/>
                                 </constraints>
-                                <state key="normal" title="reviews">
+                                <state key="normal" title="classes">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="reviewsButtonPressed:" destination="hgs-oW-eJb" eventType="touchUpInside" id="ERF-cQ-zD8"/>
+                                    <action selector="classesButtonPressed:" destination="hgs-oW-eJb" eventType="touchUpInside" id="nyI-sU-wRl"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -338,7 +337,14 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="41z-XO-S1e"/>
                                 <exclude reference="4Pt-97-fxF"/>
+                                <exclude reference="T2l-mG-Dao"/>
+                                <exclude reference="cRU-0l-Hju"/>
+                                <exclude reference="Hcz-Zf-B9J"/>
+                                <exclude reference="KUI-oB-z6h"/>
+                                <exclude reference="Dz6-cB-iQs"/>
+                                <exclude reference="g6L-gf-aZY"/>
                             </mask>
                         </variation>
                     </view>
@@ -351,10 +357,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="classButton" destination="q6i-wP-wLi" id="hEX-YP-Jng"/>
                         <outlet property="followButton" destination="h6Z-7t-6Yp" id="wke-AA-zAQ"/>
+                        <outlet property="friendsButton" destination="w2Z-bY-TuD" id="Iiy-U0-yM2"/>
                         <outlet property="name" destination="4O1-3u-Hvq" id="uy1-cJ-EsB"/>
                         <outlet property="profileImage" destination="PRd-Fg-E5h" id="YJk-Sh-lSs"/>
                         <outlet property="rating" destination="AVa-Xl-CcQ" id="kMh-io-Uen"/>
+                        <outlet property="reviewButton" destination="f7f-jc-gKb" id="yDv-3s-aDg"/>
+                        <outlet property="skillButton" destination="1kk-gh-X2l" id="pC8-wL-lzN"/>
                         <outlet property="tableVIew" destination="Imf-Lt-PuZ" id="ReS-5W-Id1"/>
                         <segue destination="Dzz-ZH-zxG" kind="show" identifier="showCourse" id="aeD-cB-7cP"/>
                         <segue destination="0CW-wh-ENZ" kind="show" identifier="reviews" id="Dgb-y7-J0q"/>
