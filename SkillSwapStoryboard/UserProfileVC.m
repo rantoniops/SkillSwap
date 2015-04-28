@@ -30,7 +30,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *skillButton;
 @property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIButton *friendsButton;
-
 @end
 @implementation UserProfileVC
 - (void)viewDidLoad
@@ -38,27 +37,38 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Profile";
     self.tableViewNumber = @1;
+    [self.skillButton setTintColor:[UIColor orangeColor]];
+    [self.reviewButton setTintColor:[UIColor orangeColor]];
+    [self.friendsButton setTintColor:[UIColor orangeColor]];
 }
 
 - (IBAction)skillsButtonPressed:(UIButton *)sender
 {
     self.tableViewNumber = @2;
-    NSLog(@"%@", self.tableViewNumber);
+    [self.classButton setTintColor:[UIColor orangeColor]];
+    [self.skillButton setTintColor:[UIColor blueColor]];
+    [self.reviewButton setTintColor:[UIColor orangeColor]];
+    [self.friendsButton setTintColor:[UIColor orangeColor]];
     [self.tableVIew reloadData];
 }
 
 - (IBAction)reviewsButtonPressed:(UIButton *)sender
 {
     self.tableViewNumber = @3;
-    NSLog(@"%@", self.tableViewNumber);
+    [self.classButton setTintColor:[UIColor orangeColor]];
+    [self.skillButton setTintColor:[UIColor orangeColor]];
+    [self.reviewButton setTintColor:[UIColor blueColor]];
+    [self.friendsButton setTintColor:[UIColor orangeColor]];
     [self.tableVIew reloadData];
-    
 }
 
 - (IBAction)classesButtonPressed:(UIButton *)sender
 {
     self.tableViewNumber = @1;
-    NSLog(@"%@", self.tableViewNumber);
+    [self.classButton setTintColor:[UIColor blueColor]];
+    [self.skillButton setTintColor:[UIColor orangeColor]];
+    [self.reviewButton setTintColor:[UIColor orangeColor]];
+    [self.friendsButton setTintColor:[UIColor orangeColor]];
     [self.tableVIew reloadData];
 }
 

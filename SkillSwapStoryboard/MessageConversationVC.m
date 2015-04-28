@@ -10,12 +10,14 @@
 @property NSArray *messages;
 @property Conversation *conversation;
 @property int conversationGotUsed;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 @implementation MessageConversationVC
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.activityIndicator.hidesWhenStopped = YES;
     self.view.backgroundColor = [[UIColor lightGrayColor]colorWithAlphaComponent:1.9];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"messageReceived" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -194,6 +196,8 @@
     }
     else
     {
+        [self.activityIndicator startAnimating];
+
         Message *newMessage = [Message new];
         newMessage.messageBody = self.messageTextField.text;
         newMessage.messageSender = [User currentUser];
@@ -224,6 +228,8 @@
                       if (succeeded)
                       {
                           NSLog(@"push success");
+
+                          [self.activityIndicator stopAnimating];
                       }
                       else
                       {
@@ -295,8 +301,8 @@
     MessageCell *cell = (MessageCell *)[tableView dequeueReusableCellWithIdentifier:@"newcellID"];
     if (cell == nil)
     {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MessageCell" owner:self options:nil];
-            cell = [nib objectAtIndex:0];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MessageCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
     }
     
     Message *messageToShow = self.messages[indexPath.row];
