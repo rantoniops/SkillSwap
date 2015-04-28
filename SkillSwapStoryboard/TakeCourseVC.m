@@ -33,7 +33,7 @@
         self.takeClassButton.hidden = YES;
     }
     self.navigationItem.title = @"Take Class";
-    self.courseRating.text = [NSString stringWithFormat:@"Rating %@", @(self.selectedTeacher.rating) ] ;
+    self.courseRating.text = [NSString stringWithFormat:@"Rating %@", self.selectedCourse.teacher.rating ] ;
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
     self.courseDesciption.text = self.selectedCourse.courseDescription;

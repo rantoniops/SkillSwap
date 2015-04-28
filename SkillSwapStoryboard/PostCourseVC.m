@@ -12,11 +12,13 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property UIImage *chosenImage;
 @property NSData *smallImageData;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 @implementation PostCourseVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.activityIndicator.hidesWhenStopped = YES;
     self.classTitleTextField.delegate = self;
     self.classAddressTextField.delegate = self;
     self.classSkillTextField.delegate = self;
@@ -143,84 +145,81 @@
     }
     else
     {
+        [self.activityIndicator startAnimating];
 
-
-
-    // CREATING SKILL
-    Skill *skill = [Skill new];
-    skill.name = self.classSkillTextField.text;
-    [skill saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-     {
-         if (succeeded)
+        // CREATING SKILL
+        Skill *skill = [Skill new];
+        skill.name = self.classSkillTextField.text;
+        [skill saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
-             self.items = [NSMutableArray arrayWithObjects:@"one", @"two", nil];
+             if (succeeded)
+             {
+                 NSLog(@"skill saved");
+                 self.items = [NSMutableArray arrayWithObjects:@"one", @"two", nil];
 
-             NSLog(@"skill saved");
+                 // CREATING COURSE
+                 Course *course = [Course new];
+                 course.title = self.classTitleTextField.text;
+                 course.courseDescription = self.classDescriptionTextField.text;
+                 course.address = self.classAddressTextField.text;
+                 PFFile *imageFile = [PFFile fileWithData:self.smallImageData];
+                 course.courseMedia = imageFile;
+                 course.time = self.datePicker.date;
+                 NSLog(@"course time is %@" , course.time);
+                 course.teacher = [User currentUser];
+                 course.location = [PFGeoPoint geoPointWithLocation:self.courseLocation];
 
-             // CREATING COURSE
-             Course *course = [Course new];
-             course.title = self.classTitleTextField.text;
-             course.courseDescription = self.classDescriptionTextField.text;
-             course.address = self.classAddressTextField.text;
-             PFFile *imageFile = [PFFile fileWithData:self.smallImageData];
-             course.courseMedia = imageFile;
-             course.time = self.datePicker.date;
-             NSLog(@"course time is %@" , course.time);
-             course.teacher = [User currentUser];
-             course.location = [PFGeoPoint geoPointWithLocation:self.courseLocation];
-
-
-             PFRelation *relation = [course relationForKey:@"skillsTaught"];
-             [relation addObject: skill];
-             [course saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-              {
-                  if (succeeded)
+                 PFRelation *relation = [course relationForKey:@"skillsTaught"];
+                 [relation addObject: skill];
+                 [course saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                   {
-                      NSLog(@"course saved");
-                      User *currentUser = [User currentUser];
-                      PFRelation *teacherRelation = [currentUser relationForKey:@"courses"];
-                      PFRelation *userSkillRelation = [currentUser relationForKey:@"skills"];
-                      [teacherRelation addObject: course];
-                      [userSkillRelation addObject: skill];
-                      [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-                       {
-                           if (succeeded)
+                      if (succeeded)
+                      {
+                          NSLog(@"course saved");
+                          User *currentUser = [User currentUser];
+                          PFRelation *teacherRelation = [currentUser relationForKey:@"courses"];
+                          PFRelation *userSkillRelation = [currentUser relationForKey:@"skills"];
+                          [teacherRelation addObject: course];
+                          [userSkillRelation addObject: skill];
+                          [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                            {
-                               NSLog(@"teacher relation saved");
-                               [self.navigationController popViewControllerAnimated:YES];
-                               NSDate *now = [NSDate date];
-                               NSTimeInterval fourteenHours = 14*60*60;
-                               NSDate *tomorrow = [now dateByAddingTimeInterval:fourteenHours];
-                               if (self.datePicker.date > tomorrow)
+                               if (succeeded)
                                {
-                                   [self.delegate didIcreateACourse:false];
+                                   NSLog(@"teacher relation saved");
+                                   [self.navigationController popViewControllerAnimated:YES];
+
+                                   [self.activityIndicator stopAnimating];
+
+                                   NSDate *now = [NSDate date];
+                                   NSTimeInterval fourteenHours = 14*60*60;
+                                   NSDate *tomorrow = [now dateByAddingTimeInterval:fourteenHours];
+                                   if (self.datePicker.date > tomorrow)
+                                   {
+                                       [self.delegate didIcreateACourse:false];
+                                   }
+                                   else
+                                   {
+                                       [self.delegate didIcreateACourse:true];
+                                   }
                                }
                                else
                                {
-                                   [self.delegate didIcreateACourse:true];
-
+                                   NSLog(@"teacher relation NOT saved");
                                }
-
-                           }
-                           else
-                           {
-                               NSLog(@"teacher relation NOT saved");
-                           }
-                       }];
-
-                  }
-                  else
-                  {
-                      NSLog(@"course NOT saved");
-                  }
-              }];
-         }
-         else
-         {
-             NSLog(@"skill NOT saved");
-         }
-     }];
-}
+                           }];
+                      }
+                      else
+                      {
+                          NSLog(@"course NOT saved");
+                      }
+                  }];
+             }
+             else
+             {
+                 NSLog(@"skill NOT saved");
+             }
+         }];
+    }
 }
 
 -(void)fillOutAllfields
@@ -237,11 +236,8 @@
 
 - (IBAction)onXButtonPressed:(UIButton *)sender
 {
-    
     [self.navigationController popViewControllerAnimated:YES];
-
     [self.delegate didIcreateACourse:false];
-   
 }
 
 

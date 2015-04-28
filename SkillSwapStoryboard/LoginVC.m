@@ -3,12 +3,14 @@
 @interface LoginVC () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 @implementation LoginVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.passwordTextField.secureTextEntry = YES;
+    self.activityIndicator.hidesWhenStopped = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -31,6 +33,7 @@
 
 - (IBAction)loginButtonPress:(UIButton *)sender
 {
+    [self.activityIndicator startAnimating];
     [PFUser logInWithUsernameInBackground:self.nameTextField.text password:self.passwordTextField.text
     block:^(PFUser *user, NSError *error)
     {
@@ -45,6 +48,7 @@
                  if (succeeded)
                  {
                      NSLog(@"installation saved");
+                     [self.activityIndicator stopAnimating];
                  }
                  else
                  {
