@@ -26,6 +26,11 @@
 @property NSNumber *tableViewNumber;
 @property Review *reviewAtRow;
 @property NSArray *followingObjectsToBeDeleted;
+@property (weak, nonatomic) IBOutlet UIButton *classButton;
+@property (weak, nonatomic) IBOutlet UIButton *skillButton;
+@property (weak, nonatomic) IBOutlet UIButton *reviewButton;
+@property (weak, nonatomic) IBOutlet UIButton *friendsButton;
+
 @end
 @implementation UserProfileVC
 - (void)viewDidLoad
