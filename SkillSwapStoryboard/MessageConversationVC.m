@@ -5,6 +5,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+
 @property NSArray *messages;
 @property Conversation *conversation;
 @property int conversationGotUsed;
@@ -18,8 +20,21 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"messageReceived" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    self.sendButton.enabled = NO;
 }
 
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    self.sendButton.enabled = YES;
+}
+
+//-(void)enableSendButton
+//{
+//    if (self.messageTextField.text = @"")
+//    {
+//        <#statements#>
+//    }
+//}
 
 - (void)keyboardWillShow:(NSNotification*)notification
 {
@@ -179,6 +194,7 @@
 - (IBAction)onSendButtonPressed:(UIButton *)sender
 {
     self.conversationGotUsed = 1;
+    self.sendButton.enabled = false;
     Message *newMessage = [Message new];
     newMessage.messageBody = self.messageTextField.text;
     newMessage.messageSender = [User currentUser];
