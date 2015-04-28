@@ -45,7 +45,6 @@
         self.selectedConnection = followerUser.to;
     }
     [self performSegueWithIdentifier:@"connectionProfile" sender:self];
-
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -76,7 +75,6 @@
                  [self.tableView reloadData];
              }
          }];
-    //        cell.detailTextLabel.text = ;
     }
     else
     {
@@ -95,7 +93,6 @@
                  [self.tableView reloadData];
              }
          }];
-//        cell.detailTextLabel.text = ;
     }
     return cell;
 }

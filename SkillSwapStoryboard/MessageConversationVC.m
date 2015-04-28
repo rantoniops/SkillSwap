@@ -1,19 +1,16 @@
 #import "MessageConversationVC.h"
 #import "MessageCell.h"
-
 @interface MessageConversationVC () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *messageTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
-
 @property NSArray *messages;
 @property Conversation *conversation;
 @property int conversationGotUsed;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 @implementation MessageConversationVC
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -100,8 +97,8 @@
 {
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = self.otherUser.username;
-    [self configureTableView];
-    
+//    [self configureTableView];
+
     if ([self.origin isEqualToString:@"messages"])
     {
         NSLog(@"coming from messages, selected conversation found");
@@ -114,7 +111,6 @@
         PFQuery *query = [Conversation query];
         [query whereKey:@"course" equalTo:self.selectedCourse];
         [query whereKey:@"users" containsAllObjectsInArray: @[ [User currentUser] , self.otherUser ]];
-//        [query whereKey:@"users" containedIn:@[ [User currentUser] , self.otherUser ] ];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
              if (error == nil)
@@ -295,50 +291,60 @@
     return self.messages.count;
 }
 
+//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    MessageCell *cell = (MessageCell *)[tableView dequeueReusableCellWithIdentifier:@"newcellID"];
+//    if (cell == nil)
+//    {
+//        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MessageCell" owner:self options:nil];
+//        cell = [nib objectAtIndex:0];
+//    }
+//    
+//    Message *messageToShow = self.messages[indexPath.row];
+//    
+////    if (messageToShow.messageSender == [User currentUser])
+////    {
+////        cell.cellViewTwo.layer.borderColor = [UIColor blueColor].CGColor;
+////        cell.cellViewTwo.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.4f];
+////        
+////        cell.titleLabel.textColor = [UIColor whiteColor];
+////        CGSize customSize = [cell.titleLabel intrinsicContentSize];
+////        NSLog(@"width: %f, height %f", customSize.width, customSize.height);
+////        cell.cellViewTwo.frame = CGRectOffset(cell.cellViewTwo.frame, 120, 10);
+////        cell.myMessageConstraint.constant = 150;
+////    }
+////    else
+////    {
+////        cell.cellViewTwo.layer.borderColor = [UIColor yellowColor].CGColor;
+////        cell.cellViewTwo.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.2f];
+////        cell.cellViewTwo.frame = CGRectOffset(cell.cellViewTwo.frame, 5, 10);
+////        cell.yourMessageConstraint.constant = 150;
+////    }
+//    cell.titleLabel.text = messageToShow.messageBody;
+//    cell.userInteractionEnabled = NO;
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//
+//    return cell;
+//}
+
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    MessageCell *cell = (MessageCell *)[tableView dequeueReusableCellWithIdentifier:@"newcellID"];
-    if (cell == nil)
-    {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MessageCell" owner:self options:nil];
-        cell = [nib objectAtIndex:0];
-    }
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Message *messageToShow = self.messages[indexPath.row];
-    
-//    if (messageToShow.messageSender == [User currentUser])
-//    {
-//        cell.cellViewTwo.layer.borderColor = [UIColor blueColor].CGColor;
-//        cell.cellViewTwo.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.4f];
-//        
-//        cell.titleLabel.textColor = [UIColor whiteColor];
-//        CGSize customSize = [cell.titleLabel intrinsicContentSize];
-//        NSLog(@"width: %f, height %f", customSize.width, customSize.height);
-//        cell.cellViewTwo.frame = CGRectOffset(cell.cellViewTwo.frame, 120, 10);
-//        cell.myMessageConstraint.constant = 150;
-//    }
-//    else
-//    {
-//        cell.cellViewTwo.layer.borderColor = [UIColor yellowColor].CGColor;
-//        cell.cellViewTwo.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.2f];
-//        cell.cellViewTwo.frame = CGRectOffset(cell.cellViewTwo.frame, 5, 10);
-//        cell.yourMessageConstraint.constant = 150;
-//    }
-    cell.titleLabel.text = messageToShow.messageBody;
-    cell.userInteractionEnabled = NO;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+    cell.textLabel.text = messageToShow.messageBody;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
     return cell;
 }
 
--(void)configureTableView
-{
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 44.0;
-}
+
+//-(void)configureTableView
+//{
+//    self.tableView.backgroundColor = [UIColor whiteColor];
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    self.tableView.rowHeight = UITableViewAutomaticDimension;
+//    self.tableView.estimatedRowHeight = 44.0;
+//}
 
 //    NSString *timeString = [NSDateFormatter localizedStringFromDate:messageToShow.createdAt dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
 //    cell.detailTextLabel.text = [NSString stringWithFormat:@"-%@ sent at %@", messageToShow.messageSender.username,timeString];
