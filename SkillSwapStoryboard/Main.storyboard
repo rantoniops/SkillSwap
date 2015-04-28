@@ -415,7 +415,7 @@
                                 </connections>
                             </tableView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lzJ-Xg-THh">
-                                <rect key="frame" x="16" y="557" width="283" height="30"/>
+                                <rect key="frame" x="16" y="557" width="291" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ELI-eF-Jdl"/>
                                 </constraints>
@@ -426,10 +426,10 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMa-Yg-mJA">
-                                <rect key="frame" x="316" y="557" width="68" height="30"/>
+                                <rect key="frame" x="324" y="557" width="60" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="it9-eQ-8Ie"/>
-                                    <constraint firstAttribute="width" constant="68" id="uNe-uG-Fs5"/>
+                                    <constraint firstAttribute="width" constant="60" id="uNe-uG-Fs5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="send">
@@ -461,6 +461,7 @@
                     <navigationItem key="navigationItem" id="n5A-aw-Ta6"/>
                     <connections>
                         <outlet property="messageTextField" destination="lzJ-Xg-THh" id="NBR-U4-swc"/>
+                        <outlet property="sendButton" destination="eMa-Yg-mJA" id="iWu-Ed-FIx"/>
                         <outlet property="tableView" destination="YYD-pZ-LVL" id="fwY-rK-pD5"/>
                     </connections>
                 </viewController>
