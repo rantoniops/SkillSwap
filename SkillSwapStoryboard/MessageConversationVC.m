@@ -274,6 +274,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     MessageCell *cell = (MessageCell *)[tableView dequeueReusableCellWithIdentifier:@"newcellID"];
     if (cell == nil)
     {
@@ -285,21 +286,26 @@
     
     if (messageToShow.messageSender == [User currentUser])
     {
-        cell.cellViewTwo.layer.borderColor = [UIColor yellowColor].CGColor;
-        cell.cellViewTwo.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.2f];
+        cell.cellViewTwo.layer.borderColor = [UIColor blueColor].CGColor;
+        cell.cellViewTwo.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.4f];
         
+        cell.titleLabel.textColor = [UIColor whiteColor];
+        CGSize customSize = [cell.titleLabel intrinsicContentSize];
+        NSLog(@"width: %f, height %f", customSize.width, customSize.height);
         cell.cellViewTwo.frame = CGRectOffset(cell.cellViewTwo.frame, 120, 10);
         cell.myMessageConstraint.constant = 150;
     }
     else
     {
-        cell.cellViewTwo.layer.borderColor = [UIColor blueColor].CGColor;
-         cell.cellViewTwo.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.4f];
+        cell.cellViewTwo.layer.borderColor = [UIColor yellowColor].CGColor;
+        cell.cellViewTwo.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.2f];
         cell.cellViewTwo.frame = CGRectOffset(cell.cellViewTwo.frame, 5, 10);
         cell.yourMessageConstraint.constant = 150;
-        cell.titleLabel.textColor = [UIColor whiteColor];
     }
     cell.titleLabel.text = messageToShow.messageBody;
+    cell.userInteractionEnabled = NO;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     return cell;
 }
 

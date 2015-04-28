@@ -234,7 +234,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q6i-wP-wLi">
-                                <rect key="frame" x="16" y="161" width="34" height="30"/>
+                                <rect key="frame" x="26" y="161" width="34" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Xrw-6R-siH"/>
                                 </constraints>
@@ -243,18 +243,6 @@
                                 </state>
                                 <connections>
                                     <action selector="skillsButtonPressed:" destination="hgs-oW-eJb" eventType="touchUpInside" id="XwU-wB-zDP"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1kk-gh-X2l">
-                                <rect key="frame" x="103" y="161" width="52" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="d6R-JZ-Wwu"/>
-                                </constraints>
-                                <state key="normal" title="reviews">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="reviewsButtonPressed:" destination="hgs-oW-eJb" eventType="touchUpInside" id="ERF-cQ-zD8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6Z-7t-6Yp">
@@ -295,6 +283,18 @@
                                     <segue destination="rph-Xh-NzY" kind="show" identifier="friends" id="gL0-gd-9e9"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1kk-gh-X2l">
+                                <rect key="frame" x="103" y="161" width="52" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="d6R-JZ-Wwu"/>
+                                </constraints>
+                                <state key="normal" title="reviews">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="reviewsButtonPressed:" destination="hgs-oW-eJb" eventType="touchUpInside" id="ERF-cQ-zD8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -311,6 +311,7 @@
                             <constraint firstItem="f7f-jc-gKb" firstAttribute="leading" secondItem="1kk-gh-X2l" secondAttribute="trailing" constant="39" id="Hcz-Zf-B9J">
                                 <variation key="widthClass=compact" constant="-57"/>
                             </constraint>
+                            <constraint firstItem="q6i-wP-wLi" firstAttribute="leading" secondItem="lhn-JW-Ife" secondAttribute="leadingMargin" constant="10" id="JGX-jg-FYK"/>
                             <constraint firstItem="f7f-jc-gKb" firstAttribute="top" secondItem="AVa-Xl-CcQ" secondAttribute="bottom" constant="16" id="KUI-oB-z6h"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AVa-Xl-CcQ" secondAttribute="trailing" constant="30" id="Kvg-Hr-vov">
                                 <variation key="widthClass=compact" constant="-70"/>
@@ -335,6 +336,11 @@
                             </constraint>
                             <constraint firstItem="q6i-wP-wLi" firstAttribute="top" secondItem="PRd-Fg-E5h" secondAttribute="bottom" constant="16" id="uXq-tg-4Fc"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="4Pt-97-fxF"/>
+                            </mask>
+                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="SuN-tk-Zs6">
@@ -1025,10 +1031,10 @@
                         <viewControllerLayoutGuide type="bottom" id="Jxl-p2-0Lc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="IAl-n9-Pvo">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter the class title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rhI-U0-BJd">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter the class title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rhI-U0-BJd">
                                 <rect key="frame" x="58" y="40" width="285" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="K0r-Zk-v22"/>
@@ -1040,7 +1046,7 @@
                                     <rect key="frame" x="158" y="40" width="285" height="30"/>
                                 </variation>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter skill being taught" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SFX-Lr-gOE">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter skill being taught" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SFX-Lr-gOE">
                                 <rect key="frame" x="58" y="88" width="285" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="285" id="clc-bt-MRF"/>
@@ -1052,7 +1058,7 @@
                                     <rect key="frame" x="158" y="88" width="285" height="30"/>
                                 </variation>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter the class description" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EEO-eU-Doi">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter the class description" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EEO-eU-Doi">
                                 <rect key="frame" x="58" y="136" width="285" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="285" id="XiM-73-ItL"/>
@@ -1064,7 +1070,7 @@
                                     <rect key="frame" x="158" y="136" width="285" height="30"/>
                                 </variation>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M82-si-X1D">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M82-si-X1D">
                                 <rect key="frame" x="58" y="184" width="285" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="QXv-li-Gpl"/>
@@ -1091,7 +1097,7 @@
                                     <action selector="onXButtonPressed:" destination="1NH-1g-Wdt" eventType="touchUpInside" id="8zs-6a-4J3"/>
                                 </connections>
                             </button>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="15" translatesAutoresizingMaskIntoConstraints="NO" id="P16-1B-wY3">
+                            <datePicker contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="15" translatesAutoresizingMaskIntoConstraints="NO" id="P16-1B-wY3">
                                 <rect key="frame" x="0.0" y="232" width="400" height="180"/>
                                 <date key="date" timeIntervalSinceReferenceDate="450942909.86943299">
                                     <!--2015-04-17 05:55:09 +0000-->
@@ -1694,16 +1700,16 @@
         </scene>
     </scenes>
     <resources>
-        <image name="addButton" width="160" height="158"/>
+        <image name="addButton" width="80" height="79"/>
         <image name="listButtonY" width="80" height="79"/>
         <image name="message" width="512" height="512"/>
         <image name="profile" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NUw-Cu-Ft4"/>
-        <segue reference="pLm-8m-qxA"/>
-        <segue reference="9l9-dK-tx5"/>
         <segue reference="aeD-cB-7cP"/>
+        <segue reference="9l9-dK-tx5"/>
+        <segue reference="pLm-8m-qxA"/>
+        <segue reference="NUw-Cu-Ft4"/>
         <segue reference="WcH-cb-mK9"/>
     </inferredMetricsTieBreakers>
 </document>

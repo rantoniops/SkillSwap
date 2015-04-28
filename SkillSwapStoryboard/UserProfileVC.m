@@ -103,6 +103,7 @@
     PFQuery *reviewsQuery = [Review query];
     [reviewsQuery includeKey:@"reviewed"];
     [reviewsQuery includeKey:@"reviewer"];
+    [reviewsQuery includeKey:@"course"];
     [reviewsQuery whereKey:@"reviewed" equalTo:user];
     [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
