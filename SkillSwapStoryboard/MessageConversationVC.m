@@ -28,13 +28,7 @@
     self.sendButton.enabled = YES;
 }
 
-//-(void)enableSendButton
-//{
-//    if (self.messageTextField.text = @"")
-//    {
-//        <#statements#>
-//    }
-//}
+
 
 - (void)keyboardWillShow:(NSNotification*)notification
 {
@@ -194,55 +188,61 @@
 - (IBAction)onSendButtonPressed:(UIButton *)sender
 {
     self.conversationGotUsed = 1;
-    self.sendButton.enabled = false;
-    Message *newMessage = [Message new];
-    newMessage.messageBody = self.messageTextField.text;
-    newMessage.messageSender = [User currentUser];
-    newMessage.messageReceiver = self.otherUser; // THIS WILL DEPEND ON THE ORIGIN
-    newMessage.course = self.conversation.course;
-    newMessage.conversation = self.conversation;
-    [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-     {
-         if (succeeded)
+    if ([self.messageTextField.text isEqualToString:@""])
+    {
+        
+    }
+    else
+    {
+        Message *newMessage = [Message new];
+        newMessage.messageBody = self.messageTextField.text;
+        newMessage.messageSender = [User currentUser];
+        newMessage.messageReceiver = self.otherUser; // THIS WILL DEPEND ON THE ORIGIN
+        newMessage.course = self.conversation.course;
+        newMessage.conversation = self.conversation;
+        [newMessage saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
-             NSLog(@"msg fron new convo saved");
-             self.messageTextField.text = @"";
+             if (succeeded)
+             {
+                 NSLog(@"msg fron new convo saved");
+                 self.messageTextField.text = @"";
 
-             /////////////////// PUSH NOTIFICATIONS /////////////////////
+                 /////////////////// PUSH NOTIFICATIONS /////////////////////
 
-             // Find users
-             PFQuery *userQuery = [User query];
-             [userQuery whereKey:@"objectId" equalTo:self.otherUser.objectId];
-             // Find devices associated with these users
-             PFQuery *pushQuery = [PFInstallation query];
-             [pushQuery whereKey:@"user" matchesQuery:userQuery];
-             // Send push notification to query
-             PFPush *push = [[PFPush alloc] init];
-             [push setQuery:pushQuery]; // Set our Installation query
-             [push setMessage: self.messageTextField.text];
-             [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-              {
-                  if (succeeded)
+                 // Find users
+                 PFQuery *userQuery = [User query];
+                 [userQuery whereKey:@"objectId" equalTo:self.otherUser.objectId];
+                 // Find devices associated with these users
+                 PFQuery *pushQuery = [PFInstallation query];
+                 [pushQuery whereKey:@"user" matchesQuery:userQuery];
+                 // Send push notification to query
+                 PFPush *push = [[PFPush alloc] init];
+                 [push setQuery:pushQuery]; // Set our Installation query
+                 [push setMessage: self.messageTextField.text];
+                 [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                   {
-                      NSLog(@"push success");
-                  }
-                  else
-                  {
-                      NSLog(@"push error");
-                  }
-              }];
+                      if (succeeded)
+                      {
+                          NSLog(@"push success");
+                      }
+                      else
+                      {
+                          NSLog(@"push error");
+                      }
+                  }];
 
-             /////////////////// PUSH NOTIFICATIONS END /////////////////
+                 /////////////////// PUSH NOTIFICATIONS END /////////////////
 
-             
-             [self queryMessagesInExistingConversation];
+                 
+                 [self queryMessagesInExistingConversation];
 
-         }
-         else
-         {
-             NSLog(@"msg from new convo NOT saved");
-         }
-     }];
+             }
+             else
+             {
+                 NSLog(@"msg from new convo NOT saved");
+             }
+         }];
+    }
 
 }
 
