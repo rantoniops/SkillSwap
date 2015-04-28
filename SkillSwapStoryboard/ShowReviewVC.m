@@ -10,7 +10,13 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = @"Review";
+    
+    
     self.classLabel.text = [NSString stringWithFormat:@"Class : %@", self.selectedReview.course.title];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+
+    
     self.reviewContentLabel.text = self.selectedReview.reviewContent;
     self.reviewerLabel.text = [NSString stringWithFormat:@"Reviewer : %@" , self.selectedReview.reviewer.username];
 }
