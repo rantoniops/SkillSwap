@@ -345,7 +345,7 @@
 {
     UIImage *pinImage = [UIImage imageNamed:@"secondPin"];
     self.pin = [[UIImageView alloc]initWithImage:pinImage];
-    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -75  , self.mapView.bounds.size.height/2 - 65, 200, 75);
+    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 - (225/2)  , self.mapView.bounds.size.height/2 - (110), 225, 110);
     UITapGestureRecognizer *pinTap = [[UITapGestureRecognizer alloc]init];
     [self imageview:self.pin addGestureRecognizer:pinTap];
     [self.mapView addSubview:self.pin];
