@@ -60,8 +60,6 @@
         self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
         [self pullReviews];
         [self queryForMap];
-
-
     }
 }
 
@@ -115,7 +113,8 @@
     return true;
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
     [self.view endEditing:YES];
 }
 
@@ -136,7 +135,6 @@
                  User *userToSee = [follow objectForKey:@"to"];
                  [self.friendsArray addObject:userToSee];
              }
-        
              PFQuery *courseQuery = [Course query];
              [courseQuery includeKey:@"teacher"];
              [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
@@ -231,7 +229,6 @@
                              [self.mapView addAnnotation:coursePointAnnotation];
                          }
                      }];
-
                 }
             }
         }
@@ -274,15 +271,13 @@
     {
         CLPlacemark *placeMark = [placemarks objectAtIndex:0];
        self.formattedAdress = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
-
         if ([self.formattedAdress containsString:@"(null)"])
         {
             NSLog(@"CONTAINS NULL, we replace it");
             NSString *newString = [self.formattedAdress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
             self.formattedAdress = newString;
         }
-
-        }];
+    }];
 }
 
 
@@ -318,7 +313,6 @@
         NSLog(@"user annotation is called");
         return nil;
     }
-    
 }
 
 
@@ -364,16 +358,17 @@
 //action on tap of imageview indicator
 -(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    [self addAnnotation];
     self.pin.hidden = YES;
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.007,0.007);
-    [self.mapView setRegion:MKCoordinateRegionMake(self.mapView.centerCoordinate,span) animated:true];
+    [self addAnnotation];
+//    MKCoordinateSpan span = MKCoordinateSpanMake(0.007,0.007);
+//    [self.mapView setRegion:MKCoordinateRegionMake(self.mapView.centerCoordinate,span) animated:true];
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void)
    {
        [self performSegueWithIdentifier:@"postClass" sender:self];
    });
+
 }
 
 
@@ -411,11 +406,9 @@
         Course *courseToShow = courseAnnotation.course;
         takeVC.selectedCourse = courseToShow;
         takeVC.selectedTeacher = courseToShow.teacher;
-
     }
     else
     {
-        
     }
 }
 
@@ -499,8 +492,6 @@
              }];
         }
     }
-
-
 }
 
 
@@ -552,7 +543,6 @@
             [self queryMapForFriends];
         }
     }
-    
 }
 
 
@@ -561,7 +551,6 @@
 
 
 //delegate method when returning from postCourse
-
 -(void)didIcreateACourse:(BOOL *)didCreate
 {
     if (didCreate == false)

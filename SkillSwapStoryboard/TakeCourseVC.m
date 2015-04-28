@@ -33,6 +33,7 @@
         self.takeClassButton.hidden = YES;
     }
     self.navigationItem.title = @"Take Class";
+    self.courseRating.text = [NSString stringWithFormat:@"Rating %@", @(self.selectedTeacher.rating) ] ;
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
     self.courseDesciption.text = self.selectedCourse.courseDescription;
@@ -106,7 +107,7 @@
              if (succeeded)
              {
                  NSLog(@"current user saved");
-                 [self dismissViewControllerAnimated:true completion:nil];
+                 [self.navigationController popViewControllerAnimated:true];
              }
              else
              {
