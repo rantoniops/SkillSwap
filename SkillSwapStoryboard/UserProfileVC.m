@@ -32,25 +32,28 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = @"Profile";
-    self.tableViewNumber = @3;
+    self.tableViewNumber = @1;
 }
 
 - (IBAction)skillsButtonPressed:(UIButton *)sender
 {
-    self.tableViewNumber = @1;
+    self.tableViewNumber = @2;
+    NSLog(@"%@", self.tableViewNumber);
     [self.tableVIew reloadData];
 }
 
 - (IBAction)reviewsButtonPressed:(UIButton *)sender
 {
-    self.tableViewNumber = @2;
+    self.tableViewNumber = @3;
+    NSLog(@"%@", self.tableViewNumber);
     [self.tableVIew reloadData];
     
 }
 
 - (IBAction)classesButtonPressed:(UIButton *)sender
 {
-    self.tableViewNumber = @3;
+    self.tableViewNumber = @1;
+    NSLog(@"%@", self.tableViewNumber);
     [self.tableVIew reloadData];
 }
 
@@ -406,14 +409,14 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    if ([self.tableViewNumber  isEqual: @1]) // skills
+    if ([self.tableViewNumber  isEqual: @2]) // skills
     {
         Skill *skill = self.skillsArray[indexPath.row];
         cell.textLabel.text = [skill valueForKey:@"name"];
         NSString *timeString = [NSDateFormatter localizedStringFromDate:skill.createdAt dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"Since %@", timeString];
     }
-    else if ([self.tableViewNumber isEqual: @2]) // reviews
+    else if ([self.tableViewNumber isEqual: @3]) // reviews
     {
         Review *review = self.reviewsArray[indexPath.row];
         cell.detailTextLabel.text = [review valueForKey:@"reviewContent"];
@@ -438,17 +441,17 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.tableViewNumber isEqual:@1])
+    if ([self.tableViewNumber isEqual:@2])
     {
         NSLog(@"no transition");
         [tableView deselectRowAtIndexPath:indexPath animated:true];
     }
-    else if ([self.tableViewNumber isEqual:@2])
+    else if ([self.tableViewNumber isEqual:@3])
     {
         self.reviewAtRow = self.reviewsArray[indexPath.row];
         [self performSegueWithIdentifier:@"reviews" sender:self];
     }
-    else if ([self.tableViewNumber isEqual:@3])
+    else if ([self.tableViewNumber isEqual:@1])
     {
         self.courseAtRow = self.coursesArray[indexPath.row];
         [self performSegueWithIdentifier:@"showCourse" sender:self];
@@ -487,11 +490,11 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([self.tableViewNumber  isEqual: @1])
+    if ([self.tableViewNumber  isEqual: @2])
     {
         return self.skillsArray.count;
     }
-    else if ([self.tableViewNumber  isEqual: @2])
+    else if ([self.tableViewNumber  isEqual: @3])
     {
         return self.reviewsArray.count;
     }
