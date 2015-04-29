@@ -179,7 +179,7 @@
              }
              if (self.reviewsArray.count == 0)
              {
-                 self.rating.text = @"0 ratings.";
+                 self.rating.text = @"0 ratings";
                  // dont do anything, since dividing by zero will crash the app
              }
              else
