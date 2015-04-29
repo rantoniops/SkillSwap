@@ -122,14 +122,7 @@
     [reviewsQuery includeKey:@"reviewed"];
     [reviewsQuery includeKey:@"reviewer"];
     [reviewsQuery includeKey:@"course"];
-    if (self.selectedUser)
-    {
-        [reviewsQuery whereKey:@"reviewed" equalTo:self.selectedUser];
-    }
-    else
-    {
-        [reviewsQuery whereKey:@"reviewed" equalTo:[User currentUser]];
-    }
+    [reviewsQuery whereKey:@"reviewed" equalTo:user];
     [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -144,7 +137,7 @@
              }
              if (self.reviewsArray.count == 0)
              {
-                 self.rating.text = @"User has no ratings yet.";
+                 self.rating.text = @"0 ratings.";
                  // dont do anything, since dividing by zero will crash the app
              }
              else
@@ -493,7 +486,7 @@
         takeCourseVC.selectedCourse = self.courseAtRow;
         takeCourseVC.selectedTeacher = self.courseAtRow.teacher;
     }
-    else if ([segue.identifier isEqualToString:@"friends"])
+    else if ([segue.identifier isEqualToString:@"connections"])
     {
         ConnectionsListVC *connectionsVC = segue.destinationViewController;
         connectionsVC.followersArray = self.followersArray;
