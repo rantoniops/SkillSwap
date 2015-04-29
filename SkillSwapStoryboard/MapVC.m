@@ -211,6 +211,7 @@
             self.results = objects;
             for (Course *object in objects)
             {
+                NSLog(@"object is of type %@", [object class]);
                 if ([object isKindOfClass:[Course class]])
                 {
                     CustomCourseAnnotation *coursePointAnnotation = [[CustomCourseAnnotation alloc]init];

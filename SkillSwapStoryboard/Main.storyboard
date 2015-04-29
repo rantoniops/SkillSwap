@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RuV-Tb-2Zf">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -1366,7 +1367,7 @@
                                     <outlet property="delegate" destination="Dzz-ZH-zxG" id="7WC-pI-Ha2"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="reviews:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eei-EJ-GRy">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="reviews:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eei-EJ-GRy">
                                 <rect key="frame" x="16" y="155" width="368" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="orF-o9-R7e"/>
@@ -1374,9 +1375,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="16" y="179" width="319" height="38"/>
-                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1479,6 +1477,9 @@
                                 <exclude reference="eei-EJ-GRy"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="9xS-Xy-xhX"/>
+                                <exclude reference="OjQ-ir-bqy"/>
+                                <exclude reference="xX4-uo-yJy"/>
                                 <exclude reference="B6h-Hi-wBv"/>
                                 <exclude reference="Gwk-Ic-RbR"/>
                                 <exclude reference="Uub-7c-Pcc"/>
@@ -1486,9 +1487,6 @@
                                 <exclude reference="8AP-O2-a8T"/>
                                 <exclude reference="gOL-jo-I00"/>
                                 <exclude reference="N8i-JX-C5y"/>
-                                <exclude reference="9xS-Xy-xhX"/>
-                                <exclude reference="OjQ-ir-bqy"/>
-                                <exclude reference="xX4-uo-yJy"/>
                                 <exclude reference="6Ir-MK-Q8I"/>
                                 <exclude reference="RcV-0A-Hul"/>
                                 <exclude reference="1rZ-dE-vIG"/>
@@ -1501,12 +1499,12 @@
                                 <exclude reference="3DG-Nt-ggt"/>
                                 <exclude reference="DxW-lD-Twb"/>
                                 <exclude reference="kF3-QR-9ye"/>
+                                <exclude reference="bAy-r6-DxE"/>
+                                <exclude reference="jAw-96-9Zz"/>
                                 <exclude reference="EVx-B9-SaI"/>
                                 <exclude reference="fI2-vC-dKf"/>
                                 <exclude reference="kGx-D6-2Em"/>
                                 <exclude reference="uvP-Fl-CfF"/>
-                                <exclude reference="bAy-r6-DxE"/>
-                                <exclude reference="jAw-96-9Zz"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1514,6 +1512,9 @@
                                 <include reference="eei-EJ-GRy"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="9xS-Xy-xhX"/>
+                                <include reference="OjQ-ir-bqy"/>
+                                <exclude reference="xX4-uo-yJy"/>
                                 <include reference="B6h-Hi-wBv"/>
                                 <exclude reference="Gwk-Ic-RbR"/>
                                 <exclude reference="Uub-7c-Pcc"/>
@@ -1527,9 +1528,6 @@
                                 <exclude reference="xVT-ru-XTQ"/>
                                 <include reference="N8i-JX-C5y"/>
                                 <exclude reference="h1V-nl-h5I"/>
-                                <include reference="9xS-Xy-xhX"/>
-                                <include reference="OjQ-ir-bqy"/>
-                                <exclude reference="xX4-uo-yJy"/>
                                 <exclude reference="6Ir-MK-Q8I"/>
                                 <exclude reference="7eS-vr-kgi"/>
                                 <include reference="RcV-0A-Hul"/>
@@ -1550,14 +1548,14 @@
                                 <include reference="DxW-lD-Twb"/>
                                 <exclude reference="E9N-BA-iYw"/>
                                 <exclude reference="kF3-QR-9ye"/>
+                                <exclude reference="4Dd-A2-KjR"/>
+                                <exclude reference="bAy-r6-DxE"/>
+                                <include reference="jAw-96-9Zz"/>
                                 <exclude reference="EVx-B9-SaI"/>
                                 <exclude reference="SVn-aG-ZEa"/>
                                 <exclude reference="fI2-vC-dKf"/>
                                 <exclude reference="kGx-D6-2Em"/>
                                 <include reference="uvP-Fl-CfF"/>
-                                <exclude reference="4Dd-A2-KjR"/>
-                                <exclude reference="bAy-r6-DxE"/>
-                                <include reference="jAw-96-9Zz"/>
                             </mask>
                         </variation>
                     </view>
