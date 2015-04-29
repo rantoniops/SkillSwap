@@ -196,12 +196,16 @@
     {
         [self calculateUserRating:self.selectedUser];
 
-        PFRelation *relation = [self.selectedUser relationForKey:@"courses"];
-        PFQuery *relationQuery = relation.query;
-        [relationQuery includeKey:@"teacher"];
-        [relationQuery whereKey:@"teacher" equalTo: self.selectedUser];
-        [relationQuery orderByAscending:@"createdAt"];
-        [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+        PFQuery *coursesQuery = [Course query];
+        [coursesQuery whereKey:@"teacher" equalTo:self.selectedUser];
+
+//        PFRelation *relation = [self.selectedUser relationForKey:@"courses"];
+//        PFQuery *relationQuery = relation.query;
+//        [relationQuery includeKey:@"teacher"];
+//        [relationQuery whereKey:@"teacher" equalTo: self.selectedUser];
+
+        [coursesQuery orderByAscending:@"createdAt"];
+        [coursesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
              if (error == nil)
              {

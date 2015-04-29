@@ -14,15 +14,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // this resizes your cell to the content size and makes the text start from the top to down, not the center growing up and down
+
     self.activityIndicator.hidesWhenStopped = YES;
-    self.view.backgroundColor = [[UIColor lightGrayColor]colorWithAlphaComponent:1.9];
+//    self.view.backgroundColor = [[UIColor lightGrayColor]colorWithAlphaComponent:1.9];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"messageReceived" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
     self.sendButton.enabled = NO;
 
+    // this resizes your cell to the content size and makes the text start from the top to down, not the center growing up and down
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
@@ -68,9 +70,9 @@
     NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
 //    UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
     [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                         self.view.frame = newFrame;
-                     }
-                     completion:^(BOOL finished){}];
+        self.view.frame = newFrame;
+     }
+     completion:^(BOOL finished){}];
 }
 
 
@@ -95,12 +97,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-
-    [self.tableView reloadData];
-    [self.tableView layoutSubviews];
-    [self.tableView reloadData];
-
     self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = self.otherUser.username;
 //    [self configureTableView];
@@ -160,7 +156,6 @@
 
 
 
-
 -(void)queryMessagesInExistingConversation
 {
     PFQuery *query = [Message query];
@@ -177,9 +172,12 @@
              }
              NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
              self.messages = objects;
+
+
              [self.tableView reloadData];
              [self.tableView layoutSubviews];
              [self.tableView reloadData];
+
          }
          else
          {
@@ -214,10 +212,6 @@
              {
                  NSLog(@"msg fron new convo saved");
                  self.messageTextField.text = @"";
-
-                 [self.tableView reloadData];
-                 [self.tableView layoutSubviews];
-                 [self.tableView reloadData];
 
                  /////////////////// PUSH NOTIFICATIONS /////////////////////
 
@@ -347,6 +341,7 @@
     cell.textLabel.text = messageToShow.messageBody;
     cell.textLabel.numberOfLines = 0;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
+    cell.detailTextLabel.numberOfLines = 0;
     return cell;
 }
 

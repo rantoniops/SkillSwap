@@ -3,7 +3,7 @@
 #import "MessageConversationVC.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <MobileCoreServices/MobileCoreServices.h>
-@interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface TakeCourseVC ()<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *courseImage;
 @property (weak, nonatomic) IBOutlet UIButton *teacherName;
 @property (weak, nonatomic) IBOutlet UILabel *courseRating;
@@ -25,7 +25,6 @@
 {
     [super viewDidLoad];
     self.currentUser = [User currentUser];
-    NSLog(@"selected course teacher is %@", self.selectedTeacher.username);
     if (self.selectedTeacher == self.currentUser)
     {
         self.followButton.hidden = YES;
@@ -34,13 +33,13 @@
     }
     self.navigationItem.title = @"Take Class";
 
-    if ([self.selectedCourse.teacher isEqual:@0])
+    if ([self.selectedTeacher.rating isEqual:@0])
     {
         self.courseRating.text = @"0 ratings.";
     }
     else
     {
-        self.courseRating.text = [NSString stringWithFormat:@"Rating %@", self.selectedCourse.teacher.rating] ;
+//        self.courseRating.text = [NSString stringWithFormat:@"Rating %@", self.selectedTeacher.rating] ;
     }
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
