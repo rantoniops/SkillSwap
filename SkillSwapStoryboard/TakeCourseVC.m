@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
+@property (weak, nonatomic) IBOutlet UILabel *reviewsLabel;
 @property NSArray *teacherReviews;
 @property User *currentUser;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
@@ -33,6 +34,7 @@
     }
     self.navigationItem.title = @"Take Class";
 
+    self.reviewsLabel.text = [NSString stringWithFormat:@"Reviews for %@:", self.selectedTeacher.username];
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
     self.courseDesciption.text = self.selectedCourse.courseDescription;

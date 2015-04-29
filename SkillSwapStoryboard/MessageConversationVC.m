@@ -25,7 +25,7 @@
     // this resizes your cell to the content size and makes the text start from the top to down, not the center growing up and down
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 50;
-
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
@@ -377,8 +377,21 @@
     Message *messageToShow = self.messages[indexPath.row];
     cell.textLabel.text = messageToShow.messageBody;
     cell.textLabel.numberOfLines = 0;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
-    cell.detailTextLabel.numberOfLines = 0;
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
+//    cell.detailTextLabel.numberOfLines = 0;
+//    cell.detailTextLabel.textAlignment = NSTextAlignmentRight;
+
+    if (messageToShow.messageSender == [User currentUser])
+    {
+        cell.textLabel.textColor = [UIColor orangeColor];
+        cell.textLabel.textAlignment = NSTextAlignmentRight;
+    }
+    else
+    {
+        cell.textLabel.textColor = [UIColor blueColor];
+        cell.textLabel.textAlignment = NSTextAlignmentLeft;
+    }
+
     [cell setNeedsUpdateConstraints];
     [cell updateConstraintsIfNeeded];
     [cell layoutIfNeeded];
