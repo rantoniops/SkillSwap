@@ -24,6 +24,7 @@
 
     // this resizes your cell to the content size and makes the text start from the top to down, not the center growing up and down
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 50;
 
 }
 
@@ -213,12 +214,7 @@
              }
              NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
              self.messages = objects;
-
-
              [self.tableView reloadData];
-             [self.tableView layoutSubviews];
-             [self.tableView reloadData];
-
          }
          else
          {
@@ -383,6 +379,9 @@
     cell.textLabel.numberOfLines = 0;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", messageToShow.messageSender.username];
     cell.detailTextLabel.numberOfLines = 0;
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
+    [cell layoutIfNeeded];
     return cell;
 }
 
