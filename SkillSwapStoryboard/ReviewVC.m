@@ -13,7 +13,7 @@
     [super viewDidLoad];
     self.reviewBodyTextField.delegate = self;
     self.reviewBodyTextField.editable = YES;
-    self.placeHolderString = [NSString stringWithFormat:@"how was %@ ?", [self.reviewCourse valueForKey:@"title"]];
+    self.placeHolderString = [NSString stringWithFormat:@"how was %@ with %@?", [self.reviewCourse valueForKey:@"title"], self.reviewToReview.reviewed.username];
     self.reviewCourseLabel.text = self.placeHolderString;
     self.reviewBodyTextField.text = @"";
 }

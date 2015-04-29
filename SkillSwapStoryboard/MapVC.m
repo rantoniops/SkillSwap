@@ -76,6 +76,7 @@
     [reviewsQuery whereKey:@"reviewer" equalTo:[User currentUser]];
     [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@0];
     [reviewsQuery includeKey:@"course"];
+    [reviewsQuery includeKey:@"reviewed"];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (!error)

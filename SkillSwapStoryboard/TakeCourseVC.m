@@ -40,7 +40,7 @@
     }
     else
     {
-        self.courseRating.text = [NSString stringWithFormat:@"Rating %@", (long)self.selectedCourse.teacher.rating] ;
+//        self.courseRating.text = [NSString stringWithFormat:@"Rating %@", self.selectedCourse.teacher.rating] ;
     }
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
@@ -189,6 +189,7 @@
          if (!error)
          {
              self.teacherReviews = objects;
+             
          }
      }];
 }
