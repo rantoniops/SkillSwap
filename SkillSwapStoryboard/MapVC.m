@@ -209,25 +209,29 @@
         if (!error)
         {
             self.results = objects;
-            for (Course *object in objects)
+            NSLog(@"object is of type %@", [self.results[0] class]);
+            for (Course *object in self.results)
             {
+                Course *course = (Course *)object;
                 NSLog(@"object is of type %@", [object class]);
                 if ([object isKindOfClass:[Course class]])
                 {
                     CustomCourseAnnotation *coursePointAnnotation = [[CustomCourseAnnotation alloc]init];
-                    coursePointAnnotation.course = object;
-                    NSString *timeString = [NSDateFormatter localizedStringFromDate:object.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-                    NSString *titleAndTime = [NSString stringWithFormat:@"%@ @ %@", object.title, timeString];
+                    coursePointAnnotation.course = course;
+                    NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+                    NSString *titleAndTime = [NSString stringWithFormat:@"%@ @ %@", [course valueForKey:@"title"], timeString];
                     coursePointAnnotation.title = titleAndTime;
-                    PFFile *imageFile = object.courseMedia;
+                    PFFile *imageFile = [course valueForKey:@"courseMedia"];
                     [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
                      {
                          if (!error)
                          {
-                             object.callOutImage = [UIImage imageWithData:data];
-                             object.sizedCallOutImage = [self imageWithImage: object.callOutImage scaledToSize:CGSizeMake(40, 40)];
-                             coursePointAnnotation.subtitle = object.address;
-                             PFGeoPoint *geoPoint = object.location;
+                             coursePointAnnotation.subtitle = [course valueForKey:@"address"];
+                             PFGeoPoint *geoPoint = [course valueForKey:@"location"];
+                             course.callOutImage = [UIImage imageWithData:data];
+                             course.sizedCallOutImage = [self imageWithImage: course.callOutImage scaledToSize:CGSizeMake(40, 40)];
+                             
+                             
                              coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
                              [self.mapView addAnnotation:coursePointAnnotation];
                          }

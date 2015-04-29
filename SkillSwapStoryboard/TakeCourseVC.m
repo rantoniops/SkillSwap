@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *takeClassButton;
 @property (weak, nonatomic) IBOutlet UIButton *messageTeacherButton;
 @property NSArray *followingObjectsToBeDeleted;
+@property NSArray *reviewObjectsToBeDeleted;
+
 @end
 @implementation TakeCourseVC
 - (void)viewDidLoad
@@ -71,6 +73,7 @@
     }
     else
     {
+        [self doIreviewThisGuy];
         [self onCancelButtonTap];
     }
     
@@ -104,7 +107,6 @@
     PFRelation *relation = [currentUser relationForKey:@"courses"];
     PFQuery *relationQuery = relation.query;
     [relationQuery includeKey:@"courses"];
-//    [relationQuery whereKey:@"courses" equalTo: self.selectedCourse];
     [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if ([objects containsObject:self.selectedCourse])
@@ -117,6 +119,26 @@
              [self.takeClassButton setTitle:@"Join class" forState:UIControlStateNormal];
          }
      }];
+}
+
+-(void)doIreviewThisGuy
+{
+    PFQuery *reviewCheck = [Review query];
+    NSArray *teacherAndStudent = [NSArray arrayWithObjects:[User currentUser],self.selectedTeacher,nil];
+    [reviewCheck whereKey:@"reviewer" containedIn:teacherAndStudent];
+    [reviewCheck whereKey:@"reviewed" containedIn:teacherAndStudent];
+    [reviewCheck whereKey:@"course" equalTo:self.selectedCourse];
+    [reviewCheck findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (objects.count > 0)
+         {
+             self.reviewObjectsToBeDeleted = objects;
+         }
+         else
+         {
+         }
+     }];
+
 }
 
 
@@ -153,6 +175,17 @@
              [self.navigationController popViewControllerAnimated:true];
              NSLog(@"here are the current users courses now %@", [currentUser valueForKey:@"courses"]);
              [self.takeClassButton setTitle:@"Join class" forState:UIControlStateNormal];
+             for (Review *review in self.reviewObjectsToBeDeleted)
+             {
+                 [review deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                  {
+                      if (error == nil)
+                      {
+                          NSLog(@"%@ has been deleted", self.reviewObjectsToBeDeleted);
+                      }
+                  }];
+             }
+             
          }
          else
          {
@@ -161,11 +194,13 @@
      }];
 }
 
+
 -(void)confirmAlert
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Confirm sign up" message:@"The poster will be sent a notification"preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *confirmClass = [UIAlertAction actionWithTitle:@"Confirm Class" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
     {
+        NSLog(@"the course is of %@ type", [self.selectedCourse class]);
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         [relation addObject: self.selectedCourse];
@@ -175,6 +210,7 @@
              {
                  NSLog(@"current user saved");
                  [self.navigationController popViewControllerAnimated:true];
+                 NSLog(@"the course is of %@ type", [self.selectedCourse class]);
              }
              else
              {
@@ -288,7 +324,6 @@
 
 - (IBAction)followButtonTap:(UIButton *)sender
 {
-    [self onCancelButtonTap];
     User *currentUser = [User currentUser];
     if ([self.followButton.titleLabel.text isEqualToString:@"Follow"])
     {
