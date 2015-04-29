@@ -4,6 +4,7 @@
 #import "TakeCourseVC.h"
 #import "ConnectionsListVC.h"
 #import "ShowReviewVC.h"
+#import "MessageConversationVC.h"
 @interface UserProfileVC () <UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *rating;
@@ -12,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionText;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
+@property (weak, nonatomic) IBOutlet UIButton *messageButton;
 @property PFFile *userImageFile;
 @property Course *courseAtRow;
 @property User *userAtRow;
@@ -123,7 +125,8 @@
     self.navigationController.navigationBarHidden = NO;
     [self queryForUserInfo];
     [self queryForFriends];
-    self.followButton.hidden = YES;
+//    self.followButton.hidden = YES;
+
 }
 
 - (IBAction)onLogoutButtonTapped:(UIBarButtonItem *)sender
@@ -139,7 +142,7 @@
     {
         [self doIfollowThisGuy];
         self.profileImage.userInteractionEnabled = NO;
-        self.followButton.hidden = NO;
+//        self.followButton.hidden = NO;
     }
     else
     {
@@ -255,6 +258,9 @@
     }
     else // current user clicked on the profile button and wants to see his own profile
     {
+        self.messageButton.hidden = YES;
+        self.followButton.hidden = YES;
+        
         [self calculateUserRating:[User currentUser]];
 
         User *currentUser = [User currentUser];
@@ -507,7 +513,14 @@
         connectionsVC.followersArray = self.followersArray;
         connectionsVC.followingArray = self.followingArray;
     }
+    else if ([segue.identifier isEqualToString:@"profileToMessage"])
+    {
+        MessageConversationVC *messageVC = segue.destinationViewController;
+        messageVC.otherUser = self.selectedUser;
+        messageVC.origin = @"userProfile"; 
+    }
 }
+
 
 
 
