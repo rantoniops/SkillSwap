@@ -10,14 +10,11 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = @"Review";
-    
-    
-    self.classLabel.text = [NSString stringWithFormat:@"Class : %@", self.selectedReview.course.title];
-    
-    self.view.backgroundColor = [UIColor whiteColor];
-
-    
+    Course *theCourse = [self.selectedReview objectForKey:@"course"];
+//    self.classLabel.text = [NSString stringWithFormat:@"Class : %@", self.selectedReview.course.title];
+    self.classLabel.text = [NSString stringWithFormat:@"Class : %@", [theCourse valueForKey:@"title"]];
     self.reviewContentLabel.text = self.selectedReview.reviewContent;
+    self.reviewContentLabel.numberOfLines = 0;
     self.reviewerLabel.text = [NSString stringWithFormat:@"Reviewer : %@" , self.selectedReview.reviewer.username];
 }
 

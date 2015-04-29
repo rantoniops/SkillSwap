@@ -1,4 +1,4 @@
-    #import "MessagesVC.h"
+#import "MessagesVC.h"
 #import "MessageConversationVC.h"
 #import "SkillSwapStoryboard-Swift.h"
 @interface MessagesVC () <UITableViewDataSource, UITableViewDelegate>
@@ -93,33 +93,39 @@
     return self.conversations.count;
 }
 
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Conversation *conversationToShow = self.conversations[indexPath.row];
     PFQuery *query = [Message query];
+    [query includeKey:@"messageSender"];
+    [query includeKey:@"messageReceiver"];
     [query whereKey:@"conversation" equalTo: conversationToShow];
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         if (!error)
+         if (error == nil)
          {
              NSLog(@"Successfully retrieved %lu messages.", (unsigned long)objects.count);
              Message *message = objects.firstObject;
              cell.textLabel.text = message.messageBody;
+
+             for (User *user in conversationToShow.users)
+             {
+                 if (user != [User currentUser])
+                 {
+                     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", user.username];
+                 }
+             }
+
          }
          else
          {
              NSLog(@"Error: %@ %@", error, [error userInfo]);
          }
      }];
-    for (User *user in conversationToShow.users)
-    {
-        if (user != [User currentUser])
-        {
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", user.username];
-        }
-    }
+
     return cell;
 }
 
