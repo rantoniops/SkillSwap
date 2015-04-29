@@ -20,51 +20,51 @@
 }
 
 
-////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
-
-- (void)keyboardWillShow:(NSNotification*)notification
-{
-    [self moveControls:notification up:YES];
-}
-
-- (void)keyboardWillBeHidden:(NSNotification*)notification
-{
-    [self moveControls:notification up:NO];
-}
-
-- (void)moveControls:(NSNotification*)notification up:(BOOL)up
-{
-    NSDictionary* userInfo = [notification userInfo];
-    CGRect newFrame = [self getNewControlsFrame:userInfo up:up];
-    [self animateControls:userInfo withFrame:newFrame];
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.view endEditing:YES];
-}
-
-- (CGRect)getNewControlsFrame:(NSDictionary*)userInfo up:(BOOL)up
-{
-    CGRect kbFrame = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-    kbFrame = [self.view convertRect:kbFrame fromView:nil];
-    CGRect newFrame = self.view.frame;
-    newFrame.origin.y += kbFrame.size.height * (up ? -1 : 1);
-    return newFrame;
-}
-
-- (void)animateControls:(NSDictionary*)userInfo withFrame:(CGRect)newFrame
-{
-    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    //    UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
-    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.view.frame = newFrame;
-    }
-                     completion:^(BOOL finished){}];
-}
-
-
-////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
+//////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
+//
+//- (void)keyboardWillShow:(NSNotification*)notification
+//{
+//    [self moveControls:notification up:YES];
+//}
+//
+//- (void)keyboardWillBeHidden:(NSNotification*)notification
+//{
+//    [self moveControls:notification up:NO];
+//}
+//
+//- (void)moveControls:(NSNotification*)notification up:(BOOL)up
+//{
+//    NSDictionary* userInfo = [notification userInfo];
+//    CGRect newFrame = [self getNewControlsFrame:userInfo up:up];
+//    [self animateControls:userInfo withFrame:newFrame];
+//}
+//
+//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [self.view endEditing:YES];
+//}
+//
+//- (CGRect)getNewControlsFrame:(NSDictionary*)userInfo up:(BOOL)up
+//{
+//    CGRect kbFrame = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+//    kbFrame = [self.view convertRect:kbFrame fromView:nil];
+//    CGRect newFrame = self.view.frame;
+//    newFrame.origin.y += kbFrame.size.height * (up ? -1 : 1);
+//    return newFrame;
+//}
+//
+//- (void)animateControls:(NSDictionary*)userInfo withFrame:(CGRect)newFrame
+//{
+//    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+//    //    UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+//    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//        self.view.frame = newFrame;
+//    }
+//                     completion:^(BOOL finished){}];
+//}
+//
+//
+//////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
 
 
 -(void)viewWillAppear:(BOOL)animated
