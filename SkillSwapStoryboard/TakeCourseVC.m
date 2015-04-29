@@ -25,6 +25,8 @@
 {
     [super viewDidLoad];
     self.currentUser = [User currentUser];
+    self.courseTableView.delegate = self;
+    self.courseTableView.dataSource = self;
     NSLog(@"selected course teacher is %@", self.selectedTeacher.username);
     if (self.selectedTeacher == self.currentUser)
     {
@@ -79,6 +81,13 @@
         self.followButton.hidden = YES;
         self.takeClassButton.hidden = YES;
         self.messageTeacherButton.hidden = YES;
+    }
+    NSDate *now = [NSDate date];
+    NSLog(@" %@ course time, %@ now ",  self.selectedCourse.time, now);
+    if ([self.selectedCourse.time earlierDate: now] == self.selectedCourse.time)
+    {
+        self.takeClassButton.hidden = YES;
+        NSLog(@" course is earlier");
     }
     [self doIfollowThisGuy];
     [self queryForteacherReviews];
@@ -189,6 +198,7 @@
          if (!error)
          {
              self.teacherReviews = objects;
+             [self.courseTableView reloadData];
              
          }
      }];
@@ -241,7 +251,9 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     Review *review = self.teacherReviews[indexPath.row];
     NSString *reviewerString = [NSString stringWithFormat:@"%@",[review valueForKey:@"reviewer"]];
-    cell.detailTextLabel.text = reviewerString;
+//    cell.detailTextLabel.text = reviewerString;
+    cell.detailTextLabel.text = @"test";
+
     cell.textLabel.text = [review valueForKey:@"reviewContent"];
     return cell;
 }

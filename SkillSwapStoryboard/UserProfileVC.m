@@ -441,7 +441,8 @@
     {
         Course *course = self.coursesArray[indexPath.row];
         NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-        NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", [course valueForKey:@"title"] , timeString];
+        NSString *secondTimeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
+        NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@ on %@", [course valueForKey:@"title"] , timeString, secondTimeString];
         cell.textLabel.text = titleAndTime;
         cell.detailTextLabel.text = [course valueForKey:@"address"];
     }
