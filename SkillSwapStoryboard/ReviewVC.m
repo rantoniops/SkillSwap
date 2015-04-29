@@ -13,8 +13,9 @@
     [super viewDidLoad];
     self.reviewBodyTextField.delegate = self;
     self.reviewBodyTextField.editable = YES;
-    self.placeHolderString = [NSString stringWithFormat:@"how was %@ ?", [self.reviewCourse valueForKey:@"title"]];
+    self.placeHolderString = [NSString stringWithFormat:@"how was %@ with %@?", [self.reviewCourse valueForKey:@"title"], self.reviewToReview.reviewed.username];
     self.reviewCourseLabel.text = self.placeHolderString;
+    self.reviewCourseLabel.numberOfLines = 0;
     self.reviewBodyTextField.text = @"";
 }
 
@@ -66,11 +67,59 @@
          if (succeeded)
          {
              NSLog(@"review with content saved");
+             [self calculateUserRating:self.reviewToReview.reviewed];
              [self dismissViewControllerAnimated:true completion:nil];
          }
      }];
 }
      
+
+
+-(void)calculateUserRating:(User *)user
+{
+    PFQuery *reviewsQuery = [Review query];
+    [reviewsQuery includeKey:@"reviewed"];
+    [reviewsQuery includeKey:@"reviewer"];
+    [reviewsQuery includeKey:@"course"];
+    [reviewsQuery whereKey:@"reviewed" equalTo:user];
+    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
+    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (error == nil)
+         {
+             NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
+             NSArray *reviewsArray = [NSArray arrayWithArray:objects];
+             int reviewsSum = 0;
+             for (Review *review in reviewsArray)
+             {
+                 reviewsSum += [review.reviewRating intValue];
+                 NSLog(@"review rating is %@", review.reviewRating);
+             }
+             if (reviewsArray.count == 0)
+             {
+                 // dont do anything, since dividing by zero will crash the app
+             }
+             else
+             {
+                 int reviewsAverage = (reviewsSum / reviewsArray.count);
+                 NSNumber *average = @(reviewsAverage);
+                 user.rating = average;
+                 [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                  {
+                      if (succeeded)
+                      {
+                          NSLog(@"user's new rating saved");
+                      }
+                  }];
+             }
+         }
+         else
+         {
+             NSLog(@"error finding reviews");
+         }
+     }];
+}
+
 
 
 

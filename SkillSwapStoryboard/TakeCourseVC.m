@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
-@property NSArray *courseReviews;
+@property NSArray *teacherReviews;
 @property User *currentUser;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
 @property (weak, nonatomic) IBOutlet UIButton *takeClassButton;
@@ -33,14 +33,6 @@
     }
     self.navigationItem.title = @"Take Class";
 
-    if ([self.selectedTeacher.rating isEqual:@0])
-    {
-        self.courseRating.text = @"0 ratings.";
-    }
-    else
-    {
-//        self.courseRating.text = [NSString stringWithFormat:@"Rating %@", self.selectedTeacher.rating] ;
-    }
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
     self.courseDesciption.text = self.selectedCourse.courseDescription;
@@ -79,7 +71,15 @@
         self.takeClassButton.hidden = YES;
         self.messageTeacherButton.hidden = YES;
     }
+    NSDate *now = [NSDate date];
+    NSLog(@" %@ course time, %@ now ",  self.selectedCourse.time, now);
+    if ([self.selectedCourse.time earlierDate: now] == self.selectedCourse.time)
+    {
+        self.takeClassButton.hidden = YES;
+        NSLog(@" course is earlier");
+    }
     [self doIfollowThisGuy];
+    [self queryForteacherReviews];
 }
 
 -(void)doIfollowThisGuy
@@ -178,15 +178,26 @@
 }
 
 
--(void)queryForCourseReviews
+-(void)queryForteacherReviews
 {
     PFQuery *reviewsQuery = [Review query];
-    [reviewsQuery whereKey:@"course" equalTo:self.selectedCourse];
+    [reviewsQuery includeKey:@"reviewer"];
+    [reviewsQuery includeKey:@"reviewed"];
+    [reviewsQuery whereKey:@"reviewed" equalTo:self.selectedTeacher];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         if (!error)
+         if (error == nil)
          {
-             self.courseReviews = objects;
+             if (objects.count > 0)
+             {
+                 self.courseRating.text = [NSString stringWithFormat:@"Rating %@", self.selectedTeacher.rating];
+                 self.teacherReviews = objects;
+                 [self.courseTableView reloadData];
+             }
+             else
+             {
+                 self.courseRating.text = @"0 ratings.";
+             }
          }
      }];
 }
@@ -236,16 +247,21 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    Review *review = self.courseReviews[indexPath.row];
-    NSString *reviewerString = [NSString stringWithFormat:@"%@",[review valueForKey:@"reviewer"]];
+    Review *review = self.teacherReviews[indexPath.row];
+
+    NSString *timeString = [NSDateFormatter localizedStringFromDate:review.updatedAt dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
+
+    NSString *reviewerString = [NSString stringWithFormat:@"%@ on %@", review.reviewer.username, timeString];
     cell.detailTextLabel.text = reviewerString;
+//    cell.detailTextLabel.text = review.reviewer.username;
+
     cell.textLabel.text = [review valueForKey:@"reviewContent"];
     return cell;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.courseReviews.count;
+    return self.teacherReviews.count;
 }
 
 
