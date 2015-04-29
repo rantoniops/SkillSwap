@@ -26,23 +26,25 @@
 {
     [super viewDidLoad];
     self.currentUser = [User currentUser];
+    [self.takeClassButton setTitle:@"Join class" forState:UIControlStateNormal];
     if (self.selectedTeacher == self.currentUser)
     {
         self.followButton.hidden = YES;
         self.messageTeacherButton.hidden = YES;
         self.takeClassButton.hidden = YES;
     }
-    self.navigationItem.title = @"Take Class";
+    self.navigationItem.title = @"Class";
 
     self.reviewsLabel.text = [NSString stringWithFormat:@"Reviews for %@:", self.selectedTeacher.username];
-    self.courseName.text = self.selectedCourse.title;
-    self.courseAddress.text = self.selectedCourse.address;
-    self.courseDesciption.text = self.selectedCourse.courseDescription;
-    NSString *timeString = [NSDateFormatter localizedStringFromDate:self.selectedCourse.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+    self.courseName.text = [self.selectedCourse valueForKey:@"title"];
+    self.courseAddress.text = [self.selectedCourse valueForKey:@"address"];
+    self.courseDesciption.text = [self.selectedCourse valueForKey:@"courseDescription"];
+
+    NSString *timeString = [NSDateFormatter localizedStringFromDate:[self.selectedCourse valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
     NSLog(@"%@", timeString);
     self.courseDuration.text = timeString;
     [self.teacherName setTitle:self.selectedTeacher.username forState:UIControlStateNormal];
-    [self.selectedCourse.courseMedia getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+    [[self.selectedCourse valueForKey:@"courseMedia"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
     {
         if (!error)
         {
@@ -54,35 +56,69 @@
 
 - (IBAction)onTeacherNameButtonTapped:(UIButton *)sender
 {
+   
+    
+    
     [self performSegueWithIdentifier:@"takeCourseToTeacherProfile" sender:self];
 }
 
 
 - (IBAction)onTakeClassButtonPressed:(UIButton *)sender
 {
-    [self confirmAlert];
+    if ([self.takeClassButton.titleLabel.text isEqualToString:@"Join class"])
+    {
+        [self confirmAlert];
+    }
+    else
+    {
+        [self onCancelButtonTap];
+    }
+    
 }
 
 
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = NO;
-    if (self.selectedCourse.teacher == self.currentUser)
+    if ([self.selectedCourse valueForKey:@"teacher"] == self.currentUser)
     {
         self.followButton.hidden = YES;
         self.takeClassButton.hidden = YES;
         self.messageTeacherButton.hidden = YES;
     }
     NSDate *now = [NSDate date];
-    NSLog(@" %@ course time, %@ now ",  self.selectedCourse.time, now);
-    if ([self.selectedCourse.time earlierDate: now] == self.selectedCourse.time)
+    NSLog(@" %@ course time, %@ now ",  [self.selectedCourse valueForKey:@"time"], now);
+    if ([[self.selectedCourse valueForKey:@"time"] earlierDate: now] == [self.selectedCourse valueForKey:@"time"])
     {
         self.takeClassButton.hidden = YES;
         NSLog(@" course is earlier");
     }
     [self doIfollowThisGuy];
+    [self amItakingThisCourse];
     [self calculateUserRating:self.selectedTeacher];
 }
+
+-(void)amItakingThisCourse
+{
+    PFUser *currentUser = [User currentUser];
+    PFRelation *relation = [currentUser relationForKey:@"courses"];
+    PFQuery *relationQuery = relation.query;
+    [relationQuery includeKey:@"courses"];
+//    [relationQuery whereKey:@"courses" equalTo: self.selectedCourse];
+    [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if ([objects containsObject:self.selectedCourse])
+         {
+             [self.takeClassButton setTitle:@"No longer attend" forState:UIControlStateNormal];
+             self.takeClassButton.backgroundColor = [[UIColor redColor]colorWithAlphaComponent:0.5];
+         }
+         else
+         {
+             [self.takeClassButton setTitle:@"Join class" forState:UIControlStateNormal];
+         }
+     }];
+}
+
 
 -(void)doIfollowThisGuy
 {
@@ -101,6 +137,28 @@
                [self.followButton setTitle:@"Follow" forState:UIControlStateNormal];
           }
       }];
+}
+
+-(void)onCancelButtonTap
+{
+    User *currentUser = [User currentUser];
+    NSLog(@"here are the current users courses now %@", [currentUser valueForKey:@"courses"]);
+    PFRelation *relation = [currentUser relationForKey:@"courses"];
+    [relation removeObject: self.selectedCourse];
+    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         if (succeeded)
+         {
+             NSLog(@"class was deleted and saved");
+             [self.navigationController popViewControllerAnimated:true];
+             NSLog(@"here are the current users courses now %@", [currentUser valueForKey:@"courses"]);
+             [self.takeClassButton setTitle:@"Join class" forState:UIControlStateNormal];
+         }
+         else
+         {
+             NSLog(@"class was NOT deleted");
+         }
+     }];
 }
 
 -(void)confirmAlert
@@ -204,7 +262,7 @@
              }
              if (self.teacherReviews.count == 0)
              {
-                 self.courseRating.text = @"0 ratings.";
+                 self.courseRating.text = @"0 ratings";
                  // dont do anything, since dividing by zero will crash the app
              }
              else
@@ -230,6 +288,7 @@
 
 - (IBAction)followButtonTap:(UIButton *)sender
 {
+    [self onCancelButtonTap];
     User *currentUser = [User currentUser];
     if ([self.followButton.titleLabel.text isEqualToString:@"Follow"])
     {
