@@ -288,7 +288,6 @@
 
 - (IBAction)followButtonTap:(UIButton *)sender
 {
-    [self onCancelButtonTap];
     User *currentUser = [User currentUser];
     if ([self.followButton.titleLabel.text isEqualToString:@"Follow"])
     {

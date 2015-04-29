@@ -1,6 +1,6 @@
 #import "ReviewVC.h"
 @interface ReviewVC () <UITextViewDelegate>
-@property (weak, nonatomic) IBOutlet UITextView *reviewBodyTextField;
+@property (weak, nonatomic) IBOutlet UITextView *reviewBodyTextField; // THIS IS A TEXTVIEW
 @property NSString *placeHolderString;
 @property (weak, nonatomic) IBOutlet UILabel *reviewCourseLabel;
 @property (weak, nonatomic) IBOutlet UIButton *badButton;
@@ -10,19 +10,29 @@
 @implementation ReviewVC
 - (void)viewDidLoad
 {
+
     [super viewDidLoad];
-    self.reviewBodyTextField.delegate = self;
+    self.reviewBodyTextField.delegate = self; // this is a textview
     self.reviewBodyTextField.editable = YES;
     self.reviewCourseLabel.text = [NSString stringWithFormat:@"how was %@ with %@?", [self.reviewCourse valueForKey:@"title"], self.reviewToReview.reviewed.username];
     self.reviewCourseLabel.numberOfLines = 0;
     self.reviewBodyTextField.text = @"";
 }
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    [textField resignFirstResponder];
-    return true;
+    if ([text isEqualToString:@"\n"])
+    {
+        [textView resignFirstResponder];
+        // Return FALSE so that the final '\n' character doesn't get added
+        return NO;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    return YES;
 }
+
+
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {

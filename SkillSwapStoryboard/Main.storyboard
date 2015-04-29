@@ -2341,7 +2341,7 @@
                                     <action selector="loginButtonPress:" destination="REZ-1m-KA0" eventType="touchUpInside" id="bbg-74-Gk6"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="your name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hkq-Ae-krN">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hkq-Ae-krN">
                                 <rect key="frame" x="57" y="122" width="294" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="6fh-7Z-SS1"/>
@@ -2557,7 +2557,7 @@
                                     <action selector="signUpButtonPress:" destination="apd-QD-DQy" eventType="touchUpInside" id="gTt-nj-pOA"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="your name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QjL-P4-5eU">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QjL-P4-5eU">
                                 <rect key="frame" x="57" y="122" width="294" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="294" id="9Fq-Yj-pIC"/>
@@ -2805,10 +2805,10 @@
         <image name="profile" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="pLm-8m-qxA"/>
         <segue reference="9l9-dK-tx5"/>
         <segue reference="aeD-cB-7cP"/>
         <segue reference="WcH-cb-mK9"/>
-        <segue reference="pLm-8m-qxA"/>
-        <segue reference="gbK-2E-8fb"/>
+        <segue reference="NUw-Cu-Ft4"/>
     </inferredMetricsTieBreakers>
 </document>
