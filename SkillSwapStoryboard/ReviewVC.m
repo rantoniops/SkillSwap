@@ -6,7 +6,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *badButton;
 @property (weak, nonatomic) IBOutlet UIButton *okayButton;
 @property (weak, nonatomic) IBOutlet UIButton *greatButton;
-@property NSNumber *givenRating;
 @end
 @implementation ReviewVC
 - (void)viewDidLoad
@@ -33,9 +32,7 @@
 
 - (IBAction)badButtonPressed:(UIButton *)sender
 {
-//    self.reviewToReview.reviewRating = @0;
-    self.givenRating = @0;
-    NSLog(@"BAD GIVEN RATING %@", self.givenRating);
+    self.reviewToReview.reviewRating = @0;
     self.badButton.tintColor = [UIColor greenColor];
     self.okayButton.enabled = NO;
     self.greatButton.enabled = NO;
@@ -43,9 +40,7 @@
 
 - (IBAction)okayButtonPressed:(UIButton *)sender
 {
-//    self.reviewToReview.reviewRating = @1;
-    self.givenRating = @1;
-    NSLog(@"OKAY GIVEN RATING %@", self.givenRating);
+    self.reviewToReview.reviewRating = @1;
     self.okayButton.tintColor = [UIColor greenColor];
     self.badButton.enabled = NO;
     self.greatButton.enabled = NO;
@@ -53,9 +48,7 @@
 
 - (IBAction)greatButtonPressed:(UIButton *)sender
 {
-//    self.reviewToReview.reviewRating = @2;
-    self.givenRating = @2;
-    NSLog(@"GREAT GIVEN RATING %@", self.givenRating);
+    self.reviewToReview.reviewRating = @2;
     self.greatButton.tintColor = [UIColor greenColor];
     self.badButton.enabled = NO;
     self.okayButton.enabled = NO;
@@ -64,15 +57,20 @@
 
 - (IBAction)submitReviewButtonPressed:(UIButton *)sender
 {
-    [self saveTheReview];
+    if (self.reviewToReview.reviewRating == nil)
+    {
+        [self showAlert];
+    }
+    else
+    {
+        [self saveTheReview];
+    }
 }
 
 
 -(void)saveTheReview
 {
-    NSLog(@"GIVEN RATING %@", self.givenRating);
-    self.reviewToReview.reviewRating = self.givenRating;
-    NSLog(@"FINAL RATING WAS %@", self.reviewToReview.reviewRating);
+    NSLog(@"RATING WAS %@", self.reviewToReview.reviewRating);
     self.reviewToReview.reviewContent = self.reviewBodyTextField.text;
     self.reviewToReview.hasBeenReviewed = @1;
     [self.reviewToReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
@@ -86,7 +84,17 @@
 }
      
 
+-(void)showAlert
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Rating Missing" message:@"Please tap on a rating" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+    {
 
+    }];
+
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:true completion:nil];
+}
 
 
 
