@@ -107,6 +107,47 @@
         self.conversation = self.selectedConversation;
         [self queryMessagesInExistingConversation];
     }
+    else if ([self.origin isEqualToString:@"userProfile"]) // SOMEONE IS MESSAGING A USER FROM THE PROFILE
+    {
+        // CHECKING IF THERE'S ALREADY AN EXISTING CONVO BETWEEN BOTH USERS
+        PFQuery *query = [Conversation query];
+        [query whereKey:@"users" containsAllObjectsInArray: @[ [User currentUser] , self.otherUser ]];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+         {
+             if (error == nil)
+             {
+                 if (objects.count > 0) // convo exists, we continue using the one that already exists
+                 {
+                     NSLog(@"there's an existing convo, we'll use that one");
+                     self.conversation = objects.firstObject;
+                     [self queryMessagesInExistingConversation];
+                 }
+                 else // convo doesn't exist, we create a new one and we'll trash it in viewwilldissappear if no messaging occurs
+                 {
+                     NSLog(@"no existing convos, we create a new one");
+                     Conversation *newConversation = [Conversation new];
+                     [newConversation addObject:[User currentUser] forKey:@"users"];
+                     [newConversation addObject:self.otherUser forKey:@"users"]; // OTHER USER HERE IS THE THE ONE BEING MESSAGED
+                     self.conversation = newConversation;
+                     [newConversation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                      {
+                          if (succeeded)
+                          {
+                              NSLog(@"conversation created");
+                          }
+                          else
+                          {
+                              NSLog(@"error, conversation NOT created");
+                          }
+                      }];
+                 }
+             }
+             else
+             {
+                 NSLog(@"Error searching for existing conversation: %@ %@", error, [error userInfo]);
+             }
+         }];
+    }
     else if ([self.origin isEqualToString:@"takeCourse"]) // SOMEONE IS MESSAGING A TEACHER
     {
         // CHECKING IF THERE'S ALREADY AN EXISTING CONVO BETWEEN THIS TEACHER, THIS USER ABOUT THIS COURSE
