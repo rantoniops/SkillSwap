@@ -260,7 +260,7 @@
     {
         self.messageButton.hidden = YES;
         self.followButton.hidden = YES;
-        
+
         [self calculateUserRating:[User currentUser]];
 
         User *currentUser = [User currentUser];

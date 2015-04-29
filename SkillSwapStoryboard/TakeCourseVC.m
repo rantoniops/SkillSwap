@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
+@property (weak, nonatomic) IBOutlet UILabel *reviewsLabel;
 @property NSArray *teacherReviews;
 @property User *currentUser;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
@@ -33,6 +34,7 @@
     }
     self.navigationItem.title = @"Take Class";
 
+    self.reviewsLabel.text = [NSString stringWithFormat:@"Reviews for %@:", self.selectedTeacher.username];
     self.courseName.text = self.selectedCourse.title;
     self.courseAddress.text = self.selectedCourse.address;
     self.courseDesciption.text = self.selectedCourse.courseDescription;
@@ -178,38 +180,6 @@
 }
 
 
-//-(void)queryForteacherReviews
-//{
-//    PFQuery *reviewsQuery = [Review query];
-//    [reviewsQuery includeKey:@"reviewer"];
-//    [reviewsQuery includeKey:@"reviewed"];
-//    [reviewsQuery whereKey:@"reviewed" equalTo:self.selectedTeacher];
-//    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//     {
-//         if (error == nil)
-//         {
-//             if (objects.count > 0)
-//             {
-//                 if (self.selectedTeacher.rating == nil)
-//                 {
-//                     self.courseRating.text = @"0 ratings.";
-//                 }
-//                 else
-//                 {
-//                     self.courseRating.text = [NSString stringWithFormat:@"Rating %@", self.selectedTeacher.rating ];
-//                 }
-//                 self.teacherReviews = objects;
-//                 [self.courseTableView reloadData];
-//             }
-//             else
-//             {
-//                 self.courseRating.text = @"0 ratings.";
-//             }
-//         }
-//     }];
-//}
-
-
 -(void)calculateUserRating:(User *)user
 {
     PFQuery *reviewsQuery = [Review query];
@@ -224,6 +194,8 @@
          {
              NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
              self.teacherReviews = objects;
+             [self.courseTableView reloadData];
+             
              int reviewsSum = 0;
              for (Review *review in self.teacherReviews)
              {
