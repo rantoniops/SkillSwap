@@ -6,6 +6,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *badButton;
 @property (weak, nonatomic) IBOutlet UIButton *okayButton;
 @property (weak, nonatomic) IBOutlet UIButton *greatButton;
+@property NSNumber *givenRating;
 @end
 @implementation ReviewVC
 - (void)viewDidLoad
@@ -13,12 +14,16 @@
     [super viewDidLoad];
     self.reviewBodyTextField.delegate = self;
     self.reviewBodyTextField.editable = YES;
-    self.placeHolderString = [NSString stringWithFormat:@"how was %@ ?", [self.reviewCourse valueForKey:@"title"]];
-    self.reviewCourseLabel.text = self.placeHolderString;
+    self.reviewCourseLabel.text = [NSString stringWithFormat:@"how was %@ with %@?", [self.reviewCourse valueForKey:@"title"], self.reviewToReview.reviewed.username];
+    self.reviewCourseLabel.numberOfLines = 0;
     self.reviewBodyTextField.text = @"";
 }
 
-
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return true;
+}
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
@@ -28,7 +33,9 @@
 
 - (IBAction)badButtonPressed:(UIButton *)sender
 {
-    self.reviewToReview.reviewRating = @0;
+//    self.reviewToReview.reviewRating = @0;
+    self.givenRating = @0;
+    NSLog(@"BAD GIVEN RATING %@", self.givenRating);
     self.badButton.tintColor = [UIColor greenColor];
     self.okayButton.enabled = NO;
     self.greatButton.enabled = NO;
@@ -36,7 +43,9 @@
 
 - (IBAction)okayButtonPressed:(UIButton *)sender
 {
-    self.reviewToReview.reviewRating = @1;
+//    self.reviewToReview.reviewRating = @1;
+    self.givenRating = @1;
+    NSLog(@"OKAY GIVEN RATING %@", self.givenRating);
     self.okayButton.tintColor = [UIColor greenColor];
     self.badButton.enabled = NO;
     self.greatButton.enabled = NO;
@@ -44,7 +53,9 @@
 
 - (IBAction)greatButtonPressed:(UIButton *)sender
 {
-    self.reviewToReview.reviewRating = @2;
+//    self.reviewToReview.reviewRating = @2;
+    self.givenRating = @2;
+    NSLog(@"GREAT GIVEN RATING %@", self.givenRating);
     self.greatButton.tintColor = [UIColor greenColor];
     self.badButton.enabled = NO;
     self.okayButton.enabled = NO;
@@ -59,6 +70,9 @@
 
 -(void)saveTheReview
 {
+    NSLog(@"GIVEN RATING %@", self.givenRating);
+    self.reviewToReview.reviewRating = self.givenRating;
+    NSLog(@"FINAL RATING WAS %@", self.reviewToReview.reviewRating);
     self.reviewToReview.reviewContent = self.reviewBodyTextField.text;
     self.reviewToReview.hasBeenReviewed = @1;
     [self.reviewToReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
@@ -71,6 +85,10 @@
      }];
 }
      
+
+
+
+
 
 
 

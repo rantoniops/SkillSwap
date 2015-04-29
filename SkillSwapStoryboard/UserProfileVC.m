@@ -116,43 +116,7 @@
 
 
 
--(void)calculateUserRating:(User *)user
-{
-    PFQuery *reviewsQuery = [Review query];
-    [reviewsQuery includeKey:@"reviewed"];
-    [reviewsQuery includeKey:@"reviewer"];
-    [reviewsQuery includeKey:@"course"];
-    [reviewsQuery whereKey:@"reviewed" equalTo:user];
-    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
-    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         if (error == nil)
-         {
-             NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
-             self.reviewsArray = objects;
-             int reviewsSum = 0;
-             for (Review *review in self.reviewsArray)
-             {
-                 reviewsSum = reviewsSum + [review.reviewRating intValue];
-             }
-             if (self.reviewsArray.count == 0)
-             {
-                 self.rating.text = @"0 ratings.";
-                 // dont do anything, since dividing by zero will crash the app
-             }
-             else
-             {
-                 int reviewsAverage = (reviewsSum / self.reviewsArray.count);
-                 NSNumber *average = @(reviewsAverage);
-                 self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
-             }
-         }
-         else
-         {
-             NSLog(@"error finding reviews");
-         }
-     }];
-}
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -190,6 +154,49 @@
 }
 
 
+-(void)calculateUserRating:(User *)user
+{
+    PFQuery *reviewsQuery = [Review query];
+    [reviewsQuery includeKey:@"reviewed"];
+    [reviewsQuery includeKey:@"reviewer"];
+    [reviewsQuery includeKey:@"course"];
+    [reviewsQuery whereKey:@"reviewed" equalTo:user];
+    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
+    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (error == nil)
+         {
+             NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
+             self.reviewsArray = objects;
+             int reviewsSum = 0;
+             for (Review *review in self.reviewsArray)
+             {
+                 reviewsSum += [review.reviewRating intValue];
+                 NSLog(@"review rating is %@", review.reviewRating);
+             }
+             if (self.reviewsArray.count == 0)
+             {
+                 self.rating.text = @"0 ratings.";
+                 // dont do anything, since dividing by zero will crash the app
+             }
+             else
+             {
+                 int reviewsAverage = (reviewsSum / self.reviewsArray.count);
+                 NSNumber *average = @(reviewsAverage);
+                 user.rating = average;
+                 self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
+             }
+         }
+         else
+         {
+             NSLog(@"error finding reviews");
+         }
+     }];
+}
+
+
+
+
 -(void)queryForUserInfo
 {
     if (self.selectedUser) // IF COMING FROM TAKECOURSEVC AND WANNA SHOW THE TEACHERS PROFILE
@@ -210,6 +217,8 @@
              if (error == nil)
              {
                  NSLog(@"selected user is %@", self.selectedUser);
+
+                 
                  self.coursesArray = objects;
                  [self.tableVIew reloadData];
                  self.name.text = self.selectedUser.username;
@@ -247,7 +256,7 @@
     else // current user clicked on the profile button and wants to see his own profile
     {
         [self calculateUserRating:[User currentUser]];
-        
+
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         PFQuery *relationQuery = relation.query;
@@ -260,6 +269,7 @@
              {
                  self.coursesArray = objects;
                  [self.tableVIew reloadData];
+
                  self.name.text = currentUser.username;
                  self.userImageFile = [currentUser valueForKey:@"profilePic"];
                  NSLog(@"image file is %@", self.userImageFile);
@@ -309,7 +319,6 @@
              if (error == nil)
              {
                  self.followersArray = objects;
-                 NSLog(@"should not be followed i don't think %@", objects);
                  
              }
              if (error)
@@ -343,7 +352,6 @@
              if (error == nil)
              {
                  self.followersArray = objects;
-                 NSLog(@"should not be followed i don't think %@", objects);
                  
              }
          }];
@@ -358,7 +366,6 @@
              if (error == nil)
              {
                  self.followingArray = objects;
-                 NSLog(@"should be following someone %@", objects);
              }
          }];
     }
@@ -417,7 +424,6 @@
 //    self.profileImage.image = self.chosenImage;
     self.smallImageData = UIImageJPEGRepresentation(self.chosenImage, 0.5);
     [picker dismissViewControllerAnimated:YES completion:NULL];
-    NSLog(@"image should be ready to save");
     [self saveImage];
     [self loadProfilePicwithImage:self.chosenImage];
     
@@ -449,7 +455,8 @@
     {
         Course *course = self.coursesArray[indexPath.row];
         NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-        NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", [course valueForKey:@"title"] , timeString];
+        NSString *secondTimeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
+        NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@ on %@", [course valueForKey:@"title"] , timeString, secondTimeString];
         cell.textLabel.text = titleAndTime;
         cell.detailTextLabel.text = [course valueForKey:@"address"];
     }
@@ -462,7 +469,6 @@
 {
     if ([self.tableViewNumber isEqual:@2])
     {
-        NSLog(@"no transition");
         [tableView deselectRowAtIndexPath:indexPath animated:true];
     }
     else if ([self.tableViewNumber isEqual:@3])
