@@ -122,7 +122,14 @@
     [reviewsQuery includeKey:@"reviewed"];
     [reviewsQuery includeKey:@"reviewer"];
     [reviewsQuery includeKey:@"course"];
-    [reviewsQuery whereKey:@"reviewed" equalTo:user];
+    if (self.selectedUser)
+    {
+        [reviewsQuery whereKey:@"reviewed" equalTo:self.selectedUser];
+    }
+    else
+    {
+        [reviewsQuery whereKey:@"reviewed" equalTo:[User currentUser]];
+    }
     [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
@@ -305,7 +312,6 @@
              if (error == nil)
              {
                  self.followersArray = objects;
-                 NSLog(@"should not be followed i don't think %@", objects);
                  
              }
              if (error)
@@ -339,7 +345,6 @@
              if (error == nil)
              {
                  self.followersArray = objects;
-                 NSLog(@"should not be followed i don't think %@", objects);
                  
              }
          }];
@@ -354,7 +359,6 @@
              if (error == nil)
              {
                  self.followingArray = objects;
-                 NSLog(@"should be following someone %@", objects);
              }
          }];
     }
@@ -413,7 +417,6 @@
 //    self.profileImage.image = self.chosenImage;
     self.smallImageData = UIImageJPEGRepresentation(self.chosenImage, 0.5);
     [picker dismissViewControllerAnimated:YES completion:NULL];
-    NSLog(@"image should be ready to save");
     [self saveImage];
     [self loadProfilePicwithImage:self.chosenImage];
     
@@ -458,7 +461,6 @@
 {
     if ([self.tableViewNumber isEqual:@2])
     {
-        NSLog(@"no transition");
         [tableView deselectRowAtIndexPath:indexPath animated:true];
     }
     else if ([self.tableViewNumber isEqual:@3])
@@ -491,7 +493,7 @@
         takeCourseVC.selectedCourse = self.courseAtRow;
         takeCourseVC.selectedTeacher = self.courseAtRow.teacher;
     }
-    else if ([segue.identifier isEqualToString:@"connections"])
+    else if ([segue.identifier isEqualToString:@"friends"])
     {
         ConnectionsListVC *connectionsVC = segue.destinationViewController;
         connectionsVC.followersArray = self.followersArray;

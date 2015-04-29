@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
-@property NSArray *courseReviews;
+@property NSArray *teacherReviews;
 @property User *currentUser;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
 @property (weak, nonatomic) IBOutlet UIButton *takeClassButton;
@@ -73,6 +73,7 @@
         self.messageTeacherButton.hidden = YES;
     }
     [self doIfollowThisGuy];
+    [self queryForteacherReviews];
 }
 
 -(void)doIfollowThisGuy
@@ -171,15 +172,15 @@
 }
 
 
--(void)queryForCourseReviews
+-(void)queryForteacherReviews
 {
     PFQuery *reviewsQuery = [Review query];
-    [reviewsQuery whereKey:@"course" equalTo:self.selectedCourse];
+    [reviewsQuery whereKey:@"reviewed" equalTo:self.selectedTeacher];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (!error)
          {
-             self.courseReviews = objects;
+             self.teacherReviews = objects;
          }
      }];
 }
@@ -229,7 +230,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    Review *review = self.courseReviews[indexPath.row];
+    Review *review = self.teacherReviews[indexPath.row];
     NSString *reviewerString = [NSString stringWithFormat:@"%@",[review valueForKey:@"reviewer"]];
     cell.detailTextLabel.text = reviewerString;
     cell.textLabel.text = [review valueForKey:@"reviewContent"];
@@ -238,7 +239,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.courseReviews.count;
+    return self.teacherReviews.count;
 }
 
 

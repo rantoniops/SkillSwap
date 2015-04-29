@@ -311,10 +311,7 @@
     {
         cell.cellViewTwo.layer.borderColor = [UIColor blueColor].CGColor;
         cell.cellViewTwo.backgroundColor = [[UIColor blueColor] colorWithAlphaComponent:0.4f];
-        
         cell.titleLabel.textColor = [UIColor whiteColor];
-        CGSize customSize = [cell.titleLabel intrinsicContentSize];
-        NSLog(@"width: %f, height %f", customSize.width, customSize.height);
         cell.cellViewTwo.frame = CGRectOffset(cell.cellViewTwo.frame, 120, 10);
         cell.myMessageConstraint.constant = 150;
     }

@@ -62,20 +62,26 @@
         else
         {
             NSLog(@"error logging in");
-//            [self showAlert("There was an error with your login", error: returnedError!)];
+            [self.activityIndicator stopAnimating];
+            [self showAlert];
         }
     }];
 }
 
 
             
-//-(void)showAlert(NSString *)message error(NSError *)
-//{
-//    let alert = UIAlertController(title: message, message: error.localizedDescription, preferredStyle: .Alert)
-//    let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-//    alert.addAction(okAction)
-//    presentViewController(alert, animated: true, completion: nil)
-//}
+-(void)showAlert
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"There was an Error" message:@"Please try again" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            self.nameTextField.text = @"";
+            self.passwordTextField.text = @"";
+        }];
+    
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:true completion:nil];
+
+}
 
 
 
