@@ -10,6 +10,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.emailTextField.delegate = self;
     self.passwordTextField.secureTextEntry = YES;
     self.activityIndicator.hidesWhenStopped = YES;
 }

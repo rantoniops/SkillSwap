@@ -116,44 +116,7 @@
 
 
 
-//-(void)calculateUserRating:(User *)user
-//{
-//    PFQuery *reviewsQuery = [Review query];
-//    [reviewsQuery includeKey:@"reviewed"];
-//    [reviewsQuery includeKey:@"reviewer"];
-//    [reviewsQuery includeKey:@"course"];
-//    [reviewsQuery whereKey:@"reviewed" equalTo:user];
-//    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
-//    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//     {
-//         if (error == nil)
-//         {
-//             NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
-//             self.reviewsArray = objects;
-//             int reviewsSum = 0;
-//             for (Review *review in self.reviewsArray)
-//             {
-//                 reviewsSum += [review.reviewRating intValue];
-//                 NSLog(@"review rating is %@", review.reviewRating);
-//             }
-//             if (self.reviewsArray.count == 0)
-//             {
-//                 self.rating.text = @"0 ratings.";
-//                 // dont do anything, since dividing by zero will crash the app
-//             }
-//             else
-//             {
-//                 int reviewsAverage = (reviewsSum / self.reviewsArray.count);
-//                 NSNumber *average = @(reviewsAverage);
-//                 self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
-//             }
-//         }
-//         else
-//         {
-//             NSLog(@"error finding reviews");
-//         }
-//     }];
-//}
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -191,11 +154,54 @@
 }
 
 
+-(void)calculateUserRating:(User *)user
+{
+    PFQuery *reviewsQuery = [Review query];
+    [reviewsQuery includeKey:@"reviewed"];
+    [reviewsQuery includeKey:@"reviewer"];
+    [reviewsQuery includeKey:@"course"];
+    [reviewsQuery whereKey:@"reviewed" equalTo:user];
+    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
+    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (error == nil)
+         {
+             NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
+             self.reviewsArray = objects;
+             int reviewsSum = 0;
+             for (Review *review in self.reviewsArray)
+             {
+                 reviewsSum += [review.reviewRating intValue];
+                 NSLog(@"review rating is %@", review.reviewRating);
+             }
+             if (self.reviewsArray.count == 0)
+             {
+                 self.rating.text = @"0 ratings.";
+                 // dont do anything, since dividing by zero will crash the app
+             }
+             else
+             {
+                 int reviewsAverage = (reviewsSum / self.reviewsArray.count);
+                 NSNumber *average = @(reviewsAverage);
+                 user.rating = average;
+                 self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
+             }
+         }
+         else
+         {
+             NSLog(@"error finding reviews");
+         }
+     }];
+}
+
+
+
+
 -(void)queryForUserInfo
 {
     if (self.selectedUser) // IF COMING FROM TAKECOURSEVC AND WANNA SHOW THE TEACHERS PROFILE
     {
-//        [self calculateUserRating:self.selectedUser];
+        [self calculateUserRating:self.selectedUser];
 
         PFQuery *coursesQuery = [Course query];
         [coursesQuery whereKey:@"teacher" equalTo:self.selectedUser];
@@ -211,7 +217,8 @@
              if (error == nil)
              {
                  NSLog(@"selected user is %@", self.selectedUser);
-                 self.rating.text = [NSString stringWithFormat:@"Rating %@", self.selectedUser.rating ];
+
+                 
                  self.coursesArray = objects;
                  [self.tableVIew reloadData];
                  self.name.text = self.selectedUser.username;
@@ -248,7 +255,7 @@
     }
     else // current user clicked on the profile button and wants to see his own profile
     {
-//        [self calculateUserRating:[User currentUser]];
+        [self calculateUserRating:[User currentUser]];
 
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
@@ -262,6 +269,7 @@
              {
                  self.coursesArray = objects;
                  [self.tableVIew reloadData];
+
                  self.name.text = currentUser.username;
                  self.userImageFile = [currentUser valueForKey:@"profilePic"];
                  NSLog(@"image file is %@", self.userImageFile);

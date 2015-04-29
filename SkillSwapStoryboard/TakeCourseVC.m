@@ -190,7 +190,14 @@
          {
              if (objects.count > 0)
              {
-                 self.courseRating.text = [NSString stringWithFormat:@"Rating %@", self.selectedTeacher.rating];
+                 if (self.selectedTeacher.rating == nil)
+                 {
+                     self.courseRating.text = @"0 ratings.";
+                 }
+                 else
+                 {
+                     self.courseRating.text = [NSString stringWithFormat:@"Rating %@", self.selectedTeacher.rating ];
+                 }
                  self.teacherReviews = objects;
                  [self.courseTableView reloadData];
              }
