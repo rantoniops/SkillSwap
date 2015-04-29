@@ -79,7 +79,7 @@
         NSLog(@" course is earlier");
     }
     [self doIfollowThisGuy];
-    [self queryForteacherReviews];
+    [self calculateUserRating:self.selectedTeacher];
 }
 
 -(void)doIfollowThisGuy
@@ -178,36 +178,77 @@
 }
 
 
--(void)queryForteacherReviews
+//-(void)queryForteacherReviews
+//{
+//    PFQuery *reviewsQuery = [Review query];
+//    [reviewsQuery includeKey:@"reviewer"];
+//    [reviewsQuery includeKey:@"reviewed"];
+//    [reviewsQuery whereKey:@"reviewed" equalTo:self.selectedTeacher];
+//    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//     {
+//         if (error == nil)
+//         {
+//             if (objects.count > 0)
+//             {
+//                 if (self.selectedTeacher.rating == nil)
+//                 {
+//                     self.courseRating.text = @"0 ratings.";
+//                 }
+//                 else
+//                 {
+//                     self.courseRating.text = [NSString stringWithFormat:@"Rating %@", self.selectedTeacher.rating ];
+//                 }
+//                 self.teacherReviews = objects;
+//                 [self.courseTableView reloadData];
+//             }
+//             else
+//             {
+//                 self.courseRating.text = @"0 ratings.";
+//             }
+//         }
+//     }];
+//}
+
+
+-(void)calculateUserRating:(User *)user
 {
     PFQuery *reviewsQuery = [Review query];
-    [reviewsQuery includeKey:@"reviewer"];
     [reviewsQuery includeKey:@"reviewed"];
-    [reviewsQuery whereKey:@"reviewed" equalTo:self.selectedTeacher];
+    [reviewsQuery includeKey:@"reviewer"];
+    [reviewsQuery includeKey:@"course"];
+    [reviewsQuery whereKey:@"reviewed" equalTo:user];
+    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (error == nil)
          {
-             if (objects.count > 0)
+             NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
+             self.teacherReviews = objects;
+             int reviewsSum = 0;
+             for (Review *review in self.teacherReviews)
              {
-                 if (self.selectedTeacher.rating == nil)
-                 {
-                     self.courseRating.text = @"0 ratings.";
-                 }
-                 else
-                 {
-                     self.courseRating.text = [NSString stringWithFormat:@"Rating %@", self.selectedTeacher.rating ];
-                 }
-                 self.teacherReviews = objects;
-                 [self.courseTableView reloadData];
+                 reviewsSum += [review.reviewRating intValue];
+                 NSLog(@"review rating is %@", review.reviewRating);
+             }
+             if (self.teacherReviews.count == 0)
+             {
+                 self.courseRating.text = @"0 ratings.";
+                 // dont do anything, since dividing by zero will crash the app
              }
              else
              {
-                 self.courseRating.text = @"0 ratings.";
+                 int reviewsAverage = (reviewsSum / self.teacherReviews.count);
+                 NSNumber *average = @(reviewsAverage);
+                 self.courseRating.text = [NSString stringWithFormat:@"Rating %@", average];
              }
+         }
+         else
+         {
+             NSLog(@"error finding reviews");
          }
      }];
 }
+
 
 
 - (IBAction)dismissButton:(id)sender

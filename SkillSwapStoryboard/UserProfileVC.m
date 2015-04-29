@@ -183,7 +183,7 @@
              {
                  int reviewsAverage = (reviewsSum / self.reviewsArray.count);
                  NSNumber *average = @(reviewsAverage);
-                 user.rating = average;
+//                 user.rating = average;
                  self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
              }
          }
