@@ -8,7 +8,7 @@ import Foundation
 
 
     @NSManaged var profilePic: PFFile
-    @NSManaged var rating : Int
+    @NSManaged var rating : NSNumber
 
     @NSManaged var friends: PFRelation
     

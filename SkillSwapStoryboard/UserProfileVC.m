@@ -489,7 +489,7 @@
     {
         TakeCourseVC *takeCourseVC = segue.destinationViewController;
         takeCourseVC.selectedCourse = self.courseAtRow;
-        takeCourseVC.selectedTeacher = self.courseAtRow.teacher;
+        takeCourseVC.selectedTeacher = [self.courseAtRow objectForKey:@"teacher"];
     }
     else if ([segue.identifier isEqualToString:@"connections"])
     {
