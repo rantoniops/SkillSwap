@@ -25,7 +25,7 @@
 {
     [super viewDidLoad];
     self.currentUser = [User currentUser];
-    [self.takeClassButton setTitle:@"Join" forState:UIControlStateNormal];
+    [self.takeClassButton setTitle:@"Join class" forState:UIControlStateNormal];
     if (self.selectedTeacher == self.currentUser)
     {
         self.followButton.hidden = YES;
@@ -62,7 +62,7 @@
 
 - (IBAction)onTakeClassButtonPressed:(UIButton *)sender
 {
-    if ([self.takeClassButton.titleLabel.text isEqualToString:@"Join"])
+    if ([self.takeClassButton.titleLabel.text isEqualToString:@"Join class"])
     {
         [self confirmAlert];
     }
@@ -101,17 +101,17 @@
     PFRelation *relation = [currentUser relationForKey:@"courses"];
     PFQuery *relationQuery = relation.query;
     [relationQuery includeKey:@"courses"];
-    [relationQuery whereKey:@"courses" equalTo: self.selectedCourse];
+//    [relationQuery whereKey:@"courses" equalTo: self.selectedCourse];
     [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         if (objects.count > 0)
+         if ([objects containsObject:self.selectedCourse])
          {
              [self.takeClassButton setTitle:@"No longer attend" forState:UIControlStateNormal];
              self.takeClassButton.backgroundColor = [[UIColor redColor]colorWithAlphaComponent:0.5];
          }
          else
          {
-             [self.takeClassButton setTitle:@"Join" forState:UIControlStateNormal];
+             [self.takeClassButton setTitle:@"Join class" forState:UIControlStateNormal];
          }
      }];
 }
@@ -149,7 +149,7 @@
              NSLog(@"class was deleted and saved");
              [self.navigationController popViewControllerAnimated:true];
              NSLog(@"here are the current users courses now %@", [currentUser valueForKey:@"courses"]);
-             [self.takeClassButton setTitle:@"Join" forState:UIControlStateNormal];
+             [self.takeClassButton setTitle:@"Join class" forState:UIControlStateNormal];
          }
          else
          {
