@@ -82,7 +82,7 @@
 
 
 // do i need to do this one?
--(void) dealloc
+-(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 //    [super dealloc];
