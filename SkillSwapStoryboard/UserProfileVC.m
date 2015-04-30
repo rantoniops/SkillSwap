@@ -203,7 +203,7 @@
 
 -(void)queryForUserInfo
 {
-    if (self.selectedUser) // IF COMING FROM TAKECOURSEVC AND WANNA SHOW THE TEACHERS PROFILE
+    if (self.selectedUser  &&  self.selectedUser != [User currentUser]) // IF COMING FROM TAKECOURSEVC AND WANNA SHOW THE TEACHERS PROFILE
     {
         [self calculateUserRating:self.selectedUser];
 

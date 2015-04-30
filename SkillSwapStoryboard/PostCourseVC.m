@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property UIImage *chosenImage;
 @property NSData *smallImageData;
+@property (weak, nonatomic) IBOutlet UIButton *postClassButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 @implementation PostCourseVC
@@ -137,7 +138,7 @@
 
 - (IBAction)onPostButtonPressed:(UIButton *)sender
 {
-    sender.enabled = NO;
+    self.postClassButton.enabled = NO;
     if (self.classAddressTextField.text == nil || self.classDescriptionTextField.text == nil || self.classTitleTextField.text == nil || [self.classPhotoImageView.image isEqual:[UIImage imageNamed:@"emptyProfile"]])
     {
         [self fillOutAllfields];
@@ -225,7 +226,9 @@
 -(void)fillOutAllfields
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please complete all fields" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+    {
+        self.postClassButton.enabled = YES;
     }];
     
     [alert addAction:cancelAction];
