@@ -185,7 +185,7 @@
              else
              {
                  float reviewsAverage = (reviewsSum / self.reviewsArray.count);
-                 int fiveScaleAverage = reviewsAverage * 2.5;
+                 float fiveScaleAverage = reviewsAverage * 2.5;
                  NSNumber *average = @(fiveScaleAverage);
 //                 user.rating = average;
                  self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
