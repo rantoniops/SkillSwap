@@ -28,6 +28,10 @@
     self.viewIsUp = @0;
     self.userInfoCaptured = @0;
 
+    if (self.view.frame.size.height == 480)
+    {
+        NSLog(@"iphone 4S");
+    }
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -98,7 +102,7 @@
     [self animateControls:userInfo withFrame:newFrame];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event // when clicking anywhere on the view
 {
     [self.view endEditing:YES];
     if ([self.viewIsUp isEqual:@1])
