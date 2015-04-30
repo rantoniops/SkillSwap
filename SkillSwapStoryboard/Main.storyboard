@@ -39,7 +39,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="16" y="35" width="368" height="59"/>
+                                    <rect key="frame" x="16" y="35" width="368" height="73"/>
                                     <mask key="constraints">
                                         <exclude reference="8CM-vB-vGS"/>
                                     </mask>
@@ -75,13 +75,14 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="n6C-0w-orb" firstAttribute="top" secondItem="7mg-Ew-Ugi" secondAttribute="bottom" constant="21" id="2Dw-Yu-Jaa">
-                                <variation key="widthClass=compact" constant="22"/>
+                                <variation key="widthClass=compact" constant="8"/>
                             </constraint>
                             <constraint firstItem="0XL-kv-MwA" firstAttribute="top" secondItem="h0r-mA-fLr" secondAttribute="bottom" constant="110" id="HBx-YJ-gW4">
                                 <variation key="widthClass=compact" constant="174"/>
                             </constraint>
                             <constraint firstItem="h0r-mA-fLr" firstAttribute="leading" secondItem="Ldq-zV-Atc" secondAttribute="leadingMargin" constant="59" id="Nkr-yb-zj2"/>
                             <constraint firstItem="n6C-0w-orb" firstAttribute="trailing" secondItem="Ldq-zV-Atc" secondAttribute="trailingMargin" id="Q65-Ql-BzC"/>
+                            <constraint firstItem="7mg-Ew-Ugi" firstAttribute="leading" secondItem="Ldq-zV-Atc" secondAttribute="leadingMargin" id="W3D-YB-r20"/>
                             <constraint firstItem="n6C-0w-orb" firstAttribute="leading" secondItem="Ldq-zV-Atc" secondAttribute="leadingMargin" id="XS1-7R-kxl"/>
                             <constraint firstItem="n6C-0w-orb" firstAttribute="leading" secondItem="Ldq-zV-Atc" secondAttribute="leadingMargin" id="cP1-si-Y10"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h0r-mA-fLr" secondAttribute="trailing" constant="59" id="cx2-DF-YG7"/>
@@ -95,9 +96,12 @@
                             </constraint>
                             <constraint firstAttribute="centerX" secondItem="7mg-Ew-Ugi" secondAttribute="centerX" id="rf6-PY-DhP"/>
                             <constraint firstAttribute="centerX" secondItem="h0r-mA-fLr" secondAttribute="centerX" id="sQp-zY-n80"/>
+                            <constraint firstItem="7mg-Ew-Ugi" firstAttribute="trailing" secondItem="Ldq-zV-Atc" secondAttribute="trailingMargin" id="zVu-eB-Ae5"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="W3D-YB-r20"/>
+                                <exclude reference="zVu-eB-Ae5"/>
                                 <exclude reference="Q65-Ql-BzC"/>
                                 <exclude reference="cP1-si-Y10"/>
                                 <exclude reference="ghz-vi-tqI"/>
@@ -106,6 +110,8 @@
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="constraints">
+                                <include reference="W3D-YB-r20"/>
+                                <include reference="zVu-eB-Ae5"/>
                                 <include reference="Q65-Ql-BzC"/>
                                 <exclude reference="XS1-7R-kxl"/>
                                 <include reference="cP1-si-Y10"/>
