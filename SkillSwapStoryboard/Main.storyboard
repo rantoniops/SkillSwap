@@ -975,7 +975,8 @@
                                         <exclude reference="qhN-IE-XuL"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="545" y="25" width="41" height="41"/>
                                     <mask key="constraints">
                                         <exclude reference="2gg-LH-jCK"/>
                                         <exclude reference="HDv-sO-uxn"/>
@@ -1925,7 +1926,8 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="58" y="40" width="511" height="30"/>
                                     <mask key="constraints">
                                         <exclude reference="xV3-Rn-KiA"/>
                                     </mask>
@@ -1945,7 +1947,8 @@
                                         <exclude reference="cV5-1y-cuy"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="58" y="88" width="511" height="30"/>
                                     <mask key="constraints">
                                         <include reference="cV5-1y-cuy"/>
                                         <exclude reference="clc-bt-MRF"/>
@@ -1961,7 +1964,8 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="58" y="136" width="511" height="30"/>
                                     <mask key="constraints">
                                         <exclude reference="XiM-73-ItL"/>
                                     </mask>
@@ -1982,7 +1986,8 @@
                                         <exclude reference="0Gv-8D-2mQ"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="58" y="184" width="511" height="30"/>
                                     <mask key="constraints">
                                         <include reference="0Gv-8D-2mQ"/>
                                         <exclude reference="QXv-li-Gpl"/>
@@ -2076,7 +2081,8 @@
                                         <exclude reference="i2a-Hd-wPX"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=compact">
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="230" width="600" height="180"/>
                                     <mask key="constraints">
                                         <include reference="7iL-OQ-VYm"/>
                                         <exclude reference="i2a-Hd-wPX"/>

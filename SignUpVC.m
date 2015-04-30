@@ -6,7 +6,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property NSNumber *keyboardUp;
+@property NSNumber *viewIsUp;
 @property NSDictionary *storedUserInfo;
+@property NSNumber *userInfoCaptured;
 @property CGRect negativeFrame;
 @end
 @implementation SignUpVC
@@ -16,74 +18,60 @@
     self.nameTextField.delegate = self;
     self.passwordTextField.delegate = self;
     self.emailTextField.delegate = self;
+
+    self.nameTextField.secureTextEntry = YES;
     self.passwordTextField.secureTextEntry = YES;
+    self.emailTextField.secureTextEntry = YES;
+
     self.activityIndicator.hidesWhenStopped = YES;
     self.keyboardUp = @0;
+    self.viewIsUp = @0;
+    self.userInfoCaptured = @0;
+
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == self.emailTextField)
+    if ([self.viewIsUp isEqual:@1])
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
-    }
-    else if (textField == self.passwordTextField)
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+
+        CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+        kbFrame = [self.view convertRect:kbFrame fromView:nil];
+        CGRect negFrame = self.view.frame;
+        negFrame.origin.y -= (kbFrame.size.height / 2) * (-1);
+        [self animateControls:self.storedUserInfo withFrame:negFrame];
     }
     [textField resignFirstResponder];
+    self.keyboardUp = @0;
     return true;
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    NSLog(@"DID BEGIN");
+    self.keyboardUp = @1;
     if (textField == self.emailTextField)
     {
-        NSLog(@"EMAIL");
-
-        if ([self.keyboardUp isEqual:@0])
+        if ([self.viewIsUp isEqual:@0])
         {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+            if ([self.userInfoCaptured isEqual:@1])
+            {
+                CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+                kbFrame = [self.view convertRect:kbFrame fromView:nil];
+                CGRect negFrame = self.view.frame;
+                negFrame.origin.y += (kbFrame.size.height / 2) * (-1);
+                [self animateControls:self.storedUserInfo withFrame:negFrame];
+            }
+            else
+            {
+                self.userInfoCaptured = @1;
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+            }
         }
     }
-
-//    else if (textField == self.nameTextField)
-//    {
-//        NSLog(@"NAME");
-//
-//        if ([self.keyboardUp isEqual:@1]) // if keyboard is up
-//        {
-//
-//            NSLog(@"NAME INSIDE");
-//
-//            CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-//            kbFrame = [self.view convertRect:kbFrame fromView:nil];
-//            CGRect negFrame = self.view.frame;
-//            negFrame.origin.y += (kbFrame.size.height / 2) * (-1);
-//
-//            [self animateControls:self.storedUserInfo withFrame:negFrame];
-//
-//            self.keyboardUp = @0;
-//        }
-//
-//    }
-    else if (textField == self.passwordTextField)
+    else
     {
-
-        NSLog(@"PASSWORD");
-//        if ([self.keyboardUp isEqual:@1]) // if keyboard is up
-//        {
-//            NSLog(@"PASSWORD INSIDE");
-//
-//            CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-//            kbFrame = [self.view convertRect:kbFrame fromView:nil];
-//            CGRect negFrame = self.view.frame;
-//            negFrame.origin.y -= (kbFrame.size.height / 2) * (-1);
-//
-//            [self animateControls:self.storedUserInfo withFrame:negFrame];
-//
-//        }
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
     }
 }
 
@@ -94,6 +82,7 @@
 - (void)keyboardWillShow:(NSNotification*)notification
 {
     [self moveControls:notification up:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)notification
@@ -112,6 +101,15 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
+    if ([self.viewIsUp isEqual:@1])
+    {
+        CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+        kbFrame = [self.view convertRect:kbFrame fromView:nil];
+        CGRect negFrame = self.view.frame;
+        negFrame.origin.y -= (kbFrame.size.height / 2) * (-1);
+        [self animateControls:self.storedUserInfo withFrame:negFrame];
+        self.keyboardUp = @0;
+    }
 }
 
 - (CGRect)getNewControlsFrame:(NSDictionary*)userInfo up:(BOOL)up
@@ -130,18 +128,14 @@
         self.view.frame = newFrame;
     }
                      completion:^(BOOL finished){
-                         [[NSNotificationCenter defaultCenter] removeObserver:self];
-
-                         if ([self.keyboardUp isEqual:@0])
+                         if ([self.viewIsUp isEqual:@0])
                          {
-                             self.keyboardUp = @1;
+                             self.viewIsUp = @1;
                          }
                          else
                          {
-                             self.keyboardUp = @0;
+                             self.viewIsUp = @0;
                          }
-                         NSLog(@"NEW STATE %@" , self.keyboardUp);
-
                      }];
 }
 
