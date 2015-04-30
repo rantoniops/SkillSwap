@@ -2541,9 +2541,6 @@
                                         <include reference="tPD-m1-kOM"/>
                                     </mask>
                                 </variation>
-                                <connections>
-                                    <outlet property="delegate" destination="REZ-1m-KA0" id="I8B-RJ-EBQ"/>
-                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnI-nb-Bgr">
                                 <rect key="frame" x="57" y="280" width="294" height="50"/>
@@ -2605,9 +2602,6 @@
                                         <exclude reference="iyh-gT-bjd"/>
                                     </mask>
                                 </variation>
-                                <connections>
-                                    <outlet property="delegate" destination="REZ-1m-KA0" id="BJT-QW-s1c"/>
-                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tX8-3Y-1Lk">
                                 <rect key="frame" x="82" y="370" width="237" height="30"/>
@@ -2663,9 +2657,6 @@
                                         <include reference="HkQ-dz-8A2"/>
                                     </mask>
                                 </variation>
-                                <connections>
-                                    <outlet property="delegate" destination="REZ-1m-KA0" id="nEb-Tv-MCU"/>
-                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.82352941176470584" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

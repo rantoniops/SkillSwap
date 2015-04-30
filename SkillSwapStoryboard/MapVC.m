@@ -241,7 +241,6 @@
         if (!error)
         {
             self.results = objects;
-            NSLog(@"object is of type %@", [self.results[0] class]);
             for (Course *object in self.results)
             {
                 Course *course = (Course *)object;
