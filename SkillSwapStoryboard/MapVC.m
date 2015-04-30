@@ -29,12 +29,21 @@
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 @property BOOL checkEveryone;
 @property NSArray *reviews;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *time;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *who;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 @implementation MapVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.ifNow = YES;
+    self.checkEveryone = YES;
+    self.now = [NSDate date];
+    NSTimeInterval fourteenHours = 14*60*60;
+    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+    [self queryForMap];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -54,33 +63,31 @@
         [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
         
         //check the segment control
-        
-        self.ifNow = YES;
-        self.checkEveryone = YES;
-        [self checkSegmentControl];
-        self.navigationController.navigationBarHidden = YES;
         self.now = [NSDate date];
-        NSLog(@"right now it is %@", self.now);
         NSTimeInterval fourteenHours = 14*60*60;
         self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+        [self checkSegmentControl];
+        self.navigationController.navigationBarHidden = YES;
         [self pullReviews];
-        [self queryForMap];
+        
     }
 }
 
 
 -(void)checkSegmentControl
 {
-    if(sender.selectedSegmentIndex == 1)
+    if(self.who.selectedSegmentIndex == 1)
     {
         self.checkEveryone = NO;
+        [self queryMapForFriends];
     }
     else
     {
         self.checkEveryone = YES;
+        [self queryForMap];
     }
     
-    if(selectedSegmentIndex == 1)
+    if(self.time.selectedSegmentIndex == 1)
     {
         self.ifNow = NO;
     }
