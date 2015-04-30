@@ -20,9 +20,7 @@
     self.passwordTextField.delegate = self;
     self.emailTextField.delegate = self;
 
-    self.nameTextField.secureTextEntry = YES;
     self.passwordTextField.secureTextEntry = YES;
-    self.emailTextField.secureTextEntry = YES;
 
     self.activityIndicator.hidesWhenStopped = YES;
     self.keyboardUp = @0;
