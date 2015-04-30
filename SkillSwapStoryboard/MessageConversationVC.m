@@ -14,15 +14,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     self.activityIndicator.hidesWhenStopped = YES;
 //    self.view.backgroundColor = [[UIColor lightGrayColor]colorWithAlphaComponent:1.9];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"messageReceived" object:nil];
+
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
-    self.sendButton.enabled = NO;
 
-    // this resizes your cell to the content size and makes the text start from the top to down, not the center growing up and down
+
+    self.sendButton.enabled = NO;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 50;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -33,7 +34,7 @@
     self.sendButton.enabled = YES;
 }
 
-
+////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
 
 - (void)keyboardWillShow:(NSNotification*)notification
 {
@@ -77,8 +78,11 @@
 }
 
 
+////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
+
+
 // do i need to do this one?
--(void) dealloc
+-(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 //    [super dealloc];
@@ -261,7 +265,8 @@
                  // Send push notification to query
                  PFPush *push = [[PFPush alloc] init];
                  [push setQuery:pushQuery]; // Set our Installation query
-                 [push setMessage: self.messageTextField.text];
+                 
+                 [push setMessage: [NSString stringWithFormat:@"%@ says: %@" , [User currentUser].username, newMessage.messageBody] ];
                  [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                   {
                       if (succeeded)

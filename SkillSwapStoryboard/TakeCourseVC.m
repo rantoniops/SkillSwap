@@ -211,6 +211,33 @@
                  NSLog(@"current user saved");
                  [self.navigationController popViewControllerAnimated:true];
                  NSLog(@"the course is of %@ type", [self.selectedCourse class]);
+
+                 /////////////////// PUSH NOTIFICATIONS /////////////////////
+
+                 // Find users
+                 PFQuery *userQuery = [User query];
+                 [userQuery whereKey:@"objectId" equalTo:self.selectedTeacher.objectId];
+                 // Find devices associated with these users
+                 PFQuery *pushQuery = [PFInstallation query];
+                 [pushQuery whereKey:@"user" matchesQuery:userQuery];
+                 // Send push notification to query
+                 PFPush *push = [[PFPush alloc] init];
+                 [push setQuery:pushQuery]; // Set our Installation query
+
+                 [push setMessage: [NSString stringWithFormat:@"%@ has joined your class!", currentUser.username] ];
+                 [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                  {
+                      if (succeeded)
+                      {
+                          NSLog(@"takeCourse push success");
+                      }
+                      else
+                      {
+                          NSLog(@"takeCourse push error");
+                      }
+                  }];
+
+                 /////////////////// PUSH NOTIFICATIONS END /////////////////
              }
              else
              {
@@ -304,7 +331,8 @@
              else
              {
                  int reviewsAverage = (reviewsSum / self.teacherReviews.count);
-                 NSNumber *average = @(reviewsAverage);
+                 int fiveScaleAverage = reviewsAverage * 2.5;
+                 NSNumber *average = @(fiveScaleAverage);
                  self.courseRating.text = [NSString stringWithFormat:@"Rating %@", average];
              }
          }
