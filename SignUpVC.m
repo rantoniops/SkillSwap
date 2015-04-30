@@ -19,24 +19,18 @@
     self.passwordTextField.secureTextEntry = YES;
     self.activityIndicator.hidesWhenStopped = YES;
     self.keyboardUp = @0;
-    
-
-
-//    NSLog(@"WIDTH SIZE IS %f", self.view.frame.size.width);
-//    NSLog(@"HEIGHT SIZE IS %f", self.view.frame.size.height);
-
-//    if (self.view.frame.size.height == 480.000000)
-//    {
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
-//    }
-
-
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    if (textField == self.emailTextField)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    }
+    else if (textField == self.passwordTextField)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    }
     [textField resignFirstResponder];
     return true;
 }
@@ -48,55 +42,48 @@
     {
         NSLog(@"EMAIL");
 
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-
-
-//        if ([self.keyboardUp isEqual: @0])
-//        {
-//            NSLog(@"EMAIL EQUAL @0");
-//            self.keyboardUp = @1;
-//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
-//        }
-
-    }
-    else if (textField == self.nameTextField)
-    {
-        NSLog(@"NAME");
-
-        if ([self.keyboardUp isEqual:@1]) // if keyboard is up
+        if ([self.keyboardUp isEqual:@0])
         {
-
-            NSLog(@"NAME INSIDE");
-
-            CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-            kbFrame = [self.view convertRect:kbFrame fromView:nil];
-            CGRect negFrame = self.view.frame;
-            negFrame.origin.y += (kbFrame.size.height / 2) * (-1);
-
-            [self animateControls:self.storedUserInfo withFrame:negFrame];
-
-            self.keyboardUp = @0;
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         }
-
     }
+
+//    else if (textField == self.nameTextField)
+//    {
+//        NSLog(@"NAME");
+//
+//        if ([self.keyboardUp isEqual:@1]) // if keyboard is up
+//        {
+//
+//            NSLog(@"NAME INSIDE");
+//
+//            CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+//            kbFrame = [self.view convertRect:kbFrame fromView:nil];
+//            CGRect negFrame = self.view.frame;
+//            negFrame.origin.y += (kbFrame.size.height / 2) * (-1);
+//
+//            [self animateControls:self.storedUserInfo withFrame:negFrame];
+//
+//            self.keyboardUp = @0;
+//        }
+//
+//    }
     else if (textField == self.passwordTextField)
     {
+
         NSLog(@"PASSWORD");
-        if ([self.keyboardUp isEqual:@1]) // if keyboard is up
-        {
-            NSLog(@"PASSWORD INSIDE");
-
-            CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-            kbFrame = [self.view convertRect:kbFrame fromView:nil];
-            CGRect negFrame = self.view.frame;
-            negFrame.origin.y += (kbFrame.size.height / 2) * (-1);
-
-            [self animateControls:self.storedUserInfo withFrame:negFrame];
-
-            self.keyboardUp = @0;
-        }
+//        if ([self.keyboardUp isEqual:@1]) // if keyboard is up
+//        {
+//            NSLog(@"PASSWORD INSIDE");
+//
+//            CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+//            kbFrame = [self.view convertRect:kbFrame fromView:nil];
+//            CGRect negFrame = self.view.frame;
+//            negFrame.origin.y -= (kbFrame.size.height / 2) * (-1);
+//
+//            [self animateControls:self.storedUserInfo withFrame:negFrame];
+//
+//        }
     }
 }
 
@@ -106,31 +93,20 @@
 
 - (void)keyboardWillShow:(NSNotification*)notification
 {
-    NSLog(@"WILL SHOW CALLED");
     [self moveControls:notification up:YES];
-    self.keyboardUp = @1;
-    NSLog(@"WILL KEY %@", self.keyboardUp);
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)notification
 {
-    NSLog(@"HIDE CALLED");
     [self moveControls:notification up:NO];
-    self.keyboardUp = @0;
-    NSLog(@"HIDE KEY %@", self.keyboardUp);
-
 }
 
 - (void)moveControls:(NSNotification*)notification up:(BOOL)up
 {
     NSDictionary* userInfo = [notification userInfo];
-
     self.storedUserInfo = userInfo;
-
     CGRect newFrame = [self getNewControlsFrame:userInfo up:up];
     [self animateControls:userInfo withFrame:newFrame];
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -141,13 +117,9 @@
 - (CGRect)getNewControlsFrame:(NSDictionary*)userInfo up:(BOOL)up
 {
     CGRect kbFrame = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-    NSLog(@"PREV kbFRAME IS %@", NSStringFromCGRect(kbFrame));
     kbFrame = [self.view convertRect:kbFrame fromView:nil];
-    NSLog(@"NEXT kbFRAME IS %@", NSStringFromCGRect(kbFrame));
     CGRect newFrame = self.view.frame;
-    NSLog(@"NEW FRAME IS %@", NSStringFromCGRect(newFrame));
     newFrame.origin.y += (kbFrame.size.height / 2) * (up ? -1 : 1);
-    NSLog(@"NEW FRAME ORIG IS %f", newFrame.origin.y);
     return newFrame;
 }
 
@@ -158,6 +130,17 @@
         self.view.frame = newFrame;
     }
                      completion:^(BOOL finished){
+                         [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+                         if ([self.keyboardUp isEqual:@0])
+                         {
+                             self.keyboardUp = @1;
+                         }
+                         else
+                         {
+                             self.keyboardUp = @0;
+                         }
+                         NSLog(@"NEW STATE %@" , self.keyboardUp);
 
                      }];
 }
