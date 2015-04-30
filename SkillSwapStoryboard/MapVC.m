@@ -31,6 +31,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 @property BOOL checkEveryone;
 @property NSArray *reviews;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *time;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *who;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 @implementation MapVC

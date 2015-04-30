@@ -80,9 +80,9 @@
 }
 
 
-
-////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
-
+//
+//////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
+//
 - (void)keyboardWillShow:(NSNotification*)notification
 {
     [self moveControls:notification up:YES];
@@ -142,8 +142,7 @@
                          }
                      }];
 }
-
-
+//
 ////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
 
 
