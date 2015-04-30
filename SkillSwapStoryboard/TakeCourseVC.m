@@ -35,7 +35,7 @@
         self.messageTeacherButton.hidden = YES;
         self.takeClassButton.hidden = YES;
     }
-    self.navigationItem.title = @"Class";
+    self.navigationItem.title = [self.selectedCourse valueForKey:@"title"];
 
     self.reviewsLabel.text = [NSString stringWithFormat:@"Reviews for %@:", self.selectedTeacher.username];
     self.courseName.text = [self.selectedCourse valueForKey:@"title"];
