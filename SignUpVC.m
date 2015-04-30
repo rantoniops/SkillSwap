@@ -5,32 +5,101 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property NSNumber *keyboardUp;
+@property NSDictionary *storedUserInfo;
+@property CGRect negativeFrame;
 @end
 @implementation SignUpVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.nameTextField.delegate = self;
+    self.passwordTextField.delegate = self;
     self.emailTextField.delegate = self;
     self.passwordTextField.secureTextEntry = YES;
     self.activityIndicator.hidesWhenStopped = YES;
+    self.keyboardUp = @0;
+    
+
+
+    if (self.view.frame.size.height == 480.000000)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    }
 }
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    [textField resignFirstResponder];
+    return true;
+}
+
+
+
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    CGFloat boost = -75;
+    CGRect newFrame = CGRectMake(self.view.frame.origin.x, boost ,self.view.frame.size.width, self.view.frame.size.height);
+    self.view.frame = newFrame;
+}
+
+
+//
+//////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
+//
+- (void)keyboardWillShow:(NSNotification*)notification
+{
+    [self moveControls:notification up:YES];
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notification
+{
+    [self moveControls:notification up:NO];
+}
+
+- (void)moveControls:(NSNotification*)notification up:(BOOL)up
+{
+    NSDictionary* userInfo = [notification userInfo];
+    CGRect newFrame = [self getNewControlsFrame:userInfo up:up];
+    [self animateControls:userInfo withFrame:newFrame];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+- (CGRect)getNewControlsFrame:(NSDictionary*)userInfo up:(BOOL)up
+{
+    CGRect kbFrame = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    kbFrame = [self.view convertRect:kbFrame fromView:nil];
+    CGRect newFrame = self.view.frame;
+
+    return newFrame;
+}
+
+- (void)animateControls:(NSDictionary*)userInfo withFrame:(CGRect)newFrame
+{
+    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    //    UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.view.frame = newFrame;
+    }
+                     completion:^(BOOL finished){}];
+}
+//
+////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.view endEditing:YES];
-    [super touchesBegan:touches withEvent:event];
-}
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return true;
-}
 
 - (IBAction)alreadyButtonPressed:(UIButton *)sender
 {

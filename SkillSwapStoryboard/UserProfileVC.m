@@ -171,7 +171,7 @@
          {
              NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
              self.reviewsArray = objects;
-             int reviewsSum = 0;
+             float reviewsSum = 0;
              for (Review *review in self.reviewsArray)
              {
                  reviewsSum += [review.reviewRating intValue];
@@ -184,8 +184,9 @@
              }
              else
              {
-                 int reviewsAverage = (reviewsSum / self.reviewsArray.count);
-                 NSNumber *average = @(reviewsAverage);
+                 float reviewsAverage = (reviewsSum / self.reviewsArray.count);
+                 float fiveScaleAverage = reviewsAverage * 2.5;
+                 NSNumber *average = @(fiveScaleAverage);
 //                 user.rating = average;
                  self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
              }

@@ -8,6 +8,8 @@
 #import "CourseListVC.h"
 #import "ReviewVC.h"
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate, PostVCDelegate>
+@property (weak, nonatomic) IBOutlet UISegmentedControl *whenSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *whoSegmentedControl;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -43,7 +45,6 @@
     NSTimeInterval fourteenHours = 14*60*60;
     self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
     [self queryForMap];
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -61,22 +62,21 @@
     {
         [self showUserLocation];
         [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-        
-        //check the segment control
+
+        // check for segmented control
+        self.navigationController.navigationBarHidden = YES;
         self.now = [NSDate date];
         NSTimeInterval fourteenHours = 14*60*60;
         self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
-        [self checkSegmentControl];
-        self.navigationController.navigationBarHidden = YES;
+        [self checkSegmentedControl];
         [self pullReviews];
-        
     }
 }
 
 
--(void)checkSegmentControl
+-(void)checkSegmentedControl
 {
-    if(self.who.selectedSegmentIndex == 1)
+    if (self.whoSegmentedControl.selectedSegmentIndex == 1)
     {
         self.checkEveryone = NO;
         [self queryMapForFriends];
@@ -86,8 +86,8 @@
         self.checkEveryone = YES;
         [self queryForMap];
     }
-    
-    if(self.time.selectedSegmentIndex == 1)
+
+    if (self.whenSegmentedControl.selectedSegmentIndex == 1)
     {
         self.ifNow = NO;
     }
@@ -96,6 +96,7 @@
         self.ifNow = YES;
     }
 }
+
 
 
 -(void)pullReviews
@@ -242,7 +243,6 @@
         if (!error)
         {
             self.results = objects;
-            NSLog(@"object is of type %@", [self.results[0] class]);
             for (Course *object in self.results)
             {
                 Course *course = (Course *)object;
