@@ -8,6 +8,8 @@
 #import "CourseListVC.h"
 #import "ReviewVC.h"
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate, PostVCDelegate>
+@property (weak, nonatomic) IBOutlet UISegmentedControl *whenSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *whoSegmentedControl;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -35,6 +37,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.ifNow = YES;
+    self.checkEveryone = YES;
+    self.now = [NSDate date];
+    NSTimeInterval fourteenHours = 14*60*60;
+    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+    [self queryForMap];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -52,18 +60,42 @@
     {
         [self showUserLocation];
         [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-        self.ifNow = YES;
-        self.checkEveryone = YES;
 
+        // check for segmented control
         self.navigationController.navigationBarHidden = YES;
         self.now = [NSDate date];
-        NSLog(@"right now it is %@", self.now);
         NSTimeInterval fourteenHours = 14*60*60;
         self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+        [self checkSegmentedControl];
         [self pullReviews];
-        [self queryForMap];
     }
 }
+
+
+-(void)checkSegmentedControl
+{
+    if (self.whoSegmentedControl.selectedSegmentIndex == 1)
+    {
+        self.checkEveryone = NO;
+        [self queryMapForFriends];
+    }
+    else
+    {
+        self.checkEveryone = YES;
+        [self queryForMap];
+    }
+
+    if (self.whenSegmentedControl.selectedSegmentIndex == 1)
+    {
+        self.ifNow = NO;
+    }
+    else
+    {
+        self.ifNow = YES;
+    }
+}
+
+
 
 -(void)pullReviews
 {
@@ -209,7 +241,6 @@
         if (!error)
         {
             self.results = objects;
-            NSLog(@"object is of type %@", [self.results[0] class]);
             for (Course *object in self.results)
             {
                 Course *course = (Course *)object;

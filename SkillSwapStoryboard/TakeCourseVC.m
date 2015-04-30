@@ -317,7 +317,7 @@
              self.teacherReviews = objects;
              [self.courseTableView reloadData];
              
-             int reviewsSum = 0;
+             float reviewsSum = 0;
              for (Review *review in self.teacherReviews)
              {
                  reviewsSum += [review.reviewRating intValue];
@@ -330,8 +330,8 @@
              }
              else
              {
-                 int reviewsAverage = (reviewsSum / self.teacherReviews.count);
-                 int fiveScaleAverage = reviewsAverage * 2.5;
+                 float reviewsAverage = (reviewsSum / self.teacherReviews.count);
+                 float fiveScaleAverage = reviewsAverage * 2.5;
                  NSNumber *average = @(fiveScaleAverage);
                  self.courseRating.text = [NSString stringWithFormat:@"Rating %@", average];
              }
