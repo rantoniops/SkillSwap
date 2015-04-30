@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C2061" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RuV-Tb-2Zf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="RuV-Tb-2Zf">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -1041,7 +1041,7 @@
                                 <color key="tintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="color" red="0.0" green="0.50196078431372548" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="282" y="250" width="37" height="37"/>
+                                    <rect key="frame" x="282" y="282" width="37" height="37"/>
                                 </variation>
                             </activityIndicatorView>
                             <searchBar contentMode="redraw" misplaced="YES" searchBarStyle="minimal" text="" placeholder="what u wanna learn?" translatesAutoresizingMaskIntoConstraints="NO" id="gaa-Yj-AFh">
@@ -1069,6 +1069,29 @@
                                     <outlet property="delegate" destination="C6z-MJ-OJR" id="LJZ-Of-XoB"/>
                                 </connections>
                             </searchBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZK-A5-o6F">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="19" id="awb-fd-Tll"/>
+                                    <constraint firstAttribute="height" constant="21" id="pFO-1d-nnN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="awb-fd-Tll"/>
+                                        <exclude reference="pFO-1d-nnN"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="awb-fd-Tll"/>
+                                        <include reference="pFO-1d-nnN"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.82352941176470584" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -1076,6 +1099,7 @@
                                 <variation key="widthClass=compact" constant="2.5"/>
                             </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="Huc-1f-hRt" secondAttribute="trailing" constant="-16" id="2FT-cZ-DmH"/>
+                            <constraint firstItem="CZK-A5-o6F" firstAttribute="leading" secondItem="PuU-bE-IYd" secondAttribute="leadingMargin" constant="21" id="5dy-hT-dkm"/>
                             <constraint firstItem="gaa-Yj-AFh" firstAttribute="leading" secondItem="41u-za-eLK" secondAttribute="trailing" constant="23" id="6Na-hG-YTN"/>
                             <constraint firstItem="gaa-Yj-AFh" firstAttribute="leading" secondItem="41u-za-eLK" secondAttribute="trailing" constant="23" id="GF5-b4-y2d">
                                 <variation key="widthClass=compact" constant="6"/>
@@ -1108,28 +1132,35 @@
                             <constraint firstItem="5Tg-TU-esF" firstAttribute="top" secondItem="a1C-4j-PCi" secondAttribute="bottom" constant="5" id="to6-AU-hDR"/>
                             <constraint firstItem="Huc-1f-hRt" firstAttribute="leading" secondItem="PuU-bE-IYd" secondAttribute="leadingMargin" constant="-16" id="up4-L0-a6m"/>
                             <constraint firstItem="OBU-w0-wVg" firstAttribute="leading" secondItem="PuU-bE-IYd" secondAttribute="leadingMargin" constant="-25" id="wBg-vI-WHq"/>
+                            <constraint firstItem="CZK-A5-o6F" firstAttribute="top" secondItem="a1C-4j-PCi" secondAttribute="bottom" constant="6" id="y9h-mu-QSK"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="LBM-Wa-Vaa"/>
+                                <exclude reference="CZK-A5-o6F"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="K3G-wm-Ri1"/>
-                                <exclude reference="TZb-Ru-xpX"/>
+                                <exclude reference="5dy-hT-dkm"/>
+                                <exclude reference="y9h-mu-QSK"/>
                                 <exclude reference="6Na-hG-YTN"/>
                                 <exclude reference="GF5-b4-y2d"/>
+                                <exclude reference="K3G-wm-Ri1"/>
+                                <exclude reference="TZb-Ru-xpX"/>
                                 <exclude reference="jtD-KV-3BL"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="LBM-Wa-Vaa"/>
+                                <include reference="CZK-A5-o6F"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="K3G-wm-Ri1"/>
-                                <include reference="TZb-Ru-xpX"/>
+                                <include reference="5dy-hT-dkm"/>
+                                <include reference="y9h-mu-QSK"/>
                                 <exclude reference="6Na-hG-YTN"/>
                                 <include reference="GF5-b4-y2d"/>
+                                <include reference="K3G-wm-Ri1"/>
+                                <include reference="TZb-Ru-xpX"/>
                                 <exclude reference="a6O-LJ-em9"/>
                                 <include reference="jtD-KV-3BL"/>
                             </mask>
@@ -1140,6 +1171,7 @@
                         <outlet property="activityIndicator" destination="LBM-Wa-Vaa" id="5Gq-c3-DYw"/>
                         <outlet property="addButton" destination="sOg-x2-3Ib" id="dYA-L9-Biw"/>
                         <outlet property="mapView" destination="Huc-1f-hRt" id="yNo-By-3rg"/>
+                        <outlet property="messageNotificationIcon" destination="CZK-A5-o6F" id="Z5n-dx-va8"/>
                         <outlet property="searchBar" destination="gaa-Yj-AFh" id="Ts0-HB-w93"/>
                         <outlet property="whenSegmentedControl" destination="edx-ti-Xt8" id="cVH-Nw-Def"/>
                         <outlet property="whoSegmentedControl" destination="dgh-xC-Pgp" id="DMC-FY-E9G"/>
@@ -1525,12 +1557,12 @@
                                 <exclude reference="3DG-Nt-ggt"/>
                                 <exclude reference="DxW-lD-Twb"/>
                                 <exclude reference="kF3-QR-9ye"/>
-                                <exclude reference="bAy-r6-DxE"/>
-                                <exclude reference="jAw-96-9Zz"/>
                                 <exclude reference="EVx-B9-SaI"/>
                                 <exclude reference="fI2-vC-dKf"/>
                                 <exclude reference="kGx-D6-2Em"/>
                                 <exclude reference="uvP-Fl-CfF"/>
+                                <exclude reference="bAy-r6-DxE"/>
+                                <exclude reference="jAw-96-9Zz"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1574,14 +1606,14 @@
                                 <include reference="DxW-lD-Twb"/>
                                 <exclude reference="E9N-BA-iYw"/>
                                 <exclude reference="kF3-QR-9ye"/>
-                                <exclude reference="4Dd-A2-KjR"/>
-                                <exclude reference="bAy-r6-DxE"/>
-                                <include reference="jAw-96-9Zz"/>
                                 <exclude reference="EVx-B9-SaI"/>
                                 <exclude reference="SVn-aG-ZEa"/>
                                 <exclude reference="fI2-vC-dKf"/>
                                 <exclude reference="kGx-D6-2Em"/>
                                 <include reference="uvP-Fl-CfF"/>
+                                <exclude reference="4Dd-A2-KjR"/>
+                                <exclude reference="bAy-r6-DxE"/>
+                                <include reference="jAw-96-9Zz"/>
                             </mask>
                         </variation>
                     </view>
@@ -2069,7 +2101,7 @@
                                 <rect key="frame" x="-10" y="-10" width="20" height="20"/>
                                 <color key="color" red="0.0" green="0.50196078431372548" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="282" y="250" width="37" height="37"/>
+                                    <rect key="frame" x="282" y="282" width="37" height="37"/>
                                 </variation>
                             </activityIndicatorView>
                             <datePicker contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="15" translatesAutoresizingMaskIntoConstraints="NO" id="P16-1B-wY3">

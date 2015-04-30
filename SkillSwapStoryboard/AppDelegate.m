@@ -37,6 +37,10 @@
     [application registerForRemoteNotifications];
 
 
+
+
+
+
     [Fabric with:@[CrashlyticsKit]];
 
 
@@ -69,11 +73,15 @@
 
 
 
-// CODIED FROM PARSE PUSH NOTIFICATIONS, THIS ALLOWS PARSE TO HANDLE PUSH NOTIFICATIONS FOR US USING A MODAL VIEW WHEN THE APP IS RUNNING
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    // CODIED FROM PARSE PUSH NOTIFICATIONS, THIS ALLOWS PARSE TO HANDLE PUSH NOTIFICATIONS FOR US USING A MODAL VIEW WHEN THE APP IS RUNNING
     [[NSNotificationCenter defaultCenter] postNotificationName:@"messageReceived" object:self];
     [PFPush handlePush:userInfo];
+
+    // this number shows as the alleged number of notifications in the app icon, will have to add it dynamically
+//    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 
