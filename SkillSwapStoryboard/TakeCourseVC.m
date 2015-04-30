@@ -3,7 +3,7 @@
 #import "MessageConversationVC.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <MobileCoreServices/MobileCoreServices.h>
-@interface TakeCourseVC ()<UITableViewDataSource,UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface TakeCourseVC ()<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *courseImage;
 @property (weak, nonatomic) IBOutlet UIButton *teacherName;
 @property (weak, nonatomic) IBOutlet UILabel *courseRating;
@@ -13,34 +13,40 @@
 @property (weak, nonatomic) IBOutlet UILabel *courseAddress;
 @property (weak, nonatomic) IBOutlet UITableView *courseTableView;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
-@property NSArray *courseReviews;
+@property (weak, nonatomic) IBOutlet UILabel *reviewsLabel;
+@property NSArray *teacherReviews;
 @property User *currentUser;
 @property (strong, nonatomic) MPMoviePlayerController *videoController;
 @property (weak, nonatomic) IBOutlet UIButton *takeClassButton;
 @property (weak, nonatomic) IBOutlet UIButton *messageTeacherButton;
 @property NSArray *followingObjectsToBeDeleted;
+@property NSArray *reviewObjectsToBeDeleted;
+
 @end
 @implementation TakeCourseVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.currentUser = [User currentUser];
-    NSLog(@"selected course teacher is %@", self.selectedTeacher.username);
+    [self.takeClassButton setTitle:@"Join class" forState:UIControlStateNormal];
     if (self.selectedTeacher == self.currentUser)
     {
         self.followButton.hidden = YES;
         self.messageTeacherButton.hidden = YES;
         self.takeClassButton.hidden = YES;
     }
-    self.navigationItem.title = @"Take Class";
-    self.courseName.text = self.selectedCourse.title;
-    self.courseAddress.text = self.selectedCourse.address;
-    self.courseDesciption.text = self.selectedCourse.courseDescription;
-    NSString *timeString = [NSDateFormatter localizedStringFromDate:self.selectedCourse.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+    self.navigationItem.title = @"Class";
+
+    self.reviewsLabel.text = [NSString stringWithFormat:@"Reviews for %@:", self.selectedTeacher.username];
+    self.courseName.text = [self.selectedCourse valueForKey:@"title"];
+    self.courseAddress.text = [self.selectedCourse valueForKey:@"address"];
+    self.courseDesciption.text = [self.selectedCourse valueForKey:@"courseDescription"];
+
+    NSString *timeString = [NSDateFormatter localizedStringFromDate:[self.selectedCourse valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
     NSLog(@"%@", timeString);
     self.courseDuration.text = timeString;
     [self.teacherName setTitle:self.selectedTeacher.username forState:UIControlStateNormal];
-    [self.selectedCourse.courseMedia getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+    [[self.selectedCourse valueForKey:@"courseMedia"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
     {
         if (!error)
         {
@@ -52,27 +58,89 @@
 
 - (IBAction)onTeacherNameButtonTapped:(UIButton *)sender
 {
+   
+    
+    
     [self performSegueWithIdentifier:@"takeCourseToTeacherProfile" sender:self];
 }
 
 
 - (IBAction)onTakeClassButtonPressed:(UIButton *)sender
 {
-    [self confirmAlert];
+    if ([self.takeClassButton.titleLabel.text isEqualToString:@"Join class"])
+    {
+        [self confirmAlert];
+    }
+    else
+    {
+        [self doIreviewThisGuy];
+        [self onCancelButtonTap];
+    }
+    
 }
 
 
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = NO;
-    if (self.selectedCourse.teacher == self.currentUser)
+    if ([self.selectedCourse valueForKey:@"teacher"] == self.currentUser)
     {
         self.followButton.hidden = YES;
         self.takeClassButton.hidden = YES;
         self.messageTeacherButton.hidden = YES;
     }
+    NSDate *now = [NSDate date];
+    NSLog(@" %@ course time, %@ now ",  [self.selectedCourse valueForKey:@"time"], now);
+    if ([[self.selectedCourse valueForKey:@"time"] earlierDate: now] == [self.selectedCourse valueForKey:@"time"])
+    {
+        self.takeClassButton.hidden = YES;
+        NSLog(@" course is earlier");
+    }
     [self doIfollowThisGuy];
+    [self amItakingThisCourse];
+    [self calculateUserRating:self.selectedTeacher];
 }
+
+-(void)amItakingThisCourse
+{
+    PFUser *currentUser = [User currentUser];
+    PFRelation *relation = [currentUser relationForKey:@"courses"];
+    PFQuery *relationQuery = relation.query;
+    [relationQuery includeKey:@"courses"];
+    [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if ([objects containsObject:self.selectedCourse])
+         {
+             [self.takeClassButton setTitle:@"No longer attend" forState:UIControlStateNormal];
+             self.takeClassButton.backgroundColor = [[UIColor redColor]colorWithAlphaComponent:0.5];
+         }
+         else
+         {
+             [self.takeClassButton setTitle:@"Join class" forState:UIControlStateNormal];
+         }
+     }];
+}
+
+-(void)doIreviewThisGuy
+{
+    PFQuery *reviewCheck = [Review query];
+    NSArray *teacherAndStudent = [NSArray arrayWithObjects:[User currentUser],self.selectedTeacher,nil];
+    [reviewCheck whereKey:@"reviewer" containedIn:teacherAndStudent];
+    [reviewCheck whereKey:@"reviewed" containedIn:teacherAndStudent];
+    [reviewCheck whereKey:@"course" equalTo:self.selectedCourse];
+    [reviewCheck findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (objects.count > 0)
+         {
+             self.reviewObjectsToBeDeleted = objects;
+         }
+         else
+         {
+         }
+     }];
+
+}
+
 
 -(void)doIfollowThisGuy
 {
@@ -93,11 +161,46 @@
       }];
 }
 
+-(void)onCancelButtonTap
+{
+    User *currentUser = [User currentUser];
+    NSLog(@"here are the current users courses now %@", [currentUser valueForKey:@"courses"]);
+    PFRelation *relation = [currentUser relationForKey:@"courses"];
+    [relation removeObject: self.selectedCourse];
+    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+     {
+         if (succeeded)
+         {
+             NSLog(@"class was deleted and saved");
+             [self.navigationController popViewControllerAnimated:true];
+             NSLog(@"here are the current users courses now %@", [currentUser valueForKey:@"courses"]);
+             [self.takeClassButton setTitle:@"Join class" forState:UIControlStateNormal];
+             for (Review *review in self.reviewObjectsToBeDeleted)
+             {
+                 [review deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                  {
+                      if (error == nil)
+                      {
+                          NSLog(@"%@ has been deleted", self.reviewObjectsToBeDeleted);
+                      }
+                  }];
+             }
+             
+         }
+         else
+         {
+             NSLog(@"class was NOT deleted");
+         }
+     }];
+}
+
+
 -(void)confirmAlert
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Confirm sign up" message:@"The poster will be sent a notification"preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *confirmClass = [UIAlertAction actionWithTitle:@"Confirm Class" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
     {
+        NSLog(@"the course is of %@ type", [self.selectedCourse class]);
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         [relation addObject: self.selectedCourse];
@@ -106,7 +209,35 @@
              if (succeeded)
              {
                  NSLog(@"current user saved");
-                 [self dismissViewControllerAnimated:true completion:nil];
+                 [self.navigationController popViewControllerAnimated:true];
+                 NSLog(@"the course is of %@ type", [self.selectedCourse class]);
+
+                 /////////////////// PUSH NOTIFICATIONS /////////////////////
+
+                 // Find users
+                 PFQuery *userQuery = [User query];
+                 [userQuery whereKey:@"objectId" equalTo:self.selectedTeacher.objectId];
+                 // Find devices associated with these users
+                 PFQuery *pushQuery = [PFInstallation query];
+                 [pushQuery whereKey:@"user" matchesQuery:userQuery];
+                 // Send push notification to query
+                 PFPush *push = [[PFPush alloc] init];
+                 [push setQuery:pushQuery]; // Set our Installation query
+
+                 [push setMessage: [NSString stringWithFormat:@"%@ has joined your class!", currentUser.username] ];
+                 [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                  {
+                      if (succeeded)
+                      {
+                          NSLog(@"takeCourse push success");
+                      }
+                      else
+                      {
+                          NSLog(@"takeCourse push error");
+                      }
+                  }];
+
+                 /////////////////// PUSH NOTIFICATIONS END /////////////////
              }
              else
              {
@@ -170,18 +301,48 @@
 }
 
 
--(void)queryForCourseReviews
+-(void)calculateUserRating:(User *)user
 {
     PFQuery *reviewsQuery = [Review query];
-    [reviewsQuery whereKey:@"course" equalTo:self.selectedCourse];
+    [reviewsQuery includeKey:@"reviewed"];
+    [reviewsQuery includeKey:@"reviewer"];
+    [reviewsQuery includeKey:@"course"];
+    [reviewsQuery whereKey:@"reviewed" equalTo:user];
+    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
-         if (!error)
+         if (error == nil)
          {
-             self.courseReviews = objects;
+             NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
+             self.teacherReviews = objects;
+             [self.courseTableView reloadData];
+             
+             float reviewsSum = 0;
+             for (Review *review in self.teacherReviews)
+             {
+                 reviewsSum += [review.reviewRating intValue];
+                 NSLog(@"review rating is %@", review.reviewRating);
+             }
+             if (self.teacherReviews.count == 0)
+             {
+                 self.courseRating.text = @"0 ratings";
+                 // dont do anything, since dividing by zero will crash the app
+             }
+             else
+             {
+                 float reviewsAverage = (reviewsSum / self.teacherReviews.count);
+                 float fiveScaleAverage = reviewsAverage * 2.5;
+                 NSNumber *average = @(fiveScaleAverage);
+                 self.courseRating.text = [NSString stringWithFormat:@"Rating %@", average];
+             }
+         }
+         else
+         {
+             NSLog(@"error finding reviews");
          }
      }];
 }
+
 
 
 - (IBAction)dismissButton:(id)sender
@@ -228,16 +389,21 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    Review *review = self.courseReviews[indexPath.row];
-    NSString *reviewerString = [NSString stringWithFormat:@"%@",[review valueForKey:@"reviewer"]];
+    Review *review = self.teacherReviews[indexPath.row];
+
+    NSString *timeString = [NSDateFormatter localizedStringFromDate:review.updatedAt dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
+
+    NSString *reviewerString = [NSString stringWithFormat:@"%@ on %@", review.reviewer.username, timeString];
     cell.detailTextLabel.text = reviewerString;
+//    cell.detailTextLabel.text = review.reviewer.username;
+
     cell.textLabel.text = [review valueForKey:@"reviewContent"];
     return cell;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.courseReviews.count;
+    return self.teacherReviews.count;
 }
 
 

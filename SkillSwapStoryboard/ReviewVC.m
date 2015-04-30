@@ -1,6 +1,6 @@
 #import "ReviewVC.h"
 @interface ReviewVC () <UITextViewDelegate>
-@property (weak, nonatomic) IBOutlet UITextView *reviewBodyTextField;
+@property (weak, nonatomic) IBOutlet UITextView *reviewBodyTextField; // THIS IS A TEXTVIEW
 @property NSString *placeHolderString;
 @property (weak, nonatomic) IBOutlet UILabel *reviewCourseLabel;
 @property (weak, nonatomic) IBOutlet UIButton *badButton;
@@ -10,12 +10,26 @@
 @implementation ReviewVC
 - (void)viewDidLoad
 {
+
     [super viewDidLoad];
-    self.reviewBodyTextField.delegate = self;
+    self.reviewBodyTextField.delegate = self; // this is a textview
     self.reviewBodyTextField.editable = YES;
-    self.placeHolderString = [NSString stringWithFormat:@"how was %@ ?", [self.reviewCourse valueForKey:@"title"]];
-    self.reviewCourseLabel.text = self.placeHolderString;
+    self.reviewCourseLabel.text = [NSString stringWithFormat:@"how was %@ with %@?", [self.reviewCourse valueForKey:@"title"], self.reviewToReview.reviewed.username];
+    self.reviewCourseLabel.numberOfLines = 0;
     self.reviewBodyTextField.text = @"";
+}
+
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"])
+    {
+        [textView resignFirstResponder];
+        // Return FALSE so that the final '\n' character doesn't get added
+        return NO;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    return YES;
 }
 
 
@@ -53,7 +67,14 @@
 
 - (IBAction)submitReviewButtonPressed:(UIButton *)sender
 {
-    [self saveTheReview];
+    if (self.reviewToReview.reviewRating == nil)
+    {
+        [self showAlert];
+    }
+    else
+    {
+        [self saveTheReview];
+    }
 }
 
 
@@ -71,6 +92,20 @@
      }];
 }
      
+
+-(void)showAlert
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Rating Missing" message:@"Please tap on a rating" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+    {
+
+    }];
+
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:true completion:nil];
+}
+
+
 
 
 

@@ -4,6 +4,7 @@
 #import "TakeCourseVC.h"
 #import "ConnectionsListVC.h"
 #import "ShowReviewVC.h"
+#import "MessageConversationVC.h"
 @interface UserProfileVC () <UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *rating;
@@ -12,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionText;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
+@property (weak, nonatomic) IBOutlet UIButton *messageButton;
 @property PFFile *userImageFile;
 @property Course *courseAtRow;
 @property User *userAtRow;
@@ -26,31 +28,49 @@
 @property NSNumber *tableViewNumber;
 @property Review *reviewAtRow;
 @property NSArray *followingObjectsToBeDeleted;
+@property (weak, nonatomic) IBOutlet UIButton *classButton;
+@property (weak, nonatomic) IBOutlet UIButton *skillButton;
+@property (weak, nonatomic) IBOutlet UIButton *reviewButton;
+@property (weak, nonatomic) IBOutlet UIButton *friendsButton;
 @end
 @implementation UserProfileVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.navigationItem.title = @"Profile";
-    self.tableViewNumber = @3;
+    self.tableViewNumber = @1;
+    [self.skillButton setTintColor:[UIColor orangeColor]];
+    [self.reviewButton setTintColor:[UIColor orangeColor]];
+    [self.friendsButton setTintColor:[UIColor orangeColor]];
 }
 
 - (IBAction)skillsButtonPressed:(UIButton *)sender
 {
-    self.tableViewNumber = @1;
+    self.tableViewNumber = @2;
+    [self.classButton setTintColor:[UIColor orangeColor]];
+    [self.skillButton setTintColor:[UIColor blueColor]];
+    [self.reviewButton setTintColor:[UIColor orangeColor]];
+    [self.friendsButton setTintColor:[UIColor orangeColor]];
     [self.tableVIew reloadData];
 }
 
 - (IBAction)reviewsButtonPressed:(UIButton *)sender
 {
-    self.tableViewNumber = @2;
+    self.tableViewNumber = @3;
+    [self.classButton setTintColor:[UIColor orangeColor]];
+    [self.skillButton setTintColor:[UIColor orangeColor]];
+    [self.reviewButton setTintColor:[UIColor blueColor]];
+    [self.friendsButton setTintColor:[UIColor orangeColor]];
     [self.tableVIew reloadData];
-    
 }
 
 - (IBAction)classesButtonPressed:(UIButton *)sender
 {
-    self.tableViewNumber = @3;
+    self.tableViewNumber = @1;
+    [self.classButton setTintColor:[UIColor blueColor]];
+    [self.skillButton setTintColor:[UIColor orangeColor]];
+    [self.reviewButton setTintColor:[UIColor orangeColor]];
+    [self.friendsButton setTintColor:[UIColor orangeColor]];
     [self.tableVIew reloadData];
 }
 
@@ -98,49 +118,15 @@
 
 
 
--(void)calculateUserRating:(User *)user
-{
-    PFQuery *reviewsQuery = [Review query];
-    [reviewsQuery includeKey:@"reviewed"];
-    [reviewsQuery includeKey:@"reviewer"];
-    [reviewsQuery whereKey:@"reviewed" equalTo:user];
-    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
-    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-     {
-         if (error == nil)
-         {
-             NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
-             self.reviewsArray = objects;
-             int reviewsSum = 0;
-             for (Review *review in self.reviewsArray)
-             {
-                 reviewsSum = reviewsSum + [review.reviewRating intValue];
-             }
-             if (self.reviewsArray.count == 0)
-             {
-                 self.rating.text = @"User has no ratings yet.";
-                 // dont do anything, since dividing by zero will crash the app
-             }
-             else
-             {
-                 int reviewsAverage = (reviewsSum / self.reviewsArray.count);
-                 NSNumber *average = @(reviewsAverage);
-                 self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
-             }
-         }
-         else
-         {
-             NSLog(@"error finding reviews");
-         }
-     }];
-}
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = NO;
     [self queryForUserInfo];
     [self queryForFriends];
-    self.followButton.hidden = YES;
+//    self.followButton.hidden = YES;
+
 }
 
 - (IBAction)onLogoutButtonTapped:(UIBarButtonItem *)sender
@@ -156,7 +142,7 @@
     {
         [self doIfollowThisGuy];
         self.profileImage.userInteractionEnabled = NO;
-        self.followButton.hidden = NO;
+//        self.followButton.hidden = NO;
     }
     else
     {
@@ -171,22 +157,72 @@
 }
 
 
+-(void)calculateUserRating:(User *)user
+{
+    PFQuery *reviewsQuery = [Review query];
+    [reviewsQuery includeKey:@"reviewed"];
+    [reviewsQuery includeKey:@"reviewer"];
+    [reviewsQuery includeKey:@"course"];
+    [reviewsQuery whereKey:@"reviewed" equalTo:user];
+    [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@1];
+    [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+     {
+         if (error == nil)
+         {
+             NSLog(@"found %lu reviews for the user" , (unsigned long)objects.count);
+             self.reviewsArray = objects;
+             float reviewsSum = 0;
+             for (Review *review in self.reviewsArray)
+             {
+                 reviewsSum += [review.reviewRating intValue];
+                 NSLog(@"review rating is %@", review.reviewRating);
+             }
+             if (self.reviewsArray.count == 0)
+             {
+                 self.rating.text = @"0 ratings";
+                 // dont do anything, since dividing by zero will crash the app
+             }
+             else
+             {
+                 float reviewsAverage = (reviewsSum / self.reviewsArray.count);
+                 float fiveScaleAverage = reviewsAverage * 2.5;
+                 NSNumber *average = @(fiveScaleAverage);
+//                 user.rating = average;
+                 self.rating.text = [NSString stringWithFormat:@"Rating %@", average];
+             }
+         }
+         else
+         {
+             NSLog(@"error finding reviews");
+         }
+     }];
+}
+
+
+
+
 -(void)queryForUserInfo
 {
     if (self.selectedUser) // IF COMING FROM TAKECOURSEVC AND WANNA SHOW THE TEACHERS PROFILE
     {
         [self calculateUserRating:self.selectedUser];
 
-        PFRelation *relation = [self.selectedUser relationForKey:@"courses"];
-        PFQuery *relationQuery = relation.query;
-        [relationQuery includeKey:@"teacher"];
-        [relationQuery whereKey:@"teacher" equalTo: self.selectedUser];
-        [relationQuery orderByAscending:@"createdAt"];
-        [relationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+        PFQuery *coursesQuery = [Course query];
+        [coursesQuery whereKey:@"teacher" equalTo:self.selectedUser];
+
+//        PFRelation *relation = [self.selectedUser relationForKey:@"courses"];
+//        PFQuery *relationQuery = relation.query;
+//        [relationQuery includeKey:@"teacher"];
+//        [relationQuery whereKey:@"teacher" equalTo: self.selectedUser];
+
+        [coursesQuery orderByAscending:@"createdAt"];
+        [coursesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
              if (error == nil)
              {
                  NSLog(@"selected user is %@", self.selectedUser);
+
+                 
                  self.coursesArray = objects;
                  [self.tableVIew reloadData];
                  self.name.text = self.selectedUser.username;
@@ -223,8 +259,11 @@
     }
     else // current user clicked on the profile button and wants to see his own profile
     {
+        self.messageButton.hidden = YES;
+        self.followButton.hidden = YES;
+
         [self calculateUserRating:[User currentUser]];
-        
+
         User *currentUser = [User currentUser];
         PFRelation *relation = [currentUser relationForKey:@"courses"];
         PFQuery *relationQuery = relation.query;
@@ -237,6 +276,7 @@
              {
                  self.coursesArray = objects;
                  [self.tableVIew reloadData];
+
                  self.name.text = currentUser.username;
                  self.userImageFile = [currentUser valueForKey:@"profilePic"];
                  NSLog(@"image file is %@", self.userImageFile);
@@ -286,7 +326,6 @@
              if (error == nil)
              {
                  self.followersArray = objects;
-                 NSLog(@"should not be followed i don't think %@", objects);
                  
              }
              if (error)
@@ -320,7 +359,6 @@
              if (error == nil)
              {
                  self.followersArray = objects;
-                 NSLog(@"should not be followed i don't think %@", objects);
                  
              }
          }];
@@ -335,7 +373,6 @@
              if (error == nil)
              {
                  self.followingArray = objects;
-                 NSLog(@"should be following someone %@", objects);
              }
          }];
     }
@@ -394,7 +431,6 @@
 //    self.profileImage.image = self.chosenImage;
     self.smallImageData = UIImageJPEGRepresentation(self.chosenImage, 0.5);
     [picker dismissViewControllerAnimated:YES completion:NULL];
-    NSLog(@"image should be ready to save");
     [self saveImage];
     [self loadProfilePicwithImage:self.chosenImage];
     
@@ -405,14 +441,14 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    if ([self.tableViewNumber  isEqual: @1]) // skills
+    if ([self.tableViewNumber  isEqual: @2]) // skills
     {
         Skill *skill = self.skillsArray[indexPath.row];
         cell.textLabel.text = [skill valueForKey:@"name"];
         NSString *timeString = [NSDateFormatter localizedStringFromDate:skill.createdAt dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"Since %@", timeString];
     }
-    else if ([self.tableViewNumber isEqual: @2]) // reviews
+    else if ([self.tableViewNumber isEqual: @3]) // reviews
     {
         Review *review = self.reviewsArray[indexPath.row];
         cell.detailTextLabel.text = [review valueForKey:@"reviewContent"];
@@ -426,7 +462,8 @@
     {
         Course *course = self.coursesArray[indexPath.row];
         NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-        NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@", [course valueForKey:@"title"] , timeString];
+        NSString *secondTimeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterNoStyle];
+        NSString *titleAndTime = [NSString stringWithFormat:@"%@ at %@ on %@", [course valueForKey:@"title"] , timeString, secondTimeString];
         cell.textLabel.text = titleAndTime;
         cell.detailTextLabel.text = [course valueForKey:@"address"];
     }
@@ -437,17 +474,16 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.tableViewNumber isEqual:@1])
+    if ([self.tableViewNumber isEqual:@2])
     {
-        NSLog(@"no transition");
         [tableView deselectRowAtIndexPath:indexPath animated:true];
     }
-    else if ([self.tableViewNumber isEqual:@2])
+    else if ([self.tableViewNumber isEqual:@3])
     {
         self.reviewAtRow = self.reviewsArray[indexPath.row];
         [self performSegueWithIdentifier:@"reviews" sender:self];
     }
-    else if ([self.tableViewNumber isEqual:@3])
+    else if ([self.tableViewNumber isEqual:@1])
     {
         self.courseAtRow = self.coursesArray[indexPath.row];
         [self performSegueWithIdentifier:@"showCourse" sender:self];
@@ -470,7 +506,7 @@
     {
         TakeCourseVC *takeCourseVC = segue.destinationViewController;
         takeCourseVC.selectedCourse = self.courseAtRow;
-        takeCourseVC.selectedTeacher = self.courseAtRow.teacher;
+        takeCourseVC.selectedTeacher = [self.courseAtRow objectForKey:@"teacher"];
     }
     else if ([segue.identifier isEqualToString:@"connections"])
     {
@@ -478,7 +514,14 @@
         connectionsVC.followersArray = self.followersArray;
         connectionsVC.followingArray = self.followingArray;
     }
+    else if ([segue.identifier isEqualToString:@"profileToMessage"])
+    {
+        MessageConversationVC *messageVC = segue.destinationViewController;
+        messageVC.otherUser = self.selectedUser;
+        messageVC.origin = @"userProfile"; 
+    }
 }
+
 
 
 
@@ -486,11 +529,11 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([self.tableViewNumber  isEqual: @1])
+    if ([self.tableViewNumber  isEqual: @2])
     {
         return self.skillsArray.count;
     }
-    else if ([self.tableViewNumber  isEqual: @2])
+    else if ([self.tableViewNumber  isEqual: @3])
     {
         return self.reviewsArray.count;
     }

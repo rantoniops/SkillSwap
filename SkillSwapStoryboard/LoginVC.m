@@ -3,12 +3,14 @@
 @interface LoginVC () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 @implementation LoginVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.passwordTextField.secureTextEntry = YES;
+    self.activityIndicator.hidesWhenStopped = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -31,6 +33,7 @@
 
 - (IBAction)loginButtonPress:(UIButton *)sender
 {
+    [self.activityIndicator startAnimating];
     [PFUser logInWithUsernameInBackground:self.nameTextField.text password:self.passwordTextField.text
     block:^(PFUser *user, NSError *error)
     {
@@ -45,6 +48,7 @@
                  if (succeeded)
                  {
                      NSLog(@"installation saved");
+                     [self.activityIndicator stopAnimating];
                  }
                  else
                  {
@@ -58,20 +62,25 @@
         else
         {
             NSLog(@"error logging in");
-//            [self showAlert("There was an error with your login", error: returnedError!)];
+            [self.activityIndicator stopAnimating];
+            [self showAlert];
         }
     }];
 }
 
 
             
-//-(void)showAlert(NSString *)message error(NSError *)
-//{
-//    let alert = UIAlertController(title: message, message: error.localizedDescription, preferredStyle: .Alert)
-//    let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-//    alert.addAction(okAction)
-//    presentViewController(alert, animated: true, completion: nil)
-//}
+-(void)showAlert
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"There was an Error" message:@"Please try again" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            self.nameTextField.text = @"";
+            self.passwordTextField.text = @"";
+        }];
+    
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:true completion:nil];
+}
 
 
 

@@ -45,7 +45,6 @@
         self.selectedConnection = followerUser.to;
     }
     [self performSegueWithIdentifier:@"connectionProfile" sender:self];
-
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -63,27 +62,27 @@
         Follow *followerForRow = self.followersArray[indexPath.row];
         User *user = [followerForRow objectForKey:@"from"];
         cell.textLabel.text = [user valueForKey:@"username"];
-        cell.imageView.layer.cornerRadius = cell.imageView.frame.size.width/2;
-        cell.imageView.clipsToBounds = YES;
+//        cell.imageView.layer.cornerRadius = cell.imageView.frame.size.width/1;
+//        cell.imageView.clipsToBounds = YES;
         PFFile *imageFile = [user valueForKey:@"profilePic"];
         [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
          {
              if (error == nil)
              {
                  cell.imageView.image = [UIImage imageWithData:data];
-                 cell.imageView.layer.cornerRadius = cell.imageView.frame.size.width/2;
-                 cell.imageView.clipsToBounds = YES;
+//                 cell.imageView.layer.cornerRadius = cell.imageView.frame.size.width/2;
+//                 cell.imageView.clipsToBounds = YES;
                  [self.tableView reloadData];
              }
          }];
-    //        cell.detailTextLabel.text = ;
     }
     else
     {
         Follow *followingForRow = self.followingArray[indexPath.row];
         User *user = [followingForRow objectForKey:@"to"];
         cell.textLabel.text = [user valueForKey:@"username"];
-      
+//        cell.imageView.layer.cornerRadius = cell.imageView.frame.size.width/1;
+//        cell.imageView.clipsToBounds = YES;
         PFFile *imageFile = [user valueForKey:@"profilePic"];
         [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
          {
@@ -91,11 +90,10 @@
              {
                  cell.imageView.image = [UIImage imageWithData:data];
                  cell.imageView.layer.cornerRadius = cell.imageView.frame.size.width/2;
-                 cell.imageView.clipsToBounds = YES;
+//                 cell.imageView.clipsToBounds = YES;
                  [self.tableView reloadData];
              }
          }];
-//        cell.detailTextLabel.text = ;
     }
     return cell;
 }

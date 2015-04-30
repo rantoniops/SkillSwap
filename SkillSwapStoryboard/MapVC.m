@@ -8,6 +8,8 @@
 #import "CourseListVC.h"
 #import "ReviewVC.h"
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate, PostVCDelegate>
+@property (weak, nonatomic) IBOutlet UISegmentedControl *whenSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *whoSegmentedControl;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property CLLocationManager *locationManager;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -26,13 +28,21 @@
 @property CLLocation *locationToPass;
 @property NSMutableArray *friendsArray;
 @property BOOL ifNow;
+@property (weak, nonatomic) IBOutlet UIButton *addButton;
 @property BOOL checkEveryone;
 @property NSArray *reviews;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 @implementation MapVC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.ifNow = YES;
+    self.checkEveryone = YES;
+    self.now = [NSDate date];
+    NSTimeInterval fourteenHours = 14*60*60;
+    self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+    [self queryForMap];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -50,20 +60,42 @@
     {
         [self showUserLocation];
         [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-        self.ifNow = YES;
-        self.checkEveryone = YES;
 
+        // check for segmented control
         self.navigationController.navigationBarHidden = YES;
         self.now = [NSDate date];
-        NSLog(@"right now it is %@", self.now);
         NSTimeInterval fourteenHours = 14*60*60;
         self.tomorrow = [self.now dateByAddingTimeInterval:fourteenHours];
+        [self checkSegmentedControl];
         [self pullReviews];
-        [self queryForMap];
-
-
     }
 }
+
+
+-(void)checkSegmentedControl
+{
+    if (self.whoSegmentedControl.selectedSegmentIndex == 1)
+    {
+        self.checkEveryone = NO;
+        [self queryMapForFriends];
+    }
+    else
+    {
+        self.checkEveryone = YES;
+        [self queryForMap];
+    }
+
+    if (self.whenSegmentedControl.selectedSegmentIndex == 1)
+    {
+        self.ifNow = NO;
+    }
+    else
+    {
+        self.ifNow = YES;
+    }
+}
+
+
 
 -(void)pullReviews
 {
@@ -76,6 +108,7 @@
     [reviewsQuery whereKey:@"reviewer" equalTo:[User currentUser]];
     [reviewsQuery whereKey:@"hasBeenReviewed" equalTo:@0];
     [reviewsQuery includeKey:@"course"];
+    [reviewsQuery includeKey:@"reviewed"];
     [reviewsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          if (!error)
@@ -93,7 +126,6 @@
                      reviewVC.reviewCourse = review.course;
                      [self presentViewController:reviewVC animated:true completion:nil];
                  }
-                 
              }
              else
              {
@@ -115,7 +147,8 @@
     return true;
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
     [self.view endEditing:YES];
 }
 
@@ -136,7 +169,6 @@
                  User *userToSee = [follow objectForKey:@"to"];
                  [self.friendsArray addObject:userToSee];
              }
-        
              PFQuery *courseQuery = [Course query];
              [courseQuery includeKey:@"teacher"];
              [courseQuery whereKey:@"teacher" containedIn:self.friendsArray];
@@ -209,29 +241,32 @@
         if (!error)
         {
             self.results = objects;
-            for (Course *object in objects)
+            for (Course *object in self.results)
             {
+                Course *course = (Course *)object;
+                NSLog(@"object is of type %@", [object class]);
                 if ([object isKindOfClass:[Course class]])
                 {
                     CustomCourseAnnotation *coursePointAnnotation = [[CustomCourseAnnotation alloc]init];
-                    coursePointAnnotation.course = object;
-                    NSString *timeString = [NSDateFormatter localizedStringFromDate:object.time dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
-                    NSString *titleAndTime = [NSString stringWithFormat:@"%@ @ %@", object.title, timeString];
+                    coursePointAnnotation.course = course;
+                    NSString *timeString = [NSDateFormatter localizedStringFromDate:[course valueForKey:@"time"] dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+                    NSString *titleAndTime = [NSString stringWithFormat:@"%@ @ %@", [course valueForKey:@"title"], timeString];
                     coursePointAnnotation.title = titleAndTime;
-                    PFFile *imageFile = object.courseMedia;
+                    PFFile *imageFile = [course valueForKey:@"courseMedia"];
                     [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
                      {
                          if (!error)
                          {
-                             object.callOutImage = [UIImage imageWithData:data];
-                             object.sizedCallOutImage = [self imageWithImage: object.callOutImage scaledToSize:CGSizeMake(40, 40)];
-                             coursePointAnnotation.subtitle = object.address;
-                             PFGeoPoint *geoPoint = object.location;
+                             coursePointAnnotation.subtitle = [course valueForKey:@"address"];
+                             PFGeoPoint *geoPoint = [course valueForKey:@"location"];
+                             course.callOutImage = [UIImage imageWithData:data];
+                             course.sizedCallOutImage = [self imageWithImage: course.callOutImage scaledToSize:CGSizeMake(40, 40)];
+                             
+                             
                              coursePointAnnotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
                              [self.mapView addAnnotation:coursePointAnnotation];
                          }
                      }];
-
                 }
             }
         }
@@ -274,15 +309,13 @@
     {
         CLPlacemark *placeMark = [placemarks objectAtIndex:0];
        self.formattedAdress = [NSString stringWithFormat: @"%@ %@ %@, %@, %@", placeMark.subThoroughfare, placeMark.thoroughfare, placeMark.locality, placeMark.administrativeArea ,placeMark.postalCode];
-
         if ([self.formattedAdress containsString:@"(null)"])
         {
             NSLog(@"CONTAINS NULL, we replace it");
             NSString *newString = [self.formattedAdress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
             self.formattedAdress = newString;
         }
-
-        }];
+    }];
 }
 
 
@@ -301,7 +334,7 @@
        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:nil];
         CustomCourseAnnotation *theAnnotation = newPin.annotation;
        newPin.canShowCallout = true;
-        if (theAnnotation.course.teacher == [PFUser currentUser])
+        if (theAnnotation.course.teacher == [PFUser currentUser] || theAnnotation.course.teacher == nil)
         {
             newPin.pinColor = MKPinAnnotationColorGreen;
         }
@@ -318,7 +351,6 @@
         NSLog(@"user annotation is called");
         return nil;
     }
-    
 }
 
 
@@ -338,14 +370,15 @@
     [self addCenterPinImageAndButton];
     MKCoordinateSpan span = MKCoordinateSpanMake(0.01,0.01);
     [self.mapView setRegion:MKCoordinateRegionMake(self.mapView.centerCoordinate,span) animated:true];
+    self.addButton.enabled = NO;
 }
 
 //add the image to map - gets called on addButton tap
 -(void)addCenterPinImageAndButton
 {
-    UIImage *pinImage = [UIImage imageNamed:@"newpin"];
+    UIImage *pinImage = [UIImage imageNamed:@"classBanner"];
     self.pin = [[UIImageView alloc]initWithImage:pinImage];
-    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 -75  , self.mapView.bounds.size.height/2 - 65, 150, 75);
+    self.pin.frame = CGRectMake(self.mapView.bounds.size.width/2 - (201.6/2)  , self.mapView.bounds.size.height/2 - (75.6), 201.6, 75.6);
     UITapGestureRecognizer *pinTap = [[UITapGestureRecognizer alloc]init];
     [self imageview:self.pin addGestureRecognizer:pinTap];
     [self.mapView addSubview:self.pin];
@@ -364,16 +397,20 @@
 //action on tap of imageview indicator
 -(void)handleTap:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    [self addAnnotation];
+    [self.activityIndicator startAnimating];
     self.pin.hidden = YES;
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.007,0.007);
-    [self.mapView setRegion:MKCoordinateRegionMake(self.mapView.centerCoordinate,span) animated:true];
+    [self addAnnotation];
+//    MKCoordinateSpan span = MKCoordinateSpanMake(0.007,0.007);
+//    [self.mapView setRegion:MKCoordinateRegionMake(self.mapView.centerCoordinate,span) animated:true];
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void)
    {
        [self performSegueWithIdentifier:@"postClass" sender:self];
+       self.addButton.enabled = YES;
+       [self.activityIndicator stopAnimating];
    });
+
 }
 
 
@@ -410,12 +447,10 @@
         CustomCourseAnnotation *courseAnnotation = sender;
         Course *courseToShow = courseAnnotation.course;
         takeVC.selectedCourse = courseToShow;
-        takeVC.selectedTeacher = courseToShow.teacher;
-
+        takeVC.selectedTeacher = [courseToShow objectForKey:@"teacher"];
     }
     else
     {
-        
     }
 }
 
@@ -499,8 +534,6 @@
              }];
         }
     }
-
-
 }
 
 
@@ -552,7 +585,6 @@
             [self queryMapForFriends];
         }
     }
-    
 }
 
 
@@ -561,7 +593,6 @@
 
 
 //delegate method when returning from postCourse
-
 -(void)didIcreateACourse:(BOOL *)didCreate
 {
     if (didCreate == false)
