@@ -52,9 +52,12 @@
     {
         [self showUserLocation];
         [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
+        
+        //check the segment control
+        
         self.ifNow = YES;
         self.checkEveryone = YES;
-
+        [self checkSegmentControl];
         self.navigationController.navigationBarHidden = YES;
         self.now = [NSDate date];
         NSLog(@"right now it is %@", self.now);
@@ -64,6 +67,29 @@
         [self queryForMap];
     }
 }
+
+
+-(void)checkSegmentControl
+{
+    if(sender.selectedSegmentIndex == 1)
+    {
+        self.checkEveryone = NO;
+    }
+    else
+    {
+        self.checkEveryone = YES;
+    }
+    
+    if(selectedSegmentIndex == 1)
+    {
+        self.ifNow = NO;
+    }
+    else
+    {
+        self.ifNow = YES;
+    }
+}
+
 
 -(void)pullReviews
 {
