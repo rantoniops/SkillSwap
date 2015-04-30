@@ -265,7 +265,8 @@
                  // Send push notification to query
                  PFPush *push = [[PFPush alloc] init];
                  [push setQuery:pushQuery]; // Set our Installation query
-                 [push setMessage: self.messageTextField.text];
+                 
+                 [push setMessage: [NSString stringWithFormat:@"%@ says: %@" , [User currentUser].username, newMessage.messageBody] ];
                  [push sendPushInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                   {
                       if (succeeded)

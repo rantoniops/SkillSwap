@@ -80,7 +80,6 @@
 
 -(void)saveTheReview
 {
-    NSLog(@"RATING WAS %@", self.reviewToReview.reviewRating);
     self.reviewToReview.reviewContent = self.reviewBodyTextField.text;
     self.reviewToReview.hasBeenReviewed = @1;
     [self.reviewToReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)

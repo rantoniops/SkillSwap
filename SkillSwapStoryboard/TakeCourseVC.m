@@ -331,7 +331,8 @@
              else
              {
                  int reviewsAverage = (reviewsSum / self.teacherReviews.count);
-                 NSNumber *average = @(reviewsAverage);
+                 int fiveScaleAverage = reviewsAverage * 2.5;
+                 NSNumber *average = @(fiveScaleAverage);
                  self.courseRating.text = [NSString stringWithFormat:@"Rating %@", average];
              }
          }
