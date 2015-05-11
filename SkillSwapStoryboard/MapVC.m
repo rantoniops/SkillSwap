@@ -8,6 +8,7 @@
 #import "CourseListVC.h"
 #import "ReviewVC.h"
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate, PostVCDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *messageNotificationIcon;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *whenSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *whoSegmentedControl;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -50,6 +51,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
+
+    self.messageNotificationIcon.hidden = YES;
 }
 
 -(void)viewDidAppear:(BOOL)animated
