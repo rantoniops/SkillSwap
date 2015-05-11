@@ -678,7 +678,7 @@
                                                            {
                                                                NSLog(@"hate report saved");
                                                                [PFCloud callFunctionInBackground:@"sendEmail"
-                                                                                  withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"course" : report.course.title, @"reason" : report.reason }
+                                                                                  withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"reason" : report.reason }
                                                                                            block:^(NSString *result, NSError *error) {
                                                                                                if (error == nil)
                                                                                                {
@@ -711,7 +711,7 @@
                                                  {
                                                      NSLog(@"threatening report saved");
                                                      [PFCloud callFunctionInBackground:@"sendEmail"
-                                                                        withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"course" : report.course.title, @"reason" : report.reason }
+                                                                        withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"reason" : report.reason }
                                                                                  block:^(NSString *result, NSError *error) {
                                                                                      if (error == nil)
                                                                                      {
