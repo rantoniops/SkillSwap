@@ -8,6 +8,7 @@
 #import "CourseListVC.h"
 #import "ReviewVC.h"
 @interface MapVC () <MKMapViewDelegate, CLLocationManagerDelegate,UISearchBarDelegate, UIGestureRecognizerDelegate, PostVCDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *messageNotificationIcon;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *whenSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *whoSegmentedControl;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -31,6 +32,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 @property BOOL checkEveryone;
 @property NSArray *reviews;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *time;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *who;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
 @implementation MapVC
@@ -48,6 +51,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = YES;
+
+    self.messageNotificationIcon.hidden = YES;
 }
 
 -(void)viewDidAppear:(BOOL)animated

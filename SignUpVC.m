@@ -7,6 +7,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property NSNumber *keyboardUp;
 @property NSNumber *viewIsUp;
+@property NSString *whatDevice;
 @property NSDictionary *storedUserInfo;
 @property NSNumber *userInfoCaptured;
 @property CGRect negativeFrame;
@@ -19,9 +20,7 @@
     self.passwordTextField.delegate = self;
     self.emailTextField.delegate = self;
 
-    self.nameTextField.secureTextEntry = YES;
     self.passwordTextField.secureTextEntry = YES;
-    self.emailTextField.secureTextEntry = YES;
 
     self.activityIndicator.hidesWhenStopped = YES;
     self.keyboardUp = @0;
@@ -31,20 +30,26 @@
     if (self.view.frame.size.height == 480)
     {
         NSLog(@"iphone 4S");
+        self.whatDevice = @"iphone4S";
+
     }
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if ([self.viewIsUp isEqual:@1])
+    if ([self.whatDevice isEqualToString:@"iphone4S"])
     {
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+        if ([self.viewIsUp isEqual:@1])
+        {
+            //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 
-        CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-        kbFrame = [self.view convertRect:kbFrame fromView:nil];
-        CGRect negFrame = self.view.frame;
-        negFrame.origin.y -= (kbFrame.size.height / 2) * (-1);
-        [self animateControls:self.storedUserInfo withFrame:negFrame];
+            CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+            kbFrame = [self.view convertRect:kbFrame fromView:nil];
+            CGRect negFrame = self.view.frame;
+            negFrame.origin.y -= (kbFrame.size.height / 2) * (-1);
+            [self animateControls:self.storedUserInfo withFrame:negFrame];
+        }
+
     }
     [textField resignFirstResponder];
     self.keyboardUp = @0;
@@ -53,35 +58,38 @@
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    self.keyboardUp = @1;
-    if (textField == self.emailTextField)
+    if ([self.whatDevice isEqualToString:@"iphone4S"])
     {
-        if ([self.viewIsUp isEqual:@0])
+        self.keyboardUp = @1;
+        if (textField == self.emailTextField)
         {
-            if ([self.userInfoCaptured isEqual:@1])
+            if ([self.viewIsUp isEqual:@0])
             {
-                CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-                kbFrame = [self.view convertRect:kbFrame fromView:nil];
-                CGRect negFrame = self.view.frame;
-                negFrame.origin.y += (kbFrame.size.height / 2) * (-1);
-                [self animateControls:self.storedUserInfo withFrame:negFrame];
-            }
-            else
-            {
-                self.userInfoCaptured = @1;
-                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+                if ([self.userInfoCaptured isEqual:@1])
+                {
+                    CGRect kbFrame = [[self.storedUserInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+                    kbFrame = [self.view convertRect:kbFrame fromView:nil];
+                    CGRect negFrame = self.view.frame;
+                    negFrame.origin.y += (kbFrame.size.height / 2) * (-1);
+                    [self animateControls:self.storedUserInfo withFrame:negFrame];
+                }
+                else
+                {
+                    self.userInfoCaptured = @1;
+                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+                }
             }
         }
-    }
-    else
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        else
+        {
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+        }
     }
 }
 
 
 
-////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
+//////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
 
 - (void)keyboardWillShow:(NSNotification*)notification
 {
@@ -142,8 +150,7 @@
                          }
                      }];
 }
-
-
+//
 ////////////////////// MOVE UP KEYBOARD STUFF //////////////////////////
 
 
