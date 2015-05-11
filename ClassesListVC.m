@@ -1,11 +1,13 @@
 #import "ClassesListVC.h"
 #import "SkillSwapStoryboard-Swift.h"
 #import "UserProfileVC.h"
+#import "TakeCourseVC.h"
 
 @interface ClassesListVC ()  <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmendtedControl;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property NSNumber *teachingOrTaking;
+@property Course *courseToPass;
 
 @end
 @implementation ClassesListVC
@@ -13,7 +15,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = @"Courses";
-    self.teachingOrTaking = @1;
+    self.teachingOrTaking = @0;
 //    NSLog(@"here are the teaching courses %@", self.teachingArray);
 }
 
@@ -41,6 +43,27 @@
     }
     return cell;
     
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.teachingOrTaking isEqualToNumber:@0]) // followers
+    {
+        Course *selectedCourse = self.takingArray[indexPath.row];
+        self.courseToPass = selectedCourse;
+    }
+    else // following
+    {
+        Course *selectedCourse = self.takingArray[indexPath.row];
+        self.courseToPass = selectedCourse;
+    }
+    [self performSegueWithIdentifier:@"classListToTakeCourse" sender:self];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    TakeCourseVC *takeVC = segue.destinationViewController;
+    takeVC.selectedCourse = self.courseToPass;
 }
 
 

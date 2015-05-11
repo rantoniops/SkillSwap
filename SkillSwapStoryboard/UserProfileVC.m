@@ -264,6 +264,7 @@
          }];
         PFRelation *coursesAsStudent = [self.selectedUser relationForKey:@"courses"];
         PFQuery *coursesAsStudentQuery = coursesAsStudent.query;
+        [coursesAsStudentQuery whereKey:@"teacher" notEqualTo:self.selectedUser];
         [coursesAsStudentQuery findObjectsInBackgroundWithBlock:^(NSArray *courses, NSError *error)
          {
              if (error == nil)
@@ -330,6 +331,7 @@
          }];
         PFRelation *coursesAsStudent = [currentUser relationForKey:@"courses"];
         PFQuery *coursesAsStudentQuery = coursesAsStudent.query;
+        [coursesAsStudentQuery whereKey:@"teacher" notEqualTo:currentUser];
         [coursesAsStudentQuery findObjectsInBackgroundWithBlock:^(NSArray *courses, NSError *error)
          {
              if (error == nil)
