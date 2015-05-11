@@ -5,6 +5,8 @@
 #import "ConnectionsListVC.h"
 #import "ShowReviewVC.h"
 #import "MessageConversationVC.h"
+#import "ClassesListVC.h"
+
 @interface UserProfileVC () <UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *rating;
@@ -18,6 +20,8 @@
 @property Course *courseAtRow;
 @property User *userAtRow;
 @property NSArray *coursesArray;
+@property NSArray *teachingArray;
+@property NSArray *takingArray;
 @property NSArray *followersArray;
 @property NSArray *followingArray;
 @property NSArray *skillsArray;
@@ -66,12 +70,16 @@
 
 - (IBAction)classesButtonPressed:(UIButton *)sender
 {
-    self.tableViewNumber = @1;
-    [self.classButton setTintColor:[UIColor blueColor]];
-    [self.skillButton setTintColor:[UIColor orangeColor]];
-    [self.reviewButton setTintColor:[UIColor orangeColor]];
-    [self.friendsButton setTintColor:[UIColor orangeColor]];
-    [self.tableVIew reloadData];
+    
+    //perform segue
+    [self performSegueWithIdentifier:@"showClasses" sender:self];
+
+//    self.tableViewNumber = @1;
+//    [self.classButton setTintColor:[UIColor blueColor]];
+//    [self.skillButton setTintColor:[UIColor orangeColor]];
+//    [self.reviewButton setTintColor:[UIColor orangeColor]];
+//    [self.friendsButton setTintColor:[UIColor orangeColor]];
+//    [self.tableVIew reloadData];
 }
 
 - (IBAction)friendsButtonPressed:(UIButton *)sender
@@ -209,21 +217,15 @@
 
         PFQuery *coursesQuery = [Course query];
         [coursesQuery whereKey:@"teacher" equalTo:self.selectedUser];
-
-//        PFRelation *relation = [self.selectedUser relationForKey:@"courses"];
-//        PFQuery *relationQuery = relation.query;
-//        [relationQuery includeKey:@"teacher"];
-//        [relationQuery whereKey:@"teacher" equalTo: self.selectedUser];
-
         [coursesQuery orderByAscending:@"createdAt"];
         [coursesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
          {
              if (error == nil)
              {
                  NSLog(@"selected user is %@", self.selectedUser);
-
                  
-                 self.coursesArray = objects;
+
+                 self.teachingArray= objects;
                  [self.tableVIew reloadData];
                  self.name.text = self.selectedUser.username;
                  self.userImageFile = [self.selectedUser valueForKey:@"profilePic"];
@@ -256,6 +258,18 @@
                  [self.tableVIew reloadData];
              }
          }];
+        PFRelation *coursesAsStudent = [self.selectedUser relationForKey:@"courses"];
+        PFQuery *coursesAsStudentQuery = coursesAsStudent.query;
+        [coursesAsStudentQuery findObjectsInBackgroundWithBlock:^(NSArray *courses, NSError *error)
+         {
+             if (error == nil)
+             {
+                 NSLog(@"here are the courses found %@", courses);
+                 self.takingArray = courses;
+                 [self.tableVIew reloadData];
+             }
+         }];
+        
     }
     else // current user clicked on the profile button and wants to see his own profile
     {
@@ -274,7 +288,7 @@
          {
              if (error == nil)
              {
-                 self.coursesArray = objects;
+                 self.teachingArray = objects;
                  [self.tableVIew reloadData];
 
                  self.name.text = currentUser.username;
@@ -309,8 +323,17 @@
                  [self.tableVIew reloadData];
              }
          }];
+        PFRelation *coursesAsStudent = [currentUser relationForKey:@"courses"];
+        PFQuery *coursesAsStudentQuery = coursesAsStudent.query;
+        [coursesAsStudentQuery findObjectsInBackgroundWithBlock:^(NSArray *courses, NSError *error)
+         {
+             if (error == nil)
+             {
+                 self.takingArray = courses;
+                 [self.tableVIew reloadData];
+             }
+         }];
     }
-
 }
 
 -(void)queryForFriends
@@ -519,6 +542,14 @@
         MessageConversationVC *messageVC = segue.destinationViewController;
         messageVC.otherUser = self.selectedUser;
         messageVC.origin = @"userProfile"; 
+    }
+    else if ([segue.identifier isEqual:@"showClasses"])
+    {
+        ClassesListVC *classesVC = segue.destinationViewController;
+        classesVC.takingArray = self.takingArray;
+        
+        classesVC.teachingArray = self.teachingArray;
+        
     }
 }
 
