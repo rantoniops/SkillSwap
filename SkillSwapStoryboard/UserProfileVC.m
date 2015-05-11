@@ -44,6 +44,7 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Profile";
     self.tableViewNumber = @1;
+    [self.classButton setTintColor:[UIColor orangeColor]];
     [self.skillButton setTintColor:[UIColor orangeColor]];
     [self.reviewButton setTintColor:[UIColor orangeColor]];
     [self.friendsButton setTintColor:[UIColor orangeColor]];
