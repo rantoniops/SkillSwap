@@ -609,6 +609,18 @@
                                                       if (succeeded)
                                                       {
                                                           NSLog(@"sexually explicit report saved");
+                                                          [PFCloud callFunctionInBackground:@"sendEmail"
+                                                                             withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"reason" : report.reason }
+                                                                                      block:^(NSString *result, NSError *error) {
+                                                                                          if (error == nil)
+                                                                                          {
+                                                                                              NSLog(@"email with report sent");
+                                                                                          }
+                                                                                          else
+                                                                                          {
+                                                                                              NSLog(@"error sending email with report");
+                                                                                          }
+                                                                                      }];
                                                           [self dismissViewControllerAnimated:YES completion:nil];
                                                       }
                                                       else
@@ -631,6 +643,18 @@
                                                            if (succeeded)
                                                            {
                                                                NSLog(@"hate report saved");
+                                                               [PFCloud callFunctionInBackground:@"sendEmail"
+                                                                                  withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"course" : report.course.title, @"reason" : report.reason }
+                                                                                           block:^(NSString *result, NSError *error) {
+                                                                                               if (error == nil)
+                                                                                               {
+                                                                                                   NSLog(@"email with report sent");
+                                                                                               }
+                                                                                               else
+                                                                                               {
+                                                                                                   NSLog(@"error sending email with report");
+                                                                                               }
+                                                                                           }];
                                                                [self dismissViewControllerAnimated:YES completion:nil];
                                                            }
                                                            else
@@ -652,6 +676,18 @@
                                                  if (succeeded)
                                                  {
                                                      NSLog(@"threatening report saved");
+                                                     [PFCloud callFunctionInBackground:@"sendEmail"
+                                                                        withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"course" : report.course.title, @"reason" : report.reason }
+                                                                                 block:^(NSString *result, NSError *error) {
+                                                                                     if (error == nil)
+                                                                                     {
+                                                                                         NSLog(@"email with report sent");
+                                                                                     }
+                                                                                     else
+                                                                                     {
+                                                                                         NSLog(@"error sending email with report");
+                                                                                     }
+                                                                                 }];
                                                      [self dismissViewControllerAnimated:YES completion:nil];
                                                  }
                                                  else
@@ -673,6 +709,18 @@
                                              if (succeeded)
                                              {
                                                  NSLog(@"drug report saved");
+                                                 [PFCloud callFunctionInBackground:@"sendEmail"
+                                                                    withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"reason" : report.reason }
+                                                                             block:^(NSString *result, NSError *error) {
+                                                                                 if (error == nil)
+                                                                                 {
+                                                                                     NSLog(@"email with report sent");
+                                                                                 }
+                                                                                 else
+                                                                                 {
+                                                                                     NSLog(@"error sending email with report");
+                                                                                 }
+                                                                             }];
                                                  [self dismissViewControllerAnimated:YES completion:nil];
                                              }
                                              else
