@@ -10,4 +10,7 @@
 
 @interface ClassesListVC : UIViewController
 
+@property NSArray *takingArray;
+@property NSArray *teachingArray;
+
 @end
