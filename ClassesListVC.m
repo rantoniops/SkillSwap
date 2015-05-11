@@ -49,21 +49,24 @@
 {
     if ([self.teachingOrTaking isEqualToNumber:@0]) // followers
     {
-        Course *selectedCourse = self.takingArray[indexPath.row];
+        Course *selectedCourse = self.teachingArray[indexPath.row];
+        NSLog(@" here is the course to pass %@" , selectedCourse);
         self.courseToPass = selectedCourse;
     }
-    else // following
+    else
     {
         Course *selectedCourse = self.takingArray[indexPath.row];
         self.courseToPass = selectedCourse;
     }
-    [self performSegueWithIdentifier:@"classListToTakeCourse" sender:self];
+    [self performSegueWithIdentifier:@"classListToTakeCourse"  sender:self];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     TakeCourseVC *takeVC = segue.destinationViewController;
+ 
     takeVC.selectedCourse = self.courseToPass;
+    takeVC.selectedTeacher = self.courseToPass.teacher;
 }
 
 
@@ -85,12 +88,12 @@
 {
     if(sender.selectedSegmentIndex == 0) // teaching
     {
-        self.teachingOrTaking = @1; // switch to taking
+        self.teachingOrTaking = @0; // switch to taking
         [self.tableView reloadData];
     }
     else
     {
-        self.teachingOrTaking = @0; // switch to teaching
+        self.teachingOrTaking = @1; // switch to teaching
         [self.tableView reloadData];
     }
 }

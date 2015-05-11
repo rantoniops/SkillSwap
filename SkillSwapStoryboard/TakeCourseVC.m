@@ -291,7 +291,7 @@
 -(void)doIreviewThisGuy
 {
     PFQuery *reviewCheck = [Review query];
-    NSArray *teacherAndStudent = [NSArray arrayWithObjects:[User currentUser],self.selectedTeacher,nil];
+    NSArray *teacherAndStudent = [NSArray arrayWithObjects:[User currentUser],self.selectedCourse.teacher,nil];
     [reviewCheck whereKey:@"reviewer" containedIn:teacherAndStudent];
     [reviewCheck whereKey:@"reviewed" containedIn:teacherAndStudent];
     [reviewCheck whereKey:@"course" equalTo:self.selectedCourse];
@@ -312,8 +312,8 @@
 -(void)doIfollowThisGuy
 {
     PFQuery *followerCheck = [Follow query];
-    [followerCheck whereKey:@"from" equalTo:[PFUser currentUser]];
-    [followerCheck whereKey:@"to" equalTo:self.selectedTeacher];
+    [followerCheck whereKey:@"from" equalTo:[User currentUser]];
+    [followerCheck whereKey:@"to" equalTo:self.selectedCourse.teacher];
     [followerCheck findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
       {
           if (objects.count > 0)
