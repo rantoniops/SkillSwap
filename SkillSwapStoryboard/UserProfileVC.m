@@ -32,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *skillButton;
 @property (weak, nonatomic) IBOutlet UIButton *reviewButton;
 @property (weak, nonatomic) IBOutlet UIButton *friendsButton;
+@property (weak, nonatomic) IBOutlet UIButton *reportButton;
 @end
 @implementation UserProfileVC
 - (void)viewDidLoad
@@ -79,6 +80,10 @@
     //perform segue
 }
 
+- (IBAction)reportButtonPressed:(UIButton *)sender
+{
+    [self reportAlert];
+}
 
 - (IBAction)followButtonPressed:(UIButton *)sender
 {
@@ -126,7 +131,6 @@
     [self queryForUserInfo];
     [self queryForFriends];
 //    self.followButton.hidden = YES;
-
 }
 
 - (IBAction)onLogoutButtonTapped:(UIBarButtonItem *)sender
@@ -261,6 +265,7 @@
     {
         self.messageButton.hidden = YES;
         self.followButton.hidden = YES;
+        self.reportButton.hidden = YES;
 
         [self calculateUserRating:[User currentUser]];
 
@@ -589,6 +594,154 @@
 }
 
 
+-(void)reportAlert
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Report" message:@"Why do you want to report this user?" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *sexuallyExplicitAction = [UIAlertAction actionWithTitle:@"Sexually explicit" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                             {
+                                                 Report *report = [Report new];
+                                                 report.reporter = [User currentUser];
+                                                 report.reported = self.selectedUser;
+                                                 report.hasBeenTakenCareOf = @0;
+                                                 report.reason = @"sexual";
+                                                 [report saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                                                  {
+                                                      if (succeeded)
+                                                      {
+                                                          NSLog(@"sexually explicit report saved");
+                                                          [PFCloud callFunctionInBackground:@"sendEmail"
+                                                                             withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"reason" : report.reason }
+                                                                                      block:^(NSString *result, NSError *error) {
+                                                                                          if (error == nil)
+                                                                                          {
+                                                                                              NSLog(@"email with report sent");
+                                                                                          }
+                                                                                          else
+                                                                                          {
+                                                                                              NSLog(@"error sending email with report");
+                                                                                          }
+                                                                                      }];
+                                                          [self dismissViewControllerAnimated:YES completion:nil];
+                                                      }
+                                                      else
+                                                      {
+                                                          NSLog(@"sexual report NOT saved");
+                                                      }
+                                                  }];
+                                             }];
+
+
+    UIAlertAction *harrassmentHateSpeechAction = [UIAlertAction actionWithTitle:@"Harrasment or hate speech" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                                  {
+                                                      Report *report = [Report new];
+                                                      report.reporter = [User currentUser];
+                                                      report.reported = self.selectedUser;
+                                                      report.hasBeenTakenCareOf = @0;
+                                                      report.reason = @"hate";
+                                                      [report saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                                                       {
+                                                           if (succeeded)
+                                                           {
+                                                               NSLog(@"hate report saved");
+                                                               [PFCloud callFunctionInBackground:@"sendEmail"
+                                                                                  withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"course" : report.course.title, @"reason" : report.reason }
+                                                                                           block:^(NSString *result, NSError *error) {
+                                                                                               if (error == nil)
+                                                                                               {
+                                                                                                   NSLog(@"email with report sent");
+                                                                                               }
+                                                                                               else
+                                                                                               {
+                                                                                                   NSLog(@"error sending email with report");
+                                                                                               }
+                                                                                           }];
+                                                               [self dismissViewControllerAnimated:YES completion:nil];
+                                                           }
+                                                           else
+                                                           {
+                                                               NSLog(@"hate report NOT saved");
+                                                           }
+                                                       }];
+                                                  }];
+
+    UIAlertAction *threateningAction = [UIAlertAction actionWithTitle:@"Threatening or violent" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                        {
+                                            Report *report = [Report new];
+                                            report.reporter = [User currentUser];
+                                            report.reported = self.selectedUser;
+                                            report.hasBeenTakenCareOf = @0;
+                                            report.reason = @"threatening";
+                                            [report saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                                             {
+                                                 if (succeeded)
+                                                 {
+                                                     NSLog(@"threatening report saved");
+                                                     [PFCloud callFunctionInBackground:@"sendEmail"
+                                                                        withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"course" : report.course.title, @"reason" : report.reason }
+                                                                                 block:^(NSString *result, NSError *error) {
+                                                                                     if (error == nil)
+                                                                                     {
+                                                                                         NSLog(@"email with report sent");
+                                                                                     }
+                                                                                     else
+                                                                                     {
+                                                                                         NSLog(@"error sending email with report");
+                                                                                     }
+                                                                                 }];
+                                                     [self dismissViewControllerAnimated:YES completion:nil];
+                                                 }
+                                                 else
+                                                 {
+                                                     NSLog(@"threatening report NOT saved");
+                                                 }
+                                             }];
+                                        }];
+
+    UIAlertAction *drugUseAction = [UIAlertAction actionWithTitle:@"Drug use" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                    {
+                                        Report *report = [Report new];
+                                        report.reporter = [User currentUser];
+                                        report.reported = self.selectedUser;
+                                        report.hasBeenTakenCareOf = @0;
+                                        report.reason = @"drugs";
+                                        [report saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+                                         {
+                                             if (succeeded)
+                                             {
+                                                 NSLog(@"drug report saved");
+                                                 [PFCloud callFunctionInBackground:@"sendEmail"
+                                                                    withParameters:@{ @"reporter" : report.reporter.username, @"reported" : report.reported.username, @"reason" : report.reason }
+                                                                             block:^(NSString *result, NSError *error) {
+                                                                                 if (error == nil)
+                                                                                 {
+                                                                                     NSLog(@"email with report sent");
+                                                                                 }
+                                                                                 else
+                                                                                 {
+                                                                                     NSLog(@"error sending email with report");
+                                                                                 }
+                                                                             }];
+                                                 [self dismissViewControllerAnimated:YES completion:nil];
+                                             }
+                                             else
+                                             {
+                                                 NSLog(@"drug report NOT saved");
+                                             }
+                                         }];
+                                    }];
+
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action)
+                                   {
+                                       [self dismissViewControllerAnimated:YES completion:nil];
+                                   }];
+
+    [alert addAction:sexuallyExplicitAction];
+    [alert addAction:harrassmentHateSpeechAction];
+    [alert addAction:threateningAction];
+    [alert addAction:drugUseAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:true completion:nil];
+}
 
 
 
