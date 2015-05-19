@@ -23,6 +23,7 @@
 		6B9B1F231AE0A673005219AF /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9B1F221AE0A673005219AF /* Course.swift */; };
 		6BAEDE281AE0390F00282CFB /* MessagesVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAEDE271AE0390F00282CFB /* MessagesVC.m */; };
 		6BD061E41AEDECF500B6B85E /* ShowReviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD061E31AEDECF500B6B85E /* ShowReviewVC.m */; };
+		6BDE79861B0B01D9009950EE /* TermsAndConditionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BDE79851B0B01D9009950EE /* TermsAndConditionsVC.m */; };
 		6BE1A88A1B00499000BEA686 /* ClassesListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1A8891B00499000BEA686 /* ClassesListVC.m */; };
 		6BE1A88F1B00509E00BEA686 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1A88E1B00509E00BEA686 /* Report.swift */; };
 		6BFECC3F1AED7188009BF05F /* ConnectionsListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFECC3E1AED7188009BF05F /* ConnectionsListVC.m */; };
@@ -94,6 +95,8 @@
 		6BAEDE271AE0390F00282CFB /* MessagesVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesVC.m; sourceTree = "<group>"; };
 		6BD061E21AEDECF500B6B85E /* ShowReviewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowReviewVC.h; sourceTree = "<group>"; };
 		6BD061E31AEDECF500B6B85E /* ShowReviewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowReviewVC.m; sourceTree = "<group>"; };
+		6BDE79841B0B01D9009950EE /* TermsAndConditionsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermsAndConditionsVC.h; sourceTree = "<group>"; };
+		6BDE79851B0B01D9009950EE /* TermsAndConditionsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsAndConditionsVC.m; sourceTree = "<group>"; };
 		6BE1A8881B00499000BEA686 /* ClassesListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassesListVC.h; path = ../ClassesListVC.h; sourceTree = "<group>"; };
 		6BE1A8891B00499000BEA686 /* ClassesListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassesListVC.m; path = ../ClassesListVC.m; sourceTree = "<group>"; };
 		6BE1A88E1B00509E00BEA686 /* Report.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
@@ -223,6 +226,8 @@
 				B126D4821ADD78BC002E6F99 /* LoginVC.m */,
 				6B25C0651AEEDA5300F1090F /* SignUpVC.h */,
 				6B25C0661AEEDA5300F1090F /* SignUpVC.m */,
+				6BDE79841B0B01D9009950EE /* TermsAndConditionsVC.h */,
+				6BDE79851B0B01D9009950EE /* TermsAndConditionsVC.m */,
 				6BD061E21AEDECF500B6B85E /* ShowReviewVC.h */,
 				6BD061E31AEDECF500B6B85E /* ShowReviewVC.m */,
 				6BFECC3D1AED7188009BF05F /* ConnectionsListVC.h */,
@@ -499,6 +504,7 @@
 				6BFECC3F1AED7188009BF05F /* ConnectionsListVC.m in Sources */,
 				6B7846731ADCA98600EAD40D /* Skill.swift in Sources */,
 				6B78467B1ADCAAFA00EAD40D /* Message.swift in Sources */,
+				6BDE79861B0B01D9009950EE /* TermsAndConditionsVC.m in Sources */,
 				6BE1A88A1B00499000BEA686 /* ClassesListVC.m in Sources */,
 				6B7846711ADCA8F500EAD40D /* User.swift in Sources */,
 				96BD8B2F1AEECCB500549447 /* MessageCell.m in Sources */,
