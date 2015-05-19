@@ -11,6 +11,7 @@
 @property NSDictionary *storedUserInfo;
 @property NSNumber *userInfoCaptured;
 @property CGRect negativeFrame;
+@property (weak, nonatomic) IBOutlet UISwitch *mySwitch;
 @end
 @implementation SignUpVC
 - (void)viewDidLoad
@@ -168,53 +169,61 @@
 
 - (IBAction)signUpButtonPress:(UIButton *)sender
 {
-    [self.activityIndicator startAnimating];
-    User *user = [User new];
-    user.username = self.nameTextField.text;
-    user.password = self.passwordTextField.text;
-    user.email = self.emailTextField.text;
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-     {
-         if (succeeded)
+    if (self.mySwitch.on)
+    {
+        [self.activityIndicator startAnimating];
+        User *user = [User new];
+        user.username = self.nameTextField.text;
+        user.password = self.passwordTextField.text;
+        user.email = self.emailTextField.text;
+        [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
          {
-             NSLog(@"setting current user to the installation from the signup");
+             if (succeeded)
+             {
+                 NSLog(@"setting current user to the installation from the signup");
 
-             // push notifications
-             [[PFInstallation currentInstallation] setObject:[User currentUser] forKey:@"user"];
-             [[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-              {
-                  if (succeeded)
+                 // push notifications
+                 [[PFInstallation currentInstallation] setObject:[User currentUser] forKey:@"user"];
+                 [[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
                   {
-                      NSLog(@"installation saved");
-                      [self.activityIndicator stopAnimating];
-                  }
-                  else
-                  {
-                      NSLog(@"error, installation NOT saved");
-                  }
-              }];
+                      if (succeeded)
+                      {
+                          NSLog(@"installation saved");
+                          [self.activityIndicator stopAnimating];
+                      }
+                      else
+                      {
+                          NSLog(@"error, installation NOT saved");
+                      }
+                  }];
 
-             [self performSegueWithIdentifier:@"signupToMap" sender:self];
-         }
-         else
-         {
-             NSLog(@"error signing up");
-         }
-     }];
+                 [self performSegueWithIdentifier:@"signupToMap" sender:self];
+             }
+             else
+             {
+                 NSLog(@"error signing up");
+             }
+         }];
+    }
+    else
+    {
+        [self showTermsAlert];
+    }
+}
+
+
+-(void)showTermsAlert
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Gotta agree to the Terms" message:@"You can't use our app if you don't agree to the terms and conditions" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    }];
+
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:true completion:nil];
 }
 
 
 
-
-
-
-//-(void)showAlert(NSString *)message error(NSError *)
-//{
-//    let alert = UIAlertController(title: message, message: error.localizedDescription, preferredStyle: .Alert)
-//    let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-//    alert.addAction(okAction)
-//    presentViewController(alert, animated: true, completion: nil)
-//}
 
 
 
